@@ -1,0 +1,25 @@
+.iconWrapper {
+  flex-shrink: 0;
+}
+.iconStack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 50%;
+  transition: transform 0.2s ease-in-out;
+
+  > svg:first-child {
+    position: absolute;
+    transform-origin: 50% 50%;
+    transition: transform 0.2s ease-in-out;
+    transform: rotate(90deg);
+  }
+
+  .open & {
+    transform: rotate(180deg);
+    > svg:first-child {
+      transform: rotate(0deg);
+    }
+  }
+}

@@ -7,7 +7,7 @@ body {
     --cursor-button: pointer;
   }
 
-  --pci-excellent: #004da8;
+  /* --pci-excellent: #004da8;
   --pci-good: #87b52b;
   --pci-fair: #e6e600;
   --pci-poor: #ffaa01;
@@ -15,10 +15,10 @@ body {
 
   --distress-severity-low: var(--pci-fair);
   --distress-severity-medium: var(--pci-poor);
-  --distress-severity-high: var(--pci-failed);
+  --distress-severity-high: var(--pci-failed); */
 }
 
-.pci-excellent {
+/* .pci-excellent {
   background-color: var(--pci-excellent);
 }
 
@@ -36,7 +36,7 @@ body {
 
 .pci-failed {
   background-color: var(--pci-failed);
-}
+} */
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -62,17 +62,18 @@ li {
   display: block;
 } */
 
+/* Radix ui hack to hide inactive tabs */
 .rt-TabsContent[data-state='inactive'] {
   display: none;
 }
 
-[inert],
+/* [inert],
 [inert] {
   opacity: 0.5;
   pointer-events: none;
   cursor: wait;
   user-select: none;
-}
+} */
 
 dialog {
   top: 50%;
