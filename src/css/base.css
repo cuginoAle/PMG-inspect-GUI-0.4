@@ -1,0 +1,89 @@
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+
+  .rt-BaseButton {
+    --cursor-button: pointer;
+  }
+
+  --pci-excellent: #004da8;
+  --pci-good: #87b52b;
+  --pci-fair: #e6e600;
+  --pci-poor: #ffaa01;
+  --pci-failed: #a80000;
+
+  --distress-severity-low: var(--pci-fair);
+  --distress-severity-medium: var(--pci-poor);
+  --distress-severity-high: var(--pci-failed);
+}
+
+.pci-excellent {
+  background-color: var(--pci-excellent);
+}
+
+.pci-good {
+  background-color: var(--pci-good);
+}
+
+.pci-fair {
+  background-color: var(--pci-fair);
+}
+
+.pci-poor {
+  background-color: var(--pci-poor);
+}
+
+.pci-failed {
+  background-color: var(--pci-failed);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+} */
+
+.rt-TabsContent[data-state='inactive'] {
+  display: none;
+}
+
+[inert],
+[inert] {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: wait;
+  user-select: none;
+}
+
+dialog {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--gray-a7);
+}
+
+::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(15px);
+}

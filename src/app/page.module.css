@@ -1,0 +1,16 @@
+.page {
+  min-height: 100svh;
+  padding: var(--space-2);
+  font-family: var(--font-geist-sans);
+  background-image: url('/assets/road_bg.avif'),
+    url('/assets/mosaic_pattern.webp');
+  background-size: 1817px 909px, 7px 7px;
+  background-position: bottom center, 0 0;
+  background-repeat: no-repeat, repeat;
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+}
