@@ -1,7 +1,7 @@
 'use client';
 import { SplitView } from 'components/base/split-view';
-import { ProjectsTreeView } from './projects-tree-view';
-import { ProjectContentView } from './project-content-view';
+import { ProjectsTreeView } from 'components/projects-tree-view';
+import { ProjectContentView } from 'components/project-content-view';
 import { useEffect, useState } from 'react';
 import { Project } from '@/src/app/types';
 import { Flex, Spinner } from '@radix-ui/themes';
