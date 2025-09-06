@@ -46,4 +46,4 @@ next-env.d.ts
 *.sass.d.ts
 
 # dummy data
-/src/data/**/*.mp4
+/**/*.mp4
