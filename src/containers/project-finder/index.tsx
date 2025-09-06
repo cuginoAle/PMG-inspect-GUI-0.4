@@ -19,11 +19,11 @@ const ProjectFinder = () => {
       .catch((err) => console.error('Error fetching projects:', err));
   }, []);
 
-  console.log('projects', projects);
-
   return (
     <SplitView
-      left={<ProjectsTreeView projects={projects} />}
+      left={
+        <ProjectsTreeView projects={projects} onSelect={setSelectedProject} />
+      }
       right={<ProjectContentView selectedProject={selectedProject} />}
     />
   );
