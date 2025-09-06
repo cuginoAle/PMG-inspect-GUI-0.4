@@ -18,11 +18,26 @@ const TreeViewNode = ({ node }: { node: NodeApi }) => {
         {node.isLeaf ? (
           <FileIcon ext={extension} />
         ) : (
-          <FolderIcon isOpen={node.isOpen} onClick={() => node.toggle()} />
+          <FolderIcon
+            isOpen={node.isOpen}
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              e.stopPropagation();
+              node.toggle();
+            }}
+          />
         )}
       </span>
 
-      <button onClick={() => node.select()} className={styles.name}>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (node.isInternal) node.toggle();
+          if (node.isLeaf) node.select();
+        }}
+        className={styles.name}
+      >
         <Text size="2">{fileInfo.name}</Text>
       </button>
     </Flex>

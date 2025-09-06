@@ -6,7 +6,7 @@ const FolderIcon = ({
   onClick,
 }: {
   isOpen: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }) => (
   <button
     className={`${styles.iconStack} ${isOpen ? styles.open : ''}`}
