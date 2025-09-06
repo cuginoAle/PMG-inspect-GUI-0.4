@@ -1,0 +1,22 @@
+.root {
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.json {
+  background-color: var(--amber-4);
+}
+
+.png,
+.jpg,
+.jpeg {
+  background-color: var(--green-4);
+}
+
+.mp4 {
+  background-color: var(--indigo-4);
+}

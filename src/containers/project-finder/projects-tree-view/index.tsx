@@ -13,14 +13,10 @@ const ProjectsTreeView = ({ projects }: ProjectsTreeViewProps) => {
       width="100%"
       idAccessor={'name'}
       childrenAccessor={'contents'}
+      rowHeight={32}
     >
       {({ node, style }) => (
-        <div
-          style={style}
-          onClick={() => {
-            node.toggle();
-          }}
-        >
+        <div style={style} onClick={() => node.toggle()}>
           <TreeViewNode node={node} />
         </div>
       )}
