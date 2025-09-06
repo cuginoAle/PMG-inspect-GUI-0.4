@@ -61,6 +61,8 @@ function getDirectoryStructure(
 export async function GET(): Promise<NextResponse<ApiResponse>> {
   const dataPath = path.join(process.cwd(), 'src', 'dummy-data');
   const contents = getDirectoryStructure(dataPath);
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response: ApiResponse =
     'error' in contents
       ? {

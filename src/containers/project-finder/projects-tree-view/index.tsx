@@ -3,7 +3,7 @@ import { Tree } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type ProjectsTreeViewProps = {
   projects: Project[];
@@ -13,9 +13,10 @@ type ProjectsTreeViewProps = {
 const ProjectsTreeView = ({ projects, onSelect }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
-  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-  };
+  }, []);
+
   return (
     <Flex direction="column" gap="2">
       <TextField.Root placeholder="Search projects..." onChange={onSearch}>
@@ -30,6 +31,7 @@ const ProjectsTreeView = ({ projects, onSelect }: ProjectsTreeViewProps) => {
         childrenAccessor={'contents'}
         rowHeight={32}
         searchTerm={searchTerm}
+        openByDefault={false}
         onSelect={(node) => {
           if (onSelect && node.length > 0 && node[0].isLeaf) {
             onSelect(node[0].data);
@@ -39,7 +41,7 @@ const ProjectsTreeView = ({ projects, onSelect }: ProjectsTreeViewProps) => {
         }}
       >
         {({ node, style }) => (
-          <div style={style} onClick={() => node.toggle()}>
+          <div style={style}>
             <TreeViewNode node={node} />
           </div>
         )}

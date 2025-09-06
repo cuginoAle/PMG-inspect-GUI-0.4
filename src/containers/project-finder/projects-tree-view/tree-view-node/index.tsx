@@ -18,7 +18,7 @@ const TreeViewNode = ({ node }: { node: NodeApi }) => {
         {node.isLeaf ? (
           <FileIcon ext={extension} />
         ) : (
-          <FolderIcon isOpen={node.isOpen} />
+          <FolderIcon isOpen={node.isOpen} onClick={() => node.toggle()} />
         )}
       </span>
 

@@ -10,7 +10,7 @@
     position: absolute;
     transform-origin: 50% 50%;
     transition: transform 0.2s linear;
-    transform: rotate(0deg);
+    transform: rotate(-90deg);
     transition-delay: 0.1s;
   }
 }
@@ -18,6 +18,6 @@
 .open {
   transform: rotate(180deg);
   > svg:first-child {
-    transform: rotate(-90deg);
+    transform: rotate(0deg);
   }
 }
