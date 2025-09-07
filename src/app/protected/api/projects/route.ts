@@ -60,19 +60,37 @@ function getDirectoryStructure(
 
 export async function GET(): Promise<NextResponse<ApiResponse>> {
   const dataPath = path.join(process.cwd(), 'src', 'dummy-data');
-  const contents = getDirectoryStructure(dataPath);
+  try {
+    const contents = getDirectoryStructure(dataPath);
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const response: ApiResponse =
-    'error' in contents
-      ? {
-          path: dataPath,
-          contents: { error: contents.error },
-        }
-      : {
-          path: dataPath,
-          contents,
-        };
+    // Simulate network latency in non-production environments for better UX testing.
+    if (process.env.NODE_ENV !== 'production') {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
 
-  return NextResponse.json(response);
+    const response: ApiResponse =
+      'error' in contents
+        ? {
+            path: dataPath,
+            contents: { error: contents.error },
+          }
+        : {
+            path: dataPath,
+            contents,
+          };
+
+    return NextResponse.json(response, {
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  } catch (e) {
+    // Map unexpected exceptions to standardized error payload.
+    const errorResponse: ApiResponse = {
+      path: dataPath,
+      contents: { error: 'Error reading directory' },
+    };
+    return NextResponse.json(errorResponse, {
+      status: 500,
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  }
 }
