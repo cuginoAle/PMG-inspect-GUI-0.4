@@ -3,14 +3,16 @@ import { useState } from 'react';
 import { SplitView } from 'components/base/split-view';
 import { ProjectsTreeView } from 'components/projects-tree-view';
 import { ProjectContentView } from 'components/project-content-view';
-import { Project } from '@/src/app/types';
+import { FileInfo } from '@/src/app/protected/api/projects/type';
 
 interface ClientProps {
-  initialProjects: Project[];
+  initialProjects: FileInfo[];
 }
 
-export default function Client({ initialProjects }: ClientProps) {
-  const [selectedProject, setSelectedProject] = useState<Project | undefined>();
+function Client({ initialProjects }: ClientProps) {
+  const [selectedProject, setSelectedProject] = useState<
+    FileInfo | undefined
+  >();
   return (
     <SplitView
       left={
@@ -19,7 +21,9 @@ export default function Client({ initialProjects }: ClientProps) {
           onSelect={setSelectedProject}
         />
       }
-      right={<ProjectContentView selectedProject={selectedProject} />}
+      right={<ProjectContentView selectedFile={selectedProject} />}
     />
   );
 }
+
+export { Client };

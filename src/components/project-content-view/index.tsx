@@ -1,13 +1,13 @@
-import { Project } from '@/src/app/types';
+import { FileInfo } from '@/src/app/protected/api/projects/type';
 import { Text } from '@radix-ui/themes';
 
 type ProjectContentViewProps = {
-  selectedProject?: Project;
+  selectedFile?: FileInfo;
 };
 
-const ProjectContentView = ({ selectedProject }: ProjectContentViewProps) => {
-  return selectedProject ? (
-    <div>Project Content View: {selectedProject?.name}</div>
+const ProjectContentView = ({ selectedFile }: ProjectContentViewProps) => {
+  return selectedFile ? (
+    <div>Project Content View: {selectedFile?.name}</div>
   ) : (
     <div className="center">
       <Text size="6" weight="light">

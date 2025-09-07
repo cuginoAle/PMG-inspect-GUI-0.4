@@ -8,7 +8,7 @@ interface Props {
   message: string;
 }
 
-export function ProjectsErrorFallback({ message }: Props) {
+function ProjectsErrorFallback({ message }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const onRetry = () => startTransition(() => router.refresh());
@@ -49,3 +49,5 @@ export function ProjectsErrorFallback({ message }: Props) {
     </div>
   );
 }
+
+export { ProjectsErrorFallback };
