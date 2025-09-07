@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Basic auth credentials now sourced from environment variables.
 // Define in .env.local (not committed):
-// PROTECTED_BASIC_AUTH_USER=admin
-// PROTECTED_BASIC_AUTH_PASS=strong-password
+
 const USERNAME = process.env.PROTECTED_BASIC_AUTH_USER;
 const PASSWORD = process.env.PROTECTED_BASIC_AUTH_PASS;
 

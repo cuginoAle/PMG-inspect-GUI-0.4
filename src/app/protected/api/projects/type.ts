@@ -6,6 +6,7 @@ export interface FileInfo {
   name: string;
   type: 'file';
   size: number;
+  pciScore?: number;
   /** Last modified timestamp in ISO 8601 format */
   lastModified: string;
 }
