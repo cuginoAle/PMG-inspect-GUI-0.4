@@ -1,54 +1,52 @@
-'use client';
-import { SplitView } from 'components/base/split-view';
-import { ProjectsTreeView } from 'components/projects-tree-view';
-import { ProjectContentView } from 'components/project-content-view';
-import { useEffect, useState } from 'react';
-import { Project } from '@/src/app/types';
-import { Flex, Spinner } from '@radix-ui/themes';
+import { Suspense } from 'react';
+import { headers } from 'next/headers';
+import Client from './client';
+import { Flex, Spinner, Text } from '@radix-ui/themes';
 
-const ProjectFinder = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | undefined>(
-    undefined,
-  );
-  const [projects, setProjects] = useState<Project[]>([]);
+async function fetchProjects() {
+  const h = await headers();
+  const host = h.get('x-forwarded-host') || h.get('host');
+  if (!host) throw new Error('Unable to resolve host for internal fetch');
+  const proto = h.get('x-forwarded-proto') || 'http';
+  const url = `${proto}://${host}/protected/api/projects`;
+  const auth = h.get('authorization');
+  const res = await fetch(url, {
+    cache: 'no-store',
+    headers: auth ? { authorization: auth } : undefined,
+  });
+  if (!res.ok) throw new Error(`Failed to load projects (${res.status})`);
+  const data = await res.json();
+  return data.contents ?? [];
+}
 
-  const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'ready'>(
-    'idle',
-  );
-  useEffect(() => {
-    const controller = new AbortController();
-    setStatus('loading');
-    fetch('/protected/api/projects', { signal: controller.signal })
-      .then((r) => {
-        if (!r.ok) throw new Error(r.statusText);
-        return r.json();
-      })
-      .then((data) => {
-        setProjects(data.contents);
-        setStatus('ready');
-      })
-      .catch((e) => {
-        if (e.name !== 'AbortError') setStatus('error');
-      });
-    return () => controller.abort();
-  }, []);
-
-  return (
-    <SplitView
-      left={
-        status === 'loading' ? (
-          <Flex gap={'2'} align="center">
-            <Spinner /> Loading...
-          </Flex>
-        ) : status === 'error' ? (
-          <div>Error loading projects</div>
-        ) : (
-          <ProjectsTreeView projects={projects} onSelect={setSelectedProject} />
-        )
-      }
-      right={<ProjectContentView selectedProject={selectedProject} />}
-    />
-  );
+// Inner async component that will suspend while fetching.
+const ProjectsPanel = async () => {
+  const projects = await fetchProjects();
+  return <Client initialProjects={projects} />;
 };
+
+const ProjectFinder = () => (
+  <Suspense
+    fallback={
+      <div className="center">
+        <Flex
+          gap={'4'}
+          align={'center'}
+          style={{
+            padding: 'var(--space-4) var(--space-6)',
+            backgroundColor: 'var(--black-a7)',
+            borderRadius: 'var(--space-8)',
+          }}
+        >
+          <Spinner size={'3'} />
+          <Text size={'5'}>Loading projects…</Text>
+        </Flex>
+      </div>
+    }
+  >
+    {/* Suspends until projects fetched */}
+    <ProjectsPanel />
+  </Suspense>
+);
 
 export { ProjectFinder };
