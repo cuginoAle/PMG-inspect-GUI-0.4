@@ -4,7 +4,6 @@
 export interface FileInfo {
   fullPath: string;
   name: string;
-  type: 'file';
   size: number;
   pciScore?: number;
   /** Last modified timestamp in ISO 8601 format */
@@ -17,7 +16,6 @@ export interface FileInfo {
 export interface DirectoryInfo {
   fullPath: string;
   name: string;
-  type: 'directory';
   contents: (FileInfo | DirectoryInfo)[];
 }
 
