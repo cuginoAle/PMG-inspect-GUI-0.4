@@ -17,7 +17,7 @@ function Client({ initialProjects }: ClientProps) {
     <SplitView
       left={
         <ProjectsTreeView
-          projects={initialProjects}
+          files={initialProjects}
           onSelect={setSelectedProject}
         />
       }

@@ -2,7 +2,7 @@
  * Represents a file in the directory structure
  */
 export interface FileInfo {
-  id: string;
+  fullPath: string;
   name: string;
   type: 'file';
   size: number;
@@ -15,7 +15,7 @@ export interface FileInfo {
  * Represents a directory in the directory structure
  */
 export interface DirectoryInfo {
-  id: string;
+  fullPath: string;
   name: string;
   type: 'directory';
   contents: (FileInfo | DirectoryInfo)[];

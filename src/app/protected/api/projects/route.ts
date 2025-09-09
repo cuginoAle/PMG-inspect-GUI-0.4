@@ -25,14 +25,14 @@ function getDirectoryStructure(
         const subDirContent = getDirectoryStructure(fullPath);
         if ('error' in subDirContent) {
           structure.push({
-            id: fullPath,
+            fullPath: fullPath,
             name: item.name,
             type: 'directory',
             contents: [],
           });
         } else {
           structure.push({
-            id: fullPath,
+            fullPath: fullPath,
             name: item.name,
             type: 'directory',
             contents: subDirContent,
@@ -40,7 +40,7 @@ function getDirectoryStructure(
         }
       } else {
         structure.push({
-          id: fullPath,
+          fullPath: fullPath,
           name: item.name,
           type: 'file',
           size: stats.size,

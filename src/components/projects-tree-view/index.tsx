@@ -1,16 +1,16 @@
-import { Project } from '@/src/app/types';
 import { Tree } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
+import { FileInfo } from '@/src/app/protected/api/projects/type';
 
 type ProjectsTreeViewProps = {
-  projects: Project[];
-  onSelect?: (project: Project | undefined) => void;
+  files: FileInfo[];
+  onSelect?: (project: FileInfo | undefined) => void;
 };
 
-const ProjectsTreeView = ({ projects, onSelect }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +25,9 @@ const ProjectsTreeView = ({ projects, onSelect }: ProjectsTreeViewProps) => {
         </TextField.Slot>
       </TextField.Root>
       <Tree
-        data={projects}
+        data={files}
         width="100%"
-        idAccessor={'id'}
+        idAccessor={'fullPath'}
         childrenAccessor={'contents'}
         rowHeight={32}
         searchTerm={searchTerm}
