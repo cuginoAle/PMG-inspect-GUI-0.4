@@ -37,6 +37,7 @@ An interactive split-view explorer for browsing and inspecting a hierarchical di
      type: 'file';
      size: number;
      lastModified: string;
+     pciScore?: number;
    }
    interface DirectoryInfo {
      name: string;
