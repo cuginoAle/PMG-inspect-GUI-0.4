@@ -50,8 +50,6 @@ export async function GET(
   try {
     const content = await getDirectoryStructure(relativePath);
 
-    console.log('content', content);
-
     return NextResponse.json(content, {
       headers: { 'Cache-Control': 'no-store' },
     });
