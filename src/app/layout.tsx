@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Web UI',
-  description: 'A web UI for a POC',
+  title: 'PMG Inspect',
+  description: 'The PMG inspector web tool',
 };
 
 export default function RootLayout({
