@@ -48,9 +48,12 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/protected')) {
     // Fail fast if server not configured correctly (avoid exposing which var is missing)
     if (!USERNAME || !PASSWORD) {
-      return new NextResponse('Server authentication not configured', {
-        status: 500,
-      });
+      return new NextResponse(
+        'Server authentication (env variables) not configured',
+        {
+          status: 500,
+        },
+      );
     }
     const authHeader = request.headers.get('authorization');
     // Derive a client key from common forwarding headers (best-effort, not cryptographically secure)
