@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { FileInfo, DirectoryInfo, ApiResponse } from './type';
+import { FileInfo, DirectoryInfo, ApiResponse } from '@/src/types';
 
 /**
  * Recursively reads the directory structure and returns it in the specified format.
@@ -27,14 +27,12 @@ function getDirectoryStructure(
           structure.push({
             fullPath: fullPath,
             name: item.name,
-            type: 'directory',
             contents: [],
           });
         } else {
           structure.push({
             fullPath: fullPath,
             name: item.name,
-            type: 'directory',
             contents: subDirContent,
           });
         }
@@ -42,7 +40,6 @@ function getDirectoryStructure(
         structure.push({
           fullPath: fullPath,
           name: item.name,
-          type: 'file',
           size: stats.size,
           lastModified: stats.mtime.toISOString(),
         });

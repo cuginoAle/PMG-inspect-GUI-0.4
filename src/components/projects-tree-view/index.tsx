@@ -3,7 +3,7 @@ import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
-import { FileInfo } from '@/src/app/protected/api/projects/type';
+import { FileInfo } from '@/src/types';
 
 type ProjectsTreeViewProps = {
   files: FileInfo[];

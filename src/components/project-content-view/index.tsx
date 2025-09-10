@@ -1,4 +1,4 @@
-import { FileInfo } from '@/src/app/protected/api/projects/type';
+import { FileInfo } from '@/src/types';
 import { getFileType } from '@/src/helpers/get-file-type';
 import { Text } from '@radix-ui/themes';
 

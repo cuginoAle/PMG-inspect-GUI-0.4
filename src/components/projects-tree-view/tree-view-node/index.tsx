@@ -2,7 +2,7 @@ import { Flex } from '@radix-ui/themes';
 import { NodeApi } from 'react-arborist';
 import styles from './style.module.css';
 import { Text } from '@radix-ui/themes';
-import { DirectoryInfo, FileInfo } from '@/src/app/protected/api/projects/type';
+import { DirectoryInfo, FileInfo } from '@/src/types';
 import { Extension, FileIcon } from './file-icon';
 import { FolderIcon } from './folder-icon';
 
