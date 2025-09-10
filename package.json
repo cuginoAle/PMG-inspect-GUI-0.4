@@ -28,7 +28,8 @@
     "radix-ui": "^1.4.2",
     "react": "19.1.0",
     "react-arborist": "^3.4.3",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
     "@swc/jest": "^0.2.39",

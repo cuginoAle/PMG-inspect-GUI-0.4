@@ -3,20 +3,20 @@ import { NodeApi } from 'react-arborist';
 import styles from './style.module.css';
 import { Text } from '@radix-ui/themes';
 import { DirectoryInfo, FileInfo } from '@/src/types';
-import { Extension, FileIcon } from './file-icon';
+import { FileIcon } from './file-icon';
 import { FolderIcon } from './folder-icon';
 
 const TreeViewNode = ({ node }: { node: NodeApi }) => {
   const rootCn = `${styles.root} ${node.isSelected ? styles.selected : ''}`;
 
   const itemInfo: FileInfo | DirectoryInfo = node.data;
-  const extension = (itemInfo.name.split('.').pop() || '') as Extension;
+  const subItemCount = 'content' in itemInfo ? itemInfo.content?.length : 0;
 
   return (
     <Flex gap={'2'} align="center" className={rootCn}>
       <span className={styles.iconWrapper}>
         {node.isLeaf ? (
-          <FileIcon ext={extension} />
+          <FileIcon type={node.data.file_type} />
         ) : (
           <FolderIcon
             isOpen={node.isOpen}
@@ -38,7 +38,12 @@ const TreeViewNode = ({ node }: { node: NodeApi }) => {
         }}
         className={styles.name}
       >
-        <Text size="2">{itemInfo.name}</Text>
+        <Flex gap={'2'} align="center">
+          <Text size="2">{itemInfo.name}</Text>
+          <Text size="1" color="gray">
+            {node.isLeaf ? null : `(${subItemCount})`}
+          </Text>
+        </Flex>
       </button>
     </Flex>
   );

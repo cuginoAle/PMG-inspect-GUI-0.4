@@ -1,89 +1,65 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { FileInfo, DirectoryInfo, ApiResponse } from '@/src/types';
 
-/**
- * Recursively reads the directory structure and returns it in the specified format.
- * @returns An array of FileInfo and DirectoryInfo objects or an error object.
- */
+import { ApiResponse } from '@/src/types';
+import { GET_FILES_ENDPOINT } from './constants';
 
-function getDirectoryStructure(
-  dirPath: string,
-):
-  | Array<FileInfo | DirectoryInfo>
-  | { error: 'Directory does not exist' | 'Error reading directory' } {
-  try {
-    const items = fs.readdirSync(dirPath, { withFileTypes: true });
-    const structure: Array<FileInfo | DirectoryInfo> = [];
-
-    items.forEach((item) => {
-      const fullPath = path.join(dirPath, item.name);
-      const stats = fs.statSync(fullPath);
-
-      if (stats.isDirectory()) {
-        const subDirContent = getDirectoryStructure(fullPath);
-        if ('error' in subDirContent) {
-          structure.push({
-            fullPath: fullPath,
-            name: item.name,
-            contents: [],
-          });
-        } else {
-          structure.push({
-            fullPath: fullPath,
-            name: item.name,
-            contents: subDirContent,
-          });
-        }
-      } else {
-        structure.push({
-          fullPath: fullPath,
-          name: item.name,
-          size: stats.size,
-          lastModified: stats.mtime.toISOString(),
-        });
-      }
-    });
-
-    return structure;
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return { error: 'Directory does not exist' };
-    }
-    return { error: 'Error reading directory' };
+async function getDirectoryStructure(
+  relativePath?: string,
+): Promise<ApiResponse> {
+  const queryParam = new URLSearchParams();
+  if (relativePath) {
+    queryParam.append('relative_path', relativePath);
   }
+
+  const fullUrl =
+    GET_FILES_ENDPOINT.LIST +
+    (queryParam.toString() ? '?' + queryParam.toString() : '');
+
+  return fetch(fullUrl)
+    .then(async (res) => {
+      if (!res.ok) {
+        return {
+          relative_path: relativePath || '/',
+          error: 'Error reading directory 1',
+        };
+      }
+      const data = (await res.json()) as ApiResponse;
+
+      if ('error' in data) {
+        return {
+          relative_path: relativePath || '/',
+          error: data.error + ' 2',
+        };
+      }
+      return data;
+    })
+    .catch((e) => {
+      return {
+        relative_path: relativePath || '/',
+        error: e || e.message || 'Error reading directory 3',
+      };
+    });
 }
 
-export async function GET(): Promise<NextResponse<ApiResponse>> {
-  const dataPath = path.join(process.cwd(), 'src', 'dummy-data');
+export async function GET(
+  request: Request,
+): Promise<NextResponse<ApiResponse>> {
+  const { searchParams } = new URL(request.url);
+  const relativePath = searchParams.get('relative_path') || undefined;
+
   try {
-    const contents = getDirectoryStructure(dataPath);
+    const content = await getDirectoryStructure(relativePath);
 
-    // Simulate network latency in non-production environments for better UX testing.
-    if (process.env.NODE_ENV !== 'production') {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-    }
+    console.log('content', content);
 
-    const response: ApiResponse =
-      'error' in contents
-        ? {
-            path: dataPath,
-            contents: { error: contents.error },
-          }
-        : {
-            path: dataPath,
-            contents,
-          };
-
-    return NextResponse.json(response, {
+    return NextResponse.json(content, {
       headers: { 'Cache-Control': 'no-store' },
     });
   } catch (e) {
     // Map unexpected exceptions to standardized error payload.
     const errorResponse: ApiResponse = {
-      path: dataPath,
-      contents: { error: 'Error reading directory' },
+      relative_path: relativePath || '/',
+      error: 'Error reading directory 5',
     };
     return NextResponse.json(errorResponse, {
       status: 500,

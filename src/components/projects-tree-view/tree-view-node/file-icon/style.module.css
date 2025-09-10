@@ -9,16 +9,14 @@
   background-color: var(--gray-7);
 }
 
-.json {
+.project {
   background-color: var(--amber-7);
 }
 
-.png,
-.jpg,
-.jpeg {
+.image {
   background-color: var(--grass-7);
 }
 
-.mp4 {
+.video {
   background-color: var(--sky-7);
 }

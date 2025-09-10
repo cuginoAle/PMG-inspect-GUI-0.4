@@ -2,42 +2,35 @@
  * Represents a file in the directory structure
  */
 export interface FileInfo {
-  fullPath: string;
+  relative_path: string;
   name: string;
-  size: number;
+  size: number | null;
   pciScore?: number;
   /** Last modified timestamp in ISO 8601 format */
-  lastModified: string;
+  last_modified: string | null;
 }
 
 /**
  * Represents a directory in the directory structure
  */
 export interface DirectoryInfo {
-  fullPath: string;
+  relative_path: string;
   name: string;
-  contents: (FileInfo | DirectoryInfo)[];
+  content: (FileInfo | DirectoryInfo)[] | null;
 }
 
 /**
  * Successful response from the directory API
  */
-export interface DirectoryResponse {
-  /** The base path being listed */
-  path: string;
-  contents: (FileInfo | DirectoryInfo)[];
-}
+export type DirectoryResponse = (FileInfo | DirectoryInfo)[];
 
 /**
  * Error response from the directory API
  */
 export interface ErrorResponse {
   /** The base path that was attempted to be listed */
-  path: string;
-  contents: {
-    /** Type of error encountered */
-    error: 'Directory does not exist' | 'Error reading directory';
-  };
+  relative_path: string;
+  error: string;
 }
 
 export type ApiResponse = DirectoryResponse | ErrorResponse;

@@ -1,48 +1,85 @@
-# PMG-inspect-GUI-0.4
+# PMG Inspect GUI
 
-A small Next.js (app router) GUI for inspecting PMG projects. Includes a simple middleware-based Basic Auth protecting `/protected` routes (development-friendly, in-memory attempt tracking).
+A Next.js application providing a graphical user interface for inspecting PMG (Project Management Group) projects. It features a file explorer to navigate project directories and view file details. The application is secured with Basic Authentication.
 
-## Quick start
+## Features
 
-Prerequisites
+- **File and Directory Exploration**: Navigate through the project's file system with a tree-like structure.
+- **Protected Routes**: Access to the project inspector is protected by Basic Authentication.
+- **API for File System**: A dedicated API endpoint to fetch directory structures and file information.
 
-- Node.js (recommended v18+)
-- pnpm (optional but recommended — the repo contains a pnpm lockfile)
+## Getting Started
 
-Install
+### Prerequisites
 
-```bash
-# from repository root
-pnpm install
+- Node.js (v18 or newer)
+- pnpm (recommended)
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone <repository-url>
+    ```
+2.  Navigate to the project directory:
+    ```bash
+    cd PMG-inspect-GUI-0.4
+    ```
+3.  Install the dependencies:
+    ```bash
+    pnpm install
+    ```
+
+### Environment Configuration
+
+Create a `.env.local` file in the root of the project and add the credentials for Basic Authentication:
+
+```
+PROTECTED_BASIC_AUTH_USER=yourusername
+PROTECTED_BASIC_AUTH_PASS=yourpassword
 ```
 
-Environment
+### Running the Development Server
 
-Create a `.env.local` in the project root with the Basic Auth credentials used by the middleware:
-
-```
-PROTECTED_BASIC_AUTH_USER=youruser
-PROTECTED_BASIC_AUTH_PASS=yourpass
-```
-
-Run (development)
+To start the development server, run:
 
 ```bash
 pnpm dev
-# then open http://localhost:3000
 ```
 
-Build and start (production)
+The application will be available at `http://localhost:3000`.
+
+## API Endpoints
+
+The application uses a Next.js API route to fetch data from a backend service.
+
+### Get Directory Structure
+
+- **Endpoint**: `/protected/api/projects`
+- **Method**: `GET`
+- **Description**: Retrieves the contents of a directory.
+- **Query Parameters**:
+  - `relative_path` (optional): The path to the directory relative to the root. If not provided, the root directory is listed.
+- **Backend Service**: This endpoint fetches data from `http://localhost:8088/api/v1/get_files_list`.
+
+To test the protected endpoint with `curl`:
+
+```bash
+curl -i -u yourusername:yourpassword http://localhost:3000/protected/api/projects?relative_path=some/folder
+```
+
+## Deployment
+
+To deploy the application, you first need to build the project:
 
 ```bash
 pnpm build
+```
+
+Then, you can start the production server:
+
+```bash
 pnpm start
 ```
 
-Testing the protected route
-
-To verify the middleware returns the proper 401/WWW-Authenticate header (which triggers browser login prompts for direct navigations):
-
-```bash
-curl -i http://localhost:3000/protected
-```
+Make sure to configure the environment variables (`PROTECTED_BASIC_AUTH_USER` and `PROTECTED_BASIC_AUTH_PASS`) in your deployment environment.

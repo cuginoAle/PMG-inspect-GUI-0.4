@@ -7,23 +7,21 @@ import {
 import styles from './style.module.css';
 
 const fileIconMap = {
-  json: LayersIcon,
-  png: ImageIcon,
-  jpg: ImageIcon,
-  jpeg: ImageIcon,
-  mp4: VideoIcon,
+  project: LayersIcon,
+  image: ImageIcon,
+  video: VideoIcon,
 };
 
-type Extension = keyof typeof fileIconMap;
+type FileType = keyof typeof fileIconMap;
 
-const FileIcon = ({ ext }: { ext: Extension }) => {
-  const Icon = fileIconMap[ext] || RadixFileIcon;
+const FileIcon = ({ type }: { type: FileType }) => {
+  const Icon = fileIconMap[type] || RadixFileIcon;
   return (
-    <div className={`${styles.root} ${styles[ext]}`}>
+    <div className={`${styles.root} ${styles[type]}`}>
       <Icon />
     </div>
   );
 };
 
 export { FileIcon };
-export type { Extension };
+export type { FileType };
