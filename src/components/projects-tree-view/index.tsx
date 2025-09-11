@@ -22,7 +22,11 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
 
   return (
     <Flex direction="column" gap="2" height={'100%'}>
-      <TextField.Root placeholder="Search projects..." onChange={onSearch}>
+      <TextField.Root
+        name="search"
+        placeholder="Search projects..."
+        onChange={onSearch}
+      >
         <TextField.Slot>
           <MagnifyingGlassIcon height="16" width="16" />
         </TextField.Slot>
