@@ -3,5 +3,9 @@
 }
 
 .selected {
-  background-color: var(--accent-a3);
+  background-color: var(--accent-a4);
+}
+
+.headerCell {
+  white-space: nowrap;
 }

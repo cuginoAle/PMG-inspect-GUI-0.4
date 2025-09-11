@@ -74,7 +74,7 @@ const ProjectTableView = ({
                   onClick={header.column.getToggleSortingHandler()}
                   style={{ cursor: 'pointer' }}
                 >
-                  <Flex align="center" gap="1">
+                  <Flex align="center" gap="1" className={styles.headerCell}>
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
