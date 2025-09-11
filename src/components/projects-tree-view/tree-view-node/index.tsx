@@ -2,14 +2,14 @@ import { Flex } from '@radix-ui/themes';
 import { NodeApi } from 'react-arborist';
 import styles from './style.module.css';
 import { Text } from '@radix-ui/themes';
-import { DirectoryInfo, FileInfo } from '@/src/types';
+import { FileInfo } from '@/src/types';
 import { FileIcon } from './file-icon';
 import { FolderIcon } from './folder-icon';
 
 const TreeViewNode = ({ node }: { node: NodeApi }) => {
   const rootCn = `${styles.root} ${node.isSelected ? styles.selected : ''}`;
 
-  const itemInfo: FileInfo | DirectoryInfo = node.data;
+  const itemInfo: FileInfo = node.data;
   const subItemCount = 'content' in itemInfo ? itemInfo.content?.length : 0;
 
   return (

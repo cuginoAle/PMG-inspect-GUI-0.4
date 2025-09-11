@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { setValidCredentials } from './helpers';
 
 test('homepage has correct title', async ({ page }) => {
   await page.goto('/');
@@ -9,11 +10,7 @@ test('homepage has correct title', async ({ page }) => {
 
 test('set valid credentials and access protected page', async ({ page }) => {
   // Set valid credentials
-  await page.setExtraHTTPHeaders({
-    Authorization: `Basic ${Buffer.from(
-      `${process.env.PROTECTED_BASIC_AUTH_USER}:${process.env.PROTECTED_BASIC_AUTH_PASS}`,
-    ).toString('base64')}`,
-  });
+  await setValidCredentials(page);
 
   const response = await page.goto('/protected');
 
@@ -42,9 +39,9 @@ test('API endpoint with valid credentials returns 200', async ({ request }) => {
   // Access the API endpoint with authentication
   const response = await request.get('/protected/api/projects', {
     headers: {
-      Authorization: `Basic ${Buffer.from(
+      Authorization: `Basic ${btoa(
         `${process.env.PROTECTED_BASIC_AUTH_USER}:${process.env.PROTECTED_BASIC_AUTH_PASS}`,
-      ).toString('base64')}`,
+      )}`,
     },
   });
 

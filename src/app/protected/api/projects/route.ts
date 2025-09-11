@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 
-import { ApiResponse } from '@/src/types';
+import { GetFilesListResponse } from '@/src/types';
 import { GET_FILES_ENDPOINT } from './constants';
 
 async function getDirectoryStructure(
   relativePath?: string,
-): Promise<ApiResponse> {
+): Promise<GetFilesListResponse> {
   const queryParam = new URLSearchParams();
   if (relativePath) {
     queryParam.append('relative_path', relativePath);
@@ -23,7 +23,7 @@ async function getDirectoryStructure(
           error: 'Error reading directory 1',
         };
       }
-      const data = (await res.json()) as ApiResponse;
+      const data = (await res.json()) as GetFilesListResponse;
 
       if ('error' in data) {
         return {
@@ -43,7 +43,7 @@ async function getDirectoryStructure(
 
 export async function GET(
   request: Request,
-): Promise<NextResponse<ApiResponse>> {
+): Promise<NextResponse<GetFilesListResponse>> {
   const { searchParams } = new URL(request.url);
   const relativePath = searchParams.get('relative_path') || undefined;
 
@@ -55,7 +55,7 @@ export async function GET(
     });
   } catch (e) {
     // Map unexpected exceptions to standardized error payload.
-    const errorResponse: ApiResponse = {
+    const errorResponse: GetFilesListResponse = {
       relative_path: relativePath || '/',
       error: 'Error reading directory 5',
     };

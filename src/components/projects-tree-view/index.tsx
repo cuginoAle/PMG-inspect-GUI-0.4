@@ -3,12 +3,12 @@ import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
-import { DirectoryResponse, FileInfo } from '@/src/types';
+import { FileInfo } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 
 type ProjectsTreeViewProps = {
-  files: DirectoryResponse;
+  files: FileInfo[];
   onSelect?: (project: FileInfo | undefined) => void;
 };
 
@@ -43,7 +43,7 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
           searchTerm={searchTerm}
           openByDefault={false}
           onSelect={(node) => {
-            if (onSelect && node.length > 0 && node[0].isLeaf) {
+            if (onSelect && node.length > 0 && node[0]?.isLeaf) {
               onSelect(node[0].data as FileInfo);
             } else if (onSelect) {
               onSelect(undefined);

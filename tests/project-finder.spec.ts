@@ -1,12 +1,5 @@
-import { test, expect, Page } from '@playwright/test';
-
-const setValidCredentials = async (page: Page) => {
-  await page.setExtraHTTPHeaders({
-    Authorization: `Basic ${Buffer.from(
-      `${process.env.PROTECTED_BASIC_AUTH_USER}:${process.env.PROTECTED_BASIC_AUTH_PASS}`,
-    ).toString('base64')}`,
-  });
-};
+import { test, expect } from '@playwright/test';
+import { setValidCredentials } from './helpers';
 
 test('project finder is visible', async ({ page }) => {
   await setValidCredentials(page);
