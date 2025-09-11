@@ -14,7 +14,7 @@ type GetProjectResponse =
 async function getProject(projectId: string): Promise<GetProjectResponse> {
   const fullUrl = `${
     GET_FILES_ENDPOINT.DETAILS
-  }?project_id=${encodeURIComponent(projectId)}`;
+  }?relative_path=${encodeURIComponent(projectId)}`;
 
   return dummyData;
   // return fetch(fullUrl)
@@ -44,10 +44,10 @@ export async function GET(
   request: Request,
 ): Promise<NextResponse<GetProjectResponse>> {
   const { searchParams } = new URL(request.url);
-  const projectId = searchParams.get('project_id');
+  const projectId = searchParams.get('relative_path');
   if (!projectId) {
     return NextResponse.json(
-      { error: 'project_id is required' },
+      { error: 'relative_path is required' },
       { status: 400, headers: { 'Cache-Control': 'no-store' } },
     );
   }

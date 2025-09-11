@@ -26,9 +26,10 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
         name="search"
         placeholder="Search projects..."
         onChange={onSearch}
+        size={'3'}
       >
         <TextField.Slot>
-          <MagnifyingGlassIcon height="16" width="16" />
+          <MagnifyingGlassIcon width="24" height="24" />
         </TextField.Slot>
       </TextField.Root>
 

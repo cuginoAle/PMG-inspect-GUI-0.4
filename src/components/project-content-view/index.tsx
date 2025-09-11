@@ -1,35 +1,27 @@
-import { FileInfo } from '@/src/types';
-import { getFileType } from '@/src/helpers/get-file-type';
 import { Text } from '@radix-ui/themes';
+import { Project } from '@/src/app/protected/api/project/types/project';
+import { ProjectTableView } from './project-table-view';
 
 type ProjectContentViewProps = {
-  selectedFile?: FileInfo;
+  project?: Project;
 };
 
-// Placeholder for actual content viewer
-const fileTypeDict = {
-  image: '🖼️',
-  video: '🎥',
-  other: '📄',
-};
-
-const ContentPlaceholder = ({ fileName }: { fileName?: string }) => (
+const NoProjectSelected = () => (
   <div className="center">
     <Text size="6" weight="light">
-      <Text size="8">{fileTypeDict[getFileType(fileName || '')]}</Text>{' '}
-      {fileName}
+      <Text size="8">🤷</Text> no project selected...
     </Text>
   </div>
 );
-const ProjectContentView = ({ selectedFile }: ProjectContentViewProps) => {
-  return selectedFile ? (
-    <ContentPlaceholder fileName={selectedFile.name} />
+
+const ProjectContentView = ({ project }: ProjectContentViewProps) => {
+  return project ? (
+    <ProjectTableView
+      project={project}
+      onRowClick={(road) => console.log(road)}
+    />
   ) : (
-    <div className="center">
-      <Text size="6" weight="light">
-        <Text size="8">🤷</Text> no project selected...
-      </Text>
-    </div>
+    <NoProjectSelected />
   );
 };
 
