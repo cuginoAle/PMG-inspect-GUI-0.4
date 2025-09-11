@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { GetFilesListResponse } from '@/src/types';
-import { GET_FILES_ENDPOINT } from './constants';
+import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
 
 async function getDirectoryStructure(
   relativePath?: string,
