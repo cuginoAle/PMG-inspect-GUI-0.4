@@ -4,7 +4,8 @@ import { ErrorBoundary } from './error-boundary';
 import { Client } from './client';
 import { Flex, Spinner, Text } from '@radix-ui/themes';
 import { ProjectsErrorFallback } from './error-fallback';
-import { fetchProjects } from './fetch-projects-util';
+import { fetchProjects } from '@/src/lib/data/fetch-projects';
+import { FetchError } from '@/src/types';
 
 // Inner async component that will suspend while fetching.
 const ProjectsPanel = async () => {
@@ -12,11 +13,8 @@ const ProjectsPanel = async () => {
     const projects = await fetchProjects();
     return <Client initialProjects={projects} />;
   } catch (error) {
-    const message =
-      process.env.NODE_ENV !== 'production' && error instanceof Error
-        ? error.message
-        : 'Unexpected error';
-    return <ProjectsErrorFallback message={message} />;
+    const errorObj = error as FetchError;
+    return <ProjectsErrorFallback message={errorObj.status.toString()} />;
   }
 };
 

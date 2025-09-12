@@ -1,31 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { FetchError, GetFilesListResponse } from '@/src/types';
-import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
-
-async function getDirectoryStructure(
-  relativePath?: string,
-): Promise<GetFilesListResponse> {
-  const queryParam = new URLSearchParams();
-  if (relativePath) {
-    queryParam.append('relative_path', relativePath);
-  }
-
-  const fullUrl =
-    GET_FILES_ENDPOINT.LIST +
-    (queryParam.toString() ? '?' + queryParam.toString() : '');
-
-  return new Promise((resolve, reject) => {
-    fetch(fullUrl).then(async (res) => {
-      const body = await res.json();
-      if (!res.ok) {
-        reject({ status: res.status, detail: body.detail });
-      }
-
-      resolve(body);
-    });
-  });
-}
+import { fetchProjects } from '@/src/lib/data/fetch-projects';
 
 export async function GET(
   request: Request,
@@ -34,9 +10,10 @@ export async function GET(
   const relativePath = searchParams.get('relative_path') || undefined;
 
   try {
-    const content = await getDirectoryStructure(relativePath);
+    const content = await fetchProjects(relativePath);
 
     return NextResponse.json(content, {
+      status: 200,
       headers: { 'Cache-Control': 'no-store' },
     });
   } catch (e) {
