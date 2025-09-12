@@ -9,7 +9,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
@@ -26,7 +26,7 @@ const ProjectTableView = ({
 }: {
   project: Project;
   onRowSelect: (projectItem: ProjectItem) => void;
-  onRowDoubleClick?: (index: number) => void;
+  onRowDoubleClick?: (projectItem: ProjectItem) => void;
   defaultSelectedRowIndex?: number;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -35,13 +35,8 @@ const ProjectTableView = ({
     [defaultSelectedRowIndex.toString()]: true,
   });
 
-  const data = useMemo(
-    () => project.project_items.map((item) => item.road_data),
-    [project],
-  );
-
   const table = useReactTable({
-    data,
+    data: project.project_items,
     columns: columns,
     state: {
       sorting,
@@ -57,10 +52,6 @@ const ProjectTableView = ({
     enableRowSelection: true,
     enableMultiRowSelection: false,
   });
-
-  const handleRoadSelect = (index: number) => {
-    onRowSelect?.(project.project_items[index]!);
-  };
 
   return (
     <Flex direction="column" gap="2">
@@ -101,20 +92,22 @@ const ProjectTableView = ({
             ))}
           </Table.Header>
           <Table.Body>
-            {table.getRowModel().rows.map((row, index) => (
+            {table.getRowModel().rows.map((row) => (
               <Table.Row
                 key={row.id}
                 tabIndex={0}
                 className={row.getIsSelected() ? styles.selected : ''}
                 onClick={() => {
                   row.toggleSelected(true);
-                  handleRoadSelect(index);
+                  onRowSelect?.(row.original);
                 }}
-                onDoubleClick={() => onRowDoubleClick?.(index)}
+                onDoubleClick={() => {
+                  onRowDoubleClick?.(row.original);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     row.toggleSelected(true);
-                    handleRoadSelect(index);
+                    onRowSelect?.(row.original);
                   }
                 }}
                 style={{ cursor: 'pointer' }}
