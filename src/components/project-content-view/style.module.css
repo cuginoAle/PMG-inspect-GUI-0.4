@@ -13,8 +13,12 @@
 
 .leftPane {
   margin-right: var(--space-3);
+  height: 100%;
+  overflow: auto;
 }
 
 .rightPane {
   margin-left: var(--space-3);
+  height: 100%;
+  overflow: auto;
 }

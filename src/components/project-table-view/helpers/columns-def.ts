@@ -1,34 +1,42 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Road } from '@/src/app/protected/api/project/types/project';
+import type { RoadData } from '@/src/types';
 
-const columns: ColumnDef<Road>[] = [
+const columns: ColumnDef<RoadData>[] = [
   {
-    accessorKey: 'roadName',
+    accessorKey: 'road_name',
     header: 'Road Name',
   },
   {
-    accessorKey: 'section',
+    accessorKey: 'road_section',
     header: 'Section',
   },
   {
-    accessorKey: 'surface',
+    accessorKey: 'road_surface',
     header: 'Surface',
   },
   {
-    accessorKey: 'condition',
-    header: 'Condition',
+    accessorKey: 'road_lanes',
+    header: 'Lanes',
   },
   {
-    accessorKey: 'length',
+    accessorKey: 'road_length',
     header: 'Length (m)',
   },
   {
-    accessorKey: 'width',
+    accessorKey: 'road_width',
     header: 'Width (m)',
   },
   {
-    accessorKey: 'area',
+    accessorKey: 'road_area',
     header: 'Area (m²)',
+  },
+  {
+    accessorKey: 'road_functional_class',
+    header: 'Functional Class',
+  },
+  {
+    accessorKey: 'road_shoulder',
+    header: 'Shoulder',
   },
 ];
 

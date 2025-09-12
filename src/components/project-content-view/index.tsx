@@ -1,9 +1,11 @@
 import { Text } from '@radix-ui/themes';
-import { Project } from '@/src/app/protected/api/project/types/project';
+
 import { ProjectTableView } from 'components/project-table-view';
 import { SplitView } from 'components/base/split-view';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './style.module.css';
+import { Project, ProjectItem } from '@/src/types';
+import { ProjectItemDetailsView } from 'components/project-item-details-view';
 
 type ProjectContentViewProps = {
   project?: Project;
@@ -18,9 +20,14 @@ const NoProjectSelected = () => (
 );
 
 const ProjectContentView = ({ project }: ProjectContentViewProps) => {
-  const [selectedRowIndex, setSelectedRowIndex] = React.useState<number | null>(
-    0,
-  );
+  const [selectedProjectItem, setSelectedProjectItem] = React.useState<
+    ProjectItem | undefined
+  >(project?.project_items[0]);
+
+  useEffect(() => {
+    setSelectedProjectItem(project?.project_items[0]);
+  }, [project]);
+
   return project ? (
     <div className={styles.root}>
       <SplitView
@@ -32,7 +39,7 @@ const ProjectContentView = ({ project }: ProjectContentViewProps) => {
           <div className={styles.leftPane}>
             <ProjectTableView
               project={project}
-              onRowSelect={(index) => setSelectedRowIndex(index)}
+              onRowSelect={(projectItem) => setSelectedProjectItem(projectItem)}
               onRowDoubleClick={(index) => console.log('double click', index)}
               defaultSelectedRowIndex={0}
             />
@@ -40,7 +47,9 @@ const ProjectContentView = ({ project }: ProjectContentViewProps) => {
         }
         right={
           <div className={styles.rightPane}>
-            <div>Details view coming soon... {selectedRowIndex}</div>
+            {selectedProjectItem && (
+              <ProjectItemDetailsView projectItem={selectedProjectItem} />
+            )}
           </div>
         }
       />

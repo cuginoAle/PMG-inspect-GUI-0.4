@@ -4,7 +4,9 @@
 
 .leftView {
   margin-right: var(--space-1);
+  height: 100%;
 }
 .rightView {
   margin-left: var(--space-1);
+  height: 100%;
 }

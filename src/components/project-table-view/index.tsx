@@ -9,14 +9,14 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { Project } from '@/src/app/protected/api/project/types/project';
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { columns } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
+import { Project, ProjectItem } from '@/src/types';
 
 const ProjectTableView = ({
   project,
@@ -25,7 +25,7 @@ const ProjectTableView = ({
   defaultSelectedRowIndex = 0,
 }: {
   project: Project;
-  onRowSelect: (index: number) => void;
+  onRowSelect: (projectItem: ProjectItem) => void;
   onRowDoubleClick?: (index: number) => void;
   defaultSelectedRowIndex?: number;
 }) => {
@@ -35,8 +35,13 @@ const ProjectTableView = ({
     [defaultSelectedRowIndex.toString()]: true,
   });
 
+  const data = useMemo(
+    () => project.project_items.map((item) => item.road_data),
+    [project],
+  );
+
   const table = useReactTable({
-    data: project.roads,
+    data,
     columns: columns,
     state: {
       sorting,
@@ -53,6 +58,10 @@ const ProjectTableView = ({
     enableMultiRowSelection: false,
   });
 
+  const handleRoadSelect = (index: number) => {
+    onRowSelect?.(project.project_items[index]!);
+  };
+
   return (
     <Flex direction="column" gap="2">
       <div className={styles.searchBox}>
@@ -68,56 +77,58 @@ const ProjectTableView = ({
         </TextField.Root>
       </div>
 
-      <Table.Root variant="surface">
-        <Table.Header>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <Table.Row key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <Table.ColumnHeaderCell
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <Flex align="center" gap="1" className={styles.headerCell}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                    {getColumnSortIcon(header.column.getIsSorted()) ?? null}
-                  </Flex>
-                </Table.ColumnHeaderCell>
-              ))}
-            </Table.Row>
-          ))}
-        </Table.Header>
-        <Table.Body>
-          {table.getRowModel().rows.map((row, index) => (
-            <Table.Row
-              key={row.id}
-              tabIndex={0}
-              className={row.getIsSelected() ? styles.selected : ''}
-              onClick={() => {
-                row.toggleSelected(true);
-                onRowSelect?.(index);
-              }}
-              onDoubleClick={() => onRowDoubleClick?.(index)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+      <div className={styles.tableContainer}>
+        <Table.Root variant="surface">
+          <Table.Header>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Table.Row key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Table.ColumnHeaderCell
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <Flex align="center" gap="1" className={styles.headerCell}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {getColumnSortIcon(header.column.getIsSorted()) ?? null}
+                    </Flex>
+                  </Table.ColumnHeaderCell>
+                ))}
+              </Table.Row>
+            ))}
+          </Table.Header>
+          <Table.Body>
+            {table.getRowModel().rows.map((row, index) => (
+              <Table.Row
+                key={row.id}
+                tabIndex={0}
+                className={row.getIsSelected() ? styles.selected : ''}
+                onClick={() => {
                   row.toggleSelected(true);
-                  onRowSelect?.(index);
-                }
-              }}
-              style={{ cursor: 'pointer' }}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <Table.Cell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Table.Cell>
-              ))}
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+                  handleRoadSelect(index);
+                }}
+                onDoubleClick={() => onRowDoubleClick?.(index)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    row.toggleSelected(true);
+                    handleRoadSelect(index);
+                  }
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <Table.Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Table.Cell>
+                ))}
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </div>
     </Flex>
   );
 };

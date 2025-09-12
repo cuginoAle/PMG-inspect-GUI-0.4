@@ -45,7 +45,12 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
           openByDefault={false}
           onSelect={(node) => {
             if (onSelect && node.length > 0 && node[0]?.isLeaf) {
-              onSelect(node[0].data as FileInfo);
+              const data: FileInfo = node[0].data;
+              if (data.file_type === 'project') {
+                onSelect(data);
+              } else {
+                alert('Sorry, this file type is not supported yet!');
+              }
             } else if (onSelect) {
               onSelect(undefined);
             }

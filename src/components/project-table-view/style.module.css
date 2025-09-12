@@ -9,3 +9,7 @@
 .headerCell {
   white-space: nowrap;
 }
+
+.tableContainer {
+  overflow: auto;
+}
