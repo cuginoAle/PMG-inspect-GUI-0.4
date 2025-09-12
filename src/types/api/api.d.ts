@@ -79,8 +79,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Processing Conf */
-        get: operations["get_processing_conf_api_v1_get_processing_configurations_get"];
+        /** Get Processing Configurations */
+        get: operations["get_processing_configurations_api_v1_get_processing_configurations_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -89,15 +89,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/get_file": {
+    "/api/v1/parse_project": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get File */
-        get: operations["get_file_api_v1_get_file_get"];
+        /** Parse Project */
+        get: operations["parse_project_api_v1_parse_project_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/parse_video": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Parse Video */
+        get: operations["parse_video_api_v1_parse_video_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -110,6 +127,53 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** CameraData */
+        CameraData: {
+            /** Create Date */
+            create_date?: string | null;
+            /** Modify Date */
+            modify_date?: string | null;
+            /** Model */
+            model?: string | null;
+            /** Digital Zoom On */
+            digital_zoom_on?: boolean | null;
+            /** Digital Zoom */
+            digital_zoom?: number | null;
+            /** Spot Meter */
+            spot_meter?: boolean | null;
+            /** Protune */
+            protune?: boolean | null;
+            /** White Balance */
+            white_balance?: string | null;
+            /** Sharpness */
+            sharpness?: string | null;
+            /** Color Mode */
+            color_mode?: string | null;
+            /** Exposure Type */
+            exposure_type?: string | null;
+            /** Auto Iso Min */
+            auto_iso_min?: number | null;
+            /** Auto Iso Max */
+            auto_iso_max?: number | null;
+            /** Exposure Compensation */
+            exposure_compensation?: number | null;
+            /** Sensor Readout Time */
+            sensor_readout_time?: number | null;
+            /** Electronic Stabilization On */
+            electronic_stabilization_on?: boolean | null;
+            /** Electronic Image Stabilization */
+            electronic_image_stabilization?: string | null;
+            /** Diagonal Field Of View */
+            diagonal_field_of_view?: number | null;
+            /** Field Of View */
+            field_of_view?: string | null;
+            /** Aspect Ratio Warped */
+            aspect_ratio_warped?: number | null;
+            /** Aspect Ratio Unwarped */
+            aspect_ratio_unwarped?: number | null;
+            /** Compressor Name */
+            compressor_name?: string | null;
+        };
         /** FileInfo */
         FileInfo: {
             file_type: components["schemas"]["FileType"];
@@ -129,6 +193,26 @@ export interface components {
          * @enum {string}
          */
         FileType: "project" | "video" | "image" | "folder" | "unsupported";
+        /**
+         * FunctionalClassType
+         * @enum {string}
+         */
+        FunctionalClassType: "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
+        /** GpsPoint */
+        GpsPoint: {
+            /** Time */
+            time: number;
+            /** Latitude */
+            latitude: number;
+            /** Longitude */
+            longitude: number;
+            /** Altitude */
+            altitude: number;
+            /** Speed */
+            speed: number;
+            /** Accuracy */
+            accuracy: number;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -143,6 +227,37 @@ export interface components {
             /** Iou */
             iou: number;
         };
+        /** MediaData */
+        MediaData: {
+            /** Url */
+            url: string;
+            /** Fps */
+            fps: number;
+            /** Frame Count */
+            frame_count: number;
+            /** Video Duration Seconds */
+            video_duration_seconds: number;
+            /** Frame Duration Seconds */
+            frame_duration_seconds: number;
+            /** Frame Width */
+            frame_width: number;
+            /** Frame Heigth */
+            frame_heigth: number;
+        };
+        /** ParseProjectResponse */
+        ParseProjectResponse: {
+            /** Project Name */
+            project_name: string;
+            /** Project Items */
+            project_items: components["schemas"]["ProjectItem"][];
+        };
+        /** ParseVideoResponse */
+        ParseVideoResponse: {
+            camera_data: components["schemas"]["CameraData"];
+            media_data: components["schemas"]["MediaData"];
+            /** Gps */
+            gps?: components["schemas"]["GpsPoint"][] | null;
+        };
         /** ProcessingConfigurationData */
         ProcessingConfigurationData: {
             road?: components["schemas"]["InferenceConfiguraionData"] | null;
@@ -150,6 +265,46 @@ export interface components {
             weathering?: components["schemas"]["InferenceConfiguraionData"] | null;
             treatment?: components["schemas"]["InferenceConfiguraionData"] | null;
         };
+        /** ProjectItem */
+        ProjectItem: {
+            /** Video Name */
+            video_name: string;
+            /** Video Url */
+            video_url: string;
+            road_data: components["schemas"]["RoadData"];
+        };
+        /** RoadData */
+        RoadData: {
+            /** Road Name */
+            road_name: string;
+            /** Road Section */
+            road_section: string;
+            /** Road From */
+            road_from: string;
+            /** Road To */
+            road_to: string;
+            /** Road Length */
+            road_length: number;
+            /** Road Width */
+            road_width: number;
+            /** Road Area */
+            road_area: number;
+            road_functional_class: components["schemas"]["FunctionalClassType"];
+            road_surface: components["schemas"]["SurfaceType"];
+            /** Road Lanes */
+            road_lanes: number;
+            road_shoulder?: components["schemas"]["ShoulderType"];
+        };
+        /**
+         * ShoulderType
+         * @enum {string}
+         */
+        ShoulderType: "none" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "vg";
+        /**
+         * SurfaceType
+         * @enum {string}
+         */
+        SurfaceType: "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -248,15 +403,17 @@ export interface operations {
                     "application/json": components["schemas"]["FileInfo"][];
                 };
             };
-            /** @description Directory not found. */
+            /** @description File not found. */
             404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     /** @example {
-                     *       "relative_path": "path/that/does/not/exist",
-                     *       "error": "Directory not found."
+                     *       "detail": {
+                     *         "message": "Item 'folder/filename/url' not found",
+                     *         "relative_path": "'folder/filename/url'"
+                     *       }
                      *     } */
                     "application/json": unknown;
                 };
@@ -272,7 +429,7 @@ export interface operations {
             };
         };
     };
-    get_processing_conf_api_v1_get_processing_configurations_get: {
+    get_processing_configurations_api_v1_get_processing_configurations_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -292,9 +449,24 @@ export interface operations {
                     };
                 };
             };
+            /** @description File not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "detail": {
+                     *         "message": "Item 'folder/filename/url' not found",
+                     *         "relative_path": "'folder/filename/url'"
+                     *       }
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
         };
     };
-    get_file_api_v1_get_file_get: {
+    parse_project_api_v1_parse_project_get: {
         parameters: {
             query: {
                 relative_path: string;
@@ -311,7 +483,68 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["ParseProjectResponse"];
+                };
+            };
+            /** @description File not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "detail": {
+                     *         "message": "Item 'folder/filename/url' not found",
+                     *         "relative_path": "'folder/filename/url'"
+                     *       }
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parse_video_api_v1_parse_video_get: {
+        parameters: {
+            query: {
+                video_url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ParseVideoResponse"];
+                };
+            };
+            /** @description File not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "detail": {
+                     *         "message": "Item 'folder/filename/url' not found",
+                     *         "relative_path": "'folder/filename/url'"
+                     *       }
+                     *     } */
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

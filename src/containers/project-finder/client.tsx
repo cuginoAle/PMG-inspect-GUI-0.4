@@ -6,6 +6,7 @@ import { ProjectContentView } from 'components/project-content-view';
 import { FileInfo } from '@/src/types';
 import { Project } from '@/src/app/protected/api/project/types/project';
 import { BFF_ENDPOINTS } from '@/src/constants/end-points';
+import styles from './style.module.css';
 
 interface ClientProps {
   initialProjects: FileInfo[];
@@ -33,13 +34,20 @@ function Client({ initialProjects }: ClientProps) {
 
   return (
     <SplitView
+      name="project-finder-split-view"
       left={
-        <ProjectsTreeView
-          files={initialProjects}
-          onSelect={setSelectedProject}
-        />
+        <div className={styles.leftView}>
+          <ProjectsTreeView
+            files={initialProjects}
+            onSelect={setSelectedProject}
+          />
+        </div>
       }
-      right={<ProjectContentView project={projectDetails} />}
+      right={
+        <div className={styles.rightView}>
+          <ProjectContentView project={projectDetails} />
+        </div>
+      }
     />
   );
 }

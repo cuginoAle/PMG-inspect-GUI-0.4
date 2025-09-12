@@ -8,14 +8,3 @@
 .rightView {
   margin-left: var(--space-1);
 }
-
-.leftView,
-.rightView {
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-5);
-  border: 1px solid var(--white-a3);
-  height: 100%;
-  max-height: 100%;
-  overflow: auto;
-  padding: var(--space-4);
-}

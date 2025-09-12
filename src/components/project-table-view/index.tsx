@@ -11,7 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { Project, Road } from '@/src/app/protected/api/project/types/project';
+import { Project } from '@/src/app/protected/api/project/types/project';
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
@@ -20,15 +20,19 @@ import { getColumnSortIcon } from './helpers/columnSortIcon';
 
 const ProjectTableView = ({
   project,
-  onRowClick,
+  onRowSelect,
+  onRowDoubleClick,
+  defaultSelectedRowIndex = 0,
 }: {
   project: Project;
-  onRowClick?: (road: Road) => void;
+  onRowSelect: (index: number) => void;
+  onRowDoubleClick?: (index: number) => void;
+  defaultSelectedRowIndex?: number;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({
-    '0': true,
+    [defaultSelectedRowIndex.toString()]: true,
   });
 
   const table = useReactTable({
@@ -87,22 +91,23 @@ const ProjectTableView = ({
           ))}
         </Table.Header>
         <Table.Body>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row, index) => (
             <Table.Row
               key={row.id}
               tabIndex={0}
               className={row.getIsSelected() ? styles.selected : ''}
               onClick={() => {
-                row.toggleSelected();
-                onRowClick?.(row.original);
+                row.toggleSelected(true);
+                onRowSelect?.(index);
               }}
+              onDoubleClick={() => onRowDoubleClick?.(index)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  row.toggleSelected();
-                  onRowClick?.(row.original);
+                  row.toggleSelected(true);
+                  onRowSelect?.(index);
                 }
               }}
-              style={{ cursor: onRowClick ? 'pointer' : 'default' }}
+              style={{ cursor: 'pointer' }}
             >
               {row.getVisibleCells().map((cell) => (
                 <Table.Cell key={cell.id}>

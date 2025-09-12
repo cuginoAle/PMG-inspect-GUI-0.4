@@ -4,11 +4,13 @@ type FileInfo = components['schemas']['FileInfo'];
 type FileType = components['schemas']['FileType'];
 
 //TODO: remove this when backend returns proper error interface
-type FileInfoError = {
-  error: string;
-  relative_path: string;
+type ErrorMessage = {
+  detail: {
+    message: string;
+    relative_path: string;
+  };
 };
 
-type GetFilesListResponse = Array<FileInfo> | FileInfoError;
+type GetFilesListResponse = Array<FileInfo> | ErrorMessage;
 
-export type { FileInfo, FileType, GetFilesListResponse, FileInfoError };
+export type { FileInfo, FileType, GetFilesListResponse, ErrorMessage };
