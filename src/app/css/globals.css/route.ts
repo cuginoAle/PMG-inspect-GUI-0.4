@@ -38,7 +38,7 @@ export async function GET() {
         pkgJson.dependencies?.[name] || pkgJson.devDependencies?.[name];
       if (!raw) return 'latest';
       const m = raw.match(/(\d+\.\d+\.\d+(?:[-+].*)?)/);
-      return m ? m[1] : 'latest';
+      return m?.[1] ?? 'latest';
     } catch {
       return 'latest';
     }
