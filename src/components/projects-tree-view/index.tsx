@@ -50,6 +50,7 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
                 onSelect(data);
               } else {
                 alert('Sorry, this file type is not supported yet!');
+                onSelect(undefined);
               }
             } else if (onSelect) {
               onSelect(undefined);

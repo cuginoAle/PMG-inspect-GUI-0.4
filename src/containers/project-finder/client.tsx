@@ -34,6 +34,8 @@ function Client({ initialProjects }: ClientProps) {
             alert(`${response.status}: ${response.detail.message}`);
           }
         });
+    } else {
+      setProjectDetails(undefined);
     }
   }, [selectedProject]);
 
