@@ -19,24 +19,30 @@ async function getDirectoryStructure(
     .then(async (res) => {
       if (!res.ok) {
         return {
-          relative_path: relativePath || '/',
-          error: 'Error reading directory 1',
+          detail: {
+            relative_path: relativePath || '/',
+            message: 'Error reading directory 1',
+          },
         };
       }
       const data = (await res.json()) as GetFilesListResponse;
 
       if ('error' in data) {
         return {
-          relative_path: relativePath || '/',
-          error: data.error + ' 2',
+          detail: {
+            relative_path: relativePath || '/',
+            message: data.error + ' 2',
+          },
         };
       }
       return data;
     })
     .catch((e) => {
       return {
-        relative_path: relativePath || '/',
-        error: e || e.message || 'Error reading directory 3',
+        detail: {
+          relative_path: relativePath || '/',
+          message: e || e.message || 'Error reading directory 3',
+        },
       };
     });
 }
@@ -56,8 +62,10 @@ export async function GET(
   } catch (e) {
     // Map unexpected exceptions to standardized error payload.
     const errorResponse: GetFilesListResponse = {
-      relative_path: relativePath || '/',
-      error: 'Error reading directory 5',
+      detail: {
+        relative_path: relativePath || '/',
+        message: 'Error reading directory 5',
+      },
     };
     return NextResponse.json(errorResponse, {
       status: 500,
