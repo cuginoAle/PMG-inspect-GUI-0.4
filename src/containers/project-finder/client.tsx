@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { SplitView } from 'components/base/split-view';
 import { ProjectsTreeView } from 'components/projects-tree-view';
 import { ProjectContentView } from 'components/project-content-view';
-import { FileInfo, Project } from '@/src/types';
+import { FileInfo, GetProjectResponse, Project } from '@/src/types';
 
 import { BFF_ENDPOINTS } from '@/src/constants/end-points';
 import styles from './style.module.css';
@@ -20,10 +20,6 @@ function Client({ initialProjects }: ClientProps) {
   const [projectDetails, setProjectDetails] = useState<Project | undefined>();
 
   useEffect(() => {
-    console.log(
-      'selectedProject?.relative_path',
-      selectedProject?.relative_path,
-    );
     if (selectedProject) {
       fetch(
         BFF_ENDPOINTS.PROJECT +
@@ -31,7 +27,12 @@ function Client({ initialProjects }: ClientProps) {
       )
         .then((res) => res.json())
         .then((data) => {
-          setProjectDetails(data);
+          const response = data as GetProjectResponse;
+          if (!('status' in response)) {
+            setProjectDetails(data);
+          } else {
+            alert(`${response.status}: ${response.detail.message}`);
+          }
         });
     }
   }, [selectedProject]);

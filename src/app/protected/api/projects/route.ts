@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { GetFilesListResponse } from '@/src/types';
+import { FetchError, GetFilesListResponse } from '@/src/types';
 import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
 
 async function getDirectoryStructure(
@@ -15,36 +15,16 @@ async function getDirectoryStructure(
     GET_FILES_ENDPOINT.LIST +
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
-  return fetch(fullUrl)
-    .then(async (res) => {
+  return new Promise((resolve, reject) => {
+    fetch(fullUrl).then(async (res) => {
+      const body = await res.json();
       if (!res.ok) {
-        return {
-          detail: {
-            relative_path: relativePath || '/',
-            message: 'Error reading directory 1',
-          },
-        };
+        reject({ status: res.status, detail: body.detail });
       }
-      const data = (await res.json()) as GetFilesListResponse;
 
-      if ('error' in data) {
-        return {
-          detail: {
-            relative_path: relativePath || '/',
-            message: data.error + ' 2',
-          },
-        };
-      }
-      return data;
-    })
-    .catch((e) => {
-      return {
-        detail: {
-          relative_path: relativePath || '/',
-          message: e || e.message || 'Error reading directory 3',
-        },
-      };
+      resolve(body);
     });
+  });
 }
 
 export async function GET(
@@ -60,15 +40,10 @@ export async function GET(
       headers: { 'Cache-Control': 'no-store' },
     });
   } catch (e) {
-    // Map unexpected exceptions to standardized error payload.
-    const errorResponse: GetFilesListResponse = {
-      detail: {
-        relative_path: relativePath || '/',
-        message: 'Error reading directory 5',
-      },
-    };
-    return NextResponse.json(errorResponse, {
-      status: 500,
+    const error = e as FetchError;
+
+    return NextResponse.json(error, {
+      status: error.status,
       headers: { 'Cache-Control': 'no-store' },
     });
   }
