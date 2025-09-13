@@ -1,34 +1,21 @@
 # PMG Inspect GUI
 
-A Next.js application providing a graphical user interface for inspecting PMG (Project Management Group) projects. It features a file explorer to navigate project directories and view file details. The application is secured with Basic Authentication.
+This project is a web-based graphical user interface for inspecting and analyzing PMG (Pavement Management Group) video data.
 
-## Features
-
-- **File and Directory Exploration**: Navigate through the project's file system with a tree-like structure.
-- **Protected Routes**: Access to the project inspector is protected by Basic Authentication.
-- **API for File System**: A dedicated API endpoint to fetch directory structures and file information.
+The frontend is built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Radix UI](https://www.radix-ui.com/), and it communicates with a backend service for data retrieval.
 
 ## Getting Started
 
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
 ### Prerequisites
 
-- Node.js (v18 or newer)
-- pnpm (recommended)
+Before you begin, ensure you have the following installed:
 
-### Installation
+- [Node.js](https://nodejs.org/) (v20 or later recommended)
+- [pnpm](https://pnpm.io/installation) package manager
 
-1.  Clone the repository:
-    ```bash
-    git clone <repository-url>
-    ```
-2.  Navigate to the project directory:
-    ```bash
-    cd PMG-inspect-GUI-0.4
-    ```
-3.  Install the dependencies:
-    ```bash
-    pnpm install
-    ```
+This project also requires a running instance of the backend service, which provides the necessary API endpoints. The backend service is expected to be available at `http://localhost:8088`.
 
 ### Environment Configuration
 
@@ -39,47 +26,49 @@ PROTECTED_BASIC_AUTH_USER=yourusername
 PROTECTED_BASIC_AUTH_PASS=yourpassword
 ```
 
-### Running the Development Server
+### Setup and Installation
 
-To start the development server, run:
+1.  **Clone the repository:**
 
-```bash
-pnpm dev
-```
+    ```bash
+    git clone <your-repository-url>
+    cd PMG-inspect-GUI-0.4
+    ```
 
-The application will be available at `http://localhost:3000`.
+2.  **Install dependencies:**
+    Use `pnpm` to install the project's dependencies.
+    ```bash
+    pnpm install
+    ```
 
-## API Endpoints
+### Running the Application Locally
 
-The application uses a Next.js API route to fetch data from a backend service.
+To run the application in development mode, you need to have the backend service running first.
 
-### Get Directory Structure
+1.  **Ensure the backend is running:**
+    Start your backend service. The frontend application expects it to be serving the OpenAPI specification at `http://localhost:8088/openapi.json`.
 
-- **Endpoint**: `/protected/api/projects`
-- **Method**: `GET`
-- **Description**: Retrieves the contents of a directory.
-- **Query Parameters**:
-  - `relative_path` (optional): The path to the directory relative to the root. If not provided, the root directory is listed.
-- **Backend Service**: This endpoint fetches data from `http://localhost:8088/api/v1/get_files_list`.
+2.  **Start the frontend development server:**
+    Run the following command to start the Next.js development server with Turbopack:
 
-To test the protected endpoint with `curl`:
+    ```bash
+    pnpm dev
+    ```
 
-```bash
-curl -i -u yourusername:yourpassword http://localhost:3000/protected/api/projects?relative_path=some/folder
-```
+    This command performs three main actions:
 
-## Deployment
+    - `generate-api-types`: Generates TypeScript types from the backend's OpenAPI schema.
+    - `next dev --turbopack`: Starts the Next.js development server.
+    - `generate-css-types`: Watches for changes in CSS modules and generates corresponding TypeScript definition files.
 
-To deploy the application, you first need to build the project:
+3.  **Open the application:**
+    Once the server is running, you can view the application by navigating to [http://localhost:3000](http://localhost:3000) in your web browser.
 
-```bash
-pnpm build
-```
+## Available Scripts
 
-Then, you can start the production server:
-
-```bash
-pnpm start
-```
-
-Make sure to configure the environment variables (`PROTECTED_BASIC_AUTH_USER` and `PROTECTED_BASIC_AUTH_PASS`) in your deployment environment.
+- `pnpm dev`: Starts the development server.
+- `pnpm build`: Creates a production-ready build of the application.
+- `pnpm start`: Starts the production server (requires a build to be created first).
+- `pnpm lint`: Lints the codebase for errors and style issues.
+- `pnpm test:e2e`: Runs end-to-end tests using Playwright.
+- `pnpm test:e2e:ui`: Opens the Playwright UI for interactive testing.

@@ -8,7 +8,7 @@ import { Project, ProjectItem } from '@/src/types';
 import { ProjectItemDetailsView } from 'components/project-item-details-view';
 
 type ProjectContentViewProps = {
-  project?: Project;
+  project: Project | null;
 };
 
 const NoProjectSelected = () => (

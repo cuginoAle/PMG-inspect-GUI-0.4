@@ -7,6 +7,7 @@ import { FileInfo, GetProjectResponse, Project } from '@/src/types';
 
 import { BFF_ENDPOINTS } from '@/src/constants/end-points';
 import styles from './style.module.css';
+import { LoadingToast } from '@/src/components/loading-toast';
 
 interface ClientProps {
   initialProjects: FileInfo[];
@@ -17,10 +18,13 @@ function Client({ initialProjects }: ClientProps) {
     FileInfo | undefined
   >();
 
-  const [projectDetails, setProjectDetails] = useState<Project | undefined>();
+  const [projectDetails, setProjectDetails] = useState<
+    Project | undefined | null
+  >(undefined);
 
   useEffect(() => {
     if (selectedProject) {
+      setProjectDetails(undefined);
       fetch(
         BFF_ENDPOINTS.PROJECT +
           `?relative_path=${selectedProject?.relative_path}`,
@@ -32,10 +36,11 @@ function Client({ initialProjects }: ClientProps) {
             setProjectDetails(data);
           } else {
             alert(`${response.status}: ${response.detail.message}`);
+            setProjectDetails(null);
           }
         });
     } else {
-      setProjectDetails(undefined);
+      setProjectDetails(null);
     }
   }, [selectedProject]);
 
@@ -52,7 +57,13 @@ function Client({ initialProjects }: ClientProps) {
       }
       right={
         <div className={styles.rightView}>
-          <ProjectContentView project={projectDetails} />
+          {undefined === projectDetails ? (
+            <div className="center">
+              <LoadingToast message="Loading project details..." />
+            </div>
+          ) : (
+            <ProjectContentView project={projectDetails} />
+          )}
         </div>
       }
     />

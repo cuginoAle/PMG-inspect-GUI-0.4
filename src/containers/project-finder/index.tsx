@@ -2,10 +2,11 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from './error-boundary';
 
 import { Client } from './client';
-import { Flex, Spinner, Text } from '@radix-ui/themes';
-import { ProjectsErrorFallback } from './error-fallback';
+
 import { fetchProjects } from '@/src/lib/data/fetch-projects';
 import { FetchError } from '@/src/types';
+import { LoadingToast } from '@/src/components/loading-toast';
+import { Warning } from '@/src/components/warning';
 
 // Inner async component that will suspend while fetching.
 const ProjectsPanel = async () => {
@@ -14,7 +15,12 @@ const ProjectsPanel = async () => {
     return <Client initialProjects={projects} />;
   } catch (error) {
     const errorObj = error as FetchError;
-    return <ProjectsErrorFallback message={errorObj.status.toString()} />;
+    return (
+      <Warning
+        title="Something went wrong loading projects"
+        message={errorObj.status.toString()}
+      />
+    );
   }
 };
 
@@ -23,22 +29,10 @@ const ProjectFinder = () => (
     <Suspense
       fallback={
         <div className="center">
-          <Flex
-            gap={'4'}
-            align={'center'}
-            style={{
-              padding: 'var(--space-4) var(--space-6)',
-              backgroundColor: 'var(--black-a7)',
-              borderRadius: 'var(--space-8)',
-            }}
-          >
-            <Spinner size={'3'} />
-            <Text size={'5'}>Loading projects…</Text>
-          </Flex>
+          <LoadingToast message="Loading projects..." />
         </div>
       }
     >
-      {/* Suspends until projects fetched */}
       <ProjectsPanel />
     </Suspense>
   </ErrorBoundary>
