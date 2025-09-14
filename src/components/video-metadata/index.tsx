@@ -1,9 +1,10 @@
 import { fetchVideoMetadata } from '@/src/lib/data/fetch-video-metadata';
 import { VideoData } from '@/src/types';
-import { Flex, Table, Text } from '@radix-ui/themes';
+import { Flex, Table, Text, Theme } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 import { LoadingToast } from 'components/loading-toast';
 import { Warning } from 'components/warning';
+import { transformMetadata } from './transform-metadata';
 
 const VideoMetaData = ({ videoUrl }: { videoUrl: string }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -24,30 +25,31 @@ const VideoMetaData = ({ videoUrl }: { videoUrl: string }) => {
       });
   }, [videoUrl]);
 
+  const transformedMetadata = transformMetadata(videoData?.camera_data);
   const cameraDataKeys = Object.keys(videoData?.camera_data || {});
 
-  return videoData ? (
+  return transformedMetadata ? (
     <Flex direction="column" gap={'2'}>
       <Text size={'2'}>Video Metadata:</Text>
 
-      <Table.Root size={'1'} variant="surface">
-        <Table.Body>
-          {cameraDataKeys.map((key) => (
-            <Table.Row key={key}>
-              <Table.Cell>
-                <Text weight={'bold'} size={'1'}>
-                  {key}
-                </Text>
-              </Table.Cell>
-              <Table.Cell width={'100%'}>
-                <Text size={'1'}>
-                  {String((videoData?.camera_data as any)[key])}
-                </Text>
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      <Theme panelBackground="translucent">
+        <Table.Root size={'1'} variant="surface">
+          <Table.Body>
+            {cameraDataKeys.map((key) => (
+              <Table.Row key={key}>
+                <Table.Cell>
+                  <Text weight={'bold'} size={'1'}>
+                    {key}
+                  </Text>
+                </Table.Cell>
+                <Table.Cell width={'100%'}>
+                  <Text size={'1'}>{transformedMetadata[key]}</Text>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Theme>
     </Flex>
   ) : videoData === undefined ? (
     <LoadingToast message="Loading video metadata..." />
