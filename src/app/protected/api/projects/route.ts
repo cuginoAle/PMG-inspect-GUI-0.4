@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { FetchError, GetFilesListResponse } from '@/src/types';
-import { fetchProjects } from '@/src/lib/data/fetch-projects';
+import { fetchProjectList } from '@/src/lib/data/fetch-projectList';
 
 export async function GET(
   request: Request,
@@ -10,7 +10,7 @@ export async function GET(
   const relativePath = searchParams.get('relative_path') || undefined;
 
   try {
-    const content = await fetchProjects(relativePath);
+    const content = await fetchProjectList(relativePath);
 
     return NextResponse.json(content, {
       status: 200,

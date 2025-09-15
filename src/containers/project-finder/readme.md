@@ -719,7 +719,7 @@ const terms = search.trim().toLowerCase().split(/\s+/);
 ### Basic Auth Fetch Wrapper
 
 ```ts
-async function fetchProjects(signal?: AbortSignal) {
+async function fetchProjectList(signal?: AbortSignal) {
   const res = await fetch('/protected/api/projects', {
     signal,
     headers: { Authorization: 'Basic ' + btoa('admin:password123') },
