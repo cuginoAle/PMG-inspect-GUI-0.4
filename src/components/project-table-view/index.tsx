@@ -54,7 +54,7 @@ const ProjectTableView = ({
   });
 
   return (
-    <Flex direction="column" gap="2">
+    <Flex direction="column" gap="2" height={'100%'}>
       <div className={styles.searchBox}>
         <TextField.Root
           placeholder="Search all columns..."
@@ -69,8 +69,8 @@ const ProjectTableView = ({
       </div>
 
       <div className={styles.tableContainer}>
-        <Table.Root variant="surface">
-          <Table.Header>
+        <Table.Root variant="surface" className={styles.tableRoot}>
+          <Table.Header className={styles.tableHeader}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Table.Row key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

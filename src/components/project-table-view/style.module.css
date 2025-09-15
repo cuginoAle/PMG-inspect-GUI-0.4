@@ -10,6 +10,22 @@
   white-space: nowrap;
 }
 
+.tableRoot {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+
+  :global(.rt-TableRootTable) {
+    overflow: auto;
+  }
+}
 .tableContainer {
   overflow: auto;
+  position: relative;
+  height: 100%;
+}
+.tableHeader {
+  position: sticky;
+  top: 0;
+  background-color: var(--gray-3);
 }
