@@ -1,8 +1,15 @@
-import { ProjectItem } from '@/src/types';
+import { MediaData, ProjectItem } from '@/src/types';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { Flex, Heading, Text } from '@radix-ui/themes';
 
-const VideoPreview = ({ projectItem }: { projectItem?: ProjectItem }) => {
+const VideoPreview = ({
+  projectItem,
+  mediaData,
+}: {
+  projectItem?: ProjectItem;
+  mediaData?: MediaData;
+}) => {
+  console.log('mediaData?.frame_width', mediaData?.frame_width);
   return !projectItem ? null : (
     <>
       <Flex gap={'2'} direction={'column'}>
@@ -20,6 +27,10 @@ const VideoPreview = ({ projectItem }: { projectItem?: ProjectItem }) => {
         height="auto"
         controls
         src={projectItem.video_url}
+        style={{
+          aspectRatio:
+            (mediaData?.frame_width || 16) / (mediaData?.frame_heigth || 9),
+        }}
       ></video>
     </>
   );

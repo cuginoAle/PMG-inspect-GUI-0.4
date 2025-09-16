@@ -33,6 +33,7 @@ const ProjectTableView = ({
   });
 
   const searchParams = useSearchParams();
+  const videoUrl = searchParams.get('videoUrl');
   const router = useRouter();
 
   const onRowSelect = useCallback(
@@ -51,8 +52,12 @@ const ProjectTableView = ({
   );
 
   useEffect(() => {
-    onRowSelect(project?.project_items[defaultSelectedRowIndex]);
-  }, [defaultSelectedRowIndex, onRowSelect, project?.project_items]);
+    const selectedRow =
+      project?.project_items.find((item) => item.video_url === videoUrl) ||
+      project?.project_items[defaultSelectedRowIndex];
+
+    onRowSelect(selectedRow);
+  }, [defaultSelectedRowIndex, onRowSelect, project?.project_items, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());

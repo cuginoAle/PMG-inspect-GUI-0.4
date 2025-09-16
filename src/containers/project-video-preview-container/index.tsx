@@ -3,6 +3,7 @@ import { useGlobalState } from '@/src/app/global-state';
 import { LoadingToast } from '@/src/components/loading-toast';
 import { VideoPreview } from '@/src/components/video-preview';
 import { Warning } from '@/src/components/warning';
+import { VideoData } from '@/src/types';
 import { useSearchParams } from 'next/navigation';
 
 const ProjectVideoPreviewContainer = () => {
@@ -10,6 +11,7 @@ const ProjectVideoPreviewContainer = () => {
   const videoUrl = searchParams.get('videoUrl') || undefined;
   const gState = useGlobalState();
   const selectedProject = gState.selectedProject.get();
+  const mediaData = gState.selectedVideo.get();
 
   if (!selectedProject || !videoUrl) {
     return null;
@@ -23,19 +25,20 @@ const ProjectVideoPreviewContainer = () => {
     return <Warning message={selectedProject.detail.message} />;
   }
 
-  const selectedProjectItems = selectedProject.project_items.find(
+  const selectedProjectItem = selectedProject.project_items.find(
     (item) => item.video_url === videoUrl,
   );
 
-  if (
-    !selectedProject ||
-    !selectedProjectItems ||
-    selectedProjectItems.video_url !== videoUrl
-  ) {
+  if (!selectedProject || !selectedProjectItem) {
     return null;
   }
 
-  return <VideoPreview projectItem={selectedProjectItems} />;
+  return (
+    <VideoPreview
+      projectItem={selectedProjectItem}
+      mediaData={(mediaData as unknown as VideoData).media_data || {}}
+    />
+  );
 };
 
 export { ProjectVideoPreviewContainer };
