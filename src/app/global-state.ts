@@ -1,9 +1,11 @@
 'use client';
 import { hookstate, useHookstate } from '@hookstate/core';
 import { devtools } from '@hookstate/devtools';
+import { VideoData, FetchError, LoadingState, Project } from '@/src/types';
 
 type GlobalState = {
-  selectedFile?: string;
+  selectedProject?: Project | FetchError | LoadingState;
+  selectedVideo?: VideoData | FetchError | LoadingState;
 };
 
 const globalState = hookstate<GlobalState>(

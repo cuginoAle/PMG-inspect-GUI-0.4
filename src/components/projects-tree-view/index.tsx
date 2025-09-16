@@ -1,24 +1,37 @@
+'use client';
 import { Tree } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
-import { FileInfo } from '@/src/types';
+import { GetFilesListResponse } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
+import { Warning } from 'components/warning';
 
 type ProjectsTreeViewProps = {
-  files: FileInfo[];
-  onSelect?: (project: FileInfo | undefined) => void;
+  files: GetFilesListResponse;
+  selectedPath?: string;
 };
 
-const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
+
+  if ('status' in files) {
+    return (
+      <div className="center">
+        <Warning
+          message={files.detail.message}
+          title="Error loading projects"
+        />
+      </div>
+    );
+  }
 
   return (
     <Flex direction="column" gap="2" height={'100%'}>
@@ -43,19 +56,7 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
           rowHeight={32}
           searchTerm={searchTerm}
           openByDefault={false}
-          onSelect={(node) => {
-            if (onSelect && node.length > 0 && node[0]?.isLeaf) {
-              const data: FileInfo = node[0].data;
-              if (data.file_type === 'project') {
-                onSelect(data);
-              } else {
-                alert('Sorry, this file type is not supported yet!');
-                onSelect(undefined);
-              }
-            } else if (onSelect) {
-              onSelect(undefined);
-            }
-          }}
+          selection={selectedPath!}
         >
           {({ node, style }) => (
             <div style={style}>

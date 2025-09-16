@@ -1,32 +1,33 @@
-import { fetchVideoMetadata } from '@/src/lib/data/fetch-video-metadata';
-import { VideoData } from '@/src/types';
+'use client';
+import { GetVideoMetadataResponse } from '@/src/types';
 import { Flex, Table, Text, Theme } from '@radix-ui/themes';
-import { useEffect, useState } from 'react';
-import { LoadingToast } from 'components/loading-toast';
 import { Warning } from 'components/warning';
 import { transformMetadata } from './transform-metadata';
+import { LoadingToast } from 'components/loading-toast';
 
-const VideoMetaData = ({ videoUrl }: { videoUrl: string }) => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [videoData, setVideoData] = useState<VideoData | null | undefined>(
-    undefined,
-  );
+const VideoMetaData = ({ video }: { video?: GetVideoMetadataResponse }) => {
+  if (!video) {
+    return null;
+  }
 
-  useEffect(() => {
-    if (!videoUrl) return;
-    setVideoData(undefined); // Reset before fetching new data
+  if ('status' in video! && video.status === 'loading') {
+    return (
+      <div className="center">
+        <LoadingToast message="Loading video metadata..." />
+      </div>
+    );
+  }
 
-    fetchVideoMetadata(videoUrl)
-      .then((data) => setVideoData(data))
-      .catch((error) => {
-        const err = error as Error;
-        setVideoData(null);
-        setErrorMessage(err.message);
-      });
-  }, [videoUrl]);
+  if ('status' in video!) {
+    return (
+      <div className="center">
+        <Warning message={video.detail.message} />
+      </div>
+    );
+  }
 
-  const transformedMetadata = transformMetadata(videoData?.camera_data);
-  const cameraDataKeys = Object.keys(videoData?.camera_data || {});
+  const transformedMetadata = transformMetadata(video.camera_data);
+  const cameraDataKeys = Object.keys(video.camera_data || {});
 
   return transformedMetadata ? (
     <Flex direction="column" gap={'2'}>
@@ -51,16 +52,7 @@ const VideoMetaData = ({ videoUrl }: { videoUrl: string }) => {
         </Table.Root>
       </Theme>
     </Flex>
-  ) : videoData === undefined ? (
-    <LoadingToast message="Loading video metadata..." />
-  ) : (
-    <Flex gap={'2'} align="center" justify={'center'}>
-      <Warning
-        title="Something went wrong"
-        message={errorMessage || 'Unknown error'}
-      />
-    </Flex>
-  );
+  ) : null;
 };
 
 export { VideoMetaData };
