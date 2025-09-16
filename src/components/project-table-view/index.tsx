@@ -19,18 +19,10 @@ import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const ProjectTableView = ({
-  defaultSelectedRowIndex = 0,
-  project,
-}: {
-  defaultSelectedRowIndex?: number;
-  project: Project;
-}) => {
+const ProjectTableView = ({ project }: { project: Project }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>({
-    [defaultSelectedRowIndex.toString()]: true,
-  });
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get('videoUrl');
@@ -52,12 +44,15 @@ const ProjectTableView = ({
   );
 
   useEffect(() => {
-    const selectedRow =
-      project?.project_items.find((item) => item.video_url === videoUrl) ||
-      project?.project_items[defaultSelectedRowIndex];
+    const selectedRowIndex = Math.max(
+      project?.project_items.findIndex((item) => item.video_url === videoUrl),
+      0,
+    );
 
+    setRowSelection({ [selectedRowIndex]: true });
+    const selectedRow = project?.project_items[selectedRowIndex];
     onRowSelect(selectedRow);
-  }, [defaultSelectedRowIndex, onRowSelect, project?.project_items, videoUrl]);
+  }, [onRowSelect, project?.project_items, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());

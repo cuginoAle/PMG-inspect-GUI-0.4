@@ -12,7 +12,11 @@ const ProjectItem = ({
   className?: string;
 }) => {
   return (
-    <Link href={`?path=${itemInfo.relative_path!}`}>
+    <Link
+      href={{
+        query: { path: itemInfo.relative_path! },
+      }}
+    >
       <Flex gap={'2'} align="center" className={className}>
         <span className={styles.iconWrapper}>
           <FileIcon

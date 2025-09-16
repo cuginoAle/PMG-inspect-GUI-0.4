@@ -36,7 +36,7 @@ const ProjectVideoPreviewContainer = () => {
   return (
     <VideoPreview
       projectItem={selectedProjectItem}
-      mediaData={(mediaData as unknown as VideoData).media_data || {}}
+      mediaData={(mediaData as unknown as VideoData)?.media_data || {}}
     />
   );
 };

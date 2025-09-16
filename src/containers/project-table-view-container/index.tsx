@@ -42,7 +42,7 @@ const ProjectTableViewContainer = () => {
     );
   }
 
-  return <ProjectTableView project={project} defaultSelectedRowIndex={0} />;
+  return <ProjectTableView project={project} />;
 };
 
 export { ProjectTableViewContainer };
