@@ -1,5 +1,12 @@
 import type { components } from './api.d.ts';
-import { FetchError } from './bffApi.js';
+
+type FetchError = {
+  status: number;
+  detail: {
+    message: string;
+  };
+};
+
 type LoadingState = {
   status: 'loading';
 };
@@ -13,7 +20,7 @@ type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
 type VideoData = components['schemas']['ParseVideoResponse'];
 
-type GetFilesListResponse = Array<FileInfo> | FetchError | LoadingState;
+type GetFilesListResponse = Array<FileInfo> | FetchError;
 type GetProjectResponse = Project | FetchError | LoadingState;
 type GetVideoMetadataResponse = VideoData | FetchError | LoadingState;
 
@@ -30,4 +37,5 @@ export type {
   MediaData,
   GetVideoMetadataResponse,
   LoadingState,
+  FetchError,
 };

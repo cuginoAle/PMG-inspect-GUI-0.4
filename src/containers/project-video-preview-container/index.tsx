@@ -27,7 +27,11 @@ const ProjectVideoPreviewContainer = () => {
     (item) => item.video_url === videoUrl,
   );
 
-  if (!selectedProject || selectedProjectItems!.video_url !== videoUrl) {
+  if (
+    !selectedProject ||
+    !selectedProjectItems ||
+    selectedProjectItems.video_url !== videoUrl
+  ) {
     return null;
   }
 

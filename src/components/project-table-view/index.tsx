@@ -9,7 +9,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
@@ -35,16 +35,24 @@ const ProjectTableView = ({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const onRowSelect = (projectItem: ProjectItem) => {
-    const urlSearchParams = new URLSearchParams(searchParams.toString());
-    urlSearchParams.set('videoUrl', projectItem.video_url);
+  const onRowSelect = useCallback(
+    (projectItem?: ProjectItem) => {
+      if (!projectItem) return;
+      const urlSearchParams = new URLSearchParams(searchParams.toString());
+      urlSearchParams.set('videoUrl', projectItem.video_url);
 
-    window.history.pushState(
-      null,
-      '',
-      `/protected?${urlSearchParams.toString()}`,
-    );
-  };
+      window.history.pushState(
+        null,
+        '',
+        `/protected?${urlSearchParams.toString()}`,
+      );
+    },
+    [searchParams],
+  );
+
+  useEffect(() => {
+    onRowSelect(project?.project_items[defaultSelectedRowIndex]);
+  }, [defaultSelectedRowIndex, onRowSelect, project?.project_items]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());

@@ -4,12 +4,13 @@ import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
-import { FileInfo } from '@/src/types';
+import { GetFilesListResponse } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
+import { Warning } from 'components/warning';
 
 type ProjectsTreeViewProps = {
-  files: FileInfo[];
+  files: GetFilesListResponse;
   selectedPath?: string;
 };
 
@@ -20,6 +21,17 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
+
+  if ('status' in files) {
+    return (
+      <div className="center">
+        <Warning
+          message={files.detail.message}
+          title="Error loading projects"
+        />
+      </div>
+    );
+  }
 
   return (
     <Flex direction="column" gap="2" height={'100%'}>

@@ -6,7 +6,7 @@ const ProjectsTreeViewContainer = async ({
 }: {
   projectPath?: string;
 }) => {
-  const projects = await fetchProjectList();
+  const projects = await fetchProjectList().catch((error) => error);
 
   return <ProjectsTreeView files={projects} selectedPath={projectPath} />;
 };
