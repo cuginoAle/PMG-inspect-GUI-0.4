@@ -24,4 +24,3 @@ const FileIcon = ({ type }: { type: FileType }) => {
 };
 
 export { FileIcon };
-export type { FileType };

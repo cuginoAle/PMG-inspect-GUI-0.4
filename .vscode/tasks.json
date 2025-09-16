@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run orphan detection scripts",
+			"type": "shell",
+			"command": "echo Running ESLint orphan check && pnpm -s lint:orphans || true && echo Running Knip orphan check && pnpm -s knip:orphans || true",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
