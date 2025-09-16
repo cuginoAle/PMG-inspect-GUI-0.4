@@ -17,23 +17,41 @@ import styles from './style.module.css';
 import { columns } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const ProjectTableView = ({
-  project,
-  onRowSelect,
-  onRowDoubleClick,
   defaultSelectedRowIndex = 0,
+  project,
 }: {
-  project: Project;
-  onRowSelect: (projectItem: ProjectItem) => void;
-  onRowDoubleClick?: (projectItem: ProjectItem) => void;
   defaultSelectedRowIndex?: number;
+  project: Project;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({
     [defaultSelectedRowIndex.toString()]: true,
   });
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const onRowSelect = (projectItem: ProjectItem) => {
+    const urlSearchParams = new URLSearchParams(searchParams.toString());
+    urlSearchParams.set('videoUrl', projectItem.video_url);
+
+    window.history.pushState(
+      null,
+      '',
+      `/protected?${urlSearchParams.toString()}`,
+    );
+  };
+
+  const onRowDoubleClick = (projectItem: ProjectItem) => {
+    const urlSearchParams = new URLSearchParams(searchParams.toString());
+    urlSearchParams.set('videoUrl', projectItem.video_url);
+
+    router.push(`/protected/edit?${urlSearchParams.toString()}`);
+  };
 
   const table = useReactTable({
     data: project.project_items,
@@ -99,10 +117,10 @@ const ProjectTableView = ({
                 className={row.getIsSelected() ? styles.selected : ''}
                 onClick={() => {
                   row.toggleSelected(true);
-                  onRowSelect?.(row.original);
+                  onRowSelect(row.original);
                 }}
                 onDoubleClick={() => {
-                  onRowDoubleClick?.(row.original);
+                  onRowDoubleClick(row.original);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {

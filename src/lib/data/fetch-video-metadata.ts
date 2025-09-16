@@ -1,8 +1,12 @@
 import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
-import { VideoData } from '@/src/types';
+import { FetchError, GetVideoMetadataResponse } from '@/src/types';
 
 let fetching = false;
-async function fetchVideoMetadata(videoUrl: string): Promise<VideoData> {
+async function fetchVideoMetadata(
+  videoUrl?: string,
+): Promise<GetVideoMetadataResponse | undefined> {
+  if (!videoUrl) return;
+
   const fullUrl = `${GET_FILES_ENDPOINT.VIDEOS}?video_url=${encodeURIComponent(
     videoUrl,
   )}`;
@@ -24,9 +28,9 @@ async function fetchVideoMetadata(videoUrl: string): Promise<VideoData> {
       .catch((error) => {
         fetching = false;
         reject({
-          message: 'Network error or server is unreachable',
-          detail: error,
-        });
+          status: error.status,
+          detail: { message: error.message },
+        } as FetchError);
       });
   });
 }

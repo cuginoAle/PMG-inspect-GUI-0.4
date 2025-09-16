@@ -1,16 +1,10 @@
 import { ProjectItem } from '@/src/types';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { Flex, Heading, Text } from '@radix-ui/themes';
-import { VideoMetaData } from 'components/video-metadata';
 
-const ProjectItemDetailsView = ({
-  projectItem,
-}: {
-  projectItem: ProjectItem;
-}) => {
-  console.log('ProjectItemDetailsView', ProjectItemDetailsView);
-  return (
-    <Flex direction="column" gap={'4'}>
+const VideoPreview = ({ projectItem }: { projectItem?: ProjectItem }) => {
+  return !projectItem ? null : (
+    <>
       <Flex gap={'2'} direction={'column'}>
         <Heading weight={'light'}>{projectItem.road_data.road_name}</Heading>
         <Text color="orange" size={'2'}>
@@ -27,11 +21,8 @@ const ProjectItemDetailsView = ({
         controls
         src={projectItem.video_url}
       ></video>
-      {/* <Suspense fallback={<LoadingToast message="Loading video metadata..." />}> */}
-      <VideoMetaData videoUrl={projectItem.video_url} />
-      {/* </Suspense> */}
-    </Flex>
+    </>
   );
 };
 
-export { ProjectItemDetailsView };
+export { VideoPreview };

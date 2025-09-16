@@ -13,10 +13,6 @@
   border-radius: 25px 0 0 25px;
 }
 
-.iconWrapper {
-  flex-shrink: 0;
-}
-
 .name {
   white-space: nowrap;
   overflow: hidden;

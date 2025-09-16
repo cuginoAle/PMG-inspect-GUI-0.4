@@ -1,3 +1,4 @@
+'use client';
 import { Tree } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Flex, TextField } from '@radix-ui/themes';
@@ -9,10 +10,10 @@ import styles from './style.module.css';
 
 type ProjectsTreeViewProps = {
   files: FileInfo[];
-  onSelect?: (project: FileInfo | undefined) => void;
+  selectedPath?: string;
 };
 
-const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
 
@@ -43,19 +44,7 @@ const ProjectsTreeView = ({ files, onSelect }: ProjectsTreeViewProps) => {
           rowHeight={32}
           searchTerm={searchTerm}
           openByDefault={false}
-          onSelect={(node) => {
-            if (onSelect && node.length > 0 && node[0]?.isLeaf) {
-              const data: FileInfo = node[0].data;
-              if (data.file_type === 'project') {
-                onSelect(data);
-              } else {
-                alert('Sorry, this file type is not supported yet!');
-                onSelect(undefined);
-              }
-            } else if (onSelect) {
-              onSelect(undefined);
-            }
-          }}
+          selection={selectedPath!}
         >
           {({ node, style }) => (
             <div style={style}>
