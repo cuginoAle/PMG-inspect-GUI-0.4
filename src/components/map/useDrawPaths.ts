@@ -25,7 +25,7 @@ const isFiniteCoord = (c: [number, number]) =>
   Number.isFinite(c[0]) && Number.isFinite(c[1]);
 
 export const useDrawPaths = (
-  mapRef: React.MutableRefObject<mapboxgl.Map | null>,
+  mapRef: React.RefObject<mapboxgl.Map | null>,
   styleLoaded: boolean,
   pathsToDraw?: LngLatLike[][],
 ) => {
