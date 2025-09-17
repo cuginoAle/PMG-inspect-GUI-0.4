@@ -5,6 +5,7 @@ import { ProjectTableViewContainer } from '@/src/containers/project-table-view-c
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
 import { Flex } from '@radix-ui/themes';
 import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
+import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 const ProjectContentView = async () => {
   return (
@@ -22,6 +23,7 @@ const ProjectContentView = async () => {
         right={
           <div className={styles.rightPane}>
             <Flex direction="column" gap={'4'}>
+              <ProjectMapContainer />
               <ProjectVideoPreviewContainer />
               <ProjectVideoMetadataContainer />
             </Flex>

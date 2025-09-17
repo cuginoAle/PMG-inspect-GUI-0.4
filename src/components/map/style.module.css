@@ -1,0 +1,5 @@
+.root {
+  position: relative;
+  min-height: 200px;
+  aspect-ratio: 16/9;
+}

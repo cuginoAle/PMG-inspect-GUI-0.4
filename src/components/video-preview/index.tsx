@@ -9,7 +9,6 @@ const VideoPreview = ({
   projectItem?: ProjectItem;
   mediaData?: MediaData;
 }) => {
-  console.log('mediaData?.frame_width', mediaData?.frame_width);
   return !projectItem ? null : (
     <>
       <Flex gap={'2'} direction={'column'}>

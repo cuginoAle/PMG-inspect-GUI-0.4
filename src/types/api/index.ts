@@ -19,23 +19,25 @@ type RoadData = ProjectItem['road_data'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
 type VideoData = components['schemas']['ParseVideoResponse'];
+type GpsData = VideoData['gps_data'];
 
 type GetFilesListResponse = Array<FileInfo> | FetchError;
 type GetProjectResponse = Project | FetchError | LoadingState;
 type GetVideoMetadataResponse = VideoData | FetchError | LoadingState;
 
 export type {
+  CameraData,
+  FetchError,
   FileInfo,
   FileType,
   GetFilesListResponse,
   GetProjectResponse,
-  Project,
-  RoadData,
-  ProjectItem,
-  CameraData,
-  VideoData,
-  MediaData,
   GetVideoMetadataResponse,
+  GpsData,
   LoadingState,
-  FetchError,
+  MediaData,
+  Project,
+  ProjectItem,
+  RoadData,
+  VideoData,
 };

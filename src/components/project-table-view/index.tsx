@@ -9,7 +9,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
@@ -18,11 +18,13 @@ import { columns } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getRowId } from './helpers/getRowId';
 
 const ProjectTableView = ({ project }: { project: Project }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const tBodyRef = useRef<HTMLTableSectionElement>(null);
 
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get('videoUrl');
@@ -33,6 +35,10 @@ const ProjectTableView = ({ project }: { project: Project }) => {
       if (!projectItem) return;
       const urlSearchParams = new URLSearchParams(searchParams.toString());
       urlSearchParams.set('videoUrl', projectItem.video_url);
+
+      tBodyRef.current
+        ?.querySelector(`[id="${getRowId(projectItem)}"]`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       window.history.pushState(
         null,
@@ -117,15 +123,16 @@ const ProjectTableView = ({ project }: { project: Project }) => {
               </Table.Row>
             ))}
           </Table.Header>
-          <Table.Body>
+          <Table.Body ref={tBodyRef}>
             {table.getRowModel().rows.map((row) => (
               <Table.Row
                 key={row.id}
+                id={getRowId(row.original)}
                 tabIndex={0}
                 className={row.getIsSelected() ? styles.selected : ''}
                 onClick={() => {
                   row.toggleSelected(true);
-                  onRowSelect(row.original);
+                  onRowSelect?.(row.original);
                 }}
                 onDoubleClick={() => {
                   onRowDoubleClick(row.original);
