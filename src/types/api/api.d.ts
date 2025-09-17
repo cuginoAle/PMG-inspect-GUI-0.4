@@ -288,7 +288,26 @@ export interface components {
             iou: number;
         };
         /** InferenceLayerResult */
-        InferenceLayerResult: {
+        "InferenceLayerResult-Input": {
+            inference_layer: components["schemas"]["InferenceLayerType"];
+            /** Orig Shape */
+            orig_shape: [
+                number,
+                number
+            ];
+            /** Names */
+            names?: {
+                [key: string]: string;
+            } | null;
+            /** Boxes */
+            boxes?: components["schemas"]["BoundingBoxItem"][] | null;
+            /** Masks */
+            masks?: components["schemas"]["MaskItem"][] | null;
+            /** Probs */
+            probs?: number[] | null;
+        };
+        /** InferenceLayerResult */
+        "InferenceLayerResult-Output": {
             inference_layer: components["schemas"]["InferenceLayerType"];
             /** Orig Shape */
             orig_shape: [
@@ -313,17 +332,17 @@ export interface components {
         InferenceLayerType: "road" | "distress" | "weathering" | "treatment";
         /** MaskItem */
         MaskItem: {
-            /** Shape */
-            shape?: [
+            /** Bitmask */
+            bitmask: components["schemas"]["ZipEncodedBitmask"] | components["schemas"]["PngEncodedBitmask"];
+            /** Area Pixels */
+            area_pixels: number;
+            /** Polygons Mask Shape */
+            polygons_mask_shape?: [
                 number,
                 number
             ] | null;
-            /** Bit Mask */
-            bit_mask?: number[][][] | null;
-            /** Polygon */
-            polygon?: number[][][] | null;
-            /** Area Pixels */
-            area_pixels?: number | null;
+            /** Polygons */
+            polygons?: number[][][] | null;
         };
         /** MediaData */
         MediaData: {
@@ -356,21 +375,28 @@ export interface components {
             /** Gps Data */
             gps_data?: components["schemas"]["GpsPoint"][] | null;
         };
+        /** PngEncodedBitmask */
+        PngEncodedBitmask: {
+            /** Shape */
+            shape: number[];
+            /** Data */
+            data: string;
+        };
         /** ProcessFrameResponse */
         "ProcessFrameResponse-Input": {
-            road?: components["schemas"]["InferenceLayerResult"] | null;
-            distress?: components["schemas"]["InferenceLayerResult"] | null;
-            weathering?: components["schemas"]["InferenceLayerResult"] | null;
-            treatment?: components["schemas"]["InferenceLayerResult"] | null;
+            road?: components["schemas"]["InferenceLayerResult-Input"] | null;
+            distress?: components["schemas"]["InferenceLayerResult-Input"] | null;
+            weathering?: components["schemas"]["InferenceLayerResult-Input"] | null;
+            treatment?: components["schemas"]["InferenceLayerResult-Input"] | null;
             /** Pci Score */
             pci_score?: number | null;
         };
         /** ProcessFrameResponse */
         "ProcessFrameResponse-Output": {
-            road?: components["schemas"]["InferenceLayerResult"] | null;
-            distress?: components["schemas"]["InferenceLayerResult"] | null;
-            weathering?: components["schemas"]["InferenceLayerResult"] | null;
-            treatment?: components["schemas"]["InferenceLayerResult"] | null;
+            road?: components["schemas"]["InferenceLayerResult-Output"] | null;
+            distress?: components["schemas"]["InferenceLayerResult-Output"] | null;
+            weathering?: components["schemas"]["InferenceLayerResult-Output"] | null;
+            treatment?: components["schemas"]["InferenceLayerResult-Output"] | null;
             /** Pci Score */
             pci_score?: number | null;
         };
@@ -429,6 +455,13 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** ZipEncodedBitmask */
+        ZipEncodedBitmask: {
+            /** Shape */
+            shape: number[];
+            /** Data */
+            data: string;
         };
     };
     responses: never;
