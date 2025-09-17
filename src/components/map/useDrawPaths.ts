@@ -44,12 +44,14 @@ export const useDrawPaths = (
     let totalPoints = 0;
     let firstCoord: [number, number] | null = null;
 
-    pathsToDraw.forEach((path, index) => {
+    // Build MultiLineString coordinates where each path is a separate line
+    const multiLineCoords: number[][][] = [];
+
+    (pathsToDraw || []).forEach((path) => {
       const normalizedPath = (path || [])
         .map(normalizeCoord)
         .filter(isFiniteCoord);
-
-      if (normalizedPath.length === 0) return; // skip empty paths
+      if (normalizedPath.length === 0) return;
 
       // Extend overall bounds
       normalizedPath.forEach(([lng, lat]) => {
@@ -62,50 +64,49 @@ export const useDrawPaths = (
         }
       });
 
-      const layerId = `line-layer-${index}`;
-      const sourceId = `line-source-${index}`;
-
-      // Add source
-      if (!map.getSource(sourceId)) {
-        map.addSource(sourceId, {
-          type: 'geojson',
-          data: {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'LineString',
-              coordinates: normalizedPath,
-            },
-          },
-        });
-      } else {
-        const src = map.getSource(sourceId) as
-          | mapboxgl.GeoJSONSource
-          | undefined;
-        src?.setData({
-          type: 'Feature',
-          properties: {},
-          geometry: { type: 'LineString', coordinates: normalizedPath },
-        } as GeoJSON.Feature<GeoJSON.LineString>);
-      }
-
-      // Add layer if missing
-      if (!map.getLayer(layerId)) {
-        map.addLayer({
-          id: layerId,
-          type: 'line',
-          source: sourceId,
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-          },
-          paint: {
-            'line-color': '#9f8562',
-            'line-width': 10,
-          },
-        });
-      }
+      multiLineCoords.push(normalizedPath);
     });
+
+    // If no valid lines, skip
+    if (multiLineCoords.length === 0) return;
+
+    const sourceId = 'paths-source';
+    const layerId = 'paths-layer';
+
+    const feature: GeoJSON.Feature<GeoJSON.MultiLineString> = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'MultiLineString',
+        coordinates: multiLineCoords,
+      },
+    };
+
+    if (!map.getSource(sourceId)) {
+      map.addSource(sourceId, {
+        type: 'geojson',
+        data: feature,
+      });
+    } else {
+      const src = map.getSource(sourceId) as mapboxgl.GeoJSONSource | undefined;
+      src?.setData(feature);
+    }
+
+    if (!map.getLayer(layerId)) {
+      map.addLayer({
+        id: layerId,
+        type: 'line',
+        source: sourceId,
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#9f8562',
+          'line-width': 10,
+        },
+      });
+    }
 
     // Auto fit/pan after drawing
     if (bounds && totalPoints > 0) {
@@ -120,12 +121,10 @@ export const useDrawPaths = (
     return () => {
       // Cleanup layers and sources on unmount or when paths change
       if (!map) return;
-      (pathsToDraw || []).forEach((_, index) => {
-        const layerId = `line-layer-${index}`;
-        const sourceId = `line-source-${index}`;
-        if (map.getLayer(layerId)) map.removeLayer(layerId);
-        if (map.getSource(sourceId)) map.removeSource(sourceId);
-      });
+      const layerId = 'paths-layer';
+      const sourceId = 'paths-source';
+      if (map.getLayer(layerId)) map.removeLayer(layerId);
+      if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
   }, [styleLoaded, pathsToDraw, mapRef]);
 };

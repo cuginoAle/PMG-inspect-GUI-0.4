@@ -37,21 +37,62 @@ function openDB(): Promise<IDBDatabase> {
 
 type CacheRecord<T> = { key: string; value: T; timestamp: number };
 
+/**
+ * Get a value (or multiple values) from IndexedDB.
+ * - When passing a single key (string), resolves to the stored value (or undefined).
+ * - When passing multiple keys (string[]), resolves to an array of values in the same order.
+ */
 async function idbGet<T = unknown>(
   store: StoreName,
   key: string,
-): Promise<T | undefined> {
-  if (!isBrowserWithIDB()) return undefined;
+): Promise<T | undefined>;
+async function idbGet<T = unknown>(
+  store: StoreName,
+  keys: string[],
+): Promise<Array<T | undefined>>;
+async function idbGet<T = unknown>(
+  store: StoreName,
+  keyOrKeys: string | string[],
+): Promise<T | undefined | Array<T | undefined>> {
+  if (!isBrowserWithIDB()) {
+    return Array.isArray(keyOrKeys)
+      ? keyOrKeys.map(() => undefined)
+      : undefined;
+  }
   const db = await openDB();
-  return new Promise<T | undefined>((resolve, reject) => {
+
+  if (!Array.isArray(keyOrKeys)) {
+    return new Promise<T | undefined>((resolve, reject) => {
+      const tx = db.transaction(store, 'readonly');
+      const os = tx.objectStore(store);
+      const req = os.get(keyOrKeys);
+      req.onsuccess = () => {
+        const rec = req.result as CacheRecord<T> | undefined;
+        resolve(rec?.value);
+      };
+      req.onerror = () => reject(req.error ?? new Error('IndexedDB get error'));
+    });
+  }
+
+  // Multiple keys in one transaction
+  return new Promise<Array<T | undefined>>((resolve, reject) => {
     const tx = db.transaction(store, 'readonly');
     const os = tx.objectStore(store);
-    const req = os.get(key);
-    req.onsuccess = () => {
-      const rec = req.result as CacheRecord<T> | undefined;
-      resolve(rec?.value);
-    };
-    req.onerror = () => reject(req.error ?? new Error('IndexedDB get error'));
+
+    const promises = keyOrKeys.map(
+      (k) =>
+        new Promise<T | undefined>((res, rej) => {
+          const req = os.get(k);
+          req.onsuccess = () => {
+            const rec = req.result as CacheRecord<T> | undefined;
+            res(rec?.value);
+          };
+          req.onerror = () =>
+            rej(req.error ?? new Error('IndexedDB get error'));
+        }),
+    );
+
+    Promise.all(promises).then(resolve).catch(reject);
   });
 }
 

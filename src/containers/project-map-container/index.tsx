@@ -1,43 +1,55 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { GpsData } from '@/src/types';
+import { getResponseIfSuccesful } from '@/src/helpers/getResponseIfSuccesful';
+import { GpsData, Project, VideoData } from '@/src/types';
 import { Map, PathsToDraw } from 'components/map';
 import { useEffect, useState } from 'react';
+import { Cache } from '@/src/lib/indexeddb';
 
 const getMapData = (
-  gpsData: GpsData | null | undefined,
+  gpsData: GpsData[] | null | undefined,
 ): PathsToDraw | undefined => {
   // Logic to get map data based on selectedVideo
   if (gpsData) {
     const data = gpsData.reduce((acc, current) => {
       if (current) {
-        acc.push([current.longitude, current.latitude]);
+        acc.push(current.map((point) => [point.longitude, point.latitude]));
       }
 
       return acc;
-    }, [] as [number, number][]);
+    }, [] as [number, number][][]);
 
-    return [data];
+    return data;
   }
 
   return undefined;
 };
 
 const ProjectMapContainer = () => {
-  const gState = useGlobalState();
-  const selectedVideo = gState.selectedVideo.get({
-    noproxy: true,
-  });
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
+  const gState = useGlobalState();
+  const project = gState.selectedProject.get({ noproxy: true });
+  const selectedProject = getResponseIfSuccesful<Project>(project as Project);
 
   useEffect(() => {
-    if (selectedVideo && !('status' in selectedVideo)) {
-      const data = selectedVideo.gps_data;
+    selectedProject &&
+      Cache.get<VideoData>(
+        'videoMetadata',
+        selectedProject.project_items.map((item) => item.video_url),
+      )
+        .then((data) => {
+          const filteredData = data.filter((d) => !!d);
+          const gpsData = filteredData.map((d) => d.gps_data) as GpsData[];
 
-      setPathsToDraw(getMapData(data as GpsData | null | undefined));
-    }
-  }, [selectedVideo]);
+          setPathsToDraw(getMapData(gpsData));
+        })
+        .catch((e) => {
+          // ignore cache errors
+          console.error('Error fetching from cache', e);
+        });
+  }, [selectedProject]);
 
+  if (!pathsToDraw) return null;
   return <Map pathsToDraw={pathsToDraw} />;
 };
 

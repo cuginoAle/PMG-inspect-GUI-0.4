@@ -25,6 +25,8 @@ type GetFilesListResponse = Array<FileInfo> | FetchError;
 type GetProjectResponse = Project | FetchError | LoadingState;
 type GetVideoMetadataResponse = VideoData | FetchError | LoadingState;
 
+type ResponseType<T> = T | FetchError | LoadingState;
+
 export type {
   CameraData,
   FetchError,
@@ -40,4 +42,5 @@ export type {
   ProjectItem,
   RoadData,
   VideoData,
+  ResponseType,
 };
