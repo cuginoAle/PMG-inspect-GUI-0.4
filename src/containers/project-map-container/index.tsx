@@ -33,6 +33,7 @@ const ProjectMapContainer = () => {
 
   useEffect(() => {
     selectedProject &&
+      // Fetch video metadata from IndexedDB for all project items
       Cache.get<VideoData>(
         'videoMetadata',
         selectedProject.project_items.map((item) => item.video_url),
