@@ -52,10 +52,14 @@
   }
 }
 
-.title {
-  text-align: center;
-
-  strong {
+.appName {
+  &::first-letter {
     color: var(--green-10);
   }
+}
+
+.appVersion {
+  color: var(--amber-10);
+  font-weight: bold;
+  font-size: 1em;
 }

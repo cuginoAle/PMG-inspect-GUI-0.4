@@ -18,10 +18,12 @@ const Greetings = () => {
 
         <Card>
           <Flex direction="column" gap="6" p="6">
-            <Heading as="h1" size="8" className={styles.title}>
-              <strong>P</strong>avement <strong>C</strong>
-              ondition <strong>I</strong>nspector
-            </Heading>
+            <Flex gap="4" align="end" justify={'center'}>
+              <Heading as="h1" size="8">
+                <div className={styles.appName}>Inspect WebUI</div>
+              </Heading>
+              <span className={styles.appVersion}>ver 0.40</span>
+            </Flex>
             <ul>
               <li>
                 <CheckCircledIcon />
