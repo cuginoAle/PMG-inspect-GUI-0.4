@@ -3,8 +3,8 @@ import mapboxgl from 'mapbox-gl';
 import { useRef, useEffect, useState } from 'react';
 import styles from './style.module.css';
 import { LngLatLike } from 'mapbox-gl';
-import { useDrawPaths } from './useDrawPaths';
 import { useDebounce } from '@/src/hooks/useDebounce';
+import React from 'react';
 
 const STANDARD_MAP_STYLE = 'mapbox://styles/mapbox/standard';
 const SATELLITE_MAP_STYLE = 'mapbox://styles/mapbox/satellite';
@@ -17,58 +17,67 @@ const MAP_STYLE = {
 type PathsToDraw = LngLatLike[][];
 
 interface MapProps {
-  pathsToDraw?: PathsToDraw;
+  onStyleLoaded?: (loaded: boolean) => void;
 }
 
-const Map = ({ pathsToDraw }: MapProps) => {
-  const mapRef = useRef<mapboxgl.Map | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
+  ({ onStyleLoaded }: MapProps, ref) => {
+    const mapRef = useRef<mapboxgl.Map | null>(null);
+    const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const [styleLoaded, setStyleLoaded] = useState(false);
+    const [_, setStyleLoaded] = useState(false);
 
-  useEffect(() => {
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiY3VnaW5vYWxlIiwiYSI6ImNtZWZvOGs0djB0c3UyaXM5dDhhM3k5eGUifQ.gL7XlJOF-fF42nZaeNnMAw';
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current as HTMLElement,
-      style: MAP_STYLE.standard,
-      center: [-74.0242, 40.6941],
-      zoom: 10.12,
-    });
+    useEffect(() => {
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoiY3VnaW5vYWxlIiwiYSI6ImNtZWZvOGs0djB0c3UyaXM5dDhhM3k5eGUifQ.gL7XlJOF-fF42nZaeNnMAw';
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current as HTMLElement,
+        style: MAP_STYLE.standard,
+        center: [-74.0242, 40.6941],
+        zoom: 10.12,
+      });
 
-    mapRef.current.on('style.load', () => {
-      setStyleLoaded(true);
+      if (typeof ref === 'function') {
+        ref(mapRef.current);
+      } else if (ref) {
+        ref.current = mapRef.current;
+      }
+
+      mapRef.current.on('style.load', () => {
+        setStyleLoaded(true);
+        onStyleLoaded && onStyleLoaded(true);
+        mapRef.current?.resize();
+      });
+
+      return () => {
+        mapRef.current?.remove();
+      };
+    }, [onStyleLoaded, ref]);
+
+    const debouncedResize = useDebounce(() => {
       mapRef.current?.resize();
-    });
+    }, 100);
 
-    return () => {
-      mapRef.current?.remove();
-    };
-  }, []);
+    useEffect(() => {
+      const container = mapContainerRef.current;
+      if (!container) return;
 
-  const debouncedResize = useDebounce(() => {
-    mapRef.current?.resize();
-  }, 100);
+      const resizeObserver = new ResizeObserver(() => {
+        debouncedResize();
+      });
 
-  useEffect(() => {
-    const container = mapContainerRef.current;
-    if (!container) return;
+      resizeObserver.observe(container);
 
-    const resizeObserver = new ResizeObserver(() => {
-      debouncedResize();
-    });
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, [debouncedResize]);
 
-    resizeObserver.observe(container);
+    return <div className={styles.root} ref={mapContainerRef} />;
+  },
+);
 
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [debouncedResize]);
-
-  useDrawPaths(mapRef, styleLoaded, pathsToDraw);
-
-  return <div className={styles.root} ref={mapContainerRef} />;
-};
+Map.displayName = 'Map';
 
 export { Map };
 export type { PathsToDraw };

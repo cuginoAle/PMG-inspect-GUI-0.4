@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 
+type PathsToDraw = LngLatLike[][];
+
 // Normalize any LngLatLike into a [lng, lat] tuple
 const normalizeCoord = (p: LngLatLike): [number, number] => {
   if (Array.isArray(p)) {
@@ -24,21 +26,23 @@ const normalizeCoord = (p: LngLatLike): [number, number] => {
 const isFiniteCoord = (c: [number, number]) =>
   Number.isFinite(c[0]) && Number.isFinite(c[1]);
 
-export const useDrawPaths = (
-  mapRef: React.RefObject<mapboxgl.Map | null>,
-  styleLoaded: boolean,
-  pathsToDraw?: LngLatLike[][],
-) => {
+interface DrawPathsProps {
+  mapRef: React.RefObject<mapboxgl.Map | null>;
+  styleLoaded: boolean;
+  pathsToDraw?: PathsToDraw;
+}
+
+export const useDrawPaths = (props: DrawPathsProps) => {
   useEffect(() => {
     if (
-      !styleLoaded ||
-      !mapRef.current ||
-      !pathsToDraw ||
-      pathsToDraw.length === 0
+      !props.styleLoaded ||
+      !props.mapRef.current ||
+      !props.pathsToDraw ||
+      props.pathsToDraw.length === 0
     )
       return;
 
-    const map = mapRef.current;
+    const map = props.mapRef.current;
 
     let bounds: mapboxgl.LngLatBounds | null = null;
     let totalPoints = 0;
@@ -47,7 +51,7 @@ export const useDrawPaths = (
     // Build MultiLineString coordinates where each path is a separate line
     const multiLineCoords: number[][][] = [];
 
-    (pathsToDraw || []).forEach((path) => {
+    (props.pathsToDraw || []).forEach((path) => {
       const normalizedPath = (path || [])
         .map(normalizeCoord)
         .filter(isFiniteCoord);
@@ -126,5 +130,7 @@ export const useDrawPaths = (
       if (map.getLayer(layerId)) map.removeLayer(layerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
-  }, [styleLoaded, pathsToDraw, mapRef]);
+  }, [props.styleLoaded, props.pathsToDraw, props.mapRef]);
 };
+
+export type { PathsToDraw };

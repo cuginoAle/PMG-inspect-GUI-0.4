@@ -2,9 +2,10 @@
 import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/getResponseIfSuccesful';
 import { GpsData, Project, VideoData } from '@/src/types';
-import { Map, PathsToDraw } from 'components/map';
-import { useEffect, useState } from 'react';
+import { Map } from 'components/map';
+import { useEffect, useState, useRef } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
+import { PathsToDraw, useDrawPaths } from '@/src/components/map/useDrawPaths';
 
 const getMapData = (
   gpsData: GpsData[] | null | undefined,
@@ -30,10 +31,13 @@ const ProjectMapContainer = () => {
   const gState = useGlobalState();
   const project = gState.selectedProject.get({ noproxy: true });
   const selectedProject = getResponseIfSuccesful<Project>(project as Project);
+  const mapBoxRef = useRef<mapboxgl.Map | null>(null);
+  const [styleLoaded, setStyleLoaded] = useState(false);
 
   useEffect(() => {
     selectedProject &&
       // Fetch video metadata from IndexedDB for all project items
+      // This should ideally come from one api call that fetches metadata for all the project videos
       Cache.get<VideoData>(
         'videoMetadata',
         selectedProject.project_items.map((item) => item.video_url),
@@ -50,8 +54,10 @@ const ProjectMapContainer = () => {
         });
   }, [selectedProject]);
 
+  useDrawPaths({ mapRef: mapBoxRef, styleLoaded, pathsToDraw });
+
   if (!pathsToDraw) return null;
-  return <Map pathsToDraw={pathsToDraw} />;
+  return <Map ref={mapBoxRef} onStyleLoaded={setStyleLoaded} />;
 };
 
 export { ProjectMapContainer };
