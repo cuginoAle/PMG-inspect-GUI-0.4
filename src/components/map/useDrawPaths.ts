@@ -1,26 +1,17 @@
 import { useEffect } from 'react';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 
-type PathsToDraw = LngLatLike[][];
+type PathsToDraw = Record<string, LngLatLike[]>;
 
-// Normalize any LngLatLike into a [lng, lat] tuple
+// Normalize any LngLatLike into a [lng, lat] tuple using Mapbox's built-in converter
 const normalizeCoord = (p: LngLatLike): [number, number] => {
-  if (Array.isArray(p)) {
-    // p can be [lng, lat] (possibly with altitude). We only need first two.
-    return [Number(p[0]), Number(p[1])];
+  try {
+    const ll = mapboxgl.LngLat.convert(p);
+    return [ll.lng, ll.lat];
+  } catch {
+    // Fallback for unexpected shapes; will be filtered out by isFiniteCoord
+    return [Number.NaN, Number.NaN];
   }
-  if (typeof p === 'object' && p !== null) {
-    // Covers LngLat instances and plain objects
-    const anyP = p as any;
-    if (typeof anyP.lng === 'number' && typeof anyP.lat === 'number') {
-      return [anyP.lng, anyP.lat];
-    }
-    if (typeof anyP.lon === 'number' && typeof anyP.lat === 'number') {
-      return [anyP.lon, anyP.lat];
-    }
-  }
-  // Fallback to 0,0 if something unexpected is passed (will be filtered out later)
-  return [Number.NaN, Number.NaN];
 };
 
 const isFiniteCoord = (c: [number, number]) =>
@@ -30,6 +21,7 @@ interface DrawPathsProps {
   mapRef: React.RefObject<mapboxgl.Map | null>;
   styleLoaded: boolean;
   pathsToDraw?: PathsToDraw;
+  highlightPath?: string;
 }
 
 export const useDrawPaths = (props: DrawPathsProps) => {
@@ -38,7 +30,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       !props.styleLoaded ||
       !props.mapRef.current ||
       !props.pathsToDraw ||
-      props.pathsToDraw.length === 0
+      Object.keys(props.pathsToDraw).length === 0
     )
       return;
 
@@ -48,11 +40,15 @@ export const useDrawPaths = (props: DrawPathsProps) => {
     let totalPoints = 0;
     let firstCoord: [number, number] | null = null;
 
-    // Build MultiLineString coordinates where each path is a separate line
-    const multiLineCoords: number[][][] = [];
+    // Build a FeatureCollection of LineString features; each path is a separate feature
+    const features: GeoJSON.Feature<
+      GeoJSON.LineString,
+      { key: string; highlight: boolean }
+    >[] = [];
+    const pathKeys = Object.keys(props.pathsToDraw);
 
-    (props.pathsToDraw || []).forEach((path) => {
-      const normalizedPath = (path || [])
+    (pathKeys || []).forEach((key) => {
+      const normalizedPath = (props.pathsToDraw?.[key] || [])
         .map(normalizeCoord)
         .filter(isFiniteCoord);
       if (normalizedPath.length === 0) return;
@@ -68,32 +64,38 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         }
       });
 
-      multiLineCoords.push(normalizedPath);
+      features.push({
+        type: 'Feature',
+        properties: { key, highlight: key === props.highlightPath },
+        geometry: {
+          type: 'LineString',
+          coordinates: normalizedPath,
+        },
+      });
     });
 
     // If no valid lines, skip
-    if (multiLineCoords.length === 0) return;
+    if (features.length === 0) return;
 
     const sourceId = 'paths-source';
     const layerId = 'paths-layer';
 
-    const feature: GeoJSON.Feature<GeoJSON.MultiLineString> = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'MultiLineString',
-        coordinates: multiLineCoords,
-      },
+    const collection: GeoJSON.FeatureCollection<
+      GeoJSON.LineString,
+      { key: string; highlight: boolean }
+    > = {
+      type: 'FeatureCollection',
+      features,
     };
 
     if (!map.getSource(sourceId)) {
       map.addSource(sourceId, {
         type: 'geojson',
-        data: feature,
+        data: collection,
       });
     } else {
       const src = map.getSource(sourceId) as mapboxgl.GeoJSONSource | undefined;
-      src?.setData(feature);
+      src?.setData(collection);
     }
 
     if (!map.getLayer(layerId)) {
@@ -106,7 +108,13 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#9f8562',
+          // Red when feature.highlight is true, else default color
+          'line-color': [
+            'case',
+            ['==', ['get', 'highlight'], true],
+            '#ff0000',
+            '#9f8562',
+          ],
           'line-width': 10,
         },
       });
@@ -130,7 +138,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       if (map.getLayer(layerId)) map.removeLayer(layerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
-  }, [props.styleLoaded, props.pathsToDraw, props.mapRef]);
+  }, [props.styleLoaded, props.pathsToDraw, props.highlightPath, props.mapRef]);
 };
 
 export type { PathsToDraw };

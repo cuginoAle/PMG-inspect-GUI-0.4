@@ -20,7 +20,13 @@ import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 
-const ProjectTableView = ({ project }: { project: Project }) => {
+const ProjectTableView = ({
+  project,
+  onMouseOver,
+}: {
+  project: Project;
+  onMouseOver?: (projectIterm: ProjectItem) => void;
+}) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -130,6 +136,9 @@ const ProjectTableView = ({ project }: { project: Project }) => {
                 id={getRowId(row.original)}
                 tabIndex={0}
                 className={row.getIsSelected() ? styles.selected : ''}
+                onMouseOver={() => {
+                  onMouseOver?.(row.original);
+                }}
                 onClick={() => {
                   row.toggleSelected(true);
                   onRowSelect?.(row.original);

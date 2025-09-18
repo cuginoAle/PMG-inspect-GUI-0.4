@@ -7,6 +7,7 @@ import { ProjectTableView } from '@/src/components/project-table-view';
 import { LoadingToast } from '@/src/components/loading-toast';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
 import { Warning } from '@/src/components/warning';
+import { ProjectItem } from '@/src/types';
 
 const ProjectTableViewContainer = () => {
   const gState = useGlobalState();
@@ -16,6 +17,10 @@ const ProjectTableViewContainer = () => {
   const projectPath = searchParams.get('path') || undefined;
 
   const project = useFetchProject(projectPath);
+
+  const setHoveredVideoUrl = (projectItem: ProjectItem) => {
+    gState.hoveredVideoUrl.set(projectItem.video_url);
+  };
 
   useEffect(() => {
     setSelectedProject(project);
@@ -42,7 +47,9 @@ const ProjectTableViewContainer = () => {
     );
   }
 
-  return <ProjectTableView project={project} />;
+  return (
+    <ProjectTableView project={project} onMouseOver={setHoveredVideoUrl} />
+  );
 };
 
 export { ProjectTableViewContainer };

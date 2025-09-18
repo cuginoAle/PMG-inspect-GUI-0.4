@@ -6,6 +6,7 @@ import { VideoData, FetchError, LoadingState, Project } from '@/src/types';
 type GlobalState = {
   selectedProject?: Project | FetchError | LoadingState;
   selectedVideo?: VideoData | FetchError | LoadingState;
+  hoveredVideoUrl?: string; // video_url
 };
 
 const globalState = hookstate<GlobalState>(

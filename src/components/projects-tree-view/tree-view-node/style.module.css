@@ -1,7 +1,7 @@
 .root {
   cursor: pointer;
   &:hover {
-    background-color: var(--amber-a3);
+    background-color: var(--amber-2);
   }
 
   &.selected {
