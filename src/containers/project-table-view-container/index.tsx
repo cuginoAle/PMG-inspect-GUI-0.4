@@ -18,8 +18,8 @@ const ProjectTableViewContainer = () => {
 
   const project = useFetchProject(projectPath);
 
-  const setHoveredVideoUrl = (projectItem: ProjectItem) => {
-    gState.hoveredVideoUrl.set(projectItem.video_url);
+  const setHoveredVideoUrl = (projectItem?: ProjectItem) => {
+    gState.hoveredVideoUrl.set(projectItem?.video_url);
   };
 
   useEffect(() => {

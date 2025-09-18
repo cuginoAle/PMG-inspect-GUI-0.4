@@ -25,7 +25,7 @@ const ProjectTableView = ({
   onMouseOver,
 }: {
   project: Project;
-  onMouseOver?: (projectIterm: ProjectItem) => void;
+  onMouseOver?: (projectIterm?: ProjectItem) => void;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -136,8 +136,11 @@ const ProjectTableView = ({
                 id={getRowId(row.original)}
                 tabIndex={0}
                 className={row.getIsSelected() ? styles.selected : ''}
-                onMouseOver={() => {
+                onMouseEnter={() => {
                   onMouseOver?.(row.original);
+                }}
+                onMouseLeave={() => {
+                  onMouseOver?.(undefined);
                 }}
                 onClick={() => {
                   row.toggleSelected(true);
