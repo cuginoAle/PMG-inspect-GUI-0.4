@@ -1,5 +1,7 @@
+import { PmgInspectLogo } from '@/src/components/pmg-inspect-logo';
 import { ProjectFinder } from '@/src/components/project-finder';
-import { Flex, Heading } from '@radix-ui/themes';
+import { Settings } from '@/src/components/settings';
+import { Flex } from '@radix-ui/themes';
 
 const Page = async ({
   searchParams,
@@ -11,9 +13,10 @@ const Page = async ({
 
   return (
     <Flex p="4" height="100%" gap={'2'} direction="column">
-      <Heading size="6" weight={'light'} as="h2">
-        Project finder:
-      </Heading>
+      <Flex justify={'between'} align="center">
+        <PmgInspectLogo />
+        <Settings />
+      </Flex>
 
       <ProjectFinder projectPath={path} />
     </Flex>

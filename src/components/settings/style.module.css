@@ -1,0 +1,11 @@
+.root {
+  svg {
+    color: var(--gray-10);
+  }
+
+  &:hover {
+    svg {
+      color: var(--accent-10);
+    }
+  }
+}

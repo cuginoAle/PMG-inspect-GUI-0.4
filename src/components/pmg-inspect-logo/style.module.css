@@ -1,0 +1,25 @@
+.root {
+  overlay: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  img {
+    object-fit: cover;
+    aspect-ratio: 2/1;
+    height: 100%;
+  }
+}
+
+.inspectText {
+  color: var(--accent-10);
+}
+
+.versionText {
+  font-size: 0.6em;
+}
+
+.textContainer {
+  display: flex;
+  gap: var(--space-1);
+  align-items: baseline;
+}

@@ -22,7 +22,7 @@ const Greetings = () => {
               <Heading as="h1" size="8">
                 <div className={styles.appName}>Inspect WebUI</div>
               </Heading>
-              <span className={styles.appVersion}>ver 0.40</span>
+              <span className={styles.appVersion}>ver 0.4.0</span>
             </Flex>
             <ul>
               <li>
