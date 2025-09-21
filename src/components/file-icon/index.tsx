@@ -10,11 +10,12 @@ const fileIconMap = {
   project: LayersIcon,
   image: ImageIcon,
   video: VideoIcon,
+  other: RadixFileIcon,
 };
 
-type FileType = keyof typeof fileIconMap;
+type FileIconType = keyof typeof fileIconMap & string;
 
-const FileIcon = ({ type }: { type: FileType }) => {
+const FileIcon = ({ type }: { type: FileIconType }) => {
   const Icon = fileIconMap[type] || RadixFileIcon;
   return (
     <div className={`${styles.root} ${styles[type]}`}>
@@ -24,3 +25,4 @@ const FileIcon = ({ type }: { type: FileType }) => {
 };
 
 export { FileIcon };
+export type { FileIconType };

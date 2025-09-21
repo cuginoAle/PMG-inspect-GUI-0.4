@@ -1,7 +1,8 @@
 import type { components } from './api.d.ts';
 
 type FetchError = {
-  status: number;
+  status: 'error';
+  code: string;
   detail: {
     message: string;
   };
@@ -21,11 +22,19 @@ type MediaData = components['schemas']['MediaData'];
 type VideoData = components['schemas']['ParseVideoResponse'];
 type GpsData = VideoData['gps_data'];
 
-type GetFilesListResponse = Array<FileInfo> | FetchError;
-type GetProjectResponse = Project | FetchError | LoadingState;
-type GetVideoMetadataResponse = VideoData | FetchError | LoadingState;
+type GetFilesListResponse =
+  | { status: 'ok'; detail: Array<FileInfo> }
+  | FetchError;
+type GetProjectResponse =
+  | { status: 'ok'; detail: Project }
+  | FetchError
+  | LoadingState;
+type GetVideoMetadataResponse =
+  | { status: 'ok'; detail: VideoData }
+  | FetchError
+  | LoadingState;
 
-type ResponseType<T> = T | FetchError | LoadingState;
+type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
 export type {
   CameraData,

@@ -1,7 +1,7 @@
 import { NodeApi } from 'react-arborist';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
-import { ProjectItem } from './treeview-items/project-item';
+import { FileItem } from './treeview-items/file-item';
 import { FolderItem } from './treeview-items/folder-item';
 
 const TreeViewNode = ({ node }: { node: NodeApi }) => {
@@ -9,7 +9,7 @@ const TreeViewNode = ({ node }: { node: NodeApi }) => {
   const itemInfo: FileInfo = node.data;
 
   return node.isLeaf ? (
-    <ProjectItem itemInfo={itemInfo} className={rootCn} />
+    <FileItem itemInfo={itemInfo} className={rootCn} />
   ) : (
     <FolderItem node={node} itemInfo={itemInfo} className={rootCn} />
   );

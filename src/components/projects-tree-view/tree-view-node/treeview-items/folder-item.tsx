@@ -1,7 +1,7 @@
 import { FileInfo } from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { NodeApi } from 'react-arborist';
-import { FolderIcon } from './folder-icon';
+import { FolderIcon } from 'components/folder-icon';
 import styles from './style.module.css';
 
 const FolderItem = ({

@@ -21,14 +21,15 @@ async function fetchVideoMetadata(
 
         fetching = false;
         if (!res.ok) {
-          reject({ status: res.status, detail: body.detail });
+          reject({ status: 'error', code: res.status, detail: body.detail });
         }
-        resolve(body);
+        resolve({ status: 'ok', detail: body });
       })
       .catch((error) => {
         fetching = false;
         reject({
-          status: error.status,
+          status: 'error',
+          code: error.code || 500,
           detail: { message: error.message },
         } as FetchError);
       });

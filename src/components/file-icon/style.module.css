@@ -7,16 +7,25 @@
   justify-content: center;
   box-shadow: 0 1px 3px var(--black-a10) inset;
   background-color: var(--gray-7);
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 
 .project {
-  background-color: var(--amber-7);
+  background-color: var(--grass-7);
 }
 
 .image {
-  background-color: var(--grass-7);
+  background-color: var(--orange-7);
 }
 
 .video {
   background-color: var(--sky-7);
+}
+
+.other {
+  background-color: var(--gray-7);
 }

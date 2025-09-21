@@ -17,15 +17,15 @@ const ProjectVideoPreviewContainer = () => {
     return null;
   }
 
-  if ('status' in selectedProject && selectedProject.status === 'loading') {
+  if (selectedProject.status === 'loading') {
     return <LoadingToast message="Loading video..." />;
   }
 
-  if ('status' in selectedProject) {
+  if (selectedProject.status === 'error') {
     return <Warning message={selectedProject.detail.message} />;
   }
 
-  const selectedProjectItem = selectedProject.project_items.find(
+  const selectedProjectItem = selectedProject.detail.project_items.find(
     (item) => item.video_url === videoUrl,
   );
 

@@ -1,10 +1,10 @@
 import { FileInfo } from '@/src/types';
-import { FileIcon } from './file-icon';
+import { FileIcon } from 'components/file-icon';
 import { Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import styles from './style.module.css';
 
-const ProjectItem = ({
+const FileItem = ({
   itemInfo,
   className,
 }: {
@@ -32,4 +32,4 @@ const ProjectItem = ({
   );
 };
 
-export { ProjectItem };
+export { FileItem };

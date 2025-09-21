@@ -22,7 +22,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
     setSearchTerm(e.target.value);
   }, []);
 
-  if ('status' in files) {
+  if (files.status === 'error') {
     return (
       <div className="center">
         <Warning
@@ -48,7 +48,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
 
       <div ref={ref} className={styles.tree}>
         <Tree
-          data={files}
+          data={files.detail}
           width={width}
           height={height}
           idAccessor={'relative_path'}

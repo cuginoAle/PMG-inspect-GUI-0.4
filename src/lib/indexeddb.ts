@@ -46,10 +46,12 @@ async function idbGet<T = unknown>(
   store: StoreName,
   key: string,
 ): Promise<T | undefined>;
+
 async function idbGet<T = unknown>(
   store: StoreName,
   keys: string[],
 ): Promise<Array<T | undefined>>;
+
 async function idbGet<T = unknown>(
   store: StoreName,
   keyOrKeys: string | string[],
@@ -103,6 +105,7 @@ async function idbSet<T = unknown>(
 ): Promise<void> {
   if (!isBrowserWithIDB()) return;
   const db = await openDB();
+
   return new Promise<void>((resolve, reject) => {
     const tx = db.transaction(store, 'readwrite');
     const os = tx.objectStore(store);

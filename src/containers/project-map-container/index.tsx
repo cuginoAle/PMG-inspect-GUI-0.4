@@ -1,11 +1,11 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { getResponseIfSuccesful } from '@/src/helpers/getResponseIfSuccesful';
-import { GpsData, Project, VideoData } from '@/src/types';
+import { GpsData, VideoData } from '@/src/types';
 import { Map } from 'components/map';
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
 import { PathsToDraw, useDrawPaths } from '@/src/components/map/useDrawPaths';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const getMapData = (
   gpsData: Record<string, GpsData> | null | undefined,
@@ -32,15 +32,20 @@ const getMapData = (
 const ProjectMapContainer = () => {
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
   const gState = useGlobalState();
-  const project = gState.selectedProject.get({ noproxy: true });
-  const selectedProject = getResponseIfSuccesful<Project>(project as Project);
   const hoveredVideoUrl = gState.hoveredVideoUrl.get();
-  const selectedVideo = gState.selectedVideo.get({ noproxy: true });
+
+  const selectedProject = getResponseIfSuccesful(
+    gState.selectedProject.get({ noproxy: true }),
+  );
+
+  const selectedVideo = getResponseIfSuccesful(
+    gState.selectedVideo.get({ noproxy: true }),
+  );
 
   // Fetch video metadata from IndexedDB for all project items
   // This should ideally come from one api call that fetches metadata for all the project videos
   const videoMetadata = useMemo(() => {
-    return selectedProject
+    return selectedProject?.project_items
       ? Cache.get<VideoData>(
           'videoMetadata',
           selectedProject.project_items.map((item) => item.video_url),

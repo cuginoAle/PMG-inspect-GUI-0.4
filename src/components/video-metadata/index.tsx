@@ -1,29 +1,11 @@
 'use client';
-import { GetVideoMetadataResponse } from '@/src/types';
+import { VideoData } from '@/src/types';
 import { Flex, Table, Text, Theme } from '@radix-ui/themes';
-import { Warning } from 'components/warning';
 import { transformMetadata } from './transform-metadata';
-import { LoadingToast } from 'components/loading-toast';
 
-const VideoMetaData = ({ video }: { video?: GetVideoMetadataResponse }) => {
+const VideoMetaData = ({ video }: { video?: VideoData }) => {
   if (!video) {
     return null;
-  }
-
-  if ('status' in video! && video.status === 'loading') {
-    return (
-      <div className="center">
-        <LoadingToast message="Loading video metadata..." />
-      </div>
-    );
-  }
-
-  if ('status' in video!) {
-    return (
-      <div className="center">
-        <Warning message={video.detail.message} />
-      </div>
-    );
   }
 
   const transformedMetadata = transformMetadata(video.camera_data);

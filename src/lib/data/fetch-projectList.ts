@@ -19,14 +19,18 @@ async function fetchProjectList(
         const body = await res.json();
 
         if (!res.ok) {
-          reject({ status: res.status, detail: body.detail });
+          reject({ code: res.status, status: 'error', detail: body.detail });
         }
 
-        resolve(body);
+        resolve({
+          status: 'ok',
+          detail: body,
+        });
       })
       .catch((error) => {
         reject({
-          status: 'NetworkError',
+          status: 'error',
+          code: 'NetworkError',
           detail: { message: error.message },
         });
       });

@@ -16,14 +16,18 @@ async function fetchProjectDetails(
       .then(async (res) => {
         const body = await res.json();
         if (!res.ok) {
-          reject({ status: res.status, detail: body.detail });
+          reject({ status: 'error', code: res.status, detail: body.detail });
         }
 
-        resolve(body);
+        resolve({
+          status: 'ok',
+          detail: body,
+        });
       })
       .catch((error) => {
         reject({
-          status: error.status,
+          status: 'error',
+          code: error.status,
           detail: { message: error.message },
         } as FetchError);
       });
