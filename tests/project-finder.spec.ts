@@ -1,5 +1,9 @@
 // Uses the Playwright test fixture that applies route-based API mocks (see tests/mocks/playwright-mocks.ts).
 import { test, expect } from './mocks/playwright-mocks';
+import {
+  overrideGetVideoMetadataError,
+  overrideParseProjectError,
+} from './mocks/api-override-helpers';
 import { setValidCredentials } from './helpers';
 
 test('Project finder page', async ({ page, apiUsage }) => {
@@ -45,4 +49,55 @@ test('Project finder page', async ({ page, apiUsage }) => {
 
   // create a snapshot for visual regression testing
   // expect(await page.screenshot()).toMatchSnapshot('project-finder.png');
+});
+
+// Test api calls error handling
+test('Project finder handles API errors - parse_project', async ({
+  page,
+  apiUsage,
+  apiOverrides,
+}) => {
+  await apiUsage.reset();
+  await setValidCredentials(page);
+
+  // Provide an override handler BEFORE navigation so it wins over defaults.
+  // This forces the get_files_list endpoint to return a 500 and exercise the UI error path.
+  apiOverrides.push(
+    overrideParseProjectError({ message: 'What a terrible failure!' }),
+  );
+
+  await page.goto('/protected?path=debug/Briarcliff');
+  const errorMessage = page.locator('text=What a terrible failure!');
+  await expect(errorMessage).toBeVisible();
+
+  // Ensure the endpoint was accounted for in usage (even though overridden)
+  // We expect the original logical endpoint to have been exercised. Since
+  // override uses a different key, we check both for clarity.
+  await apiUsage.expectHit('parse_project_error');
+});
+
+test('Project finder handles API errors - video-metadata', async ({
+  page,
+  apiUsage,
+  apiOverrides,
+}) => {
+  await apiUsage.reset();
+  await setValidCredentials(page);
+
+  // Provide an override handler BEFORE navigation so it wins over defaults.
+  // This forces the get_video_metadata endpoint to return a 500 and exercise the UI error path.
+  apiOverrides.push(
+    overrideGetVideoMetadataError({ message: 'Video metadata failure!' }),
+  );
+
+  await page.goto(
+    '/protected?path=debug/Briarcliff&videoUrl=https%3A%2F%2Fstorage.googleapis.com%2Fbriarcliff_manor_2025_videos%2FBISHOP%2520LN_01.MP4',
+  );
+  const errorMessage = page.locator('text=Video metadata failure!');
+  await expect(errorMessage).toBeVisible();
+
+  // Ensure the endpoint was accounted for in usage (even though overridden)
+  // We expect the original logical endpoint to have been exercised. Since
+  // override uses a different key, we check both for clarity.
+  await apiUsage.expectHit('get_video_metadata_error');
 });

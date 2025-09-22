@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { apiHandlers } from './handlers';
+import { apiHandlers, ApiHandler } from './handlers';
 
 // Route-interception based fixture (replaces MSW). This avoids service worker startup timing issues
 // and keeps mocks colocated with test assets.
@@ -11,9 +11,20 @@ export const test = base.extend<{
     expectHit: (endpointKey: string) => Promise<void>;
   };
   clientUsage: Record<string, number>;
+  /**
+   * Optional per-test API handler overrides. These run BEFORE the default handlers.
+   * Useful for forcing error conditions without relying on route ordering battles.
+   */
+  apiOverrides: ApiHandler[];
 }>({
+  apiOverrides: [
+    async ({}, use) => {
+      await use([]);
+    },
+    { auto: false },
+  ],
   apiMocksApplied: [
-    async ({ page }, use) => {
+    async ({ page, apiOverrides }, use) => {
       const clientUsage: Record<string, number> = {};
       const bump = (k: string) => {
         clientUsage[k] = (clientUsage[k] || 0) + 1;
@@ -37,7 +48,9 @@ export const test = base.extend<{
             pathname,
           );
         }
-        for (const h of apiHandlers) {
+        // Compose overrides first (highest precedence), then default handlers
+        const composed: ApiHandler[] = [...apiOverrides, ...apiHandlers];
+        for (const h of composed) {
           if (h.matches(pathname, url)) {
             try {
               const handled = await h.handle({ route, url, pathname, bump });
