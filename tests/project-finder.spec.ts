@@ -12,6 +12,8 @@ test('Project finder page', async ({ page, apiUsage }) => {
   );
   await expect(projectFinder).toBeVisible();
 
+  await page.waitForLoadState('networkidle');
+
   // type in the search box and verify results update (basic sanity check)
   await projectFinder.fill('Briarcliff');
   const searchResults = page
