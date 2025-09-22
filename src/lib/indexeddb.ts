@@ -37,6 +37,52 @@ function openDB(): Promise<IDBDatabase> {
 
 type CacheRecord<T> = { key: string; value: T; timestamp: number };
 
+// --- Change listener infrastructure ---------------------------------------
+type StoreChangeListener = (store: StoreName) => void;
+const changeListeners = new Set<StoreChangeListener>();
+
+// --- Batching infrastructure ----------------------------------------------
+let batchLevel = 0; // supports nested batching
+const pendingStores = new Set<StoreName>();
+
+function recordMutation(store: StoreName) {
+  if (batchLevel > 0) {
+    pendingStores.add(store);
+  } else {
+    notifyChange(store);
+  }
+}
+
+function flushPending() {
+  if (pendingStores.size === 0) return;
+  pendingStores.forEach((s) => notifyChange(s));
+  pendingStores.clear();
+}
+
+function notifyChange(store: StoreName) {
+  if (changeListeners.size === 0) return;
+  // Fire listeners in try/catch so one failing listener doesn't block others.
+  changeListeners.forEach((listener) => {
+    try {
+      listener(store);
+    } catch (err) {
+      // Swallow errors – optionally log in dev.
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn('[Cache] change listener failed', err);
+      }
+    }
+  });
+}
+
+/** Register a callback fired whenever a store mutating operation completes.
+ * Returns an unsubscribe function.
+ */
+function onChange(listener: StoreChangeListener): () => void {
+  changeListeners.add(listener);
+  return () => changeListeners.delete(listener);
+}
+
 /**
  * Get a value (or multiple values) from IndexedDB.
  * - When passing a single key (string), resolves to the stored value (or undefined).
@@ -111,12 +157,46 @@ async function idbSet<T = unknown>(
     const os = tx.objectStore(store);
     const rec: CacheRecord<T> = { key, value, timestamp: Date.now() };
     const req = os.put(rec);
-    req.onsuccess = () => resolve();
     req.onerror = () => reject(req.error ?? new Error('IndexedDB set error'));
+    tx.oncomplete = () => {
+      recordMutation(store);
+      resolve();
+    };
+    tx.onerror = () => {
+      // If transaction fails, ensure promise rejects (req.onerror might not fire for all cases)
+      reject(tx.error ?? new Error('IndexedDB transaction error'));
+    };
   });
+}
+
+/**
+ * Batch multiple cache mutations so that only a single notification per store
+ * is emitted after the batch completes. Supports nesting.
+ *
+ * Example:
+ * await Cache.batch(async () => {
+ *   await Cache.set('projectDetails', 'a', 1);
+ *   await Cache.set('projectDetails', 'b', 2); // Only one notification fired
+ * });
+ */
+async function batch<T>(fn: () => Promise<T> | T): Promise<T> {
+  batchLevel++;
+  try {
+    const result = await fn();
+    return result;
+  } finally {
+    batchLevel--;
+    if (batchLevel === 0) {
+      flushPending();
+    }
+  }
 }
 
 export const Cache = {
   get: idbGet,
   set: idbSet,
+  onChange,
+  batch,
 } as const;
+
+export type { StoreName };

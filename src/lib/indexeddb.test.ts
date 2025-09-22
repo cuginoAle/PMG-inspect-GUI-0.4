@@ -29,29 +29,39 @@ function installIndexedDBMock() {
       }
     },
     transaction(_name: StoreName, _mode: 'readonly' | 'readwrite') {
-      return {
+      let pending = 0;
+      const tx: any = {
         objectStore(storeName: StoreName) {
           return {
             get(key: string) {
               const req: any = {};
+              pending++;
               setTimeout(() => {
                 const rec = dbData[storeName].get(key);
                 req.result = rec;
                 req.onsuccess && req.onsuccess();
+                if (--pending === 0) {
+                  tx.oncomplete && tx.oncomplete();
+                }
               }, 0);
               return req;
             },
             put(rec: CacheRecord<unknown>) {
               const req: any = {};
+              pending++;
               setTimeout(() => {
                 dbData[storeName].set(rec.key, rec);
                 req.onsuccess && req.onsuccess();
+                if (--pending === 0) {
+                  tx.oncomplete && tx.oncomplete();
+                }
               }, 0);
               return req;
             },
           };
         },
       };
+      return tx;
     },
   } as any;
 
@@ -127,5 +137,34 @@ describe('Cache IndexedDB helpers', () => {
 
     // Restore
     (window as any).indexedDB = original;
+  });
+
+  test('batch groups multiple notifications per store', async () => {
+    const events: string[] = [];
+    const unsub = Cache.onChange((store) => events.push(store));
+    await Cache.batch(async () => {
+      await Cache.set('projectDetails', 'a', 1);
+      await Cache.set('projectDetails', 'b', 2);
+      await Cache.set('videoMetadata', 'v1', { foo: true });
+    });
+    // Allow microtasks to flush
+    await new Promise((r) => setTimeout(r, 5));
+    expect(events.sort()).toEqual(['projectDetails', 'videoMetadata']);
+    unsub();
+  });
+
+  test('nested batch still single notification per store', async () => {
+    const events: string[] = [];
+    const unsub = Cache.onChange((store) => events.push(store));
+    await Cache.batch(async () => {
+      await Cache.set('projectDetails', 'x', 1);
+      await Cache.batch(async () => {
+        await Cache.set('projectDetails', 'y', 2);
+        await Cache.set('videoMetadata', 'vm', { bar: 1 });
+      });
+    });
+    await new Promise((r) => setTimeout(r, 5));
+    expect(events.sort()).toEqual(['projectDetails', 'videoMetadata']);
+    unsub();
   });
 });
