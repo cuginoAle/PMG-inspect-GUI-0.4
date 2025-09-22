@@ -93,7 +93,9 @@ export function middleware(request: NextRequest) {
     resetAttempts(clientKey);
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  return response;
 }
 
 export const config = {

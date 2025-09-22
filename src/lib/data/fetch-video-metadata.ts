@@ -30,7 +30,7 @@ async function fetchVideoMetadata(
         reject({
           status: 'error',
           code: error.code || 500,
-          detail: { message: error.message },
+          detail: { message: error?.message || error },
         } as FetchError);
       });
   });

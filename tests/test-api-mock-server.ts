@@ -25,34 +25,6 @@ function hit(key: RequestName) {
   usage[key] = (usage[key] || 0) + 1;
 }
 
-// Minimal OpenAPI spec sufficient for generate-api-types script.
-const openApiSpec = {
-  openapi: '3.0.0',
-  info: { title: 'Test Mock API', version: '1.0.0' },
-  paths: {
-    '/api/v1/get_files_list': {
-      get: {
-        summary: 'Get files list',
-        responses: { '200': { description: 'OK' } },
-      },
-    },
-    '/api/v1/parse_project': {
-      get: {
-        summary: 'Parse project',
-        parameters: [
-          {
-            name: 'relative_path',
-            in: 'query',
-            required: false,
-            schema: { type: 'string' },
-          },
-        ],
-        responses: { '200': { description: 'OK' } },
-      },
-    },
-  },
-};
-
 export interface MockApiServer {
   close: () => Promise<void>;
   port: number;
@@ -74,10 +46,7 @@ export function startMockApiServer(port = 8088): Promise<MockApiServer> {
         res.statusCode = 204;
         return res.end();
       }
-      if (req.url.startsWith('/openapi.json')) {
-        res.setHeader('Content-Type', 'application/json');
-        return res.end(JSON.stringify(openApiSpec));
-      }
+
       if (req.url.startsWith('/api/v1/get_files_list')) {
         hit('get_files_list');
         console.log('[mock-api] GET /api/v1/get_files_list');
@@ -92,7 +61,9 @@ export function startMockApiServer(port = 8088): Promise<MockApiServer> {
       }
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ error: 'Unhandled test API call' }));
+      res.end(
+        JSON.stringify({ detail: { message: 'Unhandled test API call' } }),
+      );
     });
 
     server.on('error', (err: any) => {
