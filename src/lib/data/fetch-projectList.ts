@@ -1,4 +1,4 @@
-import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
+import { ENDPOINT } from '@/src/constants/api-end-points';
 import { GetFilesListResponse } from '@/src/types';
 
 async function fetchProjectList(
@@ -10,7 +10,7 @@ async function fetchProjectList(
   }
 
   const fullUrl =
-    GET_FILES_ENDPOINT.LIST +
+    ENDPOINT.PROJECT.LIST +
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
   return new Promise((resolve, reject) => {

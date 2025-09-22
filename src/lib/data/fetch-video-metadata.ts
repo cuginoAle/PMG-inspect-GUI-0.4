@@ -1,4 +1,4 @@
-import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
+import { ENDPOINT } from '@/src/constants/api-end-points';
 import { FetchError, GetVideoMetadataResponse } from '@/src/types';
 
 let fetching = false;
@@ -7,7 +7,7 @@ async function fetchVideoMetadata(
 ): Promise<GetVideoMetadataResponse | undefined> {
   if (!videoUrl) return;
 
-  const fullUrl = `${GET_FILES_ENDPOINT.VIDEOS}?video_url=${encodeURIComponent(
+  const fullUrl = `${ENDPOINT.VIDEOS}?video_url=${encodeURIComponent(
     videoUrl,
   )}`;
 

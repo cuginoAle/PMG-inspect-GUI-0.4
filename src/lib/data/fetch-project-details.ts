@@ -1,4 +1,4 @@
-import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
+import { ENDPOINT } from '@/src/constants/api-end-points';
 import { FetchError, GetProjectResponse } from '@/src/types';
 
 async function fetchProjectDetails(
@@ -8,7 +8,7 @@ async function fetchProjectDetails(
     return Promise.resolve(undefined);
   }
   const fullUrl = `${
-    GET_FILES_ENDPOINT.DETAILS
+    ENDPOINT.PROJECT.DETAILS
   }?relative_path=${encodeURIComponent(path)}`;
 
   return new Promise((resolve, reject) => {
