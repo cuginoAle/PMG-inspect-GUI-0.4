@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import projectList from './stubs/project-list.json';
-import projectDetails from './stubs/project-details.json';
+import { apiHandlers } from './handlers';
 
 // Route-interception based fixture (replaces MSW). This avoids service worker startup timing issues
 // and keeps mocks colocated with test assets.
@@ -19,57 +18,53 @@ export const test = base.extend<{
       const bump = (k: string) => {
         clientUsage[k] = (clientUsage[k] || 0) + 1;
       };
-      // Single consolidated handler for all API v1 requests to avoid overlap ambiguity
-      await page.route('**/api/v1/**', async (route) => {
-        const url = route.request().url();
-        const parsed = new URL(url);
-        const pathname = parsed.pathname; // e.g. /api/v1/parse_project
-        if (pathname.endsWith('/parse_project')) {
-          const rel = parsed.searchParams.get('relative_path');
-          bump('parse_project');
-          console.log('[TEST MOCK] Intercept parse_project', { url, relative_path: rel });
-          if (!rel) {
-            await route.fulfill({
-              status: 400,
-              contentType: 'application/json',
-              body: JSON.stringify({
-                detail: [
-                  {
-                    type: 'missing',
-                    loc: ['query', 'relative_path'],
-                    msg: 'Field required',
-                    input: null,
-                  },
-                ],
-              }),
-            });
-            return;
+      // Some code paths use direct origin (/api/v1/...), browser paths use proxy (/api/proxy/api/v1/...).
+      // We intercept BOTH so tests don't depend on window.__API_DIRECT__ flag.
+      const handler = async (route: any) => {
+        const urlStr = route.request().url();
+        const url = new URL(urlStr);
+        let pathname = url.pathname; // e.g. /api/proxy/api/v1/parse_project OR /api/v1/parse_project
+        // Normalize proxy prefix so handlers can just match on /api/v1/*
+        if (pathname.startsWith('/api/proxy/')) {
+          pathname = pathname.replace('/api/proxy/', '/');
+        }
+        // Debug log to trace interception occurrences
+        if (process.env.DEBUG_MOCKS) {
+          console.log(
+            '[TEST MOCK] Intercept raw:',
+            url.pathname,
+            'normalized:',
+            pathname,
+          );
+        }
+        for (const h of apiHandlers) {
+          if (h.matches(pathname, url)) {
+            try {
+              const handled = await h.handle({ route, url, pathname, bump });
+              if (handled) return;
+            } catch (e) {
+              console.error(`[TEST MOCK] Handler ${h.key} threw`, e);
+              await route.fulfill({
+                status: 500,
+                contentType: 'application/json',
+                body: JSON.stringify({ error: `Handler ${h.key} failed` }),
+              });
+              return;
+            }
           }
-          await route.fulfill({
-            status: 200,
-            contentType: 'application/json',
-            body: JSON.stringify(projectDetails),
-          });
-          return;
         }
-        if (pathname.endsWith('/get_files_list')) {
-          bump('get_files_list');
-            console.log('[TEST MOCK] Intercept get_files_list', { url });
-            await route.fulfill({
-              status: 200,
-              contentType: 'application/json',
-              body: JSON.stringify(projectList),
-            });
-            return;
-        }
-        // Unknown endpoint under /api/v1/
-        console.error('[TEST MOCK] Unhandled API call (fallback):', url);
+        console.error('[TEST MOCK] Unhandled API call (fallback):', urlStr);
         await route.fulfill({
           status: 500,
           contentType: 'application/json',
           body: JSON.stringify({ error: 'Unhandled test API call' }),
         });
-      });
+      };
+
+      // Direct (SSR or forced direct mode)
+      await page.route('**/api/v1/**', handler);
+      // Proxy-prefixed (browser default path)
+      await page.route('**/api/proxy/api/v1/**', handler);
       // expose clientUsage snapshot via symbol on page if needed later
       (page as any)._clientApiUsage = clientUsage;
       await use(true);
@@ -77,16 +72,37 @@ export const test = base.extend<{
     { auto: true },
   ],
   apiUsage: [
-    async ({}, use) => {
+    async ({ page }, use) => {
       const base = 'http://localhost:8088';
       const api = {
+        // Return merged usage: server-side mock API + client route interception counts.
         get: async () => {
-          const res = await fetch(`${base}/__mock-usage__`);
-          const data = (await res.json()) as { usage: Record<string, number> };
-          return data.usage || {};
+          let serverUsage: Record<string, number> = {};
+          try {
+            const res = await fetch(`${base}/__mock-usage__`);
+            const data = (await res.json()) as {
+              usage: Record<string, number>;
+            };
+            serverUsage = data.usage || {};
+          } catch {
+            // server may not be running (ALLOW_REAL_BACKEND scenario) – ignore
+          }
+          const clientUsage: Record<string, number> =
+            (page as any)._clientApiUsage || {};
+          return { ...serverUsage, ...clientUsage };
         },
         reset: async () => {
-          await fetch(`${base}/__mock-usage__/reset`);
+          try {
+            await fetch(`${base}/__mock-usage__/reset`);
+          } catch {
+            /* ignore */
+          }
+          // Clear client side counts too
+          if ((page as any)._clientApiUsage) {
+            Object.keys((page as any)._clientApiUsage).forEach(
+              (k) => delete (page as any)._clientApiUsage[k],
+            );
+          }
         },
         expectHit: async (endpointKey: string) => {
           const usage = await api.get();

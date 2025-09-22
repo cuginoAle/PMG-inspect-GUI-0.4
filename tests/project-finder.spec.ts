@@ -34,6 +34,15 @@ test('Project finder page', async ({ page, apiUsage }) => {
   });
   await expect(firstTableCell).toBeVisible();
 
+  const metaData = page.locator('text=Video Metadata:');
+
+  await expect(metaData).toBeVisible();
+
+  // Verify API usage
+  await apiUsage.expectHit('get_files_list');
+  await apiUsage.expectHit('parse_project');
+  await apiUsage.expectHit('parse_video');
+
   // create a snapshot for visual regression testing
   // expect(await page.screenshot()).toMatchSnapshot('project-finder.png');
 });
