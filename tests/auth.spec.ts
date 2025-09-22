@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { setValidCredentials } from './helpers';
+import { label } from '@/package.json';
 
 test('homepage has correct title', async ({ page }) => {
   await page.goto('/');
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/PMG Inspect/);
+  await expect(page).toHaveTitle(label);
 });
 
 test('set valid credentials and access protected page', async ({ page }) => {
