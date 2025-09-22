@@ -28,8 +28,7 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
     const [_, setStyleLoaded] = useState(false);
 
     useEffect(() => {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiY3VnaW5vYWxlIiwiYSI6ImNtZWZvOGs0djB0c3UyaXM5dDhhM3k5eGUifQ.gL7XlJOF-fF42nZaeNnMAw';
+      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current as HTMLElement,
         style: MAP_STYLE.standard,

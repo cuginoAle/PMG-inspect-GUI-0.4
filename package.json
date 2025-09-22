@@ -60,7 +60,6 @@
     "jest-environment-jsdom": "^30.0.5",
     "jiti": "^2.5.1",
     "knip": "^5.63.1",
-    "msw": "^2.11.3",
     "typed-css-modules": "^0.9.1",
     "typescript": "^5"
   }

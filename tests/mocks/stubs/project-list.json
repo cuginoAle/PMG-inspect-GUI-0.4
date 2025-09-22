@@ -1,38 +1,6 @@
 [
   {
     "file_type": "folder",
-    "name": "pci_curves",
-    "relative_path": "pci_curves",
-    "content": [
-      {
-        "file_type": "folder",
-        "name": "test",
-        "relative_path": "pci_curves/test",
-        "content": []
-      },
-      {
-        "file_type": "folder",
-        "name": "q_curvers",
-        "relative_path": "pci_curves/q_curvers",
-        "content": []
-      },
-      {
-        "file_type": "project",
-        "name": "curve",
-        "relative_path": "pci_curves/curve.xlsx",
-        "size": 71679.0,
-        "last_modified": "2025-08-17T12:45:02.527714Z"
-      }
-    ]
-  },
-  {
-    "file_type": "folder",
-    "name": "models",
-    "relative_path": "models",
-    "content": []
-  },
-  {
-    "file_type": "folder",
     "name": "ground_truth",
     "relative_path": "ground_truth",
     "content": [
