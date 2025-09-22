@@ -19,12 +19,32 @@ This project also requires a running instance of the backend service, which prov
 
 ### Environment Configuration
 
-Create a `.env.local` file in the root of the project and add the credentials for Basic Authentication:
+Copy `.env.example` to `.env.local` and adjust values as needed. At minimum set credentials for Basic Authentication:
 
 ```
 PROTECTED_BASIC_AUTH_USER=yourusername
 PROTECTED_BASIC_AUTH_PASS=yourpassword
 ```
+
+If you need Mapbox features, also set:
+
+```
+NEXT_PUBLIC_MAPBOX_API_KEY=your-mapbox-token
+```
+
+By default the app proxies browser API calls through Next.js to avoid CORS (notably Safari strictness). The backend origin defaults to `http://localhost:8088` but can be overridden:
+
+```
+NEXT_PUBLIC_API_BASE_URL=https://your-backend.example.com
+```
+
+To disable the proxy and call the backend directly from the browser (requires proper CORS headers), set:
+
+```
+NEXT_PUBLIC_API_DIRECT=1
+```
+
+You normally should NOT enable direct mode during development unless explicitly testing backend CORS.
 
 ### Setup and Installation
 
@@ -102,15 +122,17 @@ Notes:
 
 ### Environment Variables (Testing / Mocks)
 
-| Variable                                                  | Purpose                                                                        | Default Behavior                    |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------- |
-| `NO_MOCK_API`                                             | Skip starting the mock API HTTP server in tests                                | Mock server starts if unset         |
-| `ALLOW_REAL_BACKEND`                                      | Allow tests to proceed when port `8088` is already in use (disables fail-fast) | Fail fast on port conflict          |
-| `NO_SSR_FETCH_PATCH`                                      | Disable SSR `global.fetch` monkey patch interception                           | Patch enabled                       |
-| `PROTECTED_BASIC_AUTH_USER` / `PROTECTED_BASIC_AUTH_PASS` | Credentials for protected route basic auth                                     | Required locally                    |
-| `NEXT_PUBLIC_API_BASE_URL` (future)                       | Override API base for dynamic routing / isolation                              | Fallback to `http://localhost:8088` |
-| `E2E_TEST`                                                | Indicates E2E context to server-side code (set by Playwright webServer cmd)    | `1` during Playwright runs          |
-| `NEXT_PUBLIC_E2E_TEST`                                    | Indicates E2E context to client-side/browser code                              | `1` during Playwright runs          |
+| Variable                                                  | Purpose                                                                        | Default Behavior            |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------- |
+| `NO_MOCK_API`                                             | Skip starting the mock API HTTP server in tests                                | Mock server starts if unset |
+| `ALLOW_REAL_BACKEND`                                      | Allow tests to proceed when port `8088` is already in use (disables fail-fast) | Fail fast on port conflict  |
+| `NO_SSR_FETCH_PATCH`                                      | Disable SSR `global.fetch` monkey patch interception                           | Patch enabled               |
+| `PROTECTED_BASIC_AUTH_USER` / `PROTECTED_BASIC_AUTH_PASS` | Credentials for protected route basic auth                                     | Required locally            |
+| `NEXT_PUBLIC_API_BASE_URL`                                | Override backend API origin (used for SSR + proxy target)                      | `http://localhost:8088`     |
+| `NEXT_PUBLIC_API_DIRECT`                                  | Disable proxy rewrites; browser calls backend origin directly                  | Proxy enabled (unset/0)     |
+| `API_PORT`                                                | Helper port value used if `NEXT_PUBLIC_API_BASE_URL` unset                     | 8088                        |
+| `E2E_TEST`                                                | Indicates E2E context to server-side code (set by Playwright webServer cmd)    | `1` during Playwright runs  |
+| `NEXT_PUBLIC_E2E_TEST`                                    | Indicates E2E context to client-side/browser code                              | `1` during Playwright runs  |
 
 If you introduce a new base URL strategy in tests (e.g. an alternate host), add it here for visibility.
 
