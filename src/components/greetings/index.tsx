@@ -2,7 +2,7 @@ import { Button, Card, Flex, Heading, Link, Text } from '@radix-ui/themes';
 import styles from './style.module.css';
 import Image from 'next/image';
 import { CheckCircledIcon } from '@radix-ui/react-icons';
-import { version } from '@/package.json';
+import { version, label } from '@/package.json';
 
 const Greetings = () => {
   return (
@@ -20,9 +20,9 @@ const Greetings = () => {
           <Flex direction="column" gap="6" p="6">
             <Flex gap="4" align="end" justify={'center'}>
               <Heading as="h1" size="8">
-                <div className={styles.appName}>Inspect WebUI</div>
+                <div className={styles.appName}>{label}</div>
               </Heading>
-              <span className={styles.appVersion}>ver 0.4.0</span>
+              <span className={styles.appVersion}>ver {version}</span>
             </Flex>
             <ul>
               <li>

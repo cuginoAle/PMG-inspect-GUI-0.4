@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 
 import { Theme } from '@radix-ui/themes';
 import styles from './page.module.css';
+import { label } from '@/package.json';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'PMG Inspect',
-  description: 'The PMG inspector web tool',
+  title: label,
+  description: 'The PMG Inspect web tool',
 };
 
 export default function RootLayout({
