@@ -1,3 +1,11 @@
 .iconWrapper {
   flex-shrink: 0;
 }
+
+.originIcon {
+  color: var(--accent-a9);
+  svg {
+    display: block;
+    width: 1.2em;
+  }
+}

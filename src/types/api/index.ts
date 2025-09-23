@@ -11,9 +11,11 @@ type FetchError = {
 type LoadingState = {
   status: 'loading';
 };
-
-type FileInfo = components['schemas']['FileInfo'];
+type FileOrigin = 'local' | 'remote';
 type FileType = components['schemas']['FileType'];
+type FileInfo = components['schemas']['FileInfo'] & {
+  file_origin?: FileOrigin;
+};
 type Project = components['schemas']['ParseProjectResponse'];
 type ProjectItem = Project['project_items'][number];
 type RoadData = ProjectItem['road_data'];
@@ -52,4 +54,5 @@ export type {
   RoadData,
   VideoData,
   ResponseType,
+  FileOrigin,
 };

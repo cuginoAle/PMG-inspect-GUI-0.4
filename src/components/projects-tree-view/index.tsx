@@ -1,8 +1,8 @@
 'use client';
 import { Tree } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
-import { Flex, TextField } from '@radix-ui/themes';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { Button, Flex, TextField } from '@radix-ui/themes';
+import { MagnifyingGlassIcon, UploadIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
 import { GetFilesListResponse } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
@@ -33,22 +33,41 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
     );
   }
 
+  const treeViewData = [
+    {
+      content: files.detail,
+      file_type: 'remote',
+      file_origin: 'remote',
+      name: 'Remote',
+      relative_path: 'remote',
+    },
+    {
+      content: [],
+      file_type: 'local',
+      name: 'Local',
+      relative_path: 'local',
+      file_origin: 'local',
+    },
+  ];
+
   return (
     <Flex direction="column" gap="2" height={'100%'}>
-      <TextField.Root
-        name="search"
-        placeholder="Search projects..."
-        onChange={onSearch}
-        size={'3'}
-      >
-        <TextField.Slot>
-          <MagnifyingGlassIcon width="24" height="24" />
-        </TextField.Slot>
-      </TextField.Root>
+      <div className={styles.searchBox}>
+        <TextField.Root
+          name="search"
+          placeholder="Search projects..."
+          onChange={onSearch}
+          size={'3'}
+        >
+          <TextField.Slot>
+            <MagnifyingGlassIcon width="24" height="24" />
+          </TextField.Slot>
+        </TextField.Root>
+      </div>
 
       <div ref={ref} className={styles.tree}>
         <Tree
-          data={files.detail}
+          data={treeViewData}
           width={width}
           height={height}
           idAccessor={'relative_path'}
@@ -56,6 +75,10 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
           rowHeight={32}
           searchTerm={searchTerm}
           openByDefault={false}
+          initialOpenState={{
+            remote: true,
+            local: true,
+          }}
           selection={selectedPath!}
         >
           {({ node, style }) => (
@@ -64,6 +87,11 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
             </div>
           )}
         </Tree>
+      </div>
+      <div className={styles.uploadButtonContainer}>
+        <Button size="2" variant="outline">
+          <UploadIcon /> Upload videos or images
+        </Button>
       </div>
     </Flex>
   );

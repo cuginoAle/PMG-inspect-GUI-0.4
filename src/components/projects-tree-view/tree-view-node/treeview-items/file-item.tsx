@@ -1,8 +1,6 @@
 import { FileInfo } from '@/src/types';
-import { FileIcon } from 'components/file-icon';
-import { Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link';
-import styles from './style.module.css';
+import { FileLogoTitle } from '@/src/components/file-logo-title';
 
 const FileItem = ({
   itemInfo,
@@ -11,23 +9,19 @@ const FileItem = ({
   itemInfo: FileInfo;
   className?: string;
 }) => {
+  const fileType = itemInfo.file_type as 'project' | 'video' | 'image';
+
   return (
     <Link
       href={{
         query: { path: itemInfo.relative_path! },
       }}
     >
-      <Flex gap={'2'} align="center" className={className}>
-        <span className={styles.iconWrapper}>
-          <FileIcon
-            type={itemInfo.file_type as 'project' | 'video' | 'image'}
-          />
-        </span>
-
-        <Flex gap={'2'} align="center">
-          <Text size="2">{itemInfo.name}</Text>
-        </Flex>
-      </Flex>
+      <FileLogoTitle
+        className={className}
+        fileType={fileType}
+        label={itemInfo.name}
+      />
     </Link>
   );
 };

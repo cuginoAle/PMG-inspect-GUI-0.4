@@ -1,4 +1,14 @@
 .tree {
-  height: 100%;
   flex-grow: 1;
+}
+
+.searchBox {
+  flex-shrink: 0;
+}
+
+.uploadButtonContainer {
+  flex-shrink: 0;
+  button {
+    width: 100%;
+  }
 }
