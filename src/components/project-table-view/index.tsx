@@ -107,7 +107,7 @@ const ProjectTableView = ({
       </div>
 
       <div className={styles.tableContainer}>
-        <Table.Root variant="surface" className={styles.tableRoot}>
+        <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
           <Table.Header className={styles.tableHeader}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Table.Row key={headerGroup.id}>

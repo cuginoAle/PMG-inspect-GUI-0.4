@@ -71,8 +71,6 @@ test('Project finder handles API errors - parse_project', async ({
   await expect(errorMessage).toBeVisible();
 
   // Ensure the endpoint was accounted for in usage (even though overridden)
-  // We expect the original logical endpoint to have been exercised. Since
-  // override uses a different key, we check both for clarity.
   await apiUsage.expectHit('parse_project_error');
 });
 
@@ -97,7 +95,5 @@ test('Project finder handles API errors - video-metadata', async ({
   await expect(errorMessage).toBeVisible();
 
   // Ensure the endpoint was accounted for in usage (even though overridden)
-  // We expect the original logical endpoint to have been exercised. Since
-  // override uses a different key, we check both for clarity.
   await apiUsage.expectHit('get_video_metadata_error');
 });
