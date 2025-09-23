@@ -1,4 +1,4 @@
-import { Heading } from '@radix-ui/themes';
+import { Text } from '@radix-ui/themes';
 import { Responsive } from '@radix-ui/themes/props';
 import { FileIcon, FileIconType } from 'components/file-icon';
 import styles from './style.module.css';
@@ -16,19 +16,29 @@ const FileLogoTitle = ({
   label,
   size = 'small',
   className,
+  as = 'p',
+  componentId = 'file-logo-title',
 }: {
   fileType: FileIconType;
   label: string;
   size?: sizeType;
   className?: string;
+  as?: 'label' | 'span' | 'div' | 'p';
+  componentId?: string;
 }) => {
   return (
-    <Heading size={sizeMap[size]} weight="light" as="h2" className={className}>
-      <div className={styles.wrapper}>
+    <Text
+      data-component-id={componentId}
+      size={sizeMap[size]}
+      weight="light"
+      as={as}
+      className={className}
+    >
+      <span className={styles.wrapper}>
         <FileIcon type={fileType} />
         <span className="ellipsis">{label}</span>
-      </div>
-    </Heading>
+      </span>
+    </Text>
   );
 };
 

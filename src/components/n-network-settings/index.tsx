@@ -44,7 +44,7 @@ NetworkSettingsProps) => {
         <Slider
           min={0}
           max={1}
-          step={0.1}
+          step={0.05}
           name={`${name}-confidence`}
           title="Confidence"
           defaultValue={0.5}
@@ -53,7 +53,7 @@ NetworkSettingsProps) => {
         <Slider
           min={0}
           max={1}
-          step={0.1}
+          step={0.05}
           name={`${name}-iou`}
           title="Intersection over Union"
           defaultValue={0.25}

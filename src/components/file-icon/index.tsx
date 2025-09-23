@@ -18,9 +18,9 @@ type FileIconType = keyof typeof fileIconMap & string;
 const FileIcon = ({ type }: { type: FileIconType }) => {
   const Icon = fileIconMap[type] || RadixFileIcon;
   return (
-    <div className={`${styles.root} ${styles[type]}`}>
+    <span className={`${styles.root} ${styles[type]}`}>
       <Icon />
-    </div>
+    </span>
   );
 };
 

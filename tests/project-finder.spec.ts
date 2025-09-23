@@ -21,7 +21,7 @@ test('Project finder page', async ({ page, apiUsage }) => {
   // type in the search box and verify results update (basic sanity check)
   await projectFinder.fill('Briarcliff');
   const searchResults = page
-    .locator('.rt-Text')
+    .locator('[data-component-id="file-logo-title"]')
     .filter({ hasText: 'Briarcliff' });
 
   await expect(searchResults).toHaveCount(3);
@@ -29,7 +29,10 @@ test('Project finder page', async ({ page, apiUsage }) => {
   //when a project is clicked, the details panel should appear
   await searchResults.nth(1).click();
 
-  const detailsPanel = page.locator('h2', { hasText: 'debug/Briarcliff' });
+  const detailsPanel = page.locator(
+    '[data-component-id="project-analysis-dashboard-file-title"]',
+    { hasText: 'debug/Briarcliff' },
+  );
   await expect(detailsPanel).toBeVisible();
 
   // Verify the first table row contains expected text

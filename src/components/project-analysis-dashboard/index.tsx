@@ -28,7 +28,13 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
         <Flex justify={'between'} align="center">
-          <FileLogoTitle fileType={fileType} label={label} size="medium" />
+          <FileLogoTitle
+            as="div"
+            fileType={fileType}
+            label={label}
+            size="medium"
+            componentId="project-analysis-dashboard-file-title"
+          />
           <Button type="button" size={'3'} color="blue" variant="soft">
             <RocketIcon /> Run analysis
           </Button>
