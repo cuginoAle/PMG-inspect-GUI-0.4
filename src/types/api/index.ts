@@ -26,7 +26,8 @@ type GpsData = VideoData['gps_data'];
 
 type GetFilesListResponse =
   | { status: 'ok'; detail: Array<FileInfo> }
-  | FetchError;
+  | FetchError
+  | LoadingState;
 type GetProjectResponse =
   | { status: 'ok'; detail: Project }
   | FetchError

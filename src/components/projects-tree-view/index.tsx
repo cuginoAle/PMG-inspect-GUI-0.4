@@ -4,13 +4,13 @@ import { TreeViewNode } from './tree-view-node';
 import { Button, Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon, UploadIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
-import { GetFilesListResponse } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
-import { Warning } from '@/src/components';
+import { FileInfo } from '@/src/types';
+import { Immutable } from '@hookstate/core';
 
 type ProjectsTreeViewProps = {
-  files: GetFilesListResponse;
+  files: Immutable<FileInfo[]>;
   selectedPath?: string;
 };
 
@@ -22,20 +22,9 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
     setSearchTerm(e.target.value);
   }, []);
 
-  if (files.status === 'error') {
-    return (
-      <div className="center">
-        <Warning
-          message={files.detail.message}
-          title="Error loading projects"
-        />
-      </div>
-    );
-  }
-
   const treeViewData = [
     {
-      content: files.detail,
+      content: files,
       file_type: 'remote',
       file_origin: 'remote',
       name: 'Remote',
