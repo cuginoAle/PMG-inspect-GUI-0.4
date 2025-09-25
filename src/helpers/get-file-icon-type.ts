@@ -1,4 +1,4 @@
-import { FileIconType } from 'components/file-icon';
+import { FileIconType } from '@/src/components';
 
 const images = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'];
 const videos = ['mp4', 'mov', 'avi', 'mkv', 'flv', 'wmv', 'webm', 'mpeg'];
