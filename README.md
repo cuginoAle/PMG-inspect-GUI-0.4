@@ -126,7 +126,6 @@ Notes:
 | --------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------- |
 | `NO_MOCK_API`                                             | Skip starting the mock API HTTP server in tests                                | Mock server starts if unset |
 | `ALLOW_REAL_BACKEND`                                      | Allow tests to proceed when port `8088` is already in use (disables fail-fast) | Fail fast on port conflict  |
-| `NO_SSR_FETCH_PATCH`                                      | Disable SSR `global.fetch` monkey patch interception                           | Patch enabled               |
 | `PROTECTED_BASIC_AUTH_USER` / `PROTECTED_BASIC_AUTH_PASS` | Credentials for protected route basic auth                                     | Required locally            |
 | `NEXT_PUBLIC_API_BASE_URL`                                | Override backend API origin (used for SSR + proxy target)                      | `http://localhost:8088`     |
 | `NEXT_PUBLIC_API_DIRECT`                                  | Disable proxy rewrites; browser calls backend origin directly                  | Proxy enabled (unset/0)     |
@@ -266,18 +265,6 @@ If future endpoints must always be mocked during SSR:
 
 ---
 
-### SSR Fetch Monkey Patch
-
-During tests, server-side (SSR) fetches to `http://localhost:8088/api/v1/get_files_list` and `http://localhost:8088/api/v1/parse_project` are intercepted in `tests/global-setup.ts` by monkey patching `global.fetch`. This guarantees deterministic data even when Next.js renders pages or React Server Components before the browser context exists.
-
-Disable this behavior by setting:
-
-```bash
-NO_SSR_FETCH_PATCH=1 pnpm test:e2e
-```
-
-Or remove the block in `tests/global-setup.ts` if you prefer real backend calls for SSR.
-
 ### Troubleshooting Mock Failures
 
 | Symptom                                     | Likely Cause                                                   | Action                                                              |
@@ -286,7 +273,6 @@ Or remove the block in `tests/global-setup.ts` if you prefer real backend calls 
 | Test fails with port conflict error         | Real backend already bound to 8088                             | Stop real backend OR set `ALLOW_REAL_BACKEND=1` (non-deterministic) |
 | Stale data returned when expecting new stub | Browser served cached response or SSR pre-fetched              | Invalidate cache/remove local storage / ensure unique query param   |
 | `apiUsage.expectHit` fails                  | Endpoint never hit in test                                     | Ensure user interaction triggers fetch (query param/path)           |
-| SSR patch not logging                       | `NO_SSR_FETCH_PATCH=1` set or global fetch replaced elsewhere  | Unset var or move patch earlier in `global-setup.ts`                |
 
 When adding new endpoints:
 
