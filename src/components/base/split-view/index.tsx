@@ -1,5 +1,6 @@
 'use client';
 import { Allotment } from 'allotment';
+// @ts-expect-error: missing type declarations for allotment CSS side-effect import
 import 'allotment/dist/style.css';
 import { Flex } from '@radix-ui/themes';
 import styles from './styles.module.css';

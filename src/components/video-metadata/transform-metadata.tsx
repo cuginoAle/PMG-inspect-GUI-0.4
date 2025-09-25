@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoProModel } from 'components/gopro-model';
+import { GoProModel } from '@/src/components';
 import { Text } from '@radix-ui/themes';
 const dateTimeFormat = new Intl.DateTimeFormat(undefined, {
   dateStyle: 'medium',

@@ -1,4 +1,4 @@
-import { GoProIcon } from 'components/custom-icons/gopro';
+import { GoProIcon } from '@/src/components';
 import { Flex, Text } from '@radix-ui/themes';
 import React from 'react';
 import styles from './style.module.css';

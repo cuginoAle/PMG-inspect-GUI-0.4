@@ -1,10 +1,9 @@
-import { SplitView } from 'components/base/split-view';
+'use client';
+import { SplitView, LoadingToast, ProjectContentView } from '@/src/components';
 
 import styles from './style.module.css';
 import { ProjectsTreeViewContainer } from '@/src/containers/projects-tree-view-container';
 import { Suspense } from 'react';
-import { LoadingToast } from 'components/loading-toast';
-import { ProjectContentView } from 'components/project-content-view';
 
 function ProjectFinder({ projectPath }: { projectPath?: string }) {
   return (

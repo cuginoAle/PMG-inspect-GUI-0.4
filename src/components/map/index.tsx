@@ -79,4 +79,3 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
 Map.displayName = 'Map';
 
 export { Map };
-export type { PathsToDraw };

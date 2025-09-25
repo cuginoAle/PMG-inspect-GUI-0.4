@@ -1,5 +1,5 @@
 'use client';
-import { SplitView } from 'components/base/split-view';
+import { SplitView, ProjectAnalysisDashboard } from '@/src/components';
 
 import styles from './style.module.css';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
@@ -8,7 +8,6 @@ import { Flex, IconButton, Separator } from '@radix-ui/themes';
 import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
-import { ProjectAnalysisDashboard } from 'components/project-analysis-dashboard';
 import { PinBottomIcon, PinTopIcon } from '@radix-ui/react-icons';
 import React from 'react';
 

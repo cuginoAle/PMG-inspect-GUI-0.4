@@ -1,10 +1,13 @@
-import { PmgInspectLogo } from '@/src/components/pmg-inspect-logo';
-import { ProjectFinder } from '@/src/components/project-finder';
-import { Settings } from '@/src/components/settings';
+import {
+  PmgInspectLogo,
+  ProjectFinder,
+  AppSettings,
+  ProjectFinderDataLoader,
+} from '@/src/components';
+
 import { Flex } from '@radix-ui/themes';
 
 import { PageSearchParams } from '@/src/types';
-import { ProjectFinderDataLoader } from '@/src/components/project-finder-data-loader';
 
 const Page = async ({ searchParams }: { searchParams: PageSearchParams }) => {
   const { path: pathSP } = await searchParams;
@@ -15,7 +18,7 @@ const Page = async ({ searchParams }: { searchParams: PageSearchParams }) => {
       <ProjectFinderDataLoader />
       <Flex justify={'between'} align="center">
         <PmgInspectLogo />
-        <Settings />
+        <AppSettings />
       </Flex>
 
       <ProjectFinder projectPath={path} />

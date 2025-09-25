@@ -2,7 +2,7 @@ import { GearIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 import styles from './style.module.css';
 
-const Settings = () => {
+const AppSettings = () => {
   return (
     <IconButton
       variant="soft"
@@ -15,4 +15,4 @@ const Settings = () => {
   );
 };
 
-export { Settings };
+export { AppSettings };

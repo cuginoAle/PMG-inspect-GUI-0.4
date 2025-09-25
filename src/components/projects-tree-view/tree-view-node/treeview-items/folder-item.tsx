@@ -1,9 +1,9 @@
 import { FileInfo } from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { NodeApi } from 'react-arborist';
-import { FolderIcon } from 'components/folder-icon';
+
 import styles from './style.module.css';
-import { HddIcon, RemoteStorageIcon } from 'components/custom-icons/';
+import { HddIcon, RemoteStorageIcon, FolderIcon } from '@/src/components';
 import { FileOrigin } from '@/src/types/api';
 
 const getIconForOrigin = (origin?: FileOrigin) => {

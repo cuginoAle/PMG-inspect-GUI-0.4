@@ -1,24 +1,26 @@
+'use client';
 import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { Project, ResponseType } from '@/src/types';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
-import { useSearchParams } from 'next/navigation';
-import { FileLogoTitle } from '@/src/components/file-logo-title';
+
+import {
+  FileLogoTitle,
+  NetworkSettings,
+  Slider,
+  ProjectPresets,
+} from '@/src/components';
+
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { useMemo } from 'react';
-import { Button, Flex, IconButton, Select } from '@radix-ui/themes';
-import { NetworkSettings } from 'components/n-network-settings';
-import {
-  Cross2Icon,
-  DiscIcon,
-  DotsVerticalIcon,
-  MixerHorizontalIcon,
-  RocketIcon,
-} from '@radix-ui/react-icons';
+import { Button, Flex } from '@radix-ui/themes';
+
+import { Cross2Icon, DiscIcon, RocketIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
-import { Slider } from 'components/slider';
+
+import { useSearchParams } from 'next/navigation';
 
 const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
@@ -43,33 +45,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             componentId="project-analysis-dashboard-file-title"
           />
 
-          <Flex align="center" gap="2">
-            <MixerHorizontalIcon
-              width={20}
-              height={20}
-              color="var(--amber-a9)"
-            />
-            <Select.Root size={'3'} defaultValue="setting-01">
-              <Select.Trigger color="amber" variant="soft" />
-
-              <Select.Content position="popper" align="start">
-                <Select.Group>
-                  <Select.Item value="setting-01">Setting 01</Select.Item>
-                  <Select.Item value="setting-02">Setting 02</Select.Item>
-                  <Select.Item value="setting-03">Setting 03</Select.Item>
-                </Select.Group>
-              </Select.Content>
-            </Select.Root>
-
-            <IconButton
-              variant="soft"
-              color="amber"
-              size="3"
-              aria-label="Add preset"
-            >
-              <DotsVerticalIcon />
-            </IconButton>
-          </Flex>
+          <ProjectPresets />
         </Flex>
 
         <form

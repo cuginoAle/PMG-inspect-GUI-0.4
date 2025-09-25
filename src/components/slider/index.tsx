@@ -1,3 +1,4 @@
+'use client';
 import { Flex, Heading, Text } from '@radix-ui/themes';
 import React, { useCallback, useEffect, useRef } from 'react';
 import styles from './styles.module.css';

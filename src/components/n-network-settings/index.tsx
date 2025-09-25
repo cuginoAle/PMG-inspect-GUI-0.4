@@ -1,22 +1,21 @@
-import { Slider } from 'components/slider';
+import { Slider, NeuralNetworkIcon } from '@/src/components';
 import { Card, Flex, Heading, Switch } from '@radix-ui/themes';
 import styles from './style.module.css';
-import { NeuralNetworkIcon } from 'components/custom-icons';
+
 import React from 'react';
 
 type NetworkSettingsProps = {
   className?: string;
   name: string;
-  // isEnabled?: boolean;
+  isDefaultEnabled?: boolean;
 };
 
 const NetworkSettings = ({
   className,
   name,
-}: // isEnabled = false,
-
-NetworkSettingsProps) => {
-  const [isEnabled, setIsEnabled] = React.useState(false);
+  isDefaultEnabled = false,
+}: NetworkSettingsProps) => {
+  const [isEnabled, setIsEnabled] = React.useState(isDefaultEnabled);
 
   const rootCn = `${styles.root} ${isEnabled ? '' : styles.disabled}`;
   const cn = `${className ?? ''} ${styles.container} `;
@@ -38,6 +37,7 @@ NetworkSettingsProps) => {
             }}
             radius="full"
             name={`${name}-enabled`}
+            defaultChecked={isDefaultEnabled}
             // checked={!!selectedSetting?.enabled}
           />
         </Flex>
@@ -49,6 +49,7 @@ NetworkSettingsProps) => {
           title="Confidence"
           defaultValue={0.5}
           disabled={!isEnabled}
+          valueLabel={(value) => value.toFixed(2)}
         />
         <Slider
           min={0}

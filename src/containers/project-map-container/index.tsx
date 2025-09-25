@@ -1,10 +1,10 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
 import { GpsData, VideoData } from '@/src/types';
-import { Map } from 'components/map';
+import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
-import { PathsToDraw, useDrawPaths } from '@/src/components/map/useDrawPaths';
+
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const getMapData = (

@@ -1,6 +1,6 @@
 import { Text } from '@radix-ui/themes';
 import { Responsive } from '@radix-ui/themes/props';
-import { FileIcon, FileIconType } from 'components/file-icon';
+import { FileIcon, FileIconType } from '@/src/components';
 import styles from './style.module.css';
 
 type sizeType = 'small' | 'medium' | 'large';

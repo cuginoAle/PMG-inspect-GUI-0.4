@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 import { GetFilesListResponse } from '@/src/types';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
-import { Warning } from 'components/warning';
+import { Warning } from '@/src/components';
 
 type ProjectsTreeViewProps = {
   files: GetFilesListResponse;
