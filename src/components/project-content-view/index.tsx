@@ -26,12 +26,14 @@ const ProjectContentView = () => {
             <Flex direction={'column'} gap={'6'} height={'100%'}>
               {!tableExpanded && <ProjectAnalysisDashboard />}
 
-              <Separator
-                className={styles.mainContentSeparator}
-                size={'4'}
-                orientation="horizontal"
-                color="amber"
-              />
+              {!tableExpanded && (
+                <Separator
+                  className={styles.mainContentSeparator}
+                  size={'4'}
+                  orientation="horizontal"
+                  color="amber"
+                />
+              )}
 
               <div className={styles.projectTableWrapper}>
                 <IconButton

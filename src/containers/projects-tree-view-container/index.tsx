@@ -1,5 +1,5 @@
 import { useGlobalState } from '@/src/app/global-state';
-import { Warning, ProjectsTreeView } from '@/src/components';
+import { Warning, ProjectsTreeView, LoadingToast } from '@/src/components';
 
 const ProjectsTreeViewContainer = ({
   projectPath,
@@ -14,7 +14,11 @@ const ProjectsTreeViewContainer = ({
   }
 
   if (projects?.status === 'loading') {
-    return <div>Loading...</div>;
+    return (
+      <div className="center">
+        <LoadingToast message="Loading projects..." />
+      </div>
+    );
   }
 
   if (projects?.status === 'error') {
