@@ -9,3 +9,7 @@
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: var(--space-4);
 }
+
+.runAnalysisButton {
+  border: 1px solid var(--accent-a6);
+}

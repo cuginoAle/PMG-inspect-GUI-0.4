@@ -7,11 +7,18 @@ import { useSearchParams } from 'next/navigation';
 import { FileLogoTitle } from '@/src/components/file-logo-title';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { useMemo } from 'react';
-import { Button, Flex } from '@radix-ui/themes';
+import { Button, Flex, IconButton, Select } from '@radix-ui/themes';
 import { NetworkSettings } from 'components/n-network-settings';
-import { Cross2Icon, DiscIcon, RocketIcon } from '@radix-ui/react-icons';
+import {
+  Cross2Icon,
+  DiscIcon,
+  DotsVerticalIcon,
+  MixerHorizontalIcon,
+  RocketIcon,
+} from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
+import { Slider } from 'components/slider';
 
 const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
@@ -27,7 +34,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
   return project?.project_name ? (
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
-        <Flex justify={'between'} align="center">
+        <Flex align="center" gap="2" justify={'between'}>
           <FileLogoTitle
             as="div"
             fileType={fileType}
@@ -35,9 +42,34 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             size="medium"
             componentId="project-analysis-dashboard-file-title"
           />
-          <Button type="button" size={'3'} color="blue" variant="soft">
-            <RocketIcon /> Run analysis
-          </Button>
+
+          <Flex align="center" gap="2">
+            <MixerHorizontalIcon
+              width={20}
+              height={20}
+              color="var(--amber-a9)"
+            />
+            <Select.Root size={'3'} defaultValue="setting-01">
+              <Select.Trigger color="amber" variant="soft" />
+
+              <Select.Content position="popper" align="start">
+                <Select.Group>
+                  <Select.Item value="setting-01">Setting 01</Select.Item>
+                  <Select.Item value="setting-02">Setting 02</Select.Item>
+                  <Select.Item value="setting-03">Setting 03</Select.Item>
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
+
+            <IconButton
+              variant="soft"
+              color="amber"
+              size="3"
+              aria-label="Add preset"
+            >
+              <DotsVerticalIcon />
+            </IconButton>
+          </Flex>
         </Flex>
 
         <form
@@ -72,7 +104,34 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             <NetworkSettings name="Treatment" />
           </div>
 
-          <Flex gap="2" justify={'end'}>
+          <Flex gap="3" justify={'end'}>
+            <div style={{ width: '300px', marginRight: 'auto' }}>
+              <Slider
+                min={1}
+                max={10}
+                step={0.5}
+                name="sampling-rate"
+                title="Sampling rate"
+                defaultValue={5}
+                valueLabel={(val) => `1 frame / ${val.toFixed(1)}m`}
+              />
+            </div>
+            <Button
+              className={styles.runAnalysisButton}
+              type="button"
+              size={'3'}
+              color="blue"
+              variant="soft"
+            >
+              <RocketIcon /> Run analysis
+            </Button>
+            <div
+              style={{
+                width: '3px',
+                margin: '0 8px',
+                backgroundColor: 'var(--gray-a5)',
+              }}
+            />
             <Button
               type="submit"
               size="3"

@@ -22,3 +22,20 @@
   height: 100%;
   overflow: auto;
 }
+
+.mainContentSeparator {
+  flex-shrink: 0;
+}
+
+.projectTableWrapper {
+  flex-grow: 1;
+  min-height: 400px;
+
+  position: relative;
+}
+
+.pinButton {
+  position: absolute;
+  top: 4px;
+  right: 0;
+}

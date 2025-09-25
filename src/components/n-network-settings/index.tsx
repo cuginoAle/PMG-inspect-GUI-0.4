@@ -32,7 +32,7 @@ NetworkSettingsProps) => {
           </div>
           <Switch
             size="1"
-            color="green"
+            color="amber"
             onClick={() => {
               setIsEnabled((en) => !en);
             }}
