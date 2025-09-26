@@ -1,16 +1,11 @@
 'use client';
 import { hookstate, useHookstate } from '@hookstate/core';
 import { devtools } from '@hookstate/devtools';
-import {
-  GetFilesListResponse,
-  GetProjectResponse,
-  GetVideoMetadataResponse,
-} from '@/src/types';
+import { GetFilesListResponse, GetProjectResponse } from '@/src/types';
 
 type GlobalState = {
   filesList?: GetFilesListResponse;
   selectedProject?: GetProjectResponse;
-  selectedVideo?: GetVideoMetadataResponse;
   hoveredVideoUrl?: string;
 };
 

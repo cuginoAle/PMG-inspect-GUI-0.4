@@ -106,24 +106,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/parse_video": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Parse Video */
-        get: operations["parse_video_api_v1_parse_video_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/process_frame": {
+    "/api/v1/process_frames": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,8 +115,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Process Frame */
-        post: operations["process_frame_api_v1_process_frame_post"];
+        /** Process Frames */
+        post: operations["process_frames_api_v1_process_frames_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -260,18 +243,12 @@ export interface components {
         FunctionalClassType: "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
         /** GpsPoint */
         GpsPoint: {
-            /** Time */
-            time: number;
             /** Latitude */
             latitude: number;
             /** Longitude */
             longitude: number;
-            /** Altitude */
-            altitude: number;
             /** Speed */
             speed: number;
-            /** Accuracy */
-            accuracy: number;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -289,7 +266,8 @@ export interface components {
         };
         /** InferenceLayerResult */
         "InferenceLayerResult-Input": {
-            inference_layer: components["schemas"]["InferenceLayerType"];
+            inference_layer_type: components["schemas"]["InferenceLayerType"];
+            inference_layer_source: components["schemas"]["InferenceLayerSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -308,7 +286,8 @@ export interface components {
         };
         /** InferenceLayerResult */
         "InferenceLayerResult-Output": {
-            inference_layer: components["schemas"]["InferenceLayerType"];
+            inference_layer_type: components["schemas"]["InferenceLayerType"];
+            inference_layer_source: components["schemas"]["InferenceLayerSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -325,6 +304,11 @@ export interface components {
             /** Probs */
             probs?: number[] | null;
         };
+        /**
+         * InferenceLayerSource
+         * @enum {string}
+         */
+        InferenceLayerSource: "processing" | "cache" | "labelling";
         /**
          * InferenceLayerType
          * @enum {string}
@@ -368,13 +352,6 @@ export interface components {
             /** Project Items */
             project_items: components["schemas"]["ProjectItem"][];
         };
-        /** ParseVideoResponse */
-        ParseVideoResponse: {
-            camera_data: components["schemas"]["CameraData"];
-            media_data: components["schemas"]["MediaData"];
-            /** Gps Data */
-            gps_data?: components["schemas"]["GpsPoint"][] | null;
-        };
         /** PngEncodedBitmask */
         PngEncodedBitmask: {
             /** Shape */
@@ -409,11 +386,26 @@ export interface components {
         };
         /** ProjectItem */
         ProjectItem: {
-            /** Video Name */
-            video_name: string;
             /** Video Url */
             video_url: string;
+            /** Video Name */
+            video_name: string;
+            parsing_status: components["schemas"]["VideoParsingStatus"];
             road_data: components["schemas"]["RoadData"];
+            camera_data?: components["schemas"]["CameraData"] | null;
+            media_data?: components["schemas"]["MediaData"] | null;
+            /** Gps Points */
+            gps_points?: components["schemas"]["GpsPoint"][] | null;
+            /**
+             * Pci Score Avg Human
+             * @default 10.2
+             */
+            pci_score_avg_human: number;
+            /**
+             * Pci Score Avg Ai
+             * @default 10.5
+             */
+            pci_score_avg_ai: number;
         };
         /** RoadData */
         RoadData: {
@@ -456,6 +448,11 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /**
+         * VideoParsingStatus
+         * @enum {string}
+         */
+        VideoParsingStatus: "download_timeout" | "download_error" | "download_done" | "parsing_error" | "parsing_done";
         /** ZipEncodedBitmask */
         ZipEncodedBitmask: {
             /** Shape */
@@ -535,7 +532,7 @@ export interface operations {
     get_files_list_api_v1_get_files_list_get: {
         parameters: {
             query?: {
-                relative_path?: string | null;
+                folder_relative_path?: string | null;
             };
             header?: never;
             path?: never;
@@ -550,21 +547,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FileInfo"][];
-                };
-            };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -598,27 +580,12 @@ export interface operations {
                     };
                 };
             };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
         };
     };
     parse_project_api_v1_parse_project_get: {
         parameters: {
             query: {
-                relative_path: string;
+                project_relative_path: string;
             };
             header?: never;
             path?: never;
@@ -635,21 +602,6 @@ export interface operations {
                     "application/json": components["schemas"]["ParseProjectResponse"];
                 };
             };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
             /** @description Validation Error */
             422: {
                 headers: {
@@ -661,57 +613,11 @@ export interface operations {
             };
         };
     };
-    parse_video_api_v1_parse_video_get: {
+    process_frames_api_v1_process_frames_post: {
         parameters: {
             query: {
                 video_url: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ParseVideoResponse"];
-                };
-            };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    process_frame_api_v1_process_frame_post: {
-        parameters: {
-            query: {
-                video_url: string;
-                frame_index: number;
+                frame_indexes: number[];
             };
             header?: never;
             path?: never;
@@ -729,22 +635,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProcessFrameResponse-Output"];
-                };
-            };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ProcessFrameResponse-Output"][];
                 };
             };
             /** @description Validation Error */
@@ -762,7 +653,7 @@ export interface operations {
         parameters: {
             query: {
                 video_url: string;
-                frame_index: number;
+                frame_index: number[];
             };
             header?: never;
             path?: never;
@@ -783,21 +674,6 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
             /** @description Validation Error */
             422: {
                 headers: {
@@ -813,7 +689,7 @@ export interface operations {
         parameters: {
             query: {
                 video_url: string;
-                frame_index?: number | null;
+                frame_index?: number[] | null;
             };
             header?: never;
             path?: never;
@@ -827,21 +703,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Raised when resource (file/folder/url) is not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "detail": {
-                     *         "message": "Item not found.",
-                     *         "relative_path": "'file/folder/url'"
-                     *       }
-                     *     } */
                     "application/json": unknown;
                 };
             };

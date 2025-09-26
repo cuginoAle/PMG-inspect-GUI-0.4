@@ -21,8 +21,10 @@ type ProjectItem = Project['project_items'][number];
 type RoadData = ProjectItem['road_data'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
-type VideoData = components['schemas']['ParseVideoResponse'];
-type GpsData = VideoData['gps_data'];
+
+type ProjectParsingState = Project['project_items'][number]['parsing_status'];
+
+type GpsData = components['schemas']['GpsPoint'];
 
 type GetFilesListResponse =
   | { status: 'ok'; detail: Array<FileInfo> }
@@ -30,10 +32,6 @@ type GetFilesListResponse =
   | LoadingState;
 type GetProjectResponse =
   | { status: 'ok'; detail: Project }
-  | FetchError
-  | LoadingState;
-type GetVideoMetadataResponse =
-  | { status: 'ok'; detail: VideoData }
   | FetchError
   | LoadingState;
 
@@ -46,14 +44,13 @@ export type {
   FileType,
   GetFilesListResponse,
   GetProjectResponse,
-  GetVideoMetadataResponse,
-  GpsData,
   LoadingState,
   MediaData,
   Project,
   ProjectItem,
   RoadData,
-  VideoData,
   ResponseType,
   FileOrigin,
+  GpsData,
+  ProjectParsingState,
 };

@@ -7,16 +7,23 @@ async function fetchProjectDetails(
   if (!path) {
     return Promise.resolve(undefined);
   }
-  const fullUrl = `${
-    ENDPOINT.PROJECT.DETAILS
-  }?relative_path=${encodeURIComponent(path)}`;
+
+  // building the query string
+  const sp = new URLSearchParams();
+  sp.append('project_relative_path', path);
+
+  const fullUrl = `${ENDPOINT.PROJECT.DETAILS}?${sp.toString()}`;
 
   return new Promise((resolve, reject) => {
     fetch(fullUrl)
       .then(async (res) => {
         const body = await res.json();
         if (!res.ok) {
-          reject({ status: 'error', code: res.status, detail: body.detail });
+          reject({
+            status: 'error',
+            code: res.status.toString(),
+            detail: { message: res.statusText },
+          } as FetchError);
         }
 
         resolve({

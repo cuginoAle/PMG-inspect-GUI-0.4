@@ -1,9 +1,15 @@
-const GoProIcon = ({ className }: { className?: string }) => (
+const GoProIcon = ({
+  className,
+  size,
+}: {
+  className?: string;
+  size?: number;
+}) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 833.44 468.75"
-    width="1em"
+    width={`${size || 1}em`}
   >
     <path d="M0 0h833.44v468.75H0z" />
     <rect

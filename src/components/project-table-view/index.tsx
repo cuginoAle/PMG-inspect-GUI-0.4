@@ -9,22 +9,24 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { MagnifyingGlassIcon, PersonIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { columns } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
+import { Immutable } from '@hookstate/core';
+import { NeuralNetworkIcon } from '@/src/components';
 
 const ProjectTableView = ({
   project,
   onMouseOver,
 }: {
-  project: Project;
+  project: Immutable<Project>;
   onMouseOver?: (projectIterm?: ProjectItem) => void;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -36,14 +38,24 @@ const ProjectTableView = ({
   const videoUrl = searchParams.get('videoUrl');
   const router = useRouter();
 
+  useEffect(() => {
+    const selectedRowIndex = Math.max(
+      project?.project_items.findIndex((item) => item.video_url === videoUrl),
+      0,
+    );
+
+    setRowSelection({ [selectedRowIndex]: true });
+  }, [project?.project_items, videoUrl]);
+
   const onRowSelect = useCallback(
-    (projectItem?: ProjectItem) => {
+    (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
       if (!projectItem) return;
+      const item = projectItem as ProjectItem;
       const urlSearchParams = new URLSearchParams(searchParams.toString());
-      urlSearchParams.set('videoUrl', projectItem.video_url);
+      urlSearchParams.set('videoUrl', item.video_url);
 
       tBodyRef.current
-        ?.querySelector(`[id="${getRowId(projectItem)}"]`)
+        ?.querySelector(`[id="${getRowId(item)}"]`)
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       window.history.pushState(
@@ -55,17 +67,6 @@ const ProjectTableView = ({
     [searchParams],
   );
 
-  useEffect(() => {
-    const selectedRowIndex = Math.max(
-      project?.project_items.findIndex((item) => item.video_url === videoUrl),
-      0,
-    );
-
-    setRowSelection({ [selectedRowIndex]: true });
-    const selectedRow = project?.project_items[selectedRowIndex];
-    onRowSelect(selectedRow);
-  }, [onRowSelect, project?.project_items, videoUrl]);
-
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
     urlSearchParams.set('videoUrl', projectItem.video_url);
@@ -73,8 +74,14 @@ const ProjectTableView = ({
     router.push(`/protected/edit?${urlSearchParams.toString()}`);
   };
 
+  const tableData = useMemo(
+    () => [...project.project_items] as ProjectItem[],
+    [project.project_items],
+  );
+
   const table = useReactTable({
-    data: project.project_items,
+    // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
+    data: tableData,
     columns: columns,
     state: {
       sorting,
@@ -123,6 +130,13 @@ const ProjectTableView = ({
                         header.getContext(),
                       )}
                       {getColumnSortIcon(header.column.getIsSorted()) ?? null}
+                      {header.column.columnDef.meta === 'ai' && (
+                        <NeuralNetworkIcon size={1.5} />
+                      )}
+
+                      {header.column.columnDef.meta === 'human' && (
+                        <PersonIcon />
+                      )}
                     </Flex>
                   </Table.ColumnHeaderCell>
                 ))}

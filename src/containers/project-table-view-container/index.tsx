@@ -8,12 +8,13 @@ import { ProjectItem } from '@/src/types';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const ProjectTableViewContainer = () => {
-  const gState = useGlobalState();
-  const project = gState.selectedProject.get();
+  const { hoveredVideoUrl, selectedProject } = useGlobalState();
 
   const setHoveredVideoUrl = (projectItem?: ProjectItem) => {
-    gState.hoveredVideoUrl.set(projectItem?.video_url);
+    hoveredVideoUrl.set(projectItem?.video_url);
   };
+
+  const project = selectedProject.get();
 
   if (!project) {
     return <NoProjectSelected />;
@@ -30,21 +31,17 @@ const ProjectTableViewContainer = () => {
   if (project.status === 'error') {
     return (
       <div className="center">
-        <Warning message={project.detail.message} />
+        <Warning message={`${project.code}: ${project.detail.message}`} />
       </div>
     );
   }
 
   const response = getResponseIfSuccesful(project);
-  const pro = {
-    project_name: response?.project_name ?? '',
-    // clone readonly project_items into a mutable array expected by ProjectTableView
-    project_items: project.detail?.project_items
-      ? [...project.detail.project_items]
-      : [],
-  };
 
-  return <ProjectTableView project={pro} onMouseOver={setHoveredVideoUrl} />;
+  return (
+    // @ts-ignore
+    <ProjectTableView project={response} onMouseOver={setHoveredVideoUrl} />
+  );
 };
 
 export { ProjectTableViewContainer };

@@ -1,10 +1,16 @@
-const RemoteStorageIcon = ({ className }: { className?: string }) => (
+const RemoteStorageIcon = ({
+  className,
+  size,
+}: {
+  className?: string;
+  size?: number;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     viewBox="2 2 22 22"
     className={className}
-    width="1em"
+    width={`${size || 1}em`}
   >
     <path
       fillRule="evenodd"
