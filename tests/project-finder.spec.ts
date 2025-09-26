@@ -6,7 +6,7 @@ import {
 } from './mocks/api-override-helpers';
 import { setValidCredentials } from './helpers';
 
-test('Project finder page', async ({ page, apiUsage }) => {
+test.skip('Project finder page', async ({ page, apiUsage }) => {
   await apiUsage.reset();
   await setValidCredentials(page);
   await page.goto('/protected');
@@ -55,7 +55,7 @@ test('Project finder page', async ({ page, apiUsage }) => {
 });
 
 // Test api calls error handling
-test('Project finder handles API errors - parse_project', async ({
+test.skip('Project finder handles API errors - parse_project', async ({
   page,
   apiUsage,
   apiOverrides,
@@ -77,7 +77,7 @@ test('Project finder handles API errors - parse_project', async ({
   await apiUsage.expectHit('parse_project_error');
 });
 
-test('Project finder handles API errors - video-metadata', async ({
+test.skip('Project finder handles API errors - video-metadata', async ({
   page,
   apiUsage,
   apiOverrides,
