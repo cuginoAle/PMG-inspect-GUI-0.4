@@ -1,5 +1,5 @@
 'use client';
-import { Tree } from 'react-arborist';
+import { Tree, TreeApi } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Button, Flex, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon, UploadIcon } from '@radix-ui/react-icons';
@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
-import { Immutable } from '@hookstate/core';
+import { Immutable, ImmutableArray } from '@hookstate/core';
 
 type ProjectsTreeViewProps = {
   files: Immutable<FileInfo[]>;
@@ -17,6 +17,16 @@ type ProjectsTreeViewProps = {
 const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
+  const treeRef = React.useRef<
+    | TreeApi<{
+        content: ImmutableArray<FileInfo>;
+        file_type: string;
+        file_origin: string;
+        name: string;
+        relative_path: string;
+      }>
+    | undefined
+  >(undefined);
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -56,6 +66,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
 
       <div ref={ref} className={styles.tree}>
         <Tree
+          ref={treeRef}
           data={treeViewData}
           width={width}
           height={height}
@@ -67,6 +78,12 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
           initialOpenState={{
             remote: true,
             local: true,
+          }}
+          onClick={() => {
+            if (selectedPath) {
+              treeRef.current?.select(selectedPath);
+              treeRef.current?.scrollTo(selectedPath);
+            }
           }}
           selection={selectedPath!}
         >

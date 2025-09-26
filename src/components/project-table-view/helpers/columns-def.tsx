@@ -55,12 +55,12 @@ const columns: ColumnDef<ProjectItem>[] = [
   },
   {
     accessorKey: 'pci_score_avg_ai',
-    header: 'PCI score',
+    header: 'PCI sc.',
     meta: 'ai',
   },
   {
     accessorKey: 'pci_score_avg_human',
-    header: 'PCI score',
+    header: 'PCI sc.',
     meta: 'human',
   },
 

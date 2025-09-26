@@ -5,7 +5,6 @@ import { LoadingToast } from '@/src/components/loading-toast';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
 import { Warning } from '@/src/components/warning';
 import { ProjectItem } from '@/src/types';
-import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const ProjectTableViewContainer = () => {
   const { hoveredVideoUrl, selectedProject } = useGlobalState();
@@ -36,11 +35,11 @@ const ProjectTableViewContainer = () => {
     );
   }
 
-  const response = getResponseIfSuccesful(project);
-
   return (
-    // @ts-ignore
-    <ProjectTableView project={response} onMouseOver={setHoveredVideoUrl} />
+    <ProjectTableView
+      project={project.detail}
+      onMouseOver={setHoveredVideoUrl}
+    />
   );
 };
 

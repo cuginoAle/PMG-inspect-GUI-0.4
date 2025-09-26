@@ -38,15 +38,6 @@ const ProjectTableView = ({
   const videoUrl = searchParams.get('videoUrl');
   const router = useRouter();
 
-  useEffect(() => {
-    const selectedRowIndex = Math.max(
-      project?.project_items.findIndex((item) => item.video_url === videoUrl),
-      0,
-    );
-
-    setRowSelection({ [selectedRowIndex]: true });
-  }, [project?.project_items, videoUrl]);
-
   const onRowSelect = useCallback(
     (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
       if (!projectItem) return;
@@ -66,6 +57,16 @@ const ProjectTableView = ({
     },
     [searchParams],
   );
+
+  useEffect(() => {
+    const selectedRowIndex = Math.max(
+      project?.project_items.findIndex((item) => item.video_url === videoUrl),
+      0,
+    );
+
+    setRowSelection({ [selectedRowIndex]: true });
+    if (!videoUrl) onRowSelect(project?.project_items[selectedRowIndex]);
+  }, [onRowSelect, project?.project_items, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
