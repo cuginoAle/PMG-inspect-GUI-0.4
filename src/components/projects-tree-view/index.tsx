@@ -2,37 +2,51 @@
 import { Tree, TreeApi } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Button, Flex, TextField } from '@radix-ui/themes';
+// Toggle to enable top-level Remote/Local grouping nodes in the tree
+// When grouping is enabled, top-level nodes wrap the FileInfo[] in `content`
 import { MagnifyingGlassIcon, UploadIcon } from '@radix-ui/react-icons';
 import React, { useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
-import { Immutable, ImmutableArray } from '@hookstate/core';
+import { Immutable, ImmutableObject } from '@hookstate/core';
 
 type ProjectsTreeViewProps = {
   files: Immutable<FileInfo[]>;
   selectedPath?: string;
 };
 
+// Feature flag (compile-time) to enable top-level Remote/Local grouping nodes in the tree
+const enableRemoteAndLocalNodes = false as const;
+
+type RemoteLocalNode = {
+  content: Immutable<FileInfo[]>;
+  file_type?: string;
+  file_origin?: string;
+  name: string;
+  relative_path: string;
+};
+
+// Resolve the node type used by the Tree (compile-time based on the flag)
+type TreeNode = typeof enableRemoteAndLocalNodes extends true
+  ? RemoteLocalNode
+  : ImmutableObject<FileInfo>;
+
 const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
-  const treeRef = React.useRef<
-    | TreeApi<{
-        content: ImmutableArray<FileInfo>;
-        file_type: string;
-        file_origin: string;
-        name: string;
-        relative_path: string;
-      }>
-    | undefined
-  >(undefined);
+
+  const treeRef = React.useRef<TreeApi<TreeNode> | undefined>(undefined);
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
 
-  const treeViewData = [
+  type DataType = typeof enableRemoteAndLocalNodes extends true
+    ? RemoteLocalNode[]
+    : Immutable<FileInfo[]>;
+
+  const groupedData: RemoteLocalNode[] = [
     {
       content: files,
       file_type: 'remote',
@@ -41,13 +55,17 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
       relative_path: 'remote',
     },
     {
-      content: [],
+      content: [] as Immutable<FileInfo[]>,
       file_type: 'local',
       name: 'Local',
       relative_path: 'local',
       file_origin: 'local',
     },
   ];
+
+  const treeViewData = (
+    enableRemoteAndLocalNodes ? groupedData : files
+  ) as DataType;
 
   return (
     <Flex direction="column" gap="2" height={'100%'}>
@@ -65,7 +83,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
       </div>
 
       <div ref={ref} className={styles.tree}>
-        <Tree
+        <Tree<TreeNode>
           ref={treeRef}
           data={treeViewData}
           width={width}
