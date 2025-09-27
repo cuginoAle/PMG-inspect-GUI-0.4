@@ -39,3 +39,8 @@
   top: 4px;
   right: 0;
 }
+
+.runAnalysisButton {
+  border: 1px solid var(--accent-a6);
+  min-width: 200px;
+}

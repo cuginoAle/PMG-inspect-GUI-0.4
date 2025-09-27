@@ -3,16 +3,17 @@ import {
   SplitView,
   ProjectAnalysisDashboard,
   FileLogoTitle,
+  PresetsTabs,
 } from '@/src/components';
 
 import styles from './style.module.css';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
-import { Flex, IconButton, Separator } from '@radix-ui/themes';
+import { Button, Flex, IconButton, Separator } from '@radix-ui/themes';
 import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
-import { PinBottomIcon, PinTopIcon } from '@radix-ui/react-icons';
+import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
 import React, { useMemo } from 'react';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
@@ -45,6 +46,9 @@ const ProjectContentView = () => {
                   componentId="project-analysis-dashboard-file-title"
                 />
               )}
+
+              <PresetsTabs />
+
               {!tableExpanded && <ProjectAnalysisDashboard />}
 
               {!tableExpanded && projectPath && (
@@ -69,6 +73,18 @@ const ProjectContentView = () => {
                 )}
                 <ProjectTableViewContainer />
               </div>
+
+              <Flex justify={'center'}>
+                <Button
+                  className={styles.runAnalysisButton}
+                  type="button"
+                  size={'3'}
+                  color="blue"
+                  variant="soft"
+                >
+                  <RocketIcon /> Run analysis
+                </Button>
+              </Flex>
             </Flex>
           </div>
         }

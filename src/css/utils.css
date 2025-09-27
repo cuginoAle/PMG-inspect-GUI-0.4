@@ -15,3 +15,12 @@
   --card-background-color: var(--gray-a2);
   box-shadow: 0 0 0 1px var(--gray-a3) inset;
 }
+
+button.rt-BaseTabListTrigger {
+  cursor: pointer;
+}
+
+button.rt-BaseTabListTrigger:where([data-state='active'], [data-active])
+  .rt-BaseTabListTriggerInner {
+  background-color: var(--accent-a5);
+}

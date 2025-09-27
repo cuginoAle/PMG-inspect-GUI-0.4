@@ -3,10 +3,10 @@ import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { Project, ResponseType } from '@/src/types';
-import { NetworkSettings, Slider, ProjectPresets } from '@/src/components';
+import { NetworkSettings, PresetsDropDown, Slider } from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
 
-import { Cross2Icon, DiscIcon, RocketIcon } from '@radix-ui/react-icons';
+import { DiscIcon, TrashIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
 
@@ -22,7 +22,8 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
         <Flex align="center" justify={'between'}>
-          <ProjectPresets />
+          <PresetsDropDown />
+
           <Flex gap="3">
             <Button
               type="submit"
@@ -32,7 +33,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               disabled={!hasUnsavedChanges}
             >
               <DiscIcon />
-              Save as
+              Save
             </Button>
 
             <Button
@@ -42,8 +43,8 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               color="orange"
               disabled={!hasUnsavedChanges}
             >
-              <Cross2Icon />
-              Reset
+              <TrashIcon />
+              Delete
             </Button>
           </Flex>
         </Flex>
@@ -80,31 +81,20 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             <NetworkSettings name="Treatment" />
           </div>
 
-          <Flex gap="3" justify={'between'} align="center">
-            <Card
-              className="card"
-              style={{ width: 'clamp(200px, calc(50% - var(--space-2)), 50%)' }}
-            >
-              <Slider
-                min={1}
-                max={10}
-                step={0.5}
-                name="sampling-rate"
-                title="Sampling rate"
-                defaultValue={5}
-                valueLabel={(val) => `1 frame / ${val.toFixed(1)}m`}
-              />
-            </Card>
-            <Button
-              className={styles.runAnalysisButton}
-              type="button"
-              size={'3'}
-              color="blue"
-              variant="soft"
-            >
-              <RocketIcon /> Run analysis
-            </Button>
-          </Flex>
+          <Card
+            className="card"
+            style={{ width: 'clamp(200px, calc(50% - var(--space-2)), 50%)' }}
+          >
+            <Slider
+              min={1}
+              max={10}
+              step={0.5}
+              name="sampling-rate"
+              title="Sampling rate"
+              defaultValue={5}
+              valueLabel={(val) => `1 frame / ${val.toFixed(1)}m`}
+            />
+          </Card>
         </form>
       </Flex>
     </div>
