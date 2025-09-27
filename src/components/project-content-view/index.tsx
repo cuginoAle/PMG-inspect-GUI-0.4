@@ -1,5 +1,9 @@
 'use client';
-import { SplitView, ProjectAnalysisDashboard } from '@/src/components';
+import {
+  SplitView,
+  ProjectAnalysisDashboard,
+  FileLogoTitle,
+} from '@/src/components';
 
 import styles from './style.module.css';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
@@ -9,10 +13,18 @@ import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-me
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 import { PinBottomIcon, PinTopIcon } from '@radix-ui/react-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { getFileIconType } from '@/src/helpers/get-file-icon-type';
+import { removeFileExtension } from '@/src/helpers/remove-file-extension';
+import { useSearchParams } from 'next/navigation';
 
 const ProjectContentView = () => {
   const [tableExpanded, setTableExpanded] = React.useState(false);
+  const sp = useSearchParams();
+  const projectPath = sp.get('path') || '';
+
+  const fileType = useMemo(() => getFileIconType(projectPath), [projectPath]);
+  const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
   return (
     <div className={styles.root}>
@@ -24,9 +36,18 @@ const ProjectContentView = () => {
         left={
           <div className={styles.leftPane}>
             <Flex direction={'column'} gap={'6'} height={'100%'}>
+              {projectPath && (
+                <FileLogoTitle
+                  as="div"
+                  fileType={fileType}
+                  label={label}
+                  size="medium"
+                  componentId="project-analysis-dashboard-file-title"
+                />
+              )}
               {!tableExpanded && <ProjectAnalysisDashboard />}
 
-              {!tableExpanded && (
+              {!tableExpanded && projectPath && (
                 <Separator
                   className={styles.mainContentSeparator}
                   size={'4'}
@@ -36,14 +57,16 @@ const ProjectContentView = () => {
               )}
 
               <div className={styles.projectTableWrapper}>
-                <IconButton
-                  onClick={() => setTableExpanded(!tableExpanded)}
-                  variant="soft"
-                  className={styles.pinButton}
-                  title="Toggle Table Expansion"
-                >
-                  {tableExpanded ? <PinBottomIcon /> : <PinTopIcon />}
-                </IconButton>
+                {projectPath && (
+                  <IconButton
+                    onClick={() => setTableExpanded(!tableExpanded)}
+                    variant="soft"
+                    className={styles.pinButton}
+                    title="Toggle Table Expansion"
+                  >
+                    {tableExpanded ? <PinBottomIcon /> : <PinTopIcon />}
+                  </IconButton>
+                )}
                 <ProjectTableViewContainer />
               </div>
             </Flex>

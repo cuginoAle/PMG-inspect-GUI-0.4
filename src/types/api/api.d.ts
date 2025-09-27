@@ -396,16 +396,10 @@ export interface components {
             media_data?: components["schemas"]["MediaData"] | null;
             /** Gps Points */
             gps_points?: components["schemas"]["GpsPoint"][] | null;
-            /**
-             * Pci Score Avg Human
-             * @default 10.2
-             */
-            pci_score_avg_human: number;
-            /**
-             * Pci Score Avg Ai
-             * @default 10.5
-             */
-            pci_score_avg_ai: number;
+            /** Pci Score Avg Human */
+            pci_score_avg_human?: number | null;
+            /** Pci Score Avg Ai */
+            pci_score_avg_ai?: number | null;
         };
         /** RoadData */
         RoadData: {

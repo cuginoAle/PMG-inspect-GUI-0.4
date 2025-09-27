@@ -3,49 +3,49 @@ import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { Project, ResponseType } from '@/src/types';
-import { getFileIconType } from '@/src/helpers/get-file-icon-type';
-
-import {
-  FileLogoTitle,
-  NetworkSettings,
-  Slider,
-  ProjectPresets,
-} from '@/src/components';
-
-import { removeFileExtension } from '@/src/helpers/remove-file-extension';
-import { useMemo } from 'react';
-import { Button, Flex } from '@radix-ui/themes';
+import { NetworkSettings, Slider, ProjectPresets } from '@/src/components';
+import { Button, Card, Flex } from '@radix-ui/themes';
 
 import { Cross2Icon, DiscIcon, RocketIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
 
-import { useSearchParams } from 'next/navigation';
-
 const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
-  const sp = useSearchParams();
+
   const { selectedProject } = useGlobalState();
   const project = getResponseIfSuccesful<Project>(
     selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
   );
 
-  const fileType = useMemo(() => getFileIconType(sp.get('path') || ''), [sp]);
-  const label = useMemo(() => removeFileExtension(sp.get('path') || ''), [sp]);
-
   return project?.project_name ? (
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
-        <Flex align="center" gap="2" justify={'between'}>
-          <FileLogoTitle
-            as="div"
-            fileType={fileType}
-            label={label}
-            size="medium"
-            componentId="project-analysis-dashboard-file-title"
-          />
-
+        <Flex align="center" justify={'between'}>
           <ProjectPresets />
+          <Flex gap="3">
+            <Button
+              type="submit"
+              size="3"
+              color="green"
+              variant="soft"
+              disabled={!hasUnsavedChanges}
+            >
+              <DiscIcon />
+              Save as
+            </Button>
+
+            <Button
+              type="reset"
+              size="3"
+              variant="soft"
+              color="orange"
+              disabled={!hasUnsavedChanges}
+            >
+              <Cross2Icon />
+              Reset
+            </Button>
+          </Flex>
         </Flex>
 
         <form
@@ -80,8 +80,11 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             <NetworkSettings name="Treatment" />
           </div>
 
-          <Flex gap="3" justify={'end'}>
-            <div style={{ width: '300px', marginRight: 'auto' }}>
+          <Flex gap="3" justify={'between'} align="center">
+            <Card
+              className="card"
+              style={{ width: 'clamp(200px, calc(50% - var(--space-2)), 50%)' }}
+            >
               <Slider
                 min={1}
                 max={10}
@@ -91,7 +94,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
                 defaultValue={5}
                 valueLabel={(val) => `1 frame / ${val.toFixed(1)}m`}
               />
-            </div>
+            </Card>
             <Button
               className={styles.runAnalysisButton}
               type="button"
@@ -100,34 +103,6 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               variant="soft"
             >
               <RocketIcon /> Run analysis
-            </Button>
-            <div
-              style={{
-                width: '3px',
-                margin: '0 8px',
-                backgroundColor: 'var(--gray-a5)',
-              }}
-            />
-            <Button
-              type="submit"
-              size="3"
-              color="green"
-              variant="soft"
-              disabled={!hasUnsavedChanges}
-            >
-              <DiscIcon />
-              Save
-            </Button>
-
-            <Button
-              type="reset"
-              size="3"
-              variant="soft"
-              color="orange"
-              disabled={!hasUnsavedChanges}
-            >
-              <Cross2Icon />
-              Reset
             </Button>
           </Flex>
         </form>

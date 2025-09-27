@@ -1,12 +1,16 @@
-import { MixerHorizontalIcon, DotsVerticalIcon } from '@radix-ui/react-icons';
-import { Flex, IconButton, Select } from '@radix-ui/themes';
+import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import { IconButton, Select } from '@radix-ui/themes';
+import styles from './style.module.css';
 
 const ProjectPresets = () => {
   return (
-    <Flex align="center" gap="2">
-      <MixerHorizontalIcon width={20} height={20} color="var(--amber-a9)" />
+    <div className={styles.root}>
       <Select.Root size={'3'} defaultValue="setting-01">
-        <Select.Trigger color="amber" variant="soft" />
+        <Select.Trigger
+          color="amber"
+          variant="soft"
+          className={styles.trigger}
+        />
 
         <Select.Content position="popper" align="start">
           <Select.Group>
@@ -20,7 +24,7 @@ const ProjectPresets = () => {
       <IconButton variant="soft" color="amber" size="3" aria-label="Add preset">
         <DotsVerticalIcon />
       </IconButton>
-    </Flex>
+    </div>
   );
 };
 

@@ -47,7 +47,7 @@ const ProjectTableView = ({
 
       tBodyRef.current
         ?.querySelector(`[id="${getRowId(item)}"]`)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       window.history.pushState(
         null,
