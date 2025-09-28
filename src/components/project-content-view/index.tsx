@@ -4,6 +4,7 @@ import {
   ProjectAnalysisDashboard,
   FileLogoTitle,
   PresetsTabs,
+  Tab,
 } from '@/src/components';
 
 import styles from './style.module.css';
@@ -18,6 +19,12 @@ import React, { useMemo } from 'react';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { useSearchParams } from 'next/navigation';
+
+const tabs: Tab[] = [
+  { id: 'PCI_01', label: 'PCI 1.0' },
+  { id: 'PCI_02', label: 'PCI 2.0' },
+  { id: 'Custom', label: 'Custom' },
+];
 
 const ProjectContentView = () => {
   const [tableExpanded, setTableExpanded] = React.useState(false);
@@ -47,7 +54,7 @@ const ProjectContentView = () => {
                 />
               )}
 
-              <PresetsTabs />
+              <PresetsTabs tabs={tabs} />
 
               {!tableExpanded && <ProjectAnalysisDashboard />}
 

@@ -1,8 +1,17 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { Tabs } from '@radix-ui/themes';
+import { IconButton, Tabs } from '@radix-ui/themes';
 import styles from './style.module.css';
+import { ThreeVertDots } from '@/src/components/custom-icons';
 
-const PresetsTabs = () => {
+type Tab = { id: string; label: string };
+type PresetsTabsProps = {
+  tabs: Tab[];
+  onMenuClick?: (tabId: string) => void;
+};
+
+const PresetsTabs = ({ tabs, onMenuClick }: PresetsTabsProps) => {
+  if (!tabs || tabs.length === 0) return null;
+
   return (
     <Tabs.Root
       defaultValue="PCI_01"
@@ -10,9 +19,20 @@ const PresetsTabs = () => {
       className={styles.root}
     >
       <Tabs.List size="2">
-        <Tabs.Trigger value="PCI_01">PCI 01</Tabs.Trigger>
-        <Tabs.Trigger value="PCI_02">Test A</Tabs.Trigger>
-        <Tabs.Trigger value="PCI_03">Test B</Tabs.Trigger>
+        {tabs.map((tab) => (
+          <div key={tab.id} className={styles.tabWrapper}>
+            <Tabs.Trigger value={tab.id}>{tab.label}</Tabs.Trigger>
+            <IconButton
+              variant="ghost"
+              className={styles.tabMenuButton}
+              onClick={() => onMenuClick?.(tab.id)}
+            >
+              <ThreeVertDots size={1.4} />
+            </IconButton>
+          </div>
+        ))}
+
+        {/* Hardcoded tabs for demo purposes; replace with dynamic rendering as needed */}
         <Tabs.Trigger
           onClick={() => {
             alert('create a new tab!');
@@ -27,3 +47,4 @@ const PresetsTabs = () => {
 };
 
 export { PresetsTabs };
+export type { Tab };

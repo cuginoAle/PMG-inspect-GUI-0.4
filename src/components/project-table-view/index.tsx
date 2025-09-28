@@ -21,6 +21,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { Immutable } from '@hookstate/core';
 import { NeuralNetworkIcon } from '@/src/components';
+import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 
 const ProjectTableView = ({
   project,
@@ -45,9 +46,12 @@ const ProjectTableView = ({
       const urlSearchParams = new URLSearchParams(searchParams.toString());
       urlSearchParams.set('videoUrl', item.video_url);
 
-      tBodyRef.current
-        ?.querySelector(`[id="${getRowId(item)}"]`)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollChildIntoView({
+        container: tBodyRef.current!,
+        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
+        behavior: 'smooth',
+        direction: 'vertical',
+      });
 
       window.history.pushState(
         null,
@@ -65,7 +69,17 @@ const ProjectTableView = ({
     );
 
     setRowSelection({ [selectedRowIndex]: true });
-    if (!videoUrl) onRowSelect(project?.project_items[selectedRowIndex]);
+    const item = project?.project_items[selectedRowIndex] as ProjectItem;
+    if (!videoUrl) {
+      onRowSelect(item);
+    } else {
+      scrollChildIntoView({
+        container: tBodyRef.current!,
+        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
+        behavior: 'smooth',
+        direction: 'vertical',
+      });
+    }
   }, [onRowSelect, project?.project_items, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {

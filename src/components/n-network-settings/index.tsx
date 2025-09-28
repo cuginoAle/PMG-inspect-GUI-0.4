@@ -36,7 +36,6 @@ const NetworkSettings = ({
               setIsEnabled((en) => !en);
             }}
             radius="full"
-            name={`${name}-enabled`}
             defaultChecked={isDefaultEnabled}
             // checked={!!selectedSetting?.enabled}
           />

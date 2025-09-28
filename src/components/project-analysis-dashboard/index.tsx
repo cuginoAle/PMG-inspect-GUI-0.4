@@ -6,7 +6,7 @@ import { Project, ResponseType } from '@/src/types';
 import { NetworkSettings, PresetsDropDown, Slider } from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
 
-import { DiscIcon, TrashIcon } from '@radix-ui/react-icons';
+import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
 
@@ -31,6 +31,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               color="green"
               variant="soft"
               disabled={!hasUnsavedChanges}
+              form="project-analysis-dashboard-form" // to trigger form submit
             >
               <DiscIcon />
               Save
@@ -42,14 +43,16 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               variant="soft"
               color="orange"
               disabled={!hasUnsavedChanges}
+              form="project-analysis-dashboard-form" // to trigger form reset
             >
-              <TrashIcon />
-              Delete
+              <ResetIcon />
+              Reset
             </Button>
           </Flex>
         </Flex>
 
         <form
+          id="project-analysis-dashboard-form"
           className={styles.form}
           onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
@@ -68,6 +71,8 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
             // the reset event happens before the values are reset, so we need to wait a tick
             setTimeout(() => {
               Array.from(form.elements).forEach((el) => {
+                // we need to dispatch the change event so that any React state updates
+                // listening to the form elements get triggered
                 el.dispatchEvent(new Event('change', { bubbles: true }));
               });
               setHasUnsavedChanges(false);

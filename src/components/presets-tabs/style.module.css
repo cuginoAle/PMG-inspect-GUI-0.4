@@ -1,2 +1,24 @@
 .root {
 }
+
+.tabWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  :global(.rt-TabsTrigger)[aria-selected='true'] {
+    padding-right: 1.3em;
+    & + .tabMenuButton {
+      display: flex;
+    }
+  }
+}
+.tabMenuButton {
+  position: absolute;
+  right: 0;
+  display: none;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
