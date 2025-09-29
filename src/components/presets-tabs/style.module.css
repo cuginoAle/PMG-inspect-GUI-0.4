@@ -13,6 +13,15 @@
     }
   }
 }
+.unsavedChanges :global(.rt-TabsTriggerInner) {
+  &:before {
+    content: '*';
+    color: var(--accent-a10);
+    position: absolute;
+    top: 0em;
+    right: 2px;
+  }
+}
 .tabMenuButton {
   position: absolute;
   right: 0;

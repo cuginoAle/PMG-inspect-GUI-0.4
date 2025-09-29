@@ -10,13 +10,29 @@ import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
 
-const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
-  const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
+type ProjectAnalysisDashboardProps = {
+  settingId: string;
+  className?: string;
+  hasUnsavedChanges?: boolean;
+  onChange?: (id: string) => void;
+  onSave?: (data: FormData) => void;
+  onReset?: (id: string) => void;
+};
 
+const ProjectAnalysisDashboard = ({
+  settingId,
+  className,
+  hasUnsavedChanges,
+  onChange,
+  onReset,
+  onSave,
+}: ProjectAnalysisDashboardProps) => {
   const { selectedProject } = useGlobalState();
   const project = getResponseIfSuccesful<Project>(
     selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
   );
+
+  const formId = `project-analysis-dashboard-form-${settingId}`;
 
   return project?.project_name ? (
     <div className={className}>
@@ -31,7 +47,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               color="green"
               variant="soft"
               disabled={!hasUnsavedChanges}
-              form="project-analysis-dashboard-form" // to trigger form submit
+              form={formId} // to trigger form submit
             >
               <DiscIcon />
               Save
@@ -43,7 +59,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
               variant="soft"
               color="orange"
               disabled={!hasUnsavedChanges}
-              form="project-analysis-dashboard-form" // to trigger form reset
+              form={formId} // to trigger form reset
             >
               <ResetIcon />
               Reset
@@ -52,18 +68,14 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
         </Flex>
 
         <form
-          id="project-analysis-dashboard-form"
+          id={formId}
           className={styles.form}
           onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            console.log(
-              Object.fromEntries(new FormData(e.currentTarget).entries()),
-            );
+            onSave?.(new FormData(e.currentTarget));
           }}
-          onChange={(e: React.ChangeEvent<HTMLFormElement>) => {
-            if (e.target.getAttribute('type') !== 'checkbox') {
-              setHasUnsavedChanges(true);
-            }
+          onChange={() => {
+            onChange?.(settingId);
           }}
           onReset={(e: React.FormEvent<HTMLFormElement>) => {
             const form = e.target as HTMLFormElement;
@@ -75,7 +87,7 @@ const ProjectAnalysisDashboard = ({ className }: { className?: string }) => {
                 // listening to the form elements get triggered
                 el.dispatchEvent(new Event('change', { bubbles: true }));
               });
-              setHasUnsavedChanges(false);
+              onReset?.(settingId);
             }, 10);
           }}
         >

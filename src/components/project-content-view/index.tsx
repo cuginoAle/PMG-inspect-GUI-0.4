@@ -1,39 +1,16 @@
 'use client';
-import {
-  SplitView,
-  ProjectAnalysisDashboard,
-  FileLogoTitle,
-  PresetsTabs,
-  Tab,
-} from '@/src/components';
+import { SplitView } from '@/src/components';
 
 import styles from './style.module.css';
-import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
-import { Button, Flex, IconButton, Separator } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
-import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
-import React, { useMemo } from 'react';
-import { getFileIconType } from '@/src/helpers/get-file-icon-type';
-import { removeFileExtension } from '@/src/helpers/remove-file-extension';
-import { useSearchParams } from 'next/navigation';
-
-const tabs: Tab[] = [
-  { id: 'PCI_01', label: 'PCI 1.0' },
-  { id: 'PCI_02', label: 'PCI 2.0' },
-  { id: 'Custom', label: 'Custom' },
-];
+import React from 'react';
+import { LeftPane } from './left-pane';
 
 const ProjectContentView = () => {
-  const [tableExpanded, setTableExpanded] = React.useState(false);
-  const sp = useSearchParams();
-  const projectPath = sp.get('path') || '';
-
-  const fileType = useMemo(() => getFileIconType(projectPath), [projectPath]);
-  const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
-
   return (
     <div className={styles.root}>
       <SplitView
@@ -43,56 +20,7 @@ const ProjectContentView = () => {
         proportionalLayout={true}
         left={
           <div className={styles.leftPane}>
-            <Flex direction={'column'} gap={'6'} height={'100%'}>
-              {projectPath && (
-                <FileLogoTitle
-                  as="div"
-                  fileType={fileType}
-                  label={label}
-                  size="medium"
-                  componentId="project-analysis-dashboard-file-title"
-                />
-              )}
-
-              <PresetsTabs tabs={tabs} />
-
-              {!tableExpanded && <ProjectAnalysisDashboard />}
-
-              {!tableExpanded && projectPath && (
-                <Separator
-                  className={styles.mainContentSeparator}
-                  size={'4'}
-                  orientation="horizontal"
-                  color="amber"
-                />
-              )}
-
-              <div className={styles.projectTableWrapper}>
-                {projectPath && (
-                  <IconButton
-                    onClick={() => setTableExpanded(!tableExpanded)}
-                    variant="soft"
-                    className={styles.pinButton}
-                    title="Toggle Table Expansion"
-                  >
-                    {tableExpanded ? <PinBottomIcon /> : <PinTopIcon />}
-                  </IconButton>
-                )}
-                <ProjectTableViewContainer />
-              </div>
-
-              <Flex justify={'center'}>
-                <Button
-                  className={styles.runAnalysisButton}
-                  type="button"
-                  size={'3'}
-                  color="blue"
-                  variant="soft"
-                >
-                  <RocketIcon /> Run analysis
-                </Button>
-              </Flex>
-            </Flex>
+            <LeftPane />
           </div>
         }
         right={
