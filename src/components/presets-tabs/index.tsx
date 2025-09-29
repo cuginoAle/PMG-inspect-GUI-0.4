@@ -2,6 +2,7 @@ import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { IconButton, Tabs } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { ThreeVertDots } from '@/src/components/custom-icons';
+import classNames from 'classnames';
 
 type Tab = {
   id: string;
@@ -25,9 +26,9 @@ const PresetsTabs = ({ tabs, onMenuClick }: PresetsTabsProps) => {
     >
       <Tabs.List size="2">
         {tabs.map((tab) => {
-          const tabCn = `${styles.tabWrapper} ${
-            tab.hasUnsavedChanges ? styles.unsavedChanges : ''
-          }`;
+          const tabCn = classNames(styles.tabWrapper, {
+            [styles.unsavedChanges]: tab.hasUnsavedChanges,
+          });
           return (
             <div key={tab.id} className={tabCn}>
               <Tabs.Trigger value={tab.id}>{tab.label}</Tabs.Trigger>

@@ -3,6 +3,7 @@ import { Card, Flex, Heading, Select } from '@radix-ui/themes';
 import styles from './style.module.css';
 
 import React from 'react';
+import classNames from 'classnames';
 
 type NetworkSettingsProps = {
   className?: string;
@@ -24,8 +25,9 @@ const NetworkSettings = ({
 }: NetworkSettingsProps) => {
   const [isEnabled, setIsEnabled] = React.useState(isDefaultEnabled);
 
-  const rootCn = `${styles.root} ${isEnabled ? '' : styles.disabled}`;
-  const cn = `${className ?? ''} ${styles.container} `;
+  const rootCn = classNames(styles.root, { [styles.disabled]: !isEnabled });
+  const cn = classNames(className, styles.container);
+
   return (
     <Card size={'3'} className={rootCn}>
       <div className={cn}>
@@ -49,6 +51,7 @@ const NetworkSettings = ({
             console.log('preset', value);
           }}
           disabled={!isEnabled}
+          name={`${name}-model`}
         >
           <Select.Trigger variant="soft" />
           <Select.Content position="popper">
