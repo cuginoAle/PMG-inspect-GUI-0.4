@@ -36,6 +36,15 @@ const LeftPane = () => {
     );
   };
 
+  const handleOnReset = (tabId: string) => {
+    setTabs((prevTabs) =>
+      prevTabs.map((tab) => ({
+        ...tab,
+        hasUnsavedChanges: tab.id === tabId ? false : tab.hasUnsavedChanges,
+      })),
+    );
+  };
+
   return (
     <Flex direction={'column'} gap={'6'} height={'100%'}>
       {projectPath && (
@@ -49,7 +58,17 @@ const LeftPane = () => {
       )}
 
       <PresetsTabs tabs={tabs} />
-      <PresetsTabsContent tabs={tabs} onChange={handleOnChange} />
+      <PresetsTabsContent
+        tabs={tabs}
+        onChange={handleOnChange}
+        onReset={handleOnReset}
+        onSave={(data) => {
+          console.log(
+            'save the current tab!',
+            Object.fromEntries(data.entries()),
+          );
+        }}
+      />
     </Flex>
   );
 };

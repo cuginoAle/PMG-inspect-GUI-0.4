@@ -85,7 +85,15 @@ const ProjectAnalysisDashboard = ({
               Array.from(form.elements).forEach((el) => {
                 // we need to dispatch the change event so that any React state updates
                 // listening to the form elements get triggered
-                el.dispatchEvent(new Event('change', { bubbles: true }));
+                if (
+                  el.tagName === 'INPUT' &&
+                  el.getAttribute('type') === 'checkbox'
+                ) {
+                  // for checkboxes, we need to dispatch a click event to toggle the checked state 🤬
+                  el.dispatchEvent(new Event('click', { bubbles: true }));
+                } else {
+                  el.dispatchEvent(new Event('change', { bubbles: true }));
+                }
               });
               onReset?.(settingId);
             }, 10);
@@ -99,7 +107,7 @@ const ProjectAnalysisDashboard = ({
           </div>
 
           <Card
-            className="card"
+            className="card-bg"
             style={{ width: 'clamp(200px, calc(50% - var(--space-2)), 50%)' }}
           >
             <Slider

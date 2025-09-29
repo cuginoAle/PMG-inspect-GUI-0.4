@@ -1,5 +1,5 @@
-import { Slider, NeuralNetworkIcon } from '@/src/components';
-import { Card, Flex, Heading, Select, Switch } from '@radix-ui/themes';
+import { Slider, NeuralNetworkIcon, Toggle } from '@/src/components';
+import { Card, Flex, Heading, Select } from '@radix-ui/themes';
 import styles from './style.module.css';
 
 import React from 'react';
@@ -36,16 +36,10 @@ const NetworkSettings = ({
               {name}
             </Heading>
           </div>
-          <Switch
-            size="1"
-            color="amber"
-            onClick={() => {
-              setIsEnabled((en) => !en);
-            }}
-            radius="full"
-            name={`${name}-enabled`}
+          <Toggle
+            size={1}
+            onChange={setIsEnabled}
             defaultChecked={isDefaultEnabled}
-            // checked={!!selectedSetting?.enabled}
           />
         </Flex>
         <Select.Root

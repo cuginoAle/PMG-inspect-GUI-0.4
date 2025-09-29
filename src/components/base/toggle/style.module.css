@@ -1,0 +1,67 @@
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+.size-1 {
+  font-size: 1em;
+}
+.size-2 {
+  font-size: 1.2em;
+}
+.size-3 {
+  font-size: 1.5em;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.toggle {
+  display: block;
+  width: 2.2em;
+  height: 1.1em;
+  border-radius: 5em;
+  position: relative;
+  background-color: var(--gray-a4);
+  transition: background-color 0.2s;
+  cursor: pointer;
+  box-shadow: 0 0 3px 0px var(--black-a12) inset, 0 0 0 1px var(--gray-a7);
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 0.1em;
+    aspect-ratio: 1;
+    height: 90%;
+    border-radius: 50%;
+    background-color: var(--gray-a9);
+    box-shadow: 0 0 0 2px var(--gray-a12) inset;
+
+    transition: transform 0.15s;
+  }
+}
+
+.input:checked + .toggle {
+  background-color: var(--accent-a8);
+  box-shadow: 0 0 3px 0px var(--black-a11) inset, 0 0 0 1px var(--black-a12);
+
+  &:after {
+    transform: translateX(0.95em);
+    box-shadow: 0 0 0 2px var(--white-a12) inset, -1px 0 2px 0px var(--black-a5);
+    background-color: var(--accent-a9);
+  }
+}
+
+.input:disabled + .toggle {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.input:focus-visible + .toggle {
+  outline: 2px solid var(--accent-a7);
+  outline-offset: 2px;
+}

@@ -15,11 +15,14 @@
 }
 .unsavedChanges :global(.rt-TabsTriggerInner) {
   &:before {
-    content: '*';
-    color: var(--accent-a10);
+    content: '';
+    background-color: var(--green-a10);
     position: absolute;
-    top: 0em;
+    top: 2px;
     right: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
   }
 }
 .tabMenuButton {

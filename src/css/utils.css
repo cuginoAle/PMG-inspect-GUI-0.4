@@ -11,8 +11,8 @@
   text-overflow: ellipsis;
 }
 
-.card {
-  --card-background-color: var(--gray-a2);
+.card-bg {
+  --card-background-color: var(--gray-a3);
   box-shadow: 0 0 0 1px var(--gray-a3) inset;
 }
 

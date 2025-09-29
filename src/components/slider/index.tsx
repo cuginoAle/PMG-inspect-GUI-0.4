@@ -95,9 +95,7 @@ const Slider = ({
               const newValue = parseFloat(e.target.value);
               updateSlider(newValue);
 
-              if (onChange) {
-                onChange(newValue);
-              }
+              onChange?.(newValue);
             }}
           />
           <div ref={sliderTrackRef} className={styles.sliderTrack} />
