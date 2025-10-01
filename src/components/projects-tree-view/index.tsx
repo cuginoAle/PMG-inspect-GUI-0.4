@@ -112,12 +112,14 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
           )}
         </Tree>
       </div>
-      <div className={styles.uploadButtonContainer}>
-        <Button size="3" variant="outline">
-          <UploadIcon width={20} height={20} />
-          <span className="ellipsis">Upload videos or images</span>
-        </Button>
-      </div>
+      {enableRemoteAndLocalNodes && (
+        <div className={styles.uploadButtonContainer}>
+          <Button size="3" variant="outline">
+            <UploadIcon width={20} height={20} />
+            <span className="ellipsis">Upload videos or images</span>
+          </Button>
+        </div>
+      )}
     </Flex>
   );
 };
