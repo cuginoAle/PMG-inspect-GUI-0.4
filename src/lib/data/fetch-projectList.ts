@@ -1,4 +1,4 @@
-import { GET_FILES_ENDPOINT } from '@/src/app/protected/api/constants';
+import { ENDPOINT } from '@/src/constants/api-end-points';
 import { GetFilesListResponse } from '@/src/types';
 
 async function fetchProjectList(
@@ -10,7 +10,7 @@ async function fetchProjectList(
   }
 
   const fullUrl =
-    GET_FILES_ENDPOINT.LIST +
+    ENDPOINT.PROJECT.LIST +
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
   return new Promise((resolve, reject) => {
@@ -19,14 +19,18 @@ async function fetchProjectList(
         const body = await res.json();
 
         if (!res.ok) {
-          reject({ status: res.status, detail: body.detail });
+          reject({ code: res.status, status: 'error', detail: body.detail });
         }
 
-        resolve(body);
+        resolve({
+          status: 'ok',
+          detail: body,
+        });
       })
       .catch((error) => {
         reject({
-          status: 'NetworkError',
+          status: 'error',
+          code: 'NetworkError',
           detail: { message: error.message },
         });
       });

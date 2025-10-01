@@ -1,24 +1,34 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { useFetchVideo } from '@/src/app/hooks/useFetchVideo';
 import { VideoMetaData } from '@/src/components/video-metadata';
+import { Warning } from '@/src/components/warning';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 
 const ProjectVideoMetadataContainer = () => {
-  const searchParams = useSearchParams();
-  const videoUrl = searchParams.get('videoUrl') || undefined;
-  const gState = useGlobalState();
-  const setVideo = gState.selectedVideo.set;
+  const { selectedProject } = useGlobalState();
+  const sp = useSearchParams();
 
-  const videoData = useFetchVideo(videoUrl);
+  const project = selectedProject.get({
+    noproxy: true,
+  });
 
-  useEffect(() => {
-    setVideo(videoData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoData]);
+  if (!project || project.status !== 'ok') {
+    return null;
+  }
 
-  return <VideoMetaData video={videoData} />;
+  const selectedVideo = project.detail.project_items.find(
+    (item) => item.video_url === sp.get('videoUrl'),
+  );
+
+  if (!selectedVideo) {
+    return (
+      <div className="center">
+        <Warning message={'No video found!'} />
+      </div>
+    );
+  }
+
+  return <VideoMetaData cameraData={selectedVideo.camera_data} />;
 };
 
 export { ProjectVideoMetadataContainer };

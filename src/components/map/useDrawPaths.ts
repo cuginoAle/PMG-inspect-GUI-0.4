@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from 'react';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 
@@ -88,7 +89,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       features,
     };
 
-    if (!map.getSource(sourceId)) {
+    if (map && !map.getSource(sourceId)) {
       map.addSource(sourceId, {
         type: 'geojson',
         data: collection,
@@ -135,8 +136,12 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       if (!map) return;
       const layerId = 'paths-layer';
       const sourceId = 'paths-source';
-      if (map.getLayer(layerId)) map.removeLayer(layerId);
-      if (map.getSource(sourceId)) map.removeSource(sourceId);
+      try {
+        if (map?.getLayer(layerId)) map.removeLayer(layerId);
+        if (map?.getSource(sourceId)) map.removeSource(sourceId);
+      } catch (error) {
+        console.log('error', error);
+      }
     };
   }, [props.styleLoaded, props.pathsToDraw, props.highlightPath, props.mapRef]);
 };

@@ -9,22 +9,25 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { MagnifyingGlassIcon, PersonIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { columns } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
+import { Immutable } from '@hookstate/core';
+import { NeuralNetworkIcon } from '@/src/components';
+import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 
 const ProjectTableView = ({
   project,
   onMouseOver,
 }: {
-  project: Project;
+  project: Immutable<Project>;
   onMouseOver?: (projectIterm?: ProjectItem) => void;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -37,14 +40,18 @@ const ProjectTableView = ({
   const router = useRouter();
 
   const onRowSelect = useCallback(
-    (projectItem?: ProjectItem) => {
+    (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
       if (!projectItem) return;
+      const item = projectItem as ProjectItem;
       const urlSearchParams = new URLSearchParams(searchParams.toString());
-      urlSearchParams.set('videoUrl', projectItem.video_url);
+      urlSearchParams.set('videoUrl', item.video_url);
 
-      tBodyRef.current
-        ?.querySelector(`[id="${getRowId(projectItem)}"]`)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      scrollChildIntoView({
+        container: tBodyRef.current!,
+        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
+        behavior: 'smooth',
+        direction: 'vertical',
+      });
 
       window.history.pushState(
         null,
@@ -62,8 +69,17 @@ const ProjectTableView = ({
     );
 
     setRowSelection({ [selectedRowIndex]: true });
-    const selectedRow = project?.project_items[selectedRowIndex];
-    onRowSelect(selectedRow);
+    const item = project?.project_items[selectedRowIndex] as ProjectItem;
+    if (!videoUrl) {
+      onRowSelect(item);
+    } else {
+      scrollChildIntoView({
+        container: tBodyRef.current!,
+        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
+        behavior: 'smooth',
+        direction: 'vertical',
+      });
+    }
   }, [onRowSelect, project?.project_items, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
@@ -73,8 +89,14 @@ const ProjectTableView = ({
     router.push(`/protected/edit?${urlSearchParams.toString()}`);
   };
 
+  const tableData = useMemo(
+    () => [...project.project_items] as ProjectItem[],
+    [project.project_items],
+  );
+
   const table = useReactTable({
-    data: project.project_items,
+    // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
+    data: tableData,
     columns: columns,
     state: {
       sorting,
@@ -107,7 +129,7 @@ const ProjectTableView = ({
       </div>
 
       <div className={styles.tableContainer}>
-        <Table.Root variant="surface" className={styles.tableRoot}>
+        <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
           <Table.Header className={styles.tableHeader}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Table.Row key={headerGroup.id}>
@@ -123,6 +145,13 @@ const ProjectTableView = ({
                         header.getContext(),
                       )}
                       {getColumnSortIcon(header.column.getIsSorted()) ?? null}
+                      {header.column.columnDef.meta === 'ai' && (
+                        <NeuralNetworkIcon size={1.5} />
+                      )}
+
+                      {header.column.columnDef.meta === 'human' && (
+                        <PersonIcon />
+                      )}
                     </Flex>
                   </Table.ColumnHeaderCell>
                 ))}

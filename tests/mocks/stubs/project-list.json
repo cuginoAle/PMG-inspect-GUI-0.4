@@ -1,0 +1,317 @@
+[
+  {
+    "file_type": "folder",
+    "name": "ground_truth",
+    "relative_path": "ground_truth",
+    "content": [
+      {
+        "file_type": "project",
+        "name": "ground_truthdata_heath_PCI",
+        "relative_path": "ground_truth/ground_truthdata_heath_PCI.xlsx",
+        "size": 12338,
+        "last_modified": "2025-08-01T07:58:09.434594Z"
+      },
+      {
+        "file_type": "folder",
+        "name": "images",
+        "relative_path": "ground_truth/images",
+        "content": [
+          {
+            "file_type": "folder",
+            "name": "terrace_dr_02",
+            "relative_path": "ground_truth/images/terrace_dr_02",
+            "content": [
+              {
+                "file_type": "image",
+                "name": "terrace_dr_02_sample_04",
+                "relative_path": "ground_truth/images/terrace_dr_02/terrace_dr_02_sample_04.JPG",
+                "size": 14212263,
+                "last_modified": "2025-08-01T07:58:10.344023Z"
+              },
+              {
+                "file_type": "image",
+                "name": "terrace_dr_02_sample_05",
+                "relative_path": "ground_truth/images/terrace_dr_02/terrace_dr_02_sample_05.JPG",
+                "size": 12091355,
+                "last_modified": "2025-08-01T07:58:10.368796Z"
+              },
+              {
+                "file_type": "image",
+                "name": "terrace_dr_02_sample_02",
+                "relative_path": "ground_truth/images/terrace_dr_02/terrace_dr_02_sample_02.JPG",
+                "size": 12219413,
+                "last_modified": "2025-08-01T07:58:10.303270Z"
+              },
+              {
+                "file_type": "image",
+                "name": "terrace_dr_02_sample_03",
+                "relative_path": "ground_truth/images/terrace_dr_02/terrace_dr_02_sample_03.JPG",
+                "size": 12950439,
+                "last_modified": "2025-08-01T07:58:10.319655Z"
+              },
+              {
+                "file_type": "image",
+                "name": "terrace_dr_02_sample_01",
+                "relative_path": "ground_truth/images/terrace_dr_02/terrace_dr_02_sample_01.JPG",
+                "size": 12499199,
+                "last_modified": "2025-08-01T07:58:10.287259Z"
+              },
+              {
+                "file_type": "image",
+                "name": "GOPR0030",
+                "relative_path": "ground_truth/images/terrace_dr_02/GOPR0030.JPG",
+                "size": 13291721,
+                "last_modified": "2025-08-01T07:58:10.272175Z"
+              }
+            ]
+          },
+          {
+            "file_type": "folder",
+            "name": "linnview_crossing_01",
+            "relative_path": "ground_truth/images/linnview_crossing_01",
+            "content": [
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_07",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_07.JPG",
+                "size": 16058879,
+                "last_modified": "2025-08-01T07:58:09.980746Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_06",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_06.JPG",
+                "size": 14865828,
+                "last_modified": "2025-08-01T07:58:09.945833Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_04",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_04.JPG",
+                "size": 14541073,
+                "last_modified": "2025-08-01T07:58:09.896580Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_05",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_05.JPG",
+                "size": 13894284,
+                "last_modified": "2025-08-01T07:58:09.911003Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_01",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_01.JPG",
+                "size": 13318032,
+                "last_modified": "2025-08-01T07:58:09.829257Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_02",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_02.JPG",
+                "size": 13588003,
+                "last_modified": "2025-08-01T07:58:09.847246Z"
+              },
+              {
+                "file_type": "image",
+                "name": "linnview_crossing_01_sample_03",
+                "relative_path": "ground_truth/images/linnview_crossing_01/linnview_crossing_01_sample_03.JPG",
+                "size": 13903020,
+                "last_modified": "2025-08-01T07:58:09.861990Z"
+              }
+            ]
+          },
+          {
+            "file_type": "folder",
+            "name": "joanne_ct_01",
+            "relative_path": "ground_truth/images/joanne_ct_01",
+            "content": [
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_05",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_05.JPG",
+                "size": 13166115,
+                "last_modified": "2025-08-01T07:58:09.560722Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_04",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_04.JPG",
+                "size": 15010304,
+                "last_modified": "2025-08-01T07:58:09.553520Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_06",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_06.JPG",
+                "size": 13004482,
+                "last_modified": "2025-08-01T07:58:09.574374Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_07",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_07.JPG",
+                "size": 14027062,
+                "last_modified": "2025-08-01T07:58:09.782223Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_03",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_03.JPG",
+                "size": 13667351,
+                "last_modified": "2025-08-01T07:58:09.521158Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_02",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_02.JPG",
+                "size": 13595213,
+                "last_modified": "2025-08-01T07:58:09.503262Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_01",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_01.JPG",
+                "size": 12559118,
+                "last_modified": "2025-08-01T07:58:09.490380Z"
+              },
+              {
+                "file_type": "image",
+                "name": "joanne_ct_01_sample_08",
+                "relative_path": "ground_truth/images/joanne_ct_01/joanne_ct_01_sample_08.JPG",
+                "size": 12580958,
+                "last_modified": "2025-08-01T07:58:09.805544Z"
+              }
+            ]
+          },
+          {
+            "file_type": "folder",
+            "name": "s_22nd_st_02",
+            "relative_path": "ground_truth/images/s_22nd_st_02",
+            "content": [
+              {
+                "file_type": "image",
+                "name": "s_22nd_st_02_sample_04",
+                "relative_path": "ground_truth/images/s_22nd_st_02/s_22nd_st_02_sample_04.JPG",
+                "size": 12135578,
+                "last_modified": "2025-08-01T07:58:10.231109Z"
+              },
+              {
+                "file_type": "image",
+                "name": "s_22nd_st_02_sample_05",
+                "relative_path": "ground_truth/images/s_22nd_st_02/s_22nd_st_02_sample_05.JPG",
+                "size": 12820500,
+                "last_modified": "2025-08-01T07:58:10.246236Z"
+              },
+              {
+                "file_type": "image",
+                "name": "s_22nd_st_02_sample_01",
+                "relative_path": "ground_truth/images/s_22nd_st_02/s_22nd_st_02_sample_01.JPG",
+                "size": 13545290,
+                "last_modified": "2025-08-01T07:58:10.175793Z"
+              },
+              {
+                "file_type": "image",
+                "name": "s_22nd_st_02_sample_02",
+                "relative_path": "ground_truth/images/s_22nd_st_02/s_22nd_st_02_sample_02.JPG",
+                "size": 12963734,
+                "last_modified": "2025-08-01T07:58:10.191518Z"
+              },
+              {
+                "file_type": "image",
+                "name": "s_22nd_st_02_sample_03",
+                "relative_path": "ground_truth/images/s_22nd_st_02/s_22nd_st_02_sample_03.JPG",
+                "size": 12233681,
+                "last_modified": "2025-08-01T07:58:10.221170Z"
+              }
+            ]
+          },
+          {
+            "file_type": "folder",
+            "name": "fulla_ln_01",
+            "relative_path": "ground_truth/images/fulla_ln_01",
+            "content": [
+              {
+                "file_type": "image",
+                "name": "fulla_ln_01_sample_02",
+                "relative_path": "ground_truth/images/fulla_ln_01/fulla_ln_01_sample_02.JPG",
+                "size": 13803008,
+                "last_modified": "2025-08-01T07:58:09.460032Z"
+              },
+              {
+                "file_type": "image",
+                "name": "fulla_ln_01_sample_03",
+                "relative_path": "ground_truth/images/fulla_ln_01/fulla_ln_01_sample_03.JPG",
+                "size": 13407808,
+                "last_modified": "2025-08-01T07:58:09.478292Z"
+              },
+              {
+                "file_type": "image",
+                "name": "fulla_ln_01_sample_01",
+                "relative_path": "ground_truth/images/fulla_ln_01/fulla_ln_01_sample_01.JPG",
+                "size": 14083545,
+                "last_modified": "2025-08-01T07:58:09.444561Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file_type": "project",
+        "name": "ground_truthdata_heath",
+        "relative_path": "ground_truth/ground_truthdata_heath.xls",
+        "size": 30208,
+        "last_modified": "2025-08-01T07:58:09.433267Z"
+      }
+    ]
+  },
+  {
+    "file_type": "folder",
+    "name": "debug",
+    "relative_path": "debug",
+    "content": [
+      {
+        "file_type": "image",
+        "name": "fulla_ln_01_sample_01",
+        "relative_path": "debug/fulla_ln_01_sample_01.JPG",
+        "size": 14083545,
+        "last_modified": "2025-08-01T07:58:09.428704Z"
+      },
+      {
+        "file_type": "video",
+        "name": "FULLA%20LN_1",
+        "relative_path": "debug/FULLA%20LN_1.MP4",
+        "size": 102466119,
+        "last_modified": "2025-08-01T07:58:09.396452Z"
+      },
+      {
+        "file_type": "project",
+        "name": "Briarcliff_issue_video",
+        "relative_path": "debug/Briarcliff_issue_video.xlsx",
+        "size": 12897,
+        "last_modified": "2025-08-17T12:45:05.698623Z"
+      },
+      {
+        "file_type": "project",
+        "name": "Briarcliff",
+        "relative_path": "debug/Briarcliff.xlsx",
+        "size": 61316,
+        "last_modified": "2025-08-17T12:45:05.602813Z"
+      },
+      {
+        "file_type": "project",
+        "name": "Briarcliff_issue_video_small",
+        "relative_path": "debug/Briarcliff_issue_video_small.xlsx",
+        "size": 11279,
+        "last_modified": "2025-08-17T12:45:05.718382Z"
+      },
+      {
+        "file_type": "project",
+        "name": "ground_truthdata_heath_small",
+        "relative_path": "debug/ground_truthdata_heath_small.xlsx",
+        "size": 11763,
+        "last_modified": "2025-08-01T07:58:09.431994Z"
+      }
+    ]
+  }
+]

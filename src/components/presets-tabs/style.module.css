@@ -1,0 +1,36 @@
+.root {
+}
+
+.tabWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  :global(.rt-TabsTrigger)[aria-selected='true'] {
+    padding-right: 1.3em;
+    & + .tabMenuButton {
+      display: flex;
+    }
+  }
+}
+.unsavedChanges :global(.rt-TabsTriggerInner) {
+  &:before {
+    content: '';
+    background-color: var(--green-a10);
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+}
+.tabMenuButton {
+  position: absolute;
+  right: 0;
+  display: none;
+
+  &:hover {
+    background-color: transparent;
+  }
+}

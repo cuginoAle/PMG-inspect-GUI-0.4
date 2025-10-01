@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Use process.env.PORT by default and fallback to 3000
 const PORT = process.env.PORT || 3000;
 
 // Set webServer.url and use.baseURL with the location of the WebServer
@@ -53,7 +52,7 @@ export default defineConfig({
   webServer: {
     command: 'pnpm dev',
     url: baseURL,
-    timeout: 120 * 1000,
+    timeout: 20 * 1000,
     reuseExistingServer: !process.env.CI,
   },
 });

@@ -1,0 +1,5445 @@
+{
+  "project_name": "Briarcliff.xlsx",
+  "project_items": [
+    {
+      "video_name": "ADMIRAL%20WORDENS%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ADMIRAL%20WORDENS%20LN_01.MP4",
+      "road_data": {
+        "road_name": "ADMIRAL WORDENS LN",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "RIDGECREST RD",
+        "road_length": 669,
+        "road_width": 24,
+        "road_area": 16056,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ALDER%20DR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ALDER%20DR_01.MP4",
+      "road_data": {
+        "road_name": "ALDER DR",
+        "road_section": "01",
+        "road_from": "BUTTERNUT RD",
+        "road_to": "BUTTERNUT RD",
+        "road_length": 1678,
+        "road_width": 22,
+        "road_area": 36916,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ALDER%20DR_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ALDER%20DR_02.MP4",
+      "road_data": {
+        "road_name": "ALDER DR",
+        "road_section": "02",
+        "road_from": "BUTTERNUT RD",
+        "road_to": "ELM RD",
+        "road_length": 219,
+        "road_width": 22,
+        "road_area": 4818,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "APPLE%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/APPLE%20LN_01.MP4",
+      "road_data": {
+        "road_name": "APPLE LN",
+        "road_section": "01",
+        "road_from": "ORCHARD RD",
+        "road_to": "ORCHARD RD",
+        "road_length": 1438,
+        "road_width": 23,
+        "road_area": 33074,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ARGYLE%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ARGYLE%20PL_01.MP4",
+      "road_data": {
+        "road_name": "ARGYLE PL",
+        "road_section": "01",
+        "road_from": "HOLBROOK LN",
+        "road_to": "CUL DE SAC",
+        "road_length": 444,
+        "road_width": 16,
+        "road_area": 10504,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ASH%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ASH%20RD_01.MP4",
+      "road_data": {
+        "road_name": "ASH RD",
+        "road_section": "01",
+        "road_from": "OAK RD",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 346,
+        "road_width": 20,
+        "road_area": 6920,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ASPINWALL%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ASPINWALL%20RD_01.MP4",
+      "road_data": {
+        "road_name": "ASPINWALL RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD W",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 1817,
+        "road_width": 20,
+        "road_area": 36340,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "AUSTIN%20PLACE_01.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/AUSTIN%20PLACE_01.mp4",
+      "road_data": {
+        "road_name": "AUSTIN PLACE",
+        "road_section": "01",
+        "road_from": "CUL-DE-SAC W",
+        "road_to": "LONG HILL RD E",
+        "road_length": 648,
+        "road_width": 24,
+        "road_area": 15552,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BALSAM%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BALSAM%20RD_01.MP4",
+      "road_data": {
+        "road_name": "BALSAM RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD E",
+        "road_to": "HAWTHORNE PL",
+        "road_length": 862,
+        "road_width": 22,
+        "road_area": 18964,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BIRCH%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BIRCH%20RD_01.MP4",
+      "road_data": {
+        "road_name": "BIRCH RD",
+        "road_section": "01",
+        "road_from": "ELM RD",
+        "road_to": "PINE RD",
+        "road_length": 1949,
+        "road_width": 16,
+        "road_area": 31184,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BISHOP%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BISHOP%20LN_01.MP4",
+      "road_data": {
+        "road_name": "BISHOP LN",
+        "road_section": "01",
+        "road_from": "HUNGERFORD RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 470,
+        "road_width": 24,
+        "road_area": 16880,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BROOKWOOD%20DR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BROOKWOOD%20DR_01.MP4",
+      "road_data": {
+        "road_name": "BROOKWOOD DR",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 1842,
+        "road_width": 24,
+        "road_area": 44208,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BUCKOUT%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BUCKOUT%20RD_01.MP4",
+      "road_data": {
+        "road_name": "BUCKOUT RD",
+        "road_section": "01",
+        "road_from": "BEGIN MAINTENANCE",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 670,
+        "road_width": 20,
+        "road_area": 13400,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BURNS%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BURNS%20PL_01.MP4",
+      "road_data": {
+        "road_name": "BURNS PL",
+        "road_section": "01",
+        "road_from": "WHITSON RD",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 1784,
+        "road_width": 23,
+        "road_area": 41032,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BUTTERNUT%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BUTTERNUT%20RD_01.MP4",
+      "road_data": {
+        "road_name": "BUTTERNUT RD",
+        "road_section": "01",
+        "road_from": "ALDER DR",
+        "road_to": "ALDER DR",
+        "road_length": 981,
+        "road_width": 24,
+        "road_area": 23544,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "BUTTERNUT%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/BUTTERNUT%20RD_02.MP4",
+      "road_data": {
+        "road_name": "BUTTERNUT RD",
+        "road_section": "02",
+        "road_from": "ALDER DR",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 659,
+        "road_width": 24,
+        "road_area": 15816,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CARLTON%20AVE_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CARLTON%20AVE_01.MP4",
+      "road_data": {
+        "road_name": "CARLTON AVE",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "VILLAGE LINE",
+        "road_length": 259,
+        "road_width": 18,
+        "road_area": 4662,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CARLTON%20AVE_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CARLTON%20AVE_02.MP4",
+      "road_data": {
+        "road_name": "CARLTON AVE",
+        "road_section": "02",
+        "road_from": "VILLAGE LINE",
+        "road_to": "WASHBURN RD",
+        "road_length": 41,
+        "road_width": 23,
+        "road_area": 943,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20E_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20E_01.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR E",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "FRAME RD",
+        "road_length": 70,
+        "road_width": 24,
+        "road_area": 1680,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20E_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20E_02.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR E",
+        "road_section": "02",
+        "road_from": "FRAME RD",
+        "road_to": "LAUREL LN",
+        "road_length": 454,
+        "road_width": 24,
+        "road_area": 10896,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20E_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20E_03.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR E",
+        "road_section": "03",
+        "road_from": "LAUREL LN",
+        "road_to": "TAMARACK PL",
+        "road_length": 118,
+        "road_width": 24,
+        "road_area": 2832,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20E_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20E_04.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR E",
+        "road_section": "04",
+        "road_from": "TAMARACK PL",
+        "road_to": "LONG HILL RD E",
+        "road_length": 2525,
+        "road_width": 24,
+        "road_area": 60600,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20W_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20W_01.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR W",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "JUNIPER PL",
+        "road_length": 686,
+        "road_width": 23,
+        "road_area": 20578,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20W_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20W_02.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR W",
+        "road_section": "02",
+        "road_from": "JUNIPER PL",
+        "road_to": "WALNUT PL",
+        "road_length": 451,
+        "road_width": 23,
+        "road_area": 10373,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CEDAR%20DR%20W_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CEDAR%20DR%20W_03.MP4",
+      "road_data": {
+        "road_name": "CEDAR DR W",
+        "road_section": "03",
+        "road_from": "WALNUT PL",
+        "road_to": "LONG HILL RD E",
+        "road_length": 609,
+        "road_width": 23,
+        "road_area": 14007,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR%20W_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR%20W_01.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR W",
+        "road_section": "01",
+        "road_from": "LOCUST RD",
+        "road_to": "CENTRAL DR",
+        "road_length": 510,
+        "road_width": 20,
+        "road_area": 10200,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR%20W_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR%20W_02.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR W",
+        "road_section": "02",
+        "road_from": "OLD BRIARCLIFF RD",
+        "road_to": "LOCUST RD",
+        "road_length": 233,
+        "road_width": 24,
+        "road_area": 5592,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_01.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "01",
+        "road_from": "ROSE VALLEY RD",
+        "road_to": "CENTRAL LN",
+        "road_length": 464,
+        "road_width": 15,
+        "road_area": 6960,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_02.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "02",
+        "road_from": "CENTRAL LN",
+        "road_to": "CENTRAL DR",
+        "road_length": 847,
+        "road_width": 15,
+        "road_area": 12705,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_03.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "03",
+        "road_from": "CENTRAL DR",
+        "road_to": "LODGE RD",
+        "road_length": 1497,
+        "road_width": 15,
+        "road_area": 22455,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_04.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "04",
+        "road_from": "LODGE RD",
+        "road_to": "CENTRAL DR ONE WAY",
+        "road_length": 2077,
+        "road_width": 24,
+        "road_area": 49848,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_05.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "05",
+        "road_from": "CENTRAL DR ONE WAY",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 467,
+        "road_width": 15,
+        "road_area": 7005,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CENTRAL%20DR_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20DR_06.MP4",
+      "road_data": {
+        "road_name": "CENTRAL DR",
+        "road_section": "06",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "CENTRAL DR",
+        "road_length": 191,
+        "road_width": 22,
+        "road_area": 4202,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "CENTRAL%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CENTRAL%20LN_01.MP4",
+      "road_data": {
+        "road_name": "CENTRAL LN",
+        "road_section": "01",
+        "road_from": "OLD BRIARCLIFF RD",
+        "road_to": "CENTRAL DR",
+        "road_length": 850,
+        "road_width": 10,
+        "road_area": 8500,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_01.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_01.mp4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 267,
+        "road_width": 24,
+        "road_area": 6408,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_02.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_02.mp4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "02",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "NY 9A",
+        "road_length": 183,
+        "road_width": 24,
+        "road_area": 4392,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 3
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_03.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_03.mp4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "03",
+        "road_from": "NY 9A",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 110,
+        "road_width": 24,
+        "road_area": 2640,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_04.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_04.mp4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "04",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "TAPPAN TER",
+        "road_length": 238,
+        "road_width": 24,
+        "road_area": 5712,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_05.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "05",
+        "road_from": "TAPPAN TER",
+        "road_to": "MORNINGSIDE DR",
+        "road_length": 627,
+        "road_width": 24,
+        "road_area": 15048,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_06.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "06",
+        "road_from": "MORNINGSIDE DR",
+        "road_to": "FULLER RD",
+        "road_length": 814,
+        "road_width": 24,
+        "road_area": 19536,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_07.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "07",
+        "road_from": "FULLER RD",
+        "road_to": "BURNS PL",
+        "road_length": 1504,
+        "road_width": 24,
+        "road_area": 36096,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_08.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "08",
+        "road_from": "BURNS PL",
+        "road_to": "N STATE RD",
+        "road_length": 419,
+        "road_width": 24,
+        "road_area": 10056,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_09.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "09",
+        "road_from": "N STATE RD",
+        "road_to": "GORDON AVE",
+        "road_length": 568,
+        "road_width": 24,
+        "road_area": 13632,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_10.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_10.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "10",
+        "road_from": "GORDON AVE",
+        "road_to": "DEER TREE LN",
+        "road_length": 281,
+        "road_width": 24,
+        "road_area": 6744,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_11.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_11.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "11",
+        "road_from": "DEER TREE LN",
+        "road_to": "RT-100",
+        "road_length": 262,
+        "road_width": 24,
+        "road_area": 6288,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_12.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_12.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "12",
+        "road_from": "RT-100",
+        "road_to": "VILLAGE LINE",
+        "road_length": 319,
+        "road_width": 24,
+        "road_area": 7656,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_13.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_13.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "13",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "ON RAMP",
+        "road_length": 433,
+        "road_width": 36,
+        "road_area": 15588,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHAPPAQUA%20RD_14.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHAPPAQUA%20RD_14.MP4",
+      "road_data": {
+        "road_name": "CHAPPAQUA RD",
+        "road_section": "14",
+        "road_from": "ON RAMP",
+        "road_to": "VILLAGE LINE",
+        "road_length": 247,
+        "road_width": 35,
+        "road_area": 8645,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHERRY%20HILL%20CT_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHERRY%20HILL%20CT_01.MP4",
+      "road_data": {
+        "road_name": "CHERRY HILL CT",
+        "road_section": "01",
+        "road_from": "SHERRY HILL CT",
+        "road_to": "DALMENY RD",
+        "road_length": 368,
+        "road_width": 22,
+        "road_area": 8096,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHERRY%20HILL%20CT_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHERRY%20HILL%20CT_02.MP4",
+      "road_data": {
+        "road_name": "CHERRY HILL CT",
+        "road_section": "02",
+        "road_from": "CHERRY HILL CT",
+        "road_to": "CUL DE SAC",
+        "road_length": 652,
+        "road_width": 22,
+        "road_area": 17244,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CHESTNUT%20HILL%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CHESTNUT%20HILL%20LN_01.MP4",
+      "road_data": {
+        "road_name": "CHESTNUT HILL LN",
+        "road_section": "01",
+        "road_from": "SLEEPY HOLLOW RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 1212,
+        "road_width": 24,
+        "road_area": 33288,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "COTTONWOOD%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/COTTONWOOD%20LN_01.MP4",
+      "road_data": {
+        "road_name": "COTTONWOOD LN",
+        "road_section": "01",
+        "road_from": "LONG HILL RD W",
+        "road_to": "PURDYS CT",
+        "road_length": 765,
+        "road_width": 24,
+        "road_area": 18360,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "COTTONWOOD%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/COTTONWOOD%20LN_02.MP4",
+      "road_data": {
+        "road_name": "COTTONWOOD LN",
+        "road_section": "02",
+        "road_from": "PURDYS CT",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 632,
+        "road_width": 24,
+        "road_area": 15168,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CREIGHTON%20LN_01EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREIGHTON%20LN_01EB.MP4",
+      "road_data": {
+        "road_name": "CREIGHTON LN",
+        "road_section": "01EB",
+        "road_from": "RIVER RD",
+        "road_to": "RIVER RD",
+        "road_length": 100,
+        "road_width": 20,
+        "road_area": 2000,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CREIGHTON%20LN_01WB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREIGHTON%20LN_01WB.MP4",
+      "road_data": {
+        "road_name": "CREIGHTON LN",
+        "road_section": "01WB",
+        "road_from": "RIVER RD",
+        "road_to": "CREIGHTON LN",
+        "road_length": 98,
+        "road_width": 20,
+        "road_area": 1960,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CREIGHTON%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREIGHTON%20LN_02.MP4",
+      "road_data": {
+        "road_name": "CREIGHTON LN",
+        "road_section": "02",
+        "road_from": "CREIGHTON LN",
+        "road_to": "CREIGHTON LN",
+        "road_length": 1053,
+        "road_width": 20,
+        "road_area": 21060,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CREIGHTON%20LN_03EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREIGHTON%20LN_03EB.MP4",
+      "road_data": {
+        "road_name": "CREIGHTON LN",
+        "road_section": "03EB",
+        "road_from": "CREIGHTON LN",
+        "road_to": "RIVER RD",
+        "road_length": 99,
+        "road_width": 22,
+        "road_area": 2178,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "CREIGHTON%20LN_03WB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREIGHTON%20LN_03WB.MP4",
+      "road_data": {
+        "road_name": "CREIGHTON LN",
+        "road_section": "03WB",
+        "road_from": "CREIGHTON LN",
+        "road_to": "RIVER RD",
+        "road_length": 107,
+        "road_width": 20,
+        "road_area": 2140,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "CREST%20DR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREST%20DR_01.MP4",
+      "road_data": {
+        "road_name": "CREST DR",
+        "road_section": "01",
+        "road_from": "PARKWAY RD",
+        "road_to": "PINE CT",
+        "road_length": 322,
+        "road_width": 20,
+        "road_area": 6440,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CREST%20DR_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CREST%20DR_02.MP4",
+      "road_data": {
+        "road_name": "CREST DR",
+        "road_section": "02",
+        "road_from": "PINE CT",
+        "road_to": "HUNGERFORD RD",
+        "road_length": 491,
+        "road_width": 20,
+        "road_area": 9820,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CYPRESS%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CYPRESS%20LN_01.MP4",
+      "road_data": {
+        "road_name": "CYPRESS LN",
+        "road_section": "01",
+        "road_from": "LOCUST RD",
+        "road_to": "HICKORY RD",
+        "road_length": 1300,
+        "road_width": 23,
+        "road_area": 29900,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "CYPRESS%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/CYPRESS%20LN_02.MP4",
+      "road_data": {
+        "road_name": "CYPRESS LN",
+        "road_section": "02",
+        "road_from": "HICKORY RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 191,
+        "road_width": 23,
+        "road_area": 10093,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DALMENY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DALMENY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "DALMENY RD",
+        "road_section": "01",
+        "road_from": "FOUNTAIN RD",
+        "road_to": "CHERRY HILL CT",
+        "road_length": 1667,
+        "road_width": 24,
+        "road_area": 40008,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DALMENY%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DALMENY%20RD_02.MP4",
+      "road_data": {
+        "road_name": "DALMENY RD",
+        "road_section": "02",
+        "road_from": "CHERRY HILL CT",
+        "road_to": "TULIP RD",
+        "road_length": 1995,
+        "road_width": 24,
+        "road_area": 47880,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DELTON%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DELTON%20LN_01.MP4",
+      "road_data": {
+        "road_name": "DELTON LN",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 196,
+        "road_width": 40,
+        "road_area": 7840,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DELTON%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DELTON%20LN_02.MP4",
+      "road_data": {
+        "road_name": "DELTON LN",
+        "road_section": "02",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "VAN LU VAN RD",
+        "road_length": 60,
+        "road_width": 45,
+        "road_area": 2700,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DOGWOOD%20CLOSE_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DOGWOOD%20CLOSE_01.MP4",
+      "road_data": {
+        "road_name": "DOGWOOD CLOSE",
+        "road_section": "01",
+        "road_from": "DOGWOOD LN",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 310,
+        "road_width": 20,
+        "road_area": 6200,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DOGWOOD%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DOGWOOD%20LN_01.MP4",
+      "road_data": {
+        "road_name": "DOGWOOD LN",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "DOGWOOD CLOSE",
+        "road_length": 345,
+        "road_width": 16,
+        "road_area": 5520,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DOGWOOD%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DOGWOOD%20LN_02.MP4",
+      "road_data": {
+        "road_name": "DOGWOOD LN",
+        "road_section": "02",
+        "road_from": "DOGWOOD CLOSE",
+        "road_to": "VILLAGE LINE",
+        "road_length": 425,
+        "road_width": 16,
+        "road_area": 6800,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DRISLANE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DRISLANE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "DRISLANE RD",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "MACY RD",
+        "road_length": 410,
+        "road_width": 16,
+        "road_area": 6560,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "DUNN%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/DUNN%20LN_01.MP4",
+      "road_data": {
+        "road_name": "DUNN LN",
+        "road_section": "01",
+        "road_from": "MATTHES RD",
+        "road_to": "N STATE RD",
+        "road_length": 337,
+        "road_width": 22,
+        "road_area": 7414,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_01.MP4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD E",
+        "road_to": "ALDER DR",
+        "road_length": 817,
+        "road_width": 22,
+        "road_area": 17974,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_02.MP4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "02",
+        "road_from": "ALDER DR",
+        "road_to": "PLUMWOOD RD",
+        "road_length": 1047,
+        "road_width": 22,
+        "road_area": 23034,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_03.MP4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "03",
+        "road_from": "PLUMWOOD RD",
+        "road_to": "TUTTLE RD",
+        "road_length": 550,
+        "road_width": 22,
+        "road_area": 12100,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_04.MP4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "04",
+        "road_from": "TUTTLE RD",
+        "road_to": "BIRCH RD",
+        "road_length": 365,
+        "road_width": 22,
+        "road_area": 8030,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_05.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_05.mp4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "05",
+        "road_from": "BIRCH RD",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 752,
+        "road_width": 32,
+        "road_area": 24064,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_06.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_06.mp4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "06",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 575,
+        "road_width": 32,
+        "road_area": 18400,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_07.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_07.mp4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "07",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "S STATE RD",
+        "road_length": 374,
+        "road_width": 32,
+        "road_area": 11968,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ELM%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ELM%20RD_08.MP4",
+      "road_data": {
+        "road_name": "ELM RD",
+        "road_section": "08",
+        "road_from": "PINE RD",
+        "road_to": "S STATE RD",
+        "road_length": 626,
+        "road_width": 28,
+        "road_area": 17528,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FARM%20RD%20SPUR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FARM%20RD%20SPUR_01.MP4",
+      "road_data": {
+        "road_name": "FARM RD SPUR",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "FARM RD",
+        "road_length": 76,
+        "road_width": 23,
+        "road_area": 1748,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FARM%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FARM%20RD_01.MP4",
+      "road_data": {
+        "road_name": "FARM RD",
+        "road_section": "01",
+        "road_from": "END S",
+        "road_to": "ORCHARD RD",
+        "road_length": 652,
+        "road_width": 18,
+        "road_area": 11736,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FARM%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FARM%20RD_02.MP4",
+      "road_data": {
+        "road_name": "FARM RD",
+        "road_section": "02",
+        "road_from": "ORCHARD RD",
+        "road_to": "MACY RD",
+        "road_length": 504,
+        "road_width": 18,
+        "road_area": 9072,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FARM%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FARM%20RD_03.MP4",
+      "road_data": {
+        "road_name": "FARM RD",
+        "road_section": "03",
+        "road_from": "MACY RD",
+        "road_to": "FARM RD SPUR",
+        "road_length": 590,
+        "road_width": 18,
+        "road_area": 10620,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FARM%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FARM%20RD_04.MP4",
+      "road_data": {
+        "road_name": "FARM RD",
+        "road_section": "04",
+        "road_from": "FARM RD SPUR",
+        "road_to": "VILLAGE LINE",
+        "road_length": 86,
+        "road_width": 18,
+        "road_area": 1548,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FEE%20CT_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FEE%20CT_01.MP4",
+      "road_data": {
+        "road_name": "FEE CT",
+        "road_section": "01",
+        "road_from": "CEDAR DR E",
+        "road_to": "CUL DE SAC",
+        "road_length": 807,
+        "road_width": 24,
+        "road_area": 20968,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FOUNTAIN%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FOUNTAIN%20RD_01.MP4",
+      "road_data": {
+        "road_name": "FOUNTAIN RD",
+        "road_section": "01",
+        "road_from": "FOUNTAIN RD LOOP",
+        "road_to": "FOUNTAIN RD",
+        "road_length": 871,
+        "road_width": 21,
+        "road_area": 18291,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FOUNTAIN%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FOUNTAIN%20RD_02.MP4",
+      "road_data": {
+        "road_name": "FOUNTAIN RD",
+        "road_section": "02",
+        "road_from": "FOUNTAIN RD LOOP",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 363,
+        "road_width": 21,
+        "road_area": 7623,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FRAME%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FRAME%20RD_01.MP4",
+      "road_data": {
+        "road_name": "FRAME RD",
+        "road_section": "01",
+        "road_from": "CEDAR DR E",
+        "road_to": "LONG HILL RD E",
+        "road_length": 1773,
+        "road_width": 24,
+        "road_area": 42552,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FULLER%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FULLER%20RD_01.MP4",
+      "road_data": {
+        "road_name": "FULLER RD",
+        "road_section": "01",
+        "road_from": "HUNGERFORD RD",
+        "road_to": "WHITSON RD",
+        "road_length": 443,
+        "road_width": 24,
+        "road_area": 10632,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FULLER%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FULLER%20RD_02.MP4",
+      "road_data": {
+        "road_name": "FULLER RD",
+        "road_section": "02",
+        "road_from": "WHITSON RD",
+        "road_to": "WHITSON RD",
+        "road_length": 1301,
+        "road_width": 24,
+        "road_area": 31224,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "FULLER%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/FULLER%20RD_03.MP4",
+      "road_data": {
+        "road_name": "FULLER RD",
+        "road_section": "03",
+        "road_from": "WHITSON RD",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 131,
+        "road_width": 24,
+        "road_area": 3144,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HALL%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HALL%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HALL RD",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 984,
+        "road_width": 24,
+        "road_area": 23616,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HAWTHORNE%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HAWTHORNE%20PL_01.MP4",
+      "road_data": {
+        "road_name": "HAWTHORNE PL",
+        "road_section": "01",
+        "road_from": "TUTTLE RD",
+        "road_to": "BALSAM RD",
+        "road_length": 866,
+        "road_width": 24,
+        "road_area": 20784,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HAWTHORNE%20PL_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HAWTHORNE%20PL_02.MP4",
+      "road_data": {
+        "road_name": "HAWTHORNE PL",
+        "road_section": "02",
+        "road_from": "BALSAM RD",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 891,
+        "road_width": 24,
+        "road_area": 21384,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HAZELTON%20CIR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HAZELTON%20CIR_01.MP4",
+      "road_data": {
+        "road_name": "HAZELTON CIR",
+        "road_section": "01",
+        "road_from": "HUNGERFORD RD",
+        "road_to": "MATTHES RD",
+        "road_length": 1233,
+        "road_width": 24,
+        "road_area": 29592,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HAZELTON%20CIR_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HAZELTON%20CIR_02.MP4",
+      "road_data": {
+        "road_name": "HAZELTON CIR",
+        "road_section": "02",
+        "road_from": "MATTHES RD",
+        "road_to": "SCHRADE RD",
+        "road_length": 421,
+        "road_width": 24,
+        "road_area": 10104,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HEMLOCK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HEMLOCK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HEMLOCK RD",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "SPRUCE RD",
+        "road_length": 394,
+        "road_width": 25,
+        "road_area": 14050,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HEMLOCK%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HEMLOCK%20RD_02.MP4",
+      "road_data": {
+        "road_name": "HEMLOCK RD",
+        "road_section": "02",
+        "road_from": "SPRUCE RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 396,
+        "road_width": 25,
+        "road_area": 14100,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HICKORY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HICKORY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HICKORY RD",
+        "road_section": "01",
+        "road_from": "CYPRESS LN",
+        "road_to": "WILLOW DR",
+        "road_length": 385,
+        "road_width": 23,
+        "road_area": 8855,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HICKORY%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HICKORY%20RD_02.MP4",
+      "road_data": {
+        "road_name": "HICKORY RD",
+        "road_section": "02",
+        "road_from": "WILLOW DR",
+        "road_to": "LOCUST RD",
+        "road_length": 563,
+        "road_width": 23,
+        "road_area": 12949,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HICKORY%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HICKORY%20RD_03.MP4",
+      "road_data": {
+        "road_name": "HICKORY RD",
+        "road_section": "03",
+        "road_from": "LOCUST RD",
+        "road_to": "WILLOW DR",
+        "road_length": 564,
+        "road_width": 23,
+        "road_area": 12972,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HICKORY%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HICKORY%20RD_04.MP4",
+      "road_data": {
+        "road_name": "HICKORY RD",
+        "road_section": "04",
+        "road_from": "WILLOW DR",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 225,
+        "road_width": 23,
+        "road_area": 5175,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HIDDEN%20OAK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HIDDEN%20OAK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HIDDEN OAK RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD W",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 726,
+        "road_width": 20,
+        "road_area": 14520,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HIRST%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HIRST%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HIRST RD",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "TANGLEWOOD CIR",
+        "road_length": 1217,
+        "road_width": 24,
+        "road_area": 29208,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HIRST%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HIRST%20RD_02.MP4",
+      "road_data": {
+        "road_name": "HIRST RD",
+        "road_section": "02",
+        "road_from": "TANGLEWOOD CIR",
+        "road_to": "LONG HILL RD W",
+        "road_length": 1477,
+        "road_width": 28,
+        "road_area": 41356,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20LN_01.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK LN",
+        "road_section": "01",
+        "road_from": "HOLBROOK RD",
+        "road_to": "ARGYLE PL",
+        "road_length": 375,
+        "road_width": 18,
+        "road_area": 6750,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20LN_02.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK LN",
+        "road_section": "02",
+        "road_from": "ARGYLE PL",
+        "road_to": "MEADOW RD",
+        "road_length": 177,
+        "road_width": 24,
+        "road_area": 4248,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20LN_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20LN_03.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK LN",
+        "road_section": "03",
+        "road_from": "MEADOW RD",
+        "road_to": "MEADOW RD",
+        "road_length": 1348,
+        "road_width": 24,
+        "road_area": 32352,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20LN_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20LN_04.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK LN",
+        "road_section": "04",
+        "road_from": "MEADOW RD",
+        "road_to": "MACY RD",
+        "road_length": 443,
+        "road_width": 24,
+        "road_area": 10632,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK RD",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "HOLBROOK LN",
+        "road_length": 1665,
+        "road_width": 24,
+        "road_area": 39960,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20RD_02.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK RD",
+        "road_section": "02",
+        "road_from": "HOLBROOK LN",
+        "road_to": "SHADOW BROOK LN",
+        "road_length": 779,
+        "road_width": 21,
+        "road_area": 16359,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLBROOK%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLBROOK%20RD_03.MP4",
+      "road_data": {
+        "road_name": "HOLBROOK RD",
+        "road_section": "03",
+        "road_from": "SHADOW BROOK LN",
+        "road_to": "VILLAGE LINE",
+        "road_length": 913,
+        "road_width": 21,
+        "road_area": 19173,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLLOWTREE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLLOWTREE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HOLLOWTREE RD",
+        "road_section": "01",
+        "road_from": "LOOP",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 988,
+        "road_width": 18,
+        "road_area": 17784,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HOLLY%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HOLLY%20PL_01.MP4",
+      "road_data": {
+        "road_name": "HOLLY PL",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "LONG HILL RD W",
+        "road_length": 1734,
+        "road_width": 24,
+        "road_area": 47616,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HORSECHESTNUT%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HORSECHESTNUT%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HORSECHESTNUT RD",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 725,
+        "road_width": 18,
+        "road_area": 13750,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HUNGERFORD%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HUNGERFORD%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HUNGERFORD RD",
+        "road_section": "01",
+        "road_from": "SCHRADE RD",
+        "road_to": "PARKWAY RD",
+        "road_length": 324,
+        "road_width": 23,
+        "road_area": 7452,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HUNGERFORD%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HUNGERFORD%20RD_02.MP4",
+      "road_data": {
+        "road_name": "HUNGERFORD RD",
+        "road_section": "02",
+        "road_from": "PARKWAY RD",
+        "road_to": "CREST DR",
+        "road_length": 499,
+        "road_width": 23,
+        "road_area": 11477,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HUNGERFORD%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HUNGERFORD%20RD_03.MP4",
+      "road_data": {
+        "road_name": "HUNGERFORD RD",
+        "road_section": "03",
+        "road_from": "CREST DR",
+        "road_to": "FULLER RD",
+        "road_length": 232,
+        "road_width": 23,
+        "road_area": 5336,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HUNGERFORD%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HUNGERFORD%20RD_04.MP4",
+      "road_data": {
+        "road_name": "HUNGERFORD RD",
+        "road_section": "04",
+        "road_from": "FULLER RD",
+        "road_to": "BISHOP LN",
+        "road_length": 170,
+        "road_width": 23,
+        "road_area": 3910,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HUNGERFORD%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HUNGERFORD%20RD_05.MP4",
+      "road_data": {
+        "road_name": "HUNGERFORD RD",
+        "road_section": "05",
+        "road_from": "BISHOP LN",
+        "road_to": "END MAINTENANCE",
+        "road_length": 117,
+        "road_width": 23,
+        "road_area": 2691,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "HYATT%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/HYATT%20RD_01.MP4",
+      "road_data": {
+        "road_name": "HYATT RD",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "LONG HILL RD E",
+        "road_length": 752,
+        "road_width": 18,
+        "road_area": 18136,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "INGHAM%20RD_01.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/INGHAM%20RD_01.mp4",
+      "road_data": {
+        "road_name": "INGHAM RD",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "SCHOOL ENTRANCE",
+        "road_length": 494,
+        "road_width": 24,
+        "road_area": 11856,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "JACKSON%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/JACKSON%20RD_01.MP4",
+      "road_data": {
+        "road_name": "JACKSON RD",
+        "road_section": "01",
+        "road_from": "SATINWOOD LN",
+        "road_to": "ZUYDHOEK RD",
+        "road_length": 1143,
+        "road_width": 18,
+        "road_area": 20574,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "JUNIPER%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/JUNIPER%20PL_01.MP4",
+      "road_data": {
+        "road_name": "JUNIPER PL",
+        "road_section": "01",
+        "road_from": "CEDAR DR W",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 796,
+        "road_width": 24,
+        "road_area": 19104,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LARCH%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LARCH%20RD_01.MP4",
+      "road_data": {
+        "road_name": "LARCH RD",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "SIMPSON RD",
+        "road_length": 923,
+        "road_width": 21,
+        "road_area": 21483,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LARCH%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LARCH%20RD_02.MP4",
+      "road_data": {
+        "road_name": "LARCH RD",
+        "road_section": "02",
+        "road_from": "SIMPSON RD",
+        "road_to": "MAPLE RD",
+        "road_length": 799,
+        "road_width": 25,
+        "road_area": 19975,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LARCH%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LARCH%20RD_03.MP4",
+      "road_data": {
+        "road_name": "LARCH RD",
+        "road_section": "03",
+        "road_from": "MAPLE RD",
+        "road_to": "OAK RD",
+        "road_length": 352,
+        "road_width": 27,
+        "road_area": 9504,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LARCH%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LARCH%20RD_04.MP4",
+      "road_data": {
+        "road_name": "LARCH RD",
+        "road_section": "04",
+        "road_from": "OAK RD",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 355,
+        "road_width": 24,
+        "road_area": 8520,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LAUREL%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LAUREL%20LN_01.MP4",
+      "road_data": {
+        "road_name": "LAUREL LN",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "CEDAR DR E",
+        "road_length": 272,
+        "road_width": 22,
+        "road_area": 5984,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LAW%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LAW%20RD_01.MP4",
+      "road_data": {
+        "road_name": "LAW RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD W",
+        "road_to": "NICHOLS PL",
+        "road_length": 422,
+        "road_width": 23,
+        "road_area": 9706,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LAW%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LAW%20RD_02.MP4",
+      "road_data": {
+        "road_name": "LAW RD",
+        "road_section": "02",
+        "road_from": "NICHOLS PL",
+        "road_to": "QUINN LN",
+        "road_length": 3627,
+        "road_width": 23,
+        "road_area": 83421,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LAW%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LAW%20RD_03.MP4",
+      "road_data": {
+        "road_name": "LAW RD",
+        "road_section": "03",
+        "road_from": "QUINN LN",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 604,
+        "road_width": 23,
+        "road_area": 13892,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LEICESTER%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LEICESTER%20RD_01.MP4",
+      "road_data": {
+        "road_name": "LEICESTER RD",
+        "road_section": "01",
+        "road_from": "MARLBOROUGH RD",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 528,
+        "road_width": 16,
+        "road_area": 8448,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LOCUST%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LOCUST%20RD_01.MP4",
+      "road_data": {
+        "road_name": "LOCUST RD",
+        "road_section": "01",
+        "road_from": "CENTRAL DR W",
+        "road_to": "CYPRESS LN",
+        "road_length": 658,
+        "road_width": 24,
+        "road_area": 15792,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LOCUST%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LOCUST%20RD_02.MP4",
+      "road_data": {
+        "road_name": "LOCUST RD",
+        "road_section": "02",
+        "road_from": "CYPRESS LN",
+        "road_to": "WILLOW DR",
+        "road_length": 510,
+        "road_width": 24,
+        "road_area": 12240,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LOCUST%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LOCUST%20RD_03.MP4",
+      "road_data": {
+        "road_name": "LOCUST RD",
+        "road_section": "03",
+        "road_from": "WILLOW DR",
+        "road_to": "HICKORY RD",
+        "road_length": 1312,
+        "road_width": 24,
+        "road_area": 31488,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LODGE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LODGE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "LODGE RD",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "UNNAMED STREET",
+        "road_length": 200,
+        "road_width": 31,
+        "road_area": 6200,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LODGE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LODGE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "LODGE RD",
+        "road_section": "02",
+        "road_from": "UNNAMED STREET",
+        "road_to": "DEAD END",
+        "road_length": 1553,
+        "road_width": 23,
+        "road_area": 35719,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LODGE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LODGE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "LODGE RD",
+        "road_section": "03",
+        "road_from": "DEAD END",
+        "road_to": "CENTRAL DR",
+        "road_length": 807,
+        "road_width": 23,
+        "road_area": 18561,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20E_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20E_01.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD E",
+        "road_section": "01",
+        "road_from": "SLEEPY HOLLOW RD",
+        "road_to": "CEDAR DR W",
+        "road_length": 1628,
+        "road_width": 23,
+        "road_area": 37444,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20E_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20E_02.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD E",
+        "road_section": "02",
+        "road_from": "CEDAR DR W",
+        "road_to": "FRAME RD",
+        "road_length": 767,
+        "road_width": 23,
+        "road_area": 17641,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20E_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20E_03.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD E",
+        "road_section": "03",
+        "road_from": "FRAME RD",
+        "road_to": "TUTTLE RD",
+        "road_length": 547,
+        "road_width": 23,
+        "road_area": 12581,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20E_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20E_04.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD E",
+        "road_section": "04",
+        "road_from": "TUTTLE RD",
+        "road_to": "BALSAM RD",
+        "road_length": 685,
+        "road_width": 23,
+        "road_area": 15755,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20E_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20E_05.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD E",
+        "road_section": "05",
+        "road_from": "BALSAM RD",
+        "road_to": "AUSTIN PLACE",
+        "road_length": 1486,
+        "road_width": 23,
+        "road_area": 34178,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_01.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "RIDGECREST RD",
+        "road_length": 1373,
+        "road_width": 32,
+        "road_area": 43936,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_02.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "02",
+        "road_from": "RIDGECREST RD",
+        "road_to": "QUINN RD",
+        "road_length": 143,
+        "road_width": 29,
+        "road_area": 4147,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_03.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "03",
+        "road_from": "QUINN RD",
+        "road_to": "QUINN RD",
+        "road_length": 417,
+        "road_width": 25,
+        "road_area": 10425,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_04.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "04",
+        "road_from": "QUINN RD",
+        "road_to": "LAW RD",
+        "road_length": 964,
+        "road_width": 32,
+        "road_area": 30848,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_05.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "05",
+        "road_from": "LAW RD",
+        "road_to": "HOLLY PL",
+        "road_length": 170,
+        "road_width": 32,
+        "road_area": 5440,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_06.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "06",
+        "road_from": "HOLLY PL",
+        "road_to": "COTTONWOOD LN",
+        "road_length": 713,
+        "road_width": 24,
+        "road_area": 17112,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_07.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "07",
+        "road_from": "COTTONWOOD LN",
+        "road_to": "SHELLBARK LN",
+        "road_length": 271,
+        "road_width": 24,
+        "road_area": 6504,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_08.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "08",
+        "road_from": "SHELLBARK LN",
+        "road_to": "ASPINWALL RD",
+        "road_length": 1122,
+        "road_width": 32,
+        "road_area": 35904,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_09.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "09",
+        "road_from": "ASPINWALL RD",
+        "road_to": "HIRST RD",
+        "road_length": 441,
+        "road_width": 32,
+        "road_area": 14112,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_10.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_10.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "10",
+        "road_from": "HIRST RD",
+        "road_to": "HIDDEN OAK RD",
+        "road_length": 133,
+        "road_width": 32,
+        "road_area": 4256,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "LONG%20HILL%20RD%20W_11.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/LONG%20HILL%20RD%20W_11.MP4",
+      "road_data": {
+        "road_name": "LONG HILL RD W",
+        "road_section": "11",
+        "road_from": "HIDDEN OAK RD",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 918,
+        "road_width": 32,
+        "road_area": 29376,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20CIR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20CIR_01.MP4",
+      "road_data": {
+        "road_name": "MACY CIR",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "MACY RD",
+        "road_length": 350,
+        "road_width": 16,
+        "road_area": 5600,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "REDWOOD LN",
+        "road_length": 411,
+        "road_width": 24,
+        "road_area": 9864,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_02.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "02",
+        "road_from": "REDWOOD LN",
+        "road_to": "REDWOOD LN",
+        "road_length": 90,
+        "road_width": 24,
+        "road_area": 2160,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_03.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "03",
+        "road_from": "REDWOOD LN",
+        "road_to": "HOLBROOK LN",
+        "road_length": 928,
+        "road_width": 24,
+        "road_area": 22272,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_04.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "04",
+        "road_from": "HOLBROOK LN",
+        "road_to": "FARM RD",
+        "road_length": 521,
+        "road_width": 27,
+        "road_area": 14067,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_05.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "05",
+        "road_from": "FARM RD",
+        "road_to": "MACY CIR",
+        "road_length": 618,
+        "road_width": 28,
+        "road_area": 17304,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_06.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "06",
+        "road_from": "MACY CIR",
+        "road_to": "DRISLANE RD",
+        "road_length": 343,
+        "road_width": 24,
+        "road_area": 8232,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_07.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "07",
+        "road_from": "DRISLANE RD",
+        "road_to": "MACY RD",
+        "road_length": 649,
+        "road_width": 24,
+        "road_area": 15576,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MACY%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MACY%20RD_08.MP4",
+      "road_data": {
+        "road_name": "MACY RD",
+        "road_section": "08",
+        "road_from": "ORCHARD RD",
+        "road_to": "ORCHARD RD",
+        "road_length": 513,
+        "road_width": 24,
+        "road_area": 12312,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MAGNOLIA%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MAGNOLIA%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MAGNOLIA RD",
+        "road_section": "01",
+        "road_from": "MEADOW RD",
+        "road_to": "MEADOW RD",
+        "road_length": 972,
+        "road_width": 25,
+        "road_area": 24300,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MAPLE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MAPLE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MAPLE RD",
+        "road_section": "01",
+        "road_from": "ZUYDHOEK RD",
+        "road_to": "VALENTINE RD",
+        "road_length": 152,
+        "road_width": 20,
+        "road_area": 3040,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MAPLE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MAPLE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "MAPLE RD",
+        "road_section": "02",
+        "road_from": "VALENTINE RD",
+        "road_to": "LARCH RD",
+        "road_length": 353,
+        "road_width": 22,
+        "road_area": 7766,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MARLBOROUGH%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MARLBOROUGH%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MARLBOROUGH RD",
+        "road_section": "01",
+        "road_from": "US-9",
+        "road_to": "LEICESTER RD",
+        "road_length": 551,
+        "road_width": 18,
+        "road_area": 9918,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MARLBOROUGH%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MARLBOROUGH%20RD_02.MP4",
+      "road_data": {
+        "road_name": "MARLBOROUGH RD",
+        "road_section": "02",
+        "road_from": "LEICESTER RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 860,
+        "road_width": 19,
+        "road_area": 19290,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MATTHES%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MATTHES%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MATTHES RD",
+        "road_section": "01",
+        "road_from": "HAZELTON CIR",
+        "road_to": "DUNN LN",
+        "road_length": 362,
+        "road_width": 23,
+        "road_area": 8326,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MATTHES%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MATTHES%20RD_02.MP4",
+      "road_data": {
+        "road_name": "MATTHES RD",
+        "road_section": "02",
+        "road_from": "DUNN LN",
+        "road_to": "SCHRADE RD",
+        "road_length": 620,
+        "road_width": 23,
+        "road_area": 14260,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20PL_01.MP4",
+      "road_data": {
+        "road_name": "MEADOW PL",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "MEADOW RD",
+        "road_length": 377,
+        "road_width": 20,
+        "road_area": 7540,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MEADOW RD",
+        "road_section": "01",
+        "road_from": "HOLBROOK LN",
+        "road_to": "MAGNOLIA RD",
+        "road_length": 384,
+        "road_width": 24,
+        "road_area": 9216,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20RD_02.MP4",
+      "road_data": {
+        "road_name": "MEADOW RD",
+        "road_section": "02",
+        "road_from": "MAGNOLIA RD",
+        "road_to": "MEADOW PL",
+        "road_length": 533,
+        "road_width": 24,
+        "road_area": 12792,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20RD_03.MP4",
+      "road_data": {
+        "road_name": "MEADOW RD",
+        "road_section": "03",
+        "road_from": "MEADOW PL",
+        "road_to": "REDWOOD LN",
+        "road_length": 652,
+        "road_width": 24,
+        "road_area": 15648,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20RD_04.MP4",
+      "road_data": {
+        "road_name": "MEADOW RD",
+        "road_section": "04",
+        "road_from": "REDWOOD LN",
+        "road_to": "MAGNOLIA RD",
+        "road_length": 138,
+        "road_width": 24,
+        "road_area": 3312,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MEADOW%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MEADOW%20RD_05.MP4",
+      "road_data": {
+        "road_name": "MEADOW RD",
+        "road_section": "05",
+        "road_from": "MAGNOLIA RD",
+        "road_to": "HOLBROOK LN",
+        "road_length": 578,
+        "road_width": 24,
+        "road_area": 13872,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "MULBERRY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/MULBERRY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "MULBERRY RD",
+        "road_section": "01",
+        "road_from": "WILLOW DR",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 218,
+        "road_width": 40,
+        "road_area": 8720,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "BRIARCLIFF-PEEKSKILL PKY",
+        "road_length": 321,
+        "road_width": 35,
+        "road_area": 11235,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "02",
+        "road_from": "BRIARCLIFF-PEEKSKILL PKY",
+        "road_to": "WOODSIDE AVE",
+        "road_length": 569,
+        "road_width": 24,
+        "road_area": 13656,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "03",
+        "road_from": "WOODSIDE AVE",
+        "road_to": "DUNN LN",
+        "road_length": 191,
+        "road_width": 27,
+        "road_area": 5157,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_04.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "04",
+        "road_from": "DUNN LN",
+        "road_to": "OLD SAW MILL RIVER RD",
+        "road_length": 342,
+        "road_width": 24,
+        "road_area": 8208,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_05.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "05",
+        "road_from": "OLD SAW MILL RIVER RD",
+        "road_to": "STAFFORD RD",
+        "road_length": 209,
+        "road_width": 24,
+        "road_area": 5016,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_06.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "06",
+        "road_from": "STAFFORD RD",
+        "road_to": "APPARTMENT COMPLEX DRIVEWAY",
+        "road_length": 1833,
+        "road_width": 27,
+        "road_area": 49491,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_07.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "07",
+        "road_from": "APPARTMENT COMPLEX DRIVEWAY",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 1144,
+        "road_width": 24,
+        "road_area": 27456,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "N%20STATE%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/N%20STATE%20RD_08.MP4",
+      "road_data": {
+        "road_name": "N STATE RD",
+        "road_section": "08",
+        "road_from": "CHAPPAQUA RD",
+        "road_to": "VILLAGE LINE",
+        "road_length": 64,
+        "road_width": 31,
+        "road_area": 1984,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "NICHOLS%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/NICHOLS%20PL_01.MP4",
+      "road_data": {
+        "road_name": "NICHOLS PL",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "LAW RD",
+        "road_length": 770,
+        "road_width": 24,
+        "road_area": 18480,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OAK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OAK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "OAK RD",
+        "road_section": "01",
+        "road_from": "ASH RD",
+        "road_to": "ZUYDHOEK RD",
+        "road_length": 607,
+        "road_width": 22,
+        "road_area": 13354,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OAK%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OAK%20RD_02.MP4",
+      "road_data": {
+        "road_name": "OAK RD",
+        "road_section": "02",
+        "road_from": "ZUYDHOEK RD",
+        "road_to": "LARCH RD",
+        "road_length": 496,
+        "road_width": 22,
+        "road_area": 10912,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20BRIARCLIFF%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20BRIARCLIFF%20RD_01.MP4",
+      "road_data": {
+        "road_name": "OLD BRIARCLIFF RD",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "ROSE VALLEY RD",
+        "road_length": 890,
+        "road_width": 25,
+        "road_area": 22250,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20BRIARCLIFF%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20BRIARCLIFF%20RD_02.MP4",
+      "road_data": {
+        "road_name": "OLD BRIARCLIFF RD",
+        "road_section": "02",
+        "road_from": "ROSE VALLEY RD",
+        "road_to": "CENTRAL LN",
+        "road_length": 961,
+        "road_width": 20,
+        "road_area": 19220,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20BRIARCLIFF%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20BRIARCLIFF%20RD_03.MP4",
+      "road_data": {
+        "road_name": "OLD BRIARCLIFF RD",
+        "road_section": "03",
+        "road_from": "CENTRAL LN",
+        "road_to": "CENTRAL DR W",
+        "road_length": 676,
+        "road_width": 24,
+        "road_area": 16224,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20BRIARCLIFF%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20BRIARCLIFF%20RD_04.MP4",
+      "road_data": {
+        "road_name": "OLD BRIARCLIFF RD",
+        "road_section": "04",
+        "road_from": "CENTRAL DR W",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 2721,
+        "road_width": 24,
+        "road_area": 65304,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20ROUTE%20100_01.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20ROUTE%20100_01.mp4",
+      "road_data": {
+        "road_name": "OLD ROUTE 100",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 152,
+        "road_width": 30,
+        "road_area": 4560,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20ROUTE%20100_02.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20ROUTE%20100_02.mp4",
+      "road_data": {
+        "road_name": "OLD ROUTE 100",
+        "road_section": "02",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "WOODSIDE AVE",
+        "road_length": 572,
+        "road_width": 30,
+        "road_area": 17160,
+        "road_functional_class": "local",
+        "road_surface": "concrete",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "OLD%20SLEEPY%20HOLLOW%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20SLEEPY%20HOLLOW%20RD_01.MP4",
+      "road_data": {
+        "road_name": "OLD SLEEPY HOLLOW RD",
+        "road_section": "01",
+        "road_from": "DEAD END S",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 225,
+        "road_width": 13,
+        "road_area": 2925,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "OLD%20SLEEPY%20HOLLOW%20RD_02.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/OLD%20SLEEPY%20HOLLOW%20RD_02.mp4",
+      "road_data": {
+        "road_name": "OLD SLEEPY HOLLOW RD",
+        "road_section": "02",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 1135,
+        "road_width": 13,
+        "road_area": 14755,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "ORCHARD%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ORCHARD%20RD_01.MP4",
+      "road_data": {
+        "road_name": "ORCHARD RD",
+        "road_section": "01",
+        "road_from": "FARM RD",
+        "road_to": "APPLE LN",
+        "road_length": 518,
+        "road_width": 24,
+        "road_area": 12432,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ORCHARD%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ORCHARD%20RD_02.MP4",
+      "road_data": {
+        "road_name": "ORCHARD RD",
+        "road_section": "02",
+        "road_from": "APPLE LN",
+        "road_to": "MACY RD",
+        "road_length": 1048,
+        "road_width": 24,
+        "road_area": 25152,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ORCHARD%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ORCHARD%20RD_03.MP4",
+      "road_data": {
+        "road_name": "ORCHARD RD",
+        "road_section": "03",
+        "road_from": "APPLE LN",
+        "road_to": "VILLAGE LINE",
+        "road_length": 565,
+        "road_width": 24,
+        "road_area": 13560,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PARK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PARK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "PARK RD",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "WOODSIDE AVE",
+        "road_length": 414,
+        "road_width": 20,
+        "road_area": 8280,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PARKWAY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PARKWAY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "PARKWAY RD",
+        "road_section": "01",
+        "road_from": "BRIARCLIFF-PEEKSKILL PKY",
+        "road_to": "CREST DR",
+        "road_length": 221,
+        "road_width": 20,
+        "road_area": 4420,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PARKWAY%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PARKWAY%20RD_02.MP4",
+      "road_data": {
+        "road_name": "PARKWAY RD",
+        "road_section": "02",
+        "road_from": "CREST DR",
+        "road_to": "HUNGERFORD RD",
+        "road_length": 290,
+        "road_width": 23,
+        "road_area": 6670,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PEACH%20TREE%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PEACH%20TREE%20LN_01.MP4",
+      "road_data": {
+        "road_name": "PEACH TREE LN",
+        "road_section": "01",
+        "road_from": "SLEEPY HOLLOW RD",
+        "road_to": "CUL DE SAC",
+        "road_length": 749,
+        "road_width": 23,
+        "road_area": 22757,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PINE%20CT_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PINE%20CT_01.MP4",
+      "road_data": {
+        "road_name": "PINE CT",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "CREST DR",
+        "road_length": 192,
+        "road_width": 16,
+        "road_area": 3072,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PINE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PINE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "PINE RD",
+        "road_section": "01",
+        "road_from": "FOUNTAIN RD",
+        "road_to": "SHADOW TREE LN",
+        "road_length": 1199,
+        "road_width": 22,
+        "road_area": 26378,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PINE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PINE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "PINE RD",
+        "road_section": "02",
+        "road_from": "SHADOW TREE LN",
+        "road_to": "BIRCH RD",
+        "road_length": 2917,
+        "road_width": 22,
+        "road_area": 64174,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PINE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PINE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "PINE RD",
+        "road_section": "03",
+        "road_from": "BIRCH RD",
+        "road_to": "ELM RD",
+        "road_length": 1517,
+        "road_width": 22,
+        "road_area": 33374,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "ROUND HILL DR",
+        "road_length": 319,
+        "road_width": 22,
+        "road_area": 7018,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "02",
+        "road_from": "ROUND HILL DR",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 531,
+        "road_width": 22,
+        "road_area": 11682,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "03",
+        "road_from": "BEGIN MAINTENANCE",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 728,
+        "road_width": 22,
+        "road_area": 16016,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_04.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "04",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "UNNAMED STREET",
+        "road_length": 404,
+        "road_width": 27,
+        "road_area": 10908,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_05.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "05",
+        "road_from": "UNNAMED STREET",
+        "road_to": "BUCKOUT RD",
+        "road_length": 1186,
+        "road_width": 29,
+        "road_area": 34394,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_06.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "06",
+        "road_from": "BUCKOUT RD",
+        "road_to": "OFF RAMP",
+        "road_length": 537,
+        "road_width": 33,
+        "road_area": 17721,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_07.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "07",
+        "road_from": "OFF RAMP",
+        "road_to": "DOGWOOD LN",
+        "road_length": 174,
+        "road_width": 30,
+        "road_area": 5220,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_08.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "08",
+        "road_from": "DOGWOOD LN",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 530,
+        "road_width": 40,
+        "road_area": 21200,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_09.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "09",
+        "road_from": "CHAPPAQUA RD",
+        "road_to": "OFF RAMP",
+        "road_length": 428,
+        "road_width": 40,
+        "road_area": 17120,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 3
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_10.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_10.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "10",
+        "road_from": "OFF RAMP",
+        "road_to": "LARCH RD",
+        "road_length": 251,
+        "road_width": 40,
+        "road_area": 10040,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 3
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_11.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_11.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "11",
+        "road_from": "LARCH RD",
+        "road_to": "INGHAM RD",
+        "road_length": 535,
+        "road_width": 22,
+        "road_area": 11770,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_12.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_12.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "12",
+        "road_from": "INGHAM RD",
+        "road_to": "ASH RD",
+        "road_length": 535,
+        "road_width": 22,
+        "road_area": 11770,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_13.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_13.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "13",
+        "road_from": "ASH RD",
+        "road_to": "TODD LN",
+        "road_length": 198,
+        "road_width": 22,
+        "road_area": 4356,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_14.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_14.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "14",
+        "road_from": "TODD LN",
+        "road_to": "HORSECHESTNUT RD",
+        "road_length": 213,
+        "road_width": 22,
+        "road_area": 4686,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_15.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_15.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "15",
+        "road_from": "HORSECHESTNUT RD",
+        "road_to": "S STATE RD",
+        "road_length": 1018,
+        "road_width": 22,
+        "road_area": 22396,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_16.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_16.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "16",
+        "road_from": "S STATE RD",
+        "road_to": "SCHOOL RD",
+        "road_length": 933,
+        "road_width": 22,
+        "road_area": 20526,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_17.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_17.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "17",
+        "road_from": "SCHOOL RD",
+        "road_to": "SCHOOL RD",
+        "road_length": 491,
+        "road_width": 40,
+        "road_area": 19640,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_18.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_18.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "18",
+        "road_from": "SCHOOL RD",
+        "road_to": "N STATE RD",
+        "road_length": 999,
+        "road_width": 51,
+        "road_area": 50949,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_19.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_19.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "19",
+        "road_from": "N STATE RD",
+        "road_to": "POPLAR RD",
+        "road_length": 488,
+        "road_width": 50,
+        "road_area": 24400,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_20.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_20.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "20",
+        "road_from": "POPLAR RD",
+        "road_to": "CENTRAL DR",
+        "road_length": 346,
+        "road_width": 26,
+        "road_area": 8996,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_21.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_21.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "21",
+        "road_from": "CENTRAL DR",
+        "road_to": "UNNAMED STREET",
+        "road_length": 322,
+        "road_width": 26,
+        "road_area": 8372,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_22.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_22.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "22",
+        "road_from": "UNNAMED STREET",
+        "road_to": "MULBERRY RD",
+        "road_length": 1895,
+        "road_width": 26,
+        "road_area": 49270,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_23.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_23.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "23",
+        "road_from": "MULBERRY RD",
+        "road_to": "DIVIDE",
+        "road_length": 916,
+        "road_width": 26,
+        "road_area": 23816,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_24.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_24.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "24",
+        "road_from": "DIVIDE",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 104,
+        "road_width": 16,
+        "road_area": 1664,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_25.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_25.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "25",
+        "road_from": "UNNAMED STREET",
+        "road_to": "CHAPPAQUA RD",
+        "road_length": 223,
+        "road_width": 33,
+        "road_area": 7359,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_26.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_26.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "26",
+        "road_from": "CHAPPAQUA RD",
+        "road_to": "HICKORY RD",
+        "road_length": 216,
+        "road_width": 32,
+        "road_area": 6912,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_27.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_27.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "27",
+        "road_from": "HICKORY RD",
+        "road_to": "SPRUCE RD",
+        "road_length": 96,
+        "road_width": 26,
+        "road_area": 2496,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_28.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_28.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "28",
+        "road_from": "SPRUCE RD",
+        "road_to": "OLD BRIARCLIFF RD",
+        "road_length": 738,
+        "road_width": 26,
+        "road_area": 19188,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLEASANTVILLE%20RD_29.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLEASANTVILLE%20RD_29.MP4",
+      "road_data": {
+        "road_name": "PLEASANTVILLE RD",
+        "road_section": "29",
+        "road_from": "OLD BRIARCLIFF RD",
+        "road_to": "VILLAGE LINE",
+        "road_length": 203,
+        "road_width": 26,
+        "road_area": 5278,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PLUMWOOD%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PLUMWOOD%20RD_01.MP4",
+      "road_data": {
+        "road_name": "PLUMWOOD RD",
+        "road_section": "01",
+        "road_from": "ELM RD",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 922,
+        "road_width": 19,
+        "road_area": 17518,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "POPLAR%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/POPLAR%20RD_01.MP4",
+      "road_data": {
+        "road_name": "POPLAR RD",
+        "road_section": "01",
+        "road_from": "TULIP RD",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 661,
+        "road_width": 26,
+        "road_area": 17186,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "PURDYS%20CT_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/PURDYS%20CT_01.MP4",
+      "road_data": {
+        "road_name": "PURDYS CT",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "COTTONWOOD LN",
+        "road_length": 531,
+        "road_width": 24,
+        "road_area": 19444,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "QUINN%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/QUINN%20LN_01.MP4",
+      "road_data": {
+        "road_name": "QUINN LN",
+        "road_section": "01",
+        "road_from": "QUINN RD",
+        "road_to": "LAW RD",
+        "road_length": 380,
+        "road_width": 24,
+        "road_area": 9120,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "QUINN%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/QUINN%20RD_01.MP4",
+      "road_data": {
+        "road_name": "QUINN RD",
+        "road_section": "01",
+        "road_from": "LONG HILL RD W",
+        "road_to": "QUINN LN",
+        "road_length": 1095,
+        "road_width": 22,
+        "road_area": 24090,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "QUINN%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/QUINN%20RD_02.MP4",
+      "road_data": {
+        "road_name": "QUINN RD",
+        "road_section": "02",
+        "road_from": "QUINN LN",
+        "road_to": "LONG HILL RD W",
+        "road_length": 1217,
+        "road_width": 25,
+        "road_area": 30425,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "REDWOOD%20LN_01WB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/REDWOOD%20LN_01WB.MP4",
+      "road_data": {
+        "road_name": "REDWOOD LN",
+        "road_section": "01WB",
+        "road_from": "MACY RD",
+        "road_to": "REDWOOD LN",
+        "road_length": 68,
+        "road_width": 24,
+        "road_area": 1632,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "REDWOOD%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/REDWOOD%20LN_02.MP4",
+      "road_data": {
+        "road_name": "REDWOOD LN",
+        "road_section": "02",
+        "road_from": "REDWOOD LN",
+        "road_to": "MEADOW RD",
+        "road_length": 368,
+        "road_width": 23,
+        "road_area": 8464,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "REDWOOD%20LN_02EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/REDWOOD%20LN_02EB.MP4",
+      "road_data": {
+        "road_name": "REDWOOD LN",
+        "road_section": "02EB",
+        "road_from": "MACY RD",
+        "road_to": "REDWOOD LN",
+        "road_length": 88,
+        "road_width": 24,
+        "road_area": 2112,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "REVOLUTIONARY%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/REVOLUTIONARY%20RD_01.MP4",
+      "road_data": {
+        "road_name": "REVOLUTIONARY RD",
+        "road_section": "01",
+        "road_from": "US-9",
+        "road_to": "DEAD END",
+        "road_length": 993,
+        "road_width": 23,
+        "road_area": 22839,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD%20SPUR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD%20SPUR_01.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD SPUR",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 147,
+        "road_width": 20,
+        "road_area": 2940,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_01.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "01",
+        "road_from": "SCARBOROUGH RD",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 110,
+        "road_width": 25,
+        "road_area": 2750,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_02.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "02",
+        "road_from": "RIDGECREST RD SPUR",
+        "road_to": "RIDGECREST RD SPUR",
+        "road_length": 96,
+        "road_width": 30,
+        "road_area": 2880,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_03.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "03",
+        "road_from": "ADMIRAL WORDENS LN",
+        "road_to": "ADMIRAL WORDENS LN",
+        "road_length": 514,
+        "road_width": 25,
+        "road_area": 12850,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_04.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "04",
+        "road_from": "ROSEMONT LN",
+        "road_to": "RIDGECREST RD",
+        "road_length": 2313,
+        "road_width": 25,
+        "road_area": 57825,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_05.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "05",
+        "road_from": "RIDGECREST RD",
+        "road_to": "LONG HILL RD W",
+        "road_length": 81,
+        "road_width": 21,
+        "road_area": 1701,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIDGECREST%20RD_05EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIDGECREST%20RD_05EB.MP4",
+      "road_data": {
+        "road_name": "RIDGECREST RD",
+        "road_section": "05EB",
+        "road_from": "RIDGECREST RD",
+        "road_to": "LONG HILL RD W",
+        "road_length": 146,
+        "road_width": 30,
+        "road_area": 4380,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 4
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_01.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "01",
+        "road_from": "US-9",
+        "road_to": "CREIGHTON LN",
+        "road_length": 1072,
+        "road_width": 20,
+        "road_area": 21440,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_02.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "02",
+        "road_from": "CREIGHTON LN",
+        "road_to": "CREIGHTON LN",
+        "road_length": 106,
+        "road_width": 20,
+        "road_area": 2120,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_03.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "03",
+        "road_from": "CREIGHTON LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 488,
+        "road_width": 20,
+        "road_area": 9760,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_04.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "04",
+        "road_from": "WOODLEA LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 89,
+        "road_width": 20,
+        "road_area": 1780,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_05.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "05",
+        "road_from": "WOODLEA LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 104,
+        "road_width": 20,
+        "road_area": 2080,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_06.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "06",
+        "road_from": "WOODLEA LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 1040,
+        "road_width": 20,
+        "road_area": 20800,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_07.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "07",
+        "road_from": "WOODLEA LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 109,
+        "road_width": 20,
+        "road_area": 2180,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_08.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "08",
+        "road_from": "WOODLEA LN",
+        "road_to": "CREIGHTON LN",
+        "road_length": 381,
+        "road_width": 20,
+        "road_area": 7620,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_09.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "09",
+        "road_from": "CREIGHTON LN",
+        "road_to": "CREIGHTON LN",
+        "road_length": 115,
+        "road_width": 20,
+        "road_area": 2300,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_10.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_10.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "10",
+        "road_from": "CREIGHTON LN",
+        "road_to": "SCARBOROUGH STA RD",
+        "road_length": 2148,
+        "road_width": 20,
+        "road_area": 42960,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "RIVER%20RD_11.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/RIVER%20RD_11.MP4",
+      "road_data": {
+        "road_name": "RIVER RD",
+        "road_section": "11",
+        "road_from": "SCARBOROUGH STA RD",
+        "road_to": "KEMEYS AVE",
+        "road_length": 199,
+        "road_width": 28,
+        "road_area": 5572,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ROSEMONT%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ROSEMONT%20LN_01.MP4",
+      "road_data": {
+        "road_name": "ROSEMONT LN",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "RIDGECREST RD",
+        "road_length": 457,
+        "road_width": 21,
+        "road_area": 9597,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "S%20STATE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/S%20STATE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "S STATE RD",
+        "road_section": "01",
+        "road_from": "AUSTIN PLACE",
+        "road_to": "S STATE RD",
+        "road_length": 603,
+        "road_width": 20,
+        "road_area": 12060,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "S%20STATE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/S%20STATE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "S STATE RD",
+        "road_section": "02",
+        "road_from": "S STATE RD",
+        "road_to": "BEECH HILL RD",
+        "road_length": 62,
+        "road_width": 28,
+        "road_area": 1736,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "S%20STATE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/S%20STATE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "S STATE RD",
+        "road_section": "03",
+        "road_from": "S STATE RD",
+        "road_to": "BEECH HILL RD",
+        "road_length": 123,
+        "road_width": 20,
+        "road_area": 2460,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "S%20STATE%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/S%20STATE%20RD_04.MP4",
+      "road_data": {
+        "road_name": "S STATE RD",
+        "road_section": "04",
+        "road_from": "BEECH HILL RD",
+        "road_to": "ELM RD",
+        "road_length": 4679,
+        "road_width": 28,
+        "road_area": 131012,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "S%20STATE%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/S%20STATE%20RD_05.MP4",
+      "road_data": {
+        "road_name": "S STATE RD",
+        "road_section": "05",
+        "road_from": "ELM RD",
+        "road_to": "PLEASANTVILLE RD",
+        "road_length": 208,
+        "road_width": 34,
+        "road_area": 7072,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SATINWOOD%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SATINWOOD%20LN_01.MP4",
+      "road_data": {
+        "road_name": "SATINWOOD LN",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "SIMPSON RD",
+        "road_length": 532,
+        "road_width": 22,
+        "road_area": 16304,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "01",
+        "road_from": "US-9",
+        "road_to": "RIDGECREST RD",
+        "road_length": 448,
+        "road_width": 31,
+        "road_area": 13888,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_02.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "02",
+        "road_from": "RIDGECREST RD",
+        "road_to": "RIDGECREST RD SPUR",
+        "road_length": 117,
+        "road_width": 25,
+        "road_area": 2925,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_03.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "03",
+        "road_from": "RIDGECREST RD SPUR",
+        "road_to": "LONG HILL RD W",
+        "road_length": 136,
+        "road_width": 25,
+        "road_area": 3400,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_04.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "04",
+        "road_from": "LONG HILL RD W",
+        "road_to": "LEICESTER RD",
+        "road_length": 707,
+        "road_width": 22,
+        "road_area": 15554,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_05.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "05",
+        "road_from": "LEICESTER RD",
+        "road_to": "BROOKWOOD DR",
+        "road_length": 1974,
+        "road_width": 25,
+        "road_area": 49350,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_06.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "06",
+        "road_from": "BROOKWOOD DR",
+        "road_to": "BECKER LN",
+        "road_length": 665,
+        "road_width": 22,
+        "road_area": 14630,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_07.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "07",
+        "road_from": "BECKER LN",
+        "road_to": "SHADOWBROOK LN",
+        "road_length": 317,
+        "road_width": 25,
+        "road_area": 7925,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_08.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "08",
+        "road_from": "SHADOWBROOK LN",
+        "road_to": "SHADOWBROOK LN",
+        "road_length": 572,
+        "road_width": 25,
+        "road_area": 14300,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_09.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "09",
+        "road_from": "SHADOW BROOK LN",
+        "road_to": "HOLBROOK RD",
+        "road_length": 943,
+        "road_width": 25,
+        "road_area": 23575,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_10.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_10.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "10",
+        "road_from": "HOLBROOK RD",
+        "road_to": "OLD BRIARCLIFF RD",
+        "road_length": 783,
+        "road_width": 25,
+        "road_area": 19575,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_11.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_11.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "11",
+        "road_from": "OLD BRIARCLIFF RD",
+        "road_to": "SLEEPY HOLLOW RD",
+        "road_length": 1909,
+        "road_width": 25,
+        "road_area": 47725,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_12.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_12.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "12",
+        "road_from": "SLEEPY HOLLOW RD",
+        "road_to": "LODGE RD",
+        "road_length": 329,
+        "road_width": 25,
+        "road_area": 8225,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20RD_13.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20RD_13.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH RD",
+        "road_section": "13",
+        "road_from": "LODGE RD",
+        "road_to": "FOUNTAIN RD",
+        "road_length": 466,
+        "road_width": 25,
+        "road_area": 11650,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20STA%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20STA%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH STA RD",
+        "road_section": "01",
+        "road_from": "RIVER RD",
+        "road_to": "LINDEN CIR",
+        "road_length": 277,
+        "road_width": 29,
+        "road_area": 8033,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20STA%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20STA%20RD_02.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH STA RD",
+        "road_section": "02",
+        "road_from": "LINDEN CIR",
+        "road_to": "LINDEN CIR",
+        "road_length": 543,
+        "road_width": 29,
+        "road_area": 15747,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20STA%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20STA%20RD_03.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH STA RD",
+        "road_section": "03",
+        "road_from": "LINDEN CIR",
+        "road_to": "BEECHWOOD WAY",
+        "road_length": 307,
+        "road_width": 29,
+        "road_area": 8903,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCARBOROUGH%20STA%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCARBOROUGH%20STA%20RD_04.MP4",
+      "road_data": {
+        "road_name": "SCARBOROUGH STA RD",
+        "road_section": "04",
+        "road_from": "BEECHWOOD WAY",
+        "road_to": "US-9",
+        "road_length": 258,
+        "road_width": 29,
+        "road_area": 7482,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCHRADE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCHRADE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SCHRADE RD",
+        "road_section": "01",
+        "road_from": "HAZELTON CIR",
+        "road_to": "MATTHES RD",
+        "road_length": 993,
+        "road_width": 26,
+        "road_area": 25818,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCHRADE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCHRADE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "SCHRADE RD",
+        "road_section": "02",
+        "road_from": "MATTHES RD",
+        "road_to": "N RD",
+        "road_length": 1796,
+        "road_width": 25,
+        "road_area": 44900,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SCHRADE%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SCHRADE%20RD_03.MP4",
+      "road_data": {
+        "road_name": "SCHRADE RD",
+        "road_section": "03",
+        "road_from": "N RD",
+        "road_to": "N STATE RD",
+        "road_length": 131,
+        "road_width": 21,
+        "road_area": 2751,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SHELLBARK%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SHELLBARK%20LN_01.MP4",
+      "road_data": {
+        "road_name": "SHELLBARK LN",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "LONG HILL RD W",
+        "road_length": 707,
+        "road_width": 20,
+        "road_area": 14140,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SHERRY%20HILL%20CT_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SHERRY%20HILL%20CT_01.MP4",
+      "road_data": {
+        "road_name": "SHERRY HILL CT",
+        "road_section": "01",
+        "road_from": "CUL DE SAC",
+        "road_to": "CHERRY HILL CT",
+        "road_length": 541,
+        "road_width": 22,
+        "road_area": 15152,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SIMPSON%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SIMPSON%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SIMPSON RD",
+        "road_section": "01",
+        "road_from": "SATINWOOD LN",
+        "road_to": "VALENTINE RD",
+        "road_length": 255,
+        "road_width": 22,
+        "road_area": 5610,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SIMPSON%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SIMPSON%20RD_02.MP4",
+      "road_data": {
+        "road_name": "SIMPSON RD",
+        "road_section": "02",
+        "road_from": "VALENTINE RD",
+        "road_to": "LARCH RD",
+        "road_length": 350,
+        "road_width": 22,
+        "road_area": 7700,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_01.mp4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_01.mp4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "01",
+        "road_from": "VILLAGE LINE",
+        "road_to": "WILDERNESS WAY",
+        "road_length": 98,
+        "road_width": 18,
+        "road_area": 1764,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_02.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "02",
+        "road_from": "WILDERNESS WAY",
+        "road_to": "WILDERNESS WAY",
+        "road_length": 237,
+        "road_width": 18,
+        "road_area": 4266,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_03.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "03",
+        "road_from": "WILDERNESS WAY",
+        "road_to": "OLD SLEEPY HOLLOW RD",
+        "road_length": 1170,
+        "road_width": 22,
+        "road_area": 25740,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_04.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "04",
+        "road_from": "OLD SLEEPY HOLLOW RD",
+        "road_to": "CHESTNUT HILL LN",
+        "road_length": 1220,
+        "road_width": 21,
+        "road_area": 25620,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_05.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_05.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "05",
+        "road_from": "CHESTNUT HILL LN",
+        "road_to": "PEACH TREE LN",
+        "road_length": 436,
+        "road_width": 22,
+        "road_area": 9592,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_06.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_06.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "06",
+        "road_from": "PEACH TREE LN",
+        "road_to": "HALL RD",
+        "road_length": 566,
+        "road_width": 20,
+        "road_area": 11320,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_07.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_07.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "07",
+        "road_from": "HALL RD",
+        "road_to": "LONG HILL RD W",
+        "road_length": 960,
+        "road_width": 22,
+        "road_area": 21120,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_08.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_08.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "08",
+        "road_from": "LONG HILL RD E",
+        "road_to": "ASPINWALL RD",
+        "road_length": 2007,
+        "road_width": 20,
+        "road_area": 40140,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SLEEPY%20HOLLOW%20RD_09.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SLEEPY%20HOLLOW%20RD_09.MP4",
+      "road_data": {
+        "road_name": "SLEEPY HOLLOW RD",
+        "road_section": "09",
+        "road_from": "ASPINWALL RD",
+        "road_to": "SCARBOROUGH RD",
+        "road_length": 2457,
+        "road_width": 18,
+        "road_area": 44226,
+        "road_functional_class": "collector",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SPRUCE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SPRUCE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SPRUCE RD",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "HEMLOCK RD",
+        "road_length": 416,
+        "road_width": 23,
+        "road_area": 9568,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "STAFFORD%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/STAFFORD%20RD_01.MP4",
+      "road_data": {
+        "road_name": "STAFFORD RD",
+        "road_section": "01",
+        "road_from": "WOODSIDE AVE",
+        "road_to": "N STATE RD",
+        "road_length": 526,
+        "road_width": 20,
+        "road_area": 10520,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "SYCAMORE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/SYCAMORE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "SYCAMORE RD",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "TULIP RD",
+        "road_length": 281,
+        "road_width": 20,
+        "road_area": 5620,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TAMARACK%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TAMARACK%20PL_01.MP4",
+      "road_data": {
+        "road_name": "TAMARACK PL",
+        "road_section": "01",
+        "road_from": "CEDAR DR E",
+        "road_to": "CUL DE SAC LOOP",
+        "road_length": 808,
+        "road_width": 24,
+        "road_area": 19392,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TANGLEWOOD%20CIR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TANGLEWOOD%20CIR_01.MP4",
+      "road_data": {
+        "road_name": "TANGLEWOOD CIR",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "HIRST RD",
+        "road_length": 289,
+        "road_width": 22,
+        "road_area": 6358,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TAPPAN%20TER_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TAPPAN%20TER_01.MP4",
+      "road_data": {
+        "road_name": "TAPPAN TER",
+        "road_section": "01",
+        "road_from": "CHAPPAQUA RD",
+        "road_to": "VILLAGE LINE",
+        "road_length": 272,
+        "road_width": 26,
+        "road_area": 7072,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TODD%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TODD%20LN_01.MP4",
+      "road_data": {
+        "road_name": "TODD LN",
+        "road_section": "01",
+        "road_from": "PLEASANTVILLE RD",
+        "road_to": "VILLAGE LINE",
+        "road_length": 1249,
+        "road_width": 20,
+        "road_area": 24980,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TULIP%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TULIP%20RD_01.MP4",
+      "road_data": {
+        "road_name": "TULIP RD",
+        "road_section": "01",
+        "road_from": "DALMENY RD",
+        "road_to": "POPLAR RD",
+        "road_length": 169,
+        "road_width": 20,
+        "road_area": 3380,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TULIP%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TULIP%20RD_02.MP4",
+      "road_data": {
+        "road_name": "TULIP RD",
+        "road_section": "02",
+        "road_from": "SYCAMORE RD",
+        "road_to": "DEAD END",
+        "road_length": 336,
+        "road_width": 20,
+        "road_area": 6720,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TUTTLE%20RD_01NB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TUTTLE%20RD_01NB.MP4",
+      "road_data": {
+        "road_name": "TUTTLE RD",
+        "road_section": "01NB",
+        "road_from": "LONG HILL RD E",
+        "road_to": "TUTTLE RD",
+        "road_length": 2165,
+        "road_width": 19,
+        "road_area": 41135,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TUTTLE%20RD_01SB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TUTTLE%20RD_01SB.MP4",
+      "road_data": {
+        "road_name": "TUTTLE RD",
+        "road_section": "01SB",
+        "road_from": "LONG HILL RD E",
+        "road_to": "TUTTLE RD",
+        "road_length": 2164,
+        "road_width": 19,
+        "road_area": 41116,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "TUTTLE%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/TUTTLE%20RD_02.MP4",
+      "road_data": {
+        "road_name": "TUTTLE RD",
+        "road_section": "02",
+        "road_from": "TUTTLE RD",
+        "road_to": "ELM RD",
+        "road_length": 223,
+        "road_width": 25,
+        "road_area": 5575,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "VALENTINE%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/VALENTINE%20RD_01.MP4",
+      "road_data": {
+        "road_name": "VALENTINE RD",
+        "road_section": "01",
+        "road_from": "LARCH RD",
+        "road_to": "MAPLE RD",
+        "road_length": 799,
+        "road_width": 23,
+        "road_area": 18377,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "VAN%20LU%20VAN%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/VAN%20LU%20VAN%20RD_01.MP4",
+      "road_data": {
+        "road_name": "VAN LU VAN RD",
+        "road_section": "01",
+        "road_from": "COLBY LN",
+        "road_to": "PAVEMENT CHANGE",
+        "road_length": 548,
+        "road_width": 48,
+        "road_area": 26304,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "VAN%20LU%20VAN%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/VAN%20LU%20VAN%20RD_02.MP4",
+      "road_data": {
+        "road_name": "VAN LU VAN RD",
+        "road_section": "02",
+        "road_from": "PAVEMENT CHANGE",
+        "road_to": "VAN LU VAN RD",
+        "road_length": 118,
+        "road_width": 54,
+        "road_area": 6372,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "VAN%20LU%20VAN%20RD_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/VAN%20LU%20VAN%20RD_03.MP4",
+      "road_data": {
+        "road_name": "VAN LU VAN RD",
+        "road_section": "03",
+        "road_from": "VAN LU VAN RD",
+        "road_to": "VAN LU VAN RD",
+        "road_length": 270,
+        "road_width": 20,
+        "road_area": 5400,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 1
+      }
+    },
+    {
+      "video_name": "WALNUT%20PL_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WALNUT%20PL_01.MP4",
+      "road_data": {
+        "road_name": "WALNUT PL",
+        "road_section": "01",
+        "road_from": "CUL DE SAC LOOP",
+        "road_to": "CEDAR DR W",
+        "road_length": 773,
+        "road_width": 27,
+        "road_area": 20871,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WASHBURN%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WASHBURN%20RD_01.MP4",
+      "road_data": {
+        "road_name": "WASHBURN RD",
+        "road_section": "01",
+        "road_from": "DEAD END",
+        "road_to": "CARLTON AVE",
+        "road_length": 1202,
+        "road_width": 14,
+        "road_area": 16828,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WASHBURN%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WASHBURN%20RD_02.MP4",
+      "road_data": {
+        "road_name": "WASHBURN RD",
+        "road_section": "02",
+        "road_from": "CARLTON AVE",
+        "road_to": "END",
+        "road_length": 760,
+        "road_width": 21,
+        "road_area": 15960,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WHITSON%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WHITSON%20RD_01.MP4",
+      "road_data": {
+        "road_name": "WHITSON RD",
+        "road_section": "01",
+        "road_from": "FULLER RD",
+        "road_to": "BURNS PL",
+        "road_length": 934,
+        "road_width": 24,
+        "road_area": 22416,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WHITSON%20RD_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WHITSON%20RD_02.MP4",
+      "road_data": {
+        "road_name": "WHITSON RD",
+        "road_section": "02",
+        "road_from": "BURNS PL",
+        "road_to": "FULLER RD",
+        "road_length": 1149,
+        "road_width": 24,
+        "road_area": 27576,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WILLOW%20DR_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WILLOW%20DR_01.MP4",
+      "road_data": {
+        "road_name": "WILLOW DR",
+        "road_section": "01",
+        "road_from": "LOCUST RD",
+        "road_to": "HICKORY RD",
+        "road_length": 1216,
+        "road_width": 24,
+        "road_area": 29184,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WILLOW%20DR_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WILLOW%20DR_02.MP4",
+      "road_data": {
+        "road_name": "WILLOW DR",
+        "road_section": "02",
+        "road_from": "HICKORY RD",
+        "road_to": "MULBERRY RD",
+        "road_length": 747,
+        "road_width": 24,
+        "road_area": 17928,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WILLOW%20DR_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WILLOW%20DR_03.MP4",
+      "road_data": {
+        "road_name": "WILLOW DR",
+        "road_section": "03",
+        "road_from": "HICKORY RD",
+        "road_to": "HICKORY RD",
+        "road_length": 1063,
+        "road_width": 24,
+        "road_area": 25512,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_01.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "01",
+        "road_from": "RIVER RD",
+        "road_to": "RIVER RD",
+        "road_length": 315,
+        "road_width": 20,
+        "road_area": 6300,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_01EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_01EB.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "01EB",
+        "road_from": "RIVER RD",
+        "road_to": "WOODLEA LN",
+        "road_length": 74,
+        "road_width": 24,
+        "road_area": 1776,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_01WB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_01WB.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "01WB",
+        "road_from": "WOODLEA LN",
+        "road_to": "RIVER RD",
+        "road_length": 95,
+        "road_width": 20,
+        "road_area": 1900,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_02.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "02",
+        "road_from": "WOODLEA LN",
+        "road_to": "WOODLEA LN",
+        "road_length": 481,
+        "road_width": 20,
+        "road_area": 9620,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_03EB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_03EB.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "03EB",
+        "road_from": "WOODLEA LN",
+        "road_to": "RIVER RD",
+        "road_length": 123,
+        "road_width": 20,
+        "road_area": 2460,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODLEA%20LN_03WB.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODLEA%20LN_03WB.MP4",
+      "road_data": {
+        "road_name": "WOODLEA LN",
+        "road_section": "03WB",
+        "road_from": "WOODLEA LN",
+        "road_to": "RIVER RD",
+        "road_length": 89,
+        "road_width": 20,
+        "road_area": 1780,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODSIDE%20AVE_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODSIDE%20AVE_01.MP4",
+      "road_data": {
+        "road_name": "WOODSIDE AVE",
+        "road_section": "01",
+        "road_from": "N STATE RD",
+        "road_to": "OLD ROUTE 100",
+        "road_length": 207,
+        "road_width": 32,
+        "road_area": 6624,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODSIDE%20AVE_02.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODSIDE%20AVE_02.MP4",
+      "road_data": {
+        "road_name": "WOODSIDE AVE",
+        "road_section": "02",
+        "road_from": "OLD ROUTE 100",
+        "road_to": "PARK RD",
+        "road_length": 172,
+        "road_width": 24,
+        "road_area": 4128,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODSIDE%20AVE_03.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODSIDE%20AVE_03.MP4",
+      "road_data": {
+        "road_name": "WOODSIDE AVE",
+        "road_section": "03",
+        "road_from": "PARK RD",
+        "road_to": "STAFFORD RD",
+        "road_length": 176,
+        "road_width": 24,
+        "road_area": 4224,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "WOODSIDE%20AVE_04.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/WOODSIDE%20AVE_04.MP4",
+      "road_data": {
+        "road_name": "WOODSIDE AVE",
+        "road_section": "04",
+        "road_from": "STAFFORD RD",
+        "road_to": "DEAD END",
+        "road_length": 164,
+        "road_width": 24,
+        "road_area": 3936,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    },
+    {
+      "video_name": "ZUYDHOEK%20RD_01.MP4",
+      "video_url": "https://storage.googleapis.com/briarcliff_manor_2025_videos/ZUYDHOEK%20RD_01.MP4",
+      "road_data": {
+        "road_name": "ZUYDHOEK RD",
+        "road_section": "01",
+        "road_from": "JACKSON RD",
+        "road_to": "OAK RD",
+        "road_length": 350,
+        "road_width": 20,
+        "road_area": 7000,
+        "road_functional_class": "local",
+        "road_surface": "asphalt",
+        "road_lanes": 2
+      }
+    }
+  ]
+}

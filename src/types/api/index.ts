@@ -1,7 +1,8 @@
 import type { components } from './api.d.ts';
 
 type FetchError = {
-  status: number;
+  status: 'error';
+  code: string;
   detail: {
     message: string;
   };
@@ -10,22 +11,31 @@ type FetchError = {
 type LoadingState = {
   status: 'loading';
 };
-
-type FileInfo = components['schemas']['FileInfo'];
+type FileOrigin = 'local' | 'remote';
 type FileType = components['schemas']['FileType'];
+type FileInfo = components['schemas']['FileInfo'] & {
+  file_origin?: FileOrigin;
+};
 type Project = components['schemas']['ParseProjectResponse'];
 type ProjectItem = Project['project_items'][number];
 type RoadData = ProjectItem['road_data'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
-type VideoData = components['schemas']['ParseVideoResponse'];
-type GpsData = VideoData['gps_data'];
 
-type GetFilesListResponse = Array<FileInfo> | FetchError;
-type GetProjectResponse = Project | FetchError | LoadingState;
-type GetVideoMetadataResponse = VideoData | FetchError | LoadingState;
+type ProjectParsingState = Project['project_items'][number]['parsing_status'];
 
-type ResponseType<T> = T | FetchError | LoadingState;
+type GpsData = components['schemas']['GpsPoint'];
+
+type GetFilesListResponse =
+  | { status: 'ok'; detail: Array<FileInfo> }
+  | FetchError
+  | LoadingState;
+type GetProjectResponse =
+  | { status: 'ok'; detail: Project }
+  | FetchError
+  | LoadingState;
+
+type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
 export type {
   CameraData,
@@ -34,13 +44,13 @@ export type {
   FileType,
   GetFilesListResponse,
   GetProjectResponse,
-  GetVideoMetadataResponse,
-  GpsData,
   LoadingState,
   MediaData,
   Project,
   ProjectItem,
   RoadData,
-  VideoData,
   ResponseType,
+  FileOrigin,
+  GpsData,
+  ProjectParsingState,
 };

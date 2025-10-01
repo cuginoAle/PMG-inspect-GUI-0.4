@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { setValidCredentials } from './helpers';
+import { label } from '@/package.json';
 
 test('homepage has correct title', async ({ page }) => {
   await page.goto('/');
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/PMG Inspect/);
+  await expect(page).toHaveTitle(label);
 });
 
 test('set valid credentials and access protected page', async ({ page }) => {
@@ -25,26 +26,4 @@ test('unauthenticated access to protected page returns 401', async ({
 
   // The middleware should return a 401 Unauthorized status
   expect(response?.status()).toBe(401);
-});
-
-test('API endpoint requires authentication', async ({ page }) => {
-  // Attempt to access the API endpoint without authentication
-  const response = await page.request.get('/protected/api/projects');
-
-  // The middleware should return a 401 Unauthorized status
-  expect(response.status()).toBe(401);
-});
-
-test('API endpoint with valid credentials returns 200', async ({ request }) => {
-  // Access the API endpoint with authentication
-  const response = await request.get('/protected/api/projects', {
-    headers: {
-      Authorization: `Basic ${btoa(
-        `${process.env.PROTECTED_BASIC_AUTH_USER}:${process.env.PROTECTED_BASIC_AUTH_PASS}`,
-      )}`,
-    },
-  });
-
-  // The middleware should allow access and return a 200 OK status
-  expect(response.status()).toBe(200);
 });

@@ -63,9 +63,9 @@ li {
 } */
 
 /* Radix ui hack to hide inactive tabs */
-.rt-TabsContent[data-state='inactive'] {
+/* .rt-TabsContent[data-state='inactive'] {
   display: none;
-}
+} */
 
 /* [inert],
 [inert] {

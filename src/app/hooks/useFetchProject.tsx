@@ -4,7 +4,7 @@ import { GetProjectResponse } from '@/src/types';
 import React from 'react';
 import { useEffect } from 'react';
 
-const useFetchProject = (projectPath?: string) => {
+const useFetchProject = (projectPath?: string | null) => {
   const [project, setProject] = React.useState<GetProjectResponse | undefined>(
     undefined,
   );

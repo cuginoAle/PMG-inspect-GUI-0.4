@@ -1,14 +1,37 @@
-import { ProjectsTreeView } from '@/src/components/projects-tree-view';
-import { fetchProjectList } from '@/src/lib/data/fetch-projectList';
+import { useGlobalState } from '@/src/app/global-state';
+import { Warning, ProjectsTreeView, LoadingToast } from '@/src/components';
 
-const ProjectsTreeViewContainer = async ({
+const ProjectsTreeViewContainer = ({
   projectPath,
 }: {
   projectPath?: string;
 }) => {
-  const projects = await fetchProjectList().catch((error) => error);
+  const { filesList } = useGlobalState();
+  const projects = filesList.get();
 
-  return <ProjectsTreeView files={projects} selectedPath={projectPath} />;
+  if (!projects) {
+    return null;
+  }
+
+  if (projects?.status === 'loading') {
+    return (
+      <div className="center">
+        <LoadingToast message="Loading projects..." />
+      </div>
+    );
+  }
+
+  if (projects?.status === 'error') {
+    return (
+      <div className="center">
+        <Warning message={projects.detail.message} />
+      </div>
+    );
+  }
+
+  return (
+    <ProjectsTreeView files={projects.detail} selectedPath={projectPath} />
+  );
 };
 
 export { ProjectsTreeViewContainer };

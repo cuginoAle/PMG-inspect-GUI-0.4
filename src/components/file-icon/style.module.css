@@ -1,0 +1,32 @@
+.root {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px var(--black-a10) inset;
+  background-color: var(--gray-7);
+  flex-shrink: 0;
+
+  svg {
+    width: 1.3em;
+    height: 1.3em;
+  }
+}
+
+.project {
+  background-color: var(--grass-7);
+}
+
+.image {
+  background-color: var(--orange-7);
+}
+
+.video {
+  background-color: var(--sky-7);
+}
+
+.other {
+  background-color: var(--gray-7);
+}

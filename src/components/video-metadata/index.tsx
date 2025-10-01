@@ -1,33 +1,21 @@
 'use client';
-import { GetVideoMetadataResponse } from '@/src/types';
-import { Flex, Table, Text, Theme } from '@radix-ui/themes';
-import { Warning } from 'components/warning';
-import { transformMetadata } from './transform-metadata';
-import { LoadingToast } from 'components/loading-toast';
 
-const VideoMetaData = ({ video }: { video?: GetVideoMetadataResponse }) => {
-  if (!video) {
+import { Flex, Table, Text, Theme } from '@radix-ui/themes';
+import { transformMetadata } from './transform-metadata';
+import { CameraData } from '@/src/types';
+import { Immutable } from '@hookstate/core';
+
+const VideoMetaData = ({
+  cameraData,
+}: {
+  cameraData?: Immutable<CameraData> | null;
+}) => {
+  if (!cameraData) {
     return null;
   }
 
-  if ('status' in video! && video.status === 'loading') {
-    return (
-      <div className="center">
-        <LoadingToast message="Loading video metadata..." />
-      </div>
-    );
-  }
-
-  if ('status' in video!) {
-    return (
-      <div className="center">
-        <Warning message={video.detail.message} />
-      </div>
-    );
-  }
-
-  const transformedMetadata = transformMetadata(video.camera_data);
-  const cameraDataKeys = Object.keys(video.camera_data || {});
+  const transformedMetadata = transformMetadata(cameraData);
+  const cameraDataKeys = Object.keys(transformedMetadata || {});
 
   return transformedMetadata ? (
     <Flex direction="column" gap={'2'}>

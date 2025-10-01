@@ -1,8 +1,21 @@
 import { FileInfo } from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { NodeApi } from 'react-arborist';
-import { FolderIcon } from './folder-icon';
+
 import styles from './style.module.css';
+import { HddIcon, RemoteStorageIcon, FolderIcon } from '@/src/components';
+import { FileOrigin } from '@/src/types/api';
+
+const getIconForOrigin = (origin?: FileOrigin) => {
+  switch (origin) {
+    case 'remote':
+      return <RemoteStorageIcon />;
+    case 'local':
+      return <HddIcon />;
+    default:
+      return null;
+  }
+};
 
 const FolderItem = ({
   node,
@@ -29,6 +42,9 @@ const FolderItem = ({
           <FolderIcon isOpen={node.isOpen} />
         </span>
         <Flex gap={'2'} align="center">
+          <span className={styles.originIcon}>
+            {getIconForOrigin(itemInfo.file_origin)}
+          </span>
           <Text size="2">{itemInfo.name}</Text>
           <Text size="1" color="gray">
             {`(${subItemCount})`}

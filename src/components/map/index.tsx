@@ -1,8 +1,7 @@
 'use client';
 import mapboxgl from 'mapbox-gl';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import styles from './style.module.css';
-import { LngLatLike } from 'mapbox-gl';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import React from 'react';
 
@@ -14,8 +13,6 @@ const MAP_STYLE = {
   satellite: SATELLITE_MAP_STYLE,
 };
 
-type PathsToDraw = LngLatLike[][];
-
 interface MapProps {
   onStyleLoaded?: (loaded: boolean) => void;
 }
@@ -25,11 +22,8 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const [_, setStyleLoaded] = useState(false);
-
     useEffect(() => {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiY3VnaW5vYWxlIiwiYSI6ImNtZWZvOGs0djB0c3UyaXM5dDhhM3k5eGUifQ.gL7XlJOF-fF42nZaeNnMAw';
+      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current as HTMLElement,
         style: MAP_STYLE.standard,
@@ -44,13 +38,13 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
       }
 
       mapRef.current.on('style.load', () => {
-        setStyleLoaded(true);
         onStyleLoaded && onStyleLoaded(true);
         mapRef.current?.resize();
       });
 
       return () => {
         mapRef.current?.remove();
+        onStyleLoaded && onStyleLoaded(false);
       };
     }, [onStyleLoaded, ref]);
 
@@ -80,4 +74,3 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
 Map.displayName = 'Map';
 
 export { Map };
-export type { PathsToDraw };
