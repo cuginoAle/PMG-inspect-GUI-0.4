@@ -6,8 +6,9 @@ import { useFetchProjectList } from '@/src/app/hooks/useFetchProjectList';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-const ProjectFinderDataLoader = () => {
-  const { selectedProject, filesList } = useGlobalState();
+const DataLoader = () => {
+  const { selectedProject, filesList, inferenceSettings } = useGlobalState();
+  const updateInferenceSettings = inferenceSettings.set;
   const sp = useSearchParams();
   const projectPath = sp.get('path');
 
@@ -20,7 +21,14 @@ const ProjectFinderDataLoader = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [project, projects]);
 
+  useEffect(() => {
+    updateInferenceSettings({
+      setting_1: { label: 'Setting 1', parameters: {} },
+      setting_2: { label: 'Setting 2', parameters: {} },
+    });
+  }, [updateInferenceSettings]);
+
   return null;
 };
 
-export { ProjectFinderDataLoader };
+export { DataLoader };

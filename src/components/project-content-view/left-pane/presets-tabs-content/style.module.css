@@ -7,6 +7,10 @@
   min-height: 400px;
 
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
 .pinButton {

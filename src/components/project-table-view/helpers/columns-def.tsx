@@ -1,4 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import type { ProjectItem, ProjectParsingState } from '@/src/types';
 import { Text, TextProps } from '@radix-ui/themes';
 import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
@@ -26,49 +26,69 @@ const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
   ),
 };
 
-const columns: ColumnDef<ProjectItem>[] = [
-  {
-    accessorKey: 'road_data.road_name',
+const columnHelper = createColumnHelper<ProjectItem>();
+
+const columnsDef = [
+  columnHelper.display({
+    id: 'select_all',
+    cell: (info) => {
+      return (
+        <input
+          id={info.row.original.video_url}
+          name="selected"
+          value={info.row.original.video_url}
+          type="checkbox"
+          readOnly
+          onClick={(e) => e.stopPropagation()}
+        />
+      );
+    },
+  }),
+  columnHelper.accessor((row) => row.road_data.road_name, {
+    id: 'road_name',
     header: 'Road Name',
-  },
-
-  {
-    accessorKey: 'road_data.road_surface',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.road_data.road_surface, {
+    id: 'road_surface',
     header: 'Surface',
-  },
-  {
-    accessorKey: 'road_data.road_lanes',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.road_data.road_lanes, {
+    id: 'road_lanes',
     header: 'Lanes',
-  },
-  {
-    accessorKey: 'road_data.road_length',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.road_data.road_length, {
+    id: 'road_length',
     header: 'Length (m)',
-  },
-
-  {
-    accessorKey: 'road_data.road_area',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.road_data.road_area, {
+    id: 'road_area',
     header: 'Area (m²)',
-  },
-  {
-    accessorKey: 'road_data.road_functional_class',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.road_data.road_functional_class, {
+    id: 'road_functional_class',
     header: 'Functional Class',
-  },
-  {
-    accessorKey: 'pci_score_avg_ai',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.pci_score_avg_ai, {
+    id: 'pci_score_avg_ai',
     header: 'PCI sc.',
-    meta: 'ai',
-  },
-  {
-    accessorKey: 'pci_score_avg_human',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.pci_score_avg_human, {
+    id: 'pci_score_avg_human',
     header: 'PCI sc.',
-    meta: 'human',
-  },
-
-  {
-    accessorKey: 'parsing_status',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor((row) => row.parsing_status, {
+    id: 'parsing_status',
     header: 'Status',
-    cell: ({ getValue }) => {
-      const status = getValue() as ProjectParsingState;
+    cell: (info) => {
+      const status = info.getValue() as ProjectParsingState;
       let color: TextProps['color'] = 'gray';
 
       if (status === 'parsing_done') {
@@ -88,7 +108,7 @@ const columns: ColumnDef<ProjectItem>[] = [
         </Text>
       );
     },
-  },
+  }),
 ];
 
-export { columns };
+export { columnsDef };

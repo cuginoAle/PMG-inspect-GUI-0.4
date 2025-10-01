@@ -1,7 +1,7 @@
 import { Tab } from '@/src/components/presets-tabs';
 import { ProjectAnalysisDashboard } from '@/src/components/project-analysis-dashboard';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
-import { Button, Flex, IconButton, Separator } from '@radix-ui/themes';
+import { Button, Flex, IconButton, Separator, Tabs } from '@radix-ui/themes';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import styles from './style.module.css';
@@ -24,55 +24,60 @@ const PresetsTabsContent = ({
 
   const [tableExpanded, setTableExpanded] = React.useState(false);
 
-  // TODO: uncomment this
-  // tabs.map((tab) => tab.id);
-
   return (
     <>
-      {!tableExpanded && (
-        <ProjectAnalysisDashboard
-          settingId={tabs[0]!.id}
-          onChange={onChange}
-          onSave={onSave}
-          onReset={onReset}
-          hasUnsavedChanges={tabs[0]!.hasUnsavedChanges}
-        />
-      )}
+      {tabs.map((tab) => {
+        return (
+          <Tabs.Content key={tab.id} value={tab.id} forceMount>
+            <Flex direction={'column'} gap={'6'} height={'100%'}>
+              {!tableExpanded && (
+                <ProjectAnalysisDashboard
+                  settingId={tab.id}
+                  onChange={onChange}
+                  onSave={onSave}
+                  onReset={onReset}
+                  hasUnsavedChanges={tab.hasUnsavedChanges}
+                />
+              )}
 
-      {!tableExpanded && projectPath && (
-        <Separator
-          className={styles.mainContentSeparator}
-          size={'4'}
-          orientation="horizontal"
-          color="amber"
-        />
-      )}
+              {!tableExpanded && projectPath && (
+                <Separator
+                  className={styles.mainContentSeparator}
+                  size={'4'}
+                  orientation="horizontal"
+                  color="amber"
+                />
+              )}
 
-      <div className={styles.projectTableWrapper}>
-        {projectPath && (
-          <IconButton
-            onClick={() => setTableExpanded(!tableExpanded)}
-            variant="soft"
-            className={styles.pinButton}
-            title="Toggle Table Expansion"
-          >
-            {tableExpanded ? <PinBottomIcon /> : <PinTopIcon />}
-          </IconButton>
-        )}
-        <ProjectTableViewContainer />
-      </div>
+              <div className={styles.projectTableWrapper}>
+                {projectPath && (
+                  <IconButton
+                    onClick={() => setTableExpanded(!tableExpanded)}
+                    variant="soft"
+                    className={styles.pinButton}
+                    title="Toggle Table Expansion"
+                  >
+                    {tableExpanded ? <PinBottomIcon /> : <PinTopIcon />}
+                  </IconButton>
+                )}
+                <ProjectTableViewContainer />
 
-      <Flex justify={'center'}>
-        <Button
-          className={styles.runAnalysisButton}
-          type="button"
-          size={'3'}
-          color="blue"
-          variant="soft"
-        >
-          <RocketIcon /> Run analysis
-        </Button>
-      </Flex>
+                <Flex justify={'center'}>
+                  <Button
+                    className={styles.runAnalysisButton}
+                    type="button"
+                    size={'3'}
+                    color="blue"
+                    variant="soft"
+                  >
+                    <RocketIcon /> Run analysis
+                  </Button>
+                </Flex>
+              </div>
+            </Flex>
+          </Tabs.Content>
+        );
+      })}
     </>
   );
 };

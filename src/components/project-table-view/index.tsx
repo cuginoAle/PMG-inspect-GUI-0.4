@@ -14,7 +14,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon, PersonIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
-import { columns } from './helpers/columns-def';
+import { columnsDef } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -26,10 +26,14 @@ import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 const ProjectTableView = ({
   project,
   onMouseOver,
+  onChange,
 }: {
   project: Immutable<Project>;
   onMouseOver?: (projectIterm?: ProjectItem) => void;
+  onChange?: (selectedItemIdList: string[] | []) => void;
 }) => {
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -90,14 +94,14 @@ const ProjectTableView = ({
   };
 
   const tableData = useMemo(
+    // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
     () => [...project.project_items] as ProjectItem[],
     [project.project_items],
   );
 
   const table = useReactTable({
-    // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
     data: tableData,
-    columns: columns,
+    columns: columnsDef,
     state: {
       sorting,
       globalFilter,
@@ -114,89 +118,127 @@ const ProjectTableView = ({
   });
 
   return (
-    <Flex direction="column" gap="2" height={'100%'}>
-      <div className={styles.searchBox}>
-        <TextField.Root
-          placeholder="Search all columns..."
-          value={globalFilter ?? ''}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          size={'3'}
-        >
-          <TextField.Slot>
-            <MagnifyingGlassIcon width="24" height="24" />
-          </TextField.Slot>
-        </TextField.Root>
-      </div>
+    <form
+      onChange={(e) => {
+        const form = (e.target as HTMLInputElement).closest(
+          'form',
+        ) as HTMLFormElement;
+        const formData = new FormData(form);
+        const selectedValues = formData.getAll('selected') as string[];
 
-      <div className={styles.tableContainer}>
-        <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
-          <Table.Header className={styles.tableHeader}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Table.Row key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Table.ColumnHeaderCell
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <Flex align="center" gap="1" className={styles.headerCell}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                      {getColumnSortIcon(header.column.getIsSorted()) ?? null}
-                      {header.column.columnDef.meta === 'ai' && (
-                        <NeuralNetworkIcon size={1.5} />
-                      )}
+        setSelectAllChecked(
+          selectedValues.length === table.getRowModel().rows.length,
+        );
+        onChange?.(selectedValues);
+      }}
+    >
+      <Flex direction="column" gap="2" height={'100%'}>
+        <div className={styles.searchBox}>
+          <TextField.Root
+            placeholder="Search all columns..."
+            value={globalFilter ?? ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            size={'3'}
+          >
+            <TextField.Slot>
+              <MagnifyingGlassIcon width="24" height="24" />
+            </TextField.Slot>
+          </TextField.Root>
+        </div>
 
-                      {header.column.columnDef.meta === 'human' && (
-                        <PersonIcon />
-                      )}
-                    </Flex>
-                  </Table.ColumnHeaderCell>
-                ))}
-              </Table.Row>
-            ))}
-          </Table.Header>
-          <Table.Body ref={tBodyRef}>
-            {table.getRowModel().rows.map((row) => (
-              <Table.Row
-                key={row.id}
-                id={getRowId(row.original)}
-                tabIndex={0}
-                className={row.getIsSelected() ? styles.selected : ''}
-                onMouseEnter={() => {
-                  onMouseOver?.(row.original);
-                }}
-                onMouseLeave={() => {
-                  onMouseOver?.(undefined);
-                }}
-                onClick={() => {
-                  row.toggleSelected(true);
-                  onRowSelect?.(row.original);
-                }}
-                onDoubleClick={() => {
-                  onRowDoubleClick(row.original);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
+        <div className={styles.tableContainer}>
+          <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
+            <Table.Header className={styles.tableHeader}>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Table.Row key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Table.ColumnHeaderCell
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <Flex
+                        align="center"
+                        gap="1"
+                        className={styles.headerCell}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                        {getColumnSortIcon(header.column.getIsSorted()) ?? null}
+
+                        {header.column.columnDef.id === 'select_all' && (
+                          <input
+                            type="checkbox"
+                            checked={selectAllChecked}
+                            onChange={() => void 0}
+                            onClick={(e) => {
+                              tBodyRef.current
+                                ?.querySelectorAll('input[type="checkbox"]')
+                                .forEach((checkbox) => {
+                                  (checkbox as HTMLInputElement).checked =
+                                    e.currentTarget.checked;
+                                });
+                              return false;
+                            }}
+                          />
+                        )}
+                        {header.column.columnDef.id === 'pci_score_avg_ai' && (
+                          <NeuralNetworkIcon size={1.5} />
+                        )}
+
+                        {header.column.columnDef.id ===
+                          'pci_score_avg_human' && <PersonIcon />}
+                      </Flex>
+                    </Table.ColumnHeaderCell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table.Header>
+            <Table.Body ref={tBodyRef}>
+              {table.getRowModel().rows.map((row) => (
+                <Table.Row
+                  key={row.id}
+                  id={getRowId(row.original)}
+                  tabIndex={0}
+                  className={row.getIsSelected() ? styles.selected : ''}
+                  onMouseEnter={() => {
+                    onMouseOver?.(row.original);
+                  }}
+                  onMouseLeave={() => {
+                    onMouseOver?.(undefined);
+                  }}
+                  onClick={() => {
                     row.toggleSelected(true);
                     onRowSelect?.(row.original);
-                  }
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Cell>
-                ))}
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
-      </div>
-    </Flex>
+                  }}
+                  onDoubleClick={() => {
+                    onRowDoubleClick(row.original);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      row.toggleSelected(true);
+                      onRowSelect?.(row.original);
+                    }
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <Table.Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </div>
+      </Flex>
+    </form>
   );
 };
 

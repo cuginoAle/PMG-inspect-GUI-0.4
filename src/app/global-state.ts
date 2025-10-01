@@ -7,6 +7,20 @@ type GlobalState = {
   filesList?: GetFilesListResponse;
   selectedProject?: GetProjectResponse;
   hoveredVideoUrl?: string;
+  userPreferences?: {
+    unit?: 'metric' | 'imperial';
+    userName?: string;
+    localCacheSizeLimitInGB?: number;
+  };
+  inferenceSettings?: Record<
+    string,
+    {
+      label: string;
+      parameters: Record<string, unknown>;
+    }
+  >; // TODO: define type
+  selectedInferenceSettingId?: string;
+  selectedVideoUrlList?: Record<string, string[]>; // { [inferenceSettingId: string]: videoUrlList as string[] }
 };
 
 const globalState = hookstate<GlobalState>(

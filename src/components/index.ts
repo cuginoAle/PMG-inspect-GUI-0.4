@@ -16,7 +16,7 @@ export * from './presets-dropdowm';
 export * from './presets-tabs';
 export * from './project-analysis-dashboard';
 export * from './project-content-view';
-export * from './project-finder-data-loader';
+export * from './data-loader';
 export * from './project-finder';
 export * from './project-table-view';
 export * from './projects-tree-view';

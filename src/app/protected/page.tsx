@@ -2,7 +2,7 @@ import {
   PmgInspectLogo,
   ProjectFinder,
   AppSettings,
-  ProjectFinderDataLoader,
+  DataLoader,
 } from '@/src/components';
 
 import { Flex } from '@radix-ui/themes';
@@ -15,7 +15,7 @@ const Page = async ({ searchParams }: { searchParams: PageSearchParams }) => {
 
   return (
     <Flex p="4" height="100%" gap={'2'} direction="column">
-      <ProjectFinderDataLoader />
+      <DataLoader />
       <Flex justify={'between'} align="center">
         <PmgInspectLogo />
         <AppSettings />

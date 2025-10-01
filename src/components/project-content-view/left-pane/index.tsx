@@ -1,21 +1,24 @@
-import { Flex } from '@radix-ui/themes';
-import { FileLogoTitle, PresetsTabs, Tab } from '@/src/components';
+import { Flex, Tabs } from '@radix-ui/themes';
+import { FileLogoTitle, PresetsTabs, Tab, Warning } from '@/src/components';
 
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { PresetsTabsContent } from './presets-tabs-content';
-
-// this should come from global state
-const dummyTabs: Tab[] = [
-  { id: 'PCI_01', label: 'PCI 1.0', values: [] },
-  { id: 'PCI_02', label: 'PCI 2.0', values: [] },
-  { id: 'Custom', label: 'Custom', values: [] },
-];
+import { useGlobalState } from '@/src/app/global-state';
 
 const LeftPane = () => {
-  const [tabs, setTabs] = React.useState<Tab[]>(dummyTabs);
+  const inferenceSettings = useGlobalState().inferenceSettings.get();
+
+  const [tabs, setTabs] = React.useState<Tab[]>(
+    Object.keys(inferenceSettings || {}).map((key: string) => ({
+      id: key,
+      label: (inferenceSettings as any)?.[key].label,
+      hasUnsavedChanges: false,
+      values: (inferenceSettings as any)[key].parameters,
+    })),
+  );
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -45,31 +48,35 @@ const LeftPane = () => {
     );
   };
 
-  return (
-    <Flex direction={'column'} gap={'6'} height={'100%'}>
-      {projectPath && (
-        <FileLogoTitle
-          as="div"
-          fileType={fileType}
-          label={label}
-          size="medium"
-          componentId="project-analysis-dashboard-file-title"
-        />
-      )}
+  return tabs?.length === 0 ? (
+    <Warning message="No inference settings found." />
+  ) : (
+    <Tabs.Root defaultValue={tabs[0]?.id} orientation="horizontal">
+      <Flex direction={'column'} gap={'6'} height={'100%'}>
+        {projectPath && (
+          <FileLogoTitle
+            as="div"
+            fileType={fileType}
+            label={label}
+            size="medium"
+            componentId="project-analysis-dashboard-file-title"
+          />
+        )}
 
-      <PresetsTabs tabs={tabs} />
-      <PresetsTabsContent
-        tabs={tabs}
-        onChange={handleOnChange}
-        onReset={handleOnReset}
-        onSave={(data) => {
-          console.log(
-            'save the current tab!',
-            Object.fromEntries(data.entries()),
-          );
-        }}
-      />
-    </Flex>
+        <PresetsTabs tabs={tabs} />
+        <PresetsTabsContent
+          tabs={tabs}
+          onChange={handleOnChange}
+          onReset={handleOnReset}
+          onSave={(data) => {
+            console.log(
+              'save the current tab!',
+              Object.fromEntries(data.entries()),
+            );
+          }}
+        />
+      </Flex>
+    </Tabs.Root>
   );
 };
 
