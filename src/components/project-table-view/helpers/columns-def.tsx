@@ -129,13 +129,16 @@ const columnsDef = [
     cell: (info) => {
       const index = info.row.index;
       const color = index > 2 ? 'green' : index > 1 ? 'red' : 'yellow';
-      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      const value =
+        info.cell.row.index === 1
+          ? undefined
+          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex align="center" gap="1">
-          <PciScoreBox value={Math.round(value)} />
+          <PciScoreBox value={value} />
           <Progress
             color={color}
-            value={index > 2 ? 100 : 30 + Math.random() * 50} // TODO: replace with actual value
+            value={index > 2 ? 100 : value ? 30 + Math.random() * 50 : 0} // TODO: replace with actual value
             size={'1'}
             radius="medium"
           />
