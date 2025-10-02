@@ -3,32 +3,34 @@ import type { ProjectItem, ProjectParsingState } from '@/src/types';
 import { Flex, Progress, Text, TextProps } from '@radix-ui/themes';
 import {
   CheckCircledIcon,
-  CrossCircledIcon,
+  DownloadIcon,
   PersonIcon,
+  UpdateIcon,
 } from '@radix-ui/react-icons';
 import { PciScoreBox, NeuralNetworkIcon } from '@/src/components';
 
 const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
-  download_done: 'Parsing',
-  download_error: (
-    <>
-      <CrossCircledIcon width={16} height={16} />
-      Download error
-    </>
-  ),
-  download_timeout: (
-    <>
-      <CrossCircledIcon width={16} height={16} />
-      Download timeout
-    </>
-  ),
-  parsing_done: <CheckCircledIcon width={16} height={16} />,
-  parsing_error: (
-    <>
-      <CrossCircledIcon width={16} height={16} />
-      Parsing error
-    </>
-  ),
+  downloading: <DownloadIcon width={18} height={18} className="blinking" />,
+  parsing: <UpdateIcon width={18} height={18} className="spinning" />,
+  ready: <CheckCircledIcon width={18} height={18} />,
+  download_error: <DownloadIcon width={18} height={18} />,
+  parsing_error: <UpdateIcon width={18} height={18} />,
+};
+
+const statusColorsMap: Record<ProjectParsingState, TextProps['color']> = {
+  download_error: 'red',
+  downloading: 'blue',
+  parsing: 'blue',
+  parsing_error: 'red',
+  ready: 'green',
+};
+
+const statusTitleMap: Record<ProjectParsingState, string> = {
+  download_error: 'Download error',
+  downloading: 'Dowloading...',
+  parsing: 'Parsing...',
+  parsing_error: 'Parsing error',
+  ready: 'Ready',
 };
 
 const columnHelper = createColumnHelper<ProjectItem>();
@@ -80,7 +82,7 @@ const columnsDef = [
     cell: (info) => info.getValue(),
   }),
 
-  columnHelper.accessor((row) => row.pci_score_avg_human, {
+  columnHelper.accessor((row) => row.pci_score_avg_human_inspector, {
     id: 'pci_score_avg_human',
     header: () => (
       <Flex justify="center" align={'center'} gap="1" width={'100%'}>
@@ -89,28 +91,29 @@ const columnsDef = [
       </Flex>
     ),
     cell: (info) => {
-      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      const value =
+        info.cell.row.index === 1
+          ? undefined
+          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex justify="center" gap="1">
-          <PciScoreBox value={Math.round(value)} />
+          <PciScoreBox value={value} />
         </Flex>
       );
     },
   }),
 
-  //TODO: this should read "pci_score_avg_human_qc"
-  columnHelper.accessor((row) => row.pci_score_avg_human, {
+  columnHelper.accessor((row) => row.pci_score_avg_human_qc, {
     id: 'pci_score_avg_human_qc',
-    header: () => (
-      <Flex justify="center" align={'center'} width={'100%'}>
-        <span>Pci QC</span>
-      </Flex>
-    ),
+    header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
     cell: (info) => {
-      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      const value =
+        info.cell.row.index === 1
+          ? undefined
+          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex justify="center" gap="1">
-          <PciScoreBox value={Math.round(value)} />
+          <PciScoreBox value={value} />
         </Flex>
       );
     },
@@ -143,24 +146,23 @@ const columnsDef = [
 
   columnHelper.accessor((row) => row.parsing_status, {
     id: 'parsing_status',
-    header: 'Status',
+    header: () => <span style={{ margin: 'auto' }}>Status</span>,
     cell: (info) => {
-      const status = info.getValue() as ProjectParsingState;
-      let color: TextProps['color'] = 'gray';
+      // const status = info.getValue() as ProjectParsingState;
 
-      if (status === 'parsing_done') {
-        color = 'green';
-      } else if (status === 'download_done') {
-        color = 'blue';
-      } else if (
-        status === 'download_error' ||
-        status === 'parsing_error' ||
-        status === 'download_timeout'
-      ) {
-        color = 'red';
-      }
+      // TODO: replace with the value above ⬆︎
+      const keys = Object.keys(parsingMap);
+      const status = keys[Math.round(Math.random() * 4)] as ProjectParsingState;
+
+      const color = statusColorsMap[status];
+
       return (
-        <Text as="p" align={'center'} color={color}>
+        <Text
+          as="p"
+          align={'center'}
+          color={color}
+          title={statusTitleMap[status]}
+        >
           {parsingMap[status]}
         </Text>
       );

@@ -72,15 +72,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/get_processing_configurations": {
+    "/api/v1/get_configurations": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get Processing Configurations */
-        get: operations["get_processing_configurations_api_v1_get_processing_configurations_get"];
+        /** Get Configurations */
+        get: operations["get_configurations_api_v1_get_configurations_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -241,6 +241,17 @@ export interface components {
          * @enum {string}
          */
         FunctionalClassType: "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
+        /** GetConfigurationsResponse */
+        GetConfigurationsResponse: {
+            /** Processing Configurations */
+            processing_configurations: {
+                [key: string]: components["schemas"]["ProcessingConfiguration"];
+            };
+            /** Inference Model Ids */
+            inference_model_ids: {
+                [key: string]: string[];
+            };
+        };
         /** GpsPoint */
         GpsPoint: {
             /** Latitude */
@@ -255,19 +266,23 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** InferenceConfiguraionData */
-        InferenceConfiguraionData: {
-            /** Model */
-            model: string;
-            /** Confidency */
-            confidency: number;
+        /** InferenceConfiguration */
+        InferenceConfiguration: {
+            /** Inference Model Id */
+            inference_model_id: string;
+            inference_model_parameters: components["schemas"]["InferenceModelParameters"];
+        };
+        /** InferenceModelParameters */
+        InferenceModelParameters: {
+            /** Confidence */
+            confidence: number;
             /** Iou */
             iou: number;
         };
-        /** InferenceLayerResult */
-        "InferenceLayerResult-Input": {
-            inference_layer_type: components["schemas"]["InferenceLayerType"];
-            inference_layer_source: components["schemas"]["InferenceLayerSource"];
+        /** InferenceResult */
+        "InferenceResult-Input": {
+            inference_type: components["schemas"]["InferenceType"];
+            inference_source: components["schemas"]["InferenceSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -284,10 +299,10 @@ export interface components {
             /** Probs */
             probs?: number[] | null;
         };
-        /** InferenceLayerResult */
-        "InferenceLayerResult-Output": {
-            inference_layer_type: components["schemas"]["InferenceLayerType"];
-            inference_layer_source: components["schemas"]["InferenceLayerSource"];
+        /** InferenceResult */
+        "InferenceResult-Output": {
+            inference_type: components["schemas"]["InferenceType"];
+            inference_source: components["schemas"]["InferenceSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -305,19 +320,18 @@ export interface components {
             probs?: number[] | null;
         };
         /**
-         * InferenceLayerSource
+         * InferenceSource
          * @enum {string}
          */
-        InferenceLayerSource: "processing" | "cache" | "labelling";
+        InferenceSource: "processing" | "cache" | "labelling";
         /**
-         * InferenceLayerType
+         * InferenceType
          * @enum {string}
          */
-        InferenceLayerType: "road" | "distress" | "weathering" | "treatment";
+        InferenceType: "road" | "distress" | "weathering" | "treatment" | "sign" | "marking";
         /** MaskItem */
         MaskItem: {
-            /** Bitmask */
-            bitmask: components["schemas"]["ZipEncodedBitmask"] | components["schemas"]["PngEncodedBitmask"];
+            bitmask: components["schemas"]["PngEncodedBitmask"];
             /** Area Pixels */
             area_pixels: number;
             /** Polygons Mask Shape */
@@ -342,8 +356,8 @@ export interface components {
             frame_duration_seconds: number;
             /** Frame Width */
             frame_width: number;
-            /** Frame Heigth */
-            frame_heigth: number;
+            /** Frame Height */
+            frame_height: number;
         };
         /** ParseProjectResponse */
         ParseProjectResponse: {
@@ -359,30 +373,37 @@ export interface components {
             /** Data */
             data: string;
         };
-        /** ProcessFrameResponse */
-        "ProcessFrameResponse-Input": {
-            road?: components["schemas"]["InferenceLayerResult-Input"] | null;
-            distress?: components["schemas"]["InferenceLayerResult-Input"] | null;
-            weathering?: components["schemas"]["InferenceLayerResult-Input"] | null;
-            treatment?: components["schemas"]["InferenceLayerResult-Input"] | null;
+        /** ProcessingConfiguration */
+        ProcessingConfiguration: {
+            /** Label */
+            label: string;
+            /** Inferences */
+            inferences: {
+                [key: string]: components["schemas"]["InferenceConfiguration"];
+            };
+            sampler_type: components["schemas"]["SamplerType"];
+            /** Sampler Parameters */
+            sampler_parameters: {
+                [key: string]: number | null;
+            };
+        };
+        /** ProcessingResults */
+        "ProcessingResults-Input": {
+            /** Inference Results */
+            inference_results: {
+                [key: string]: components["schemas"]["InferenceResult-Input"];
+            };
             /** Pci Score */
             pci_score?: number | null;
         };
-        /** ProcessFrameResponse */
-        "ProcessFrameResponse-Output": {
-            road?: components["schemas"]["InferenceLayerResult-Output"] | null;
-            distress?: components["schemas"]["InferenceLayerResult-Output"] | null;
-            weathering?: components["schemas"]["InferenceLayerResult-Output"] | null;
-            treatment?: components["schemas"]["InferenceLayerResult-Output"] | null;
+        /** ProcessingResults */
+        "ProcessingResults-Output": {
+            /** Inference Results */
+            inference_results: {
+                [key: string]: components["schemas"]["InferenceResult-Output"];
+            };
             /** Pci Score */
             pci_score?: number | null;
-        };
-        /** ProcessingConfigurationData */
-        ProcessingConfigurationData: {
-            road?: components["schemas"]["InferenceConfiguraionData"] | null;
-            distress?: components["schemas"]["InferenceConfiguraionData"] | null;
-            weathering?: components["schemas"]["InferenceConfiguraionData"] | null;
-            treatment?: components["schemas"]["InferenceConfiguraionData"] | null;
         };
         /** ProjectItem */
         ProjectItem: {
@@ -396,8 +417,10 @@ export interface components {
             media_data?: components["schemas"]["MediaData"] | null;
             /** Gps Points */
             gps_points?: components["schemas"]["GpsPoint"][] | null;
-            /** Pci Score Avg Human */
-            pci_score_avg_human?: number | null;
+            /** Pci Score Avg Human Inspector */
+            pci_score_avg_human_inspector?: number | null;
+            /** Pci Score Avg Human Qc */
+            pci_score_avg_human_qc?: number | null;
             /** Pci Score Avg Ai */
             pci_score_avg_ai?: number | null;
         };
@@ -424,6 +447,11 @@ export interface components {
             road_shoulder?: components["schemas"]["ShoulderType"];
         };
         /**
+         * SamplerType
+         * @enum {string}
+         */
+        SamplerType: "fpssampler" | "distancesampler";
+        /**
          * ShoulderType
          * @enum {string}
          */
@@ -446,14 +474,7 @@ export interface components {
          * VideoParsingStatus
          * @enum {string}
          */
-        VideoParsingStatus: "download_timeout" | "download_error" | "download_done" | "parsing_error" | "parsing_done";
-        /** ZipEncodedBitmask */
-        ZipEncodedBitmask: {
-            /** Shape */
-            shape: number[];
-            /** Data */
-            data: string;
-        };
+        VideoParsingStatus: "downloading" | "parsing" | "download_error" | "parsing_error" | "ready";
     };
     responses: never;
     parameters: never;
@@ -554,7 +575,7 @@ export interface operations {
             };
         };
     };
-    get_processing_configurations_api_v1_get_processing_configurations_get: {
+    get_configurations_api_v1_get_configurations_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -569,9 +590,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: components["schemas"]["ProcessingConfigurationData"];
-                    };
+                    "application/json": components["schemas"]["GetConfigurationsResponse"];
                 };
             };
         };
@@ -619,7 +638,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProcessingConfigurationData"];
+                "application/json": {
+                    [key: string]: components["schemas"]["InferenceConfiguration"];
+                };
             };
         };
         responses: {
@@ -629,7 +650,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProcessFrameResponse-Output"][];
+                    "application/json": components["schemas"]["ProcessingResults-Output"][];
                 };
             };
             /** @description Validation Error */
@@ -655,7 +676,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProcessFrameResponse-Input"];
+                "application/json": components["schemas"]["ProcessingResults-Input"];
             };
         };
         responses: {

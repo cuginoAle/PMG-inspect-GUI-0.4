@@ -3,7 +3,7 @@ import styles from './style.module.css';
 import classNames from 'classnames';
 
 type PciScoreBoxProps = {
-  value: number;
+  value?: number;
   size?: 'small' | 'medium' | 'large';
   className?: string;
 };
@@ -14,7 +14,9 @@ const PciScoreBox = ({
   className,
 }: PciScoreBoxProps) => {
   const scoreLabel = getPciScoreLabelFromValue(value);
-  const cn = classNames(styles.root, styles[size], className);
+  const cn = classNames(styles.root, styles[size], className, {
+    [styles.na]: value === undefined,
+  });
   return (
     <span
       className={cn}
@@ -23,7 +25,7 @@ const PciScoreBox = ({
         backgroundColor: `var(--pci-${scoreLabel})`,
       }}
     >
-      {value}
+      <span>{value}</span>
     </span>
   );
 };

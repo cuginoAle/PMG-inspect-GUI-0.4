@@ -24,3 +24,35 @@ button.rt-BaseTabListTrigger:where([data-state='active'], [data-active])
   .rt-BaseTabListTriggerInner {
   background-color: var(--accent-a5);
 }
+
+/* animations */
+
+.blinking {
+  animation: blink 1s step-start 0s infinite;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.spinning {
+  animation: spinning 2s linear infinite;
+}
+@keyframes spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
