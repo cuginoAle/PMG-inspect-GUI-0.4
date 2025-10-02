@@ -1,7 +1,7 @@
 import { Flex, Tabs } from '@radix-ui/themes';
 import { FileLogoTitle, PresetsTabs, Tab, Warning } from '@/src/components';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
@@ -9,16 +9,26 @@ import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
 
 const LeftPane = () => {
-  const inferenceSettings = useGlobalState().inferenceSettings.get();
+  const { inferenceSettings, selectedInferenceSettingId } = useGlobalState();
+  const inferenceSettingsValue = inferenceSettings.get();
+  const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
 
   const [tabs, setTabs] = React.useState<Tab[]>(
-    Object.keys(inferenceSettings || {}).map((key: string) => ({
+    Object.keys(inferenceSettingsValue || {}).map((key: string) => ({
       id: key,
-      label: (inferenceSettings as any)?.[key].label,
+      label: (inferenceSettingsValue as any)?.[key].label,
       hasUnsavedChanges: false,
-      values: (inferenceSettings as any)[key].parameters,
+      values: (inferenceSettingsValue as any)[key].parameters,
     })),
   );
+
+  useEffect(() => {
+    const firstTabId = inferenceSettingsValue
+      ? Object.keys(inferenceSettingsValue)[0]
+      : undefined;
+
+    selectedInferenceSettingIdSetter(firstTabId);
+  }, [selectedInferenceSettingIdSetter, inferenceSettingsValue]);
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -63,7 +73,10 @@ const LeftPane = () => {
           />
         )}
 
-        <PresetsTabs tabs={tabs} />
+        <PresetsTabs
+          tabs={tabs}
+          onTabClick={selectedInferenceSettingIdSetter}
+        />
         <PresetsTabsContent
           tabs={tabs}
           onChange={handleOnChange}

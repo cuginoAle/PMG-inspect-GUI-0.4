@@ -12,7 +12,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flex, Table, TextField } from '@radix-ui/themes';
-import { MagnifyingGlassIcon, PersonIcon } from '@radix-ui/react-icons';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { columnsDef } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
@@ -20,7 +20,6 @@ import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { Immutable } from '@hookstate/core';
-import { NeuralNetworkIcon } from '@/src/components';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 
 const ProjectTableView = ({
@@ -155,7 +154,7 @@ const ProjectTableView = ({
                     <Table.ColumnHeaderCell
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: 'pointer', verticalAlign: 'middle' }}
                     >
                       <Flex
                         align="center"
@@ -170,6 +169,7 @@ const ProjectTableView = ({
 
                         {header.column.columnDef.id === 'select_all' && (
                           <input
+                            title="Select All"
                             type="checkbox"
                             checked={selectAllChecked}
                             onChange={() => void 0}
@@ -184,12 +184,6 @@ const ProjectTableView = ({
                             }}
                           />
                         )}
-                        {header.column.columnDef.id === 'pci_score_avg_ai' && (
-                          <NeuralNetworkIcon size={1.5} />
-                        )}
-
-                        {header.column.columnDef.id ===
-                          'pci_score_avg_human' && <PersonIcon />}
                       </Flex>
                     </Table.ColumnHeaderCell>
                   ))}

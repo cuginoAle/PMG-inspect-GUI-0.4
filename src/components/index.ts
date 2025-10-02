@@ -24,3 +24,4 @@ export * from './slider';
 export * from './video-metadata';
 export * from './video-preview';
 export * from './warning';
+export * from './pci-score-box';

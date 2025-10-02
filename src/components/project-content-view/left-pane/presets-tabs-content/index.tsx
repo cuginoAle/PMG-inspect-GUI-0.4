@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import styles from './style.module.css';
 import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
+import { useGlobalState } from '@/src/app/global-state';
 
 type PresetsTabsContentProps = {
   tabs: Tab[];
@@ -21,6 +22,13 @@ const PresetsTabsContent = ({
 }: PresetsTabsContentProps) => {
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
+  const { selectedVideoUrlList, selectedInferenceSettingId } = useGlobalState();
+  const selectedVideoUrlListValue = selectedVideoUrlList.get();
+  const selectedInferenceSettingIdValue =
+    selectedInferenceSettingId.get() || '';
+
+  const selectedVideos =
+    selectedVideoUrlListValue?.[selectedInferenceSettingIdValue] || [];
 
   const [tableExpanded, setTableExpanded] = React.useState(false);
 
@@ -69,6 +77,7 @@ const PresetsTabsContent = ({
                     size={'3'}
                     color="blue"
                     variant="soft"
+                    disabled={selectedVideos.length === 0}
                   >
                     <RocketIcon /> Run analysis
                   </Button>

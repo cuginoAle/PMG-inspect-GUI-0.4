@@ -1,0 +1,25 @@
+.root {
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  width: 1.8em;
+  height: 1.8em;
+}
+
+.small {
+  font-size: 11px;
+}
+
+.medium {
+  font-size: 15px;
+}
+
+.large {
+  border-radius: 2em;
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 30px;
+}

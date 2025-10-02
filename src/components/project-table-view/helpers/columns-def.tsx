@@ -1,7 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import type { ProjectItem, ProjectParsingState } from '@/src/types';
-import { Text, TextProps } from '@radix-ui/themes';
-import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
+import { Flex, Progress, Text, TextProps } from '@radix-ui/themes';
+import {
+  CheckCircledIcon,
+  CrossCircledIcon,
+  PersonIcon,
+} from '@radix-ui/react-icons';
+import { PciScoreBox, NeuralNetworkIcon } from '@/src/components';
 
 const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
   download_done: 'Parsing',
@@ -74,16 +79,68 @@ const columnsDef = [
     header: 'Functional Class',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.pci_score_avg_ai, {
-    id: 'pci_score_avg_ai',
-    header: 'PCI sc.',
-    cell: (info) => info.getValue(),
-  }),
+
   columnHelper.accessor((row) => row.pci_score_avg_human, {
     id: 'pci_score_avg_human',
-    header: 'PCI sc.',
-    cell: (info) => info.getValue(),
+    header: () => (
+      <Flex justify="center" align={'center'} gap="1" width={'100%'}>
+        <span>Pci</span>
+        <PersonIcon />
+      </Flex>
+    ),
+    cell: (info) => {
+      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      return (
+        <Flex justify="center" gap="1">
+          <PciScoreBox value={Math.round(value)} />
+        </Flex>
+      );
+    },
   }),
+
+  //TODO: this should read "pci_score_avg_human_qc"
+  columnHelper.accessor((row) => row.pci_score_avg_human, {
+    id: 'pci_score_avg_human_qc',
+    header: () => (
+      <Flex justify="center" align={'center'} width={'100%'}>
+        <span>Pci QC</span>
+      </Flex>
+    ),
+    cell: (info) => {
+      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      return (
+        <Flex justify="center" gap="1">
+          <PciScoreBox value={Math.round(value)} />
+        </Flex>
+      );
+    },
+  }),
+  columnHelper.accessor((row) => row.pci_score_avg_ai, {
+    id: 'pci_score_avg_ai',
+    header: () => (
+      <Flex align={'center'} gap="1">
+        <span>Pci</span>
+        <NeuralNetworkIcon size={1.6} />
+      </Flex>
+    ),
+    cell: (info) => {
+      const index = info.row.index;
+      const color = index > 2 ? 'green' : index > 1 ? 'red' : 'yellow';
+      const value = 10 + Math.random() * 90; // TODO: replace with actual value
+      return (
+        <Flex align="center" gap="1">
+          <PciScoreBox value={Math.round(value)} />
+          <Progress
+            color={color}
+            value={index > 2 ? 100 : 30 + Math.random() * 50} // TODO: replace with actual value
+            size={'1'}
+            radius="medium"
+          />
+        </Flex>
+      );
+    },
+  }),
+
   columnHelper.accessor((row) => row.parsing_status, {
     id: 'parsing_status',
     header: 'Status',

@@ -6,37 +6,7 @@ body {
   .rt-BaseButton {
     --cursor-button: pointer;
   }
-
-  /* --pci-excellent: #004da8;
-  --pci-good: #87b52b;
-  --pci-fair: #e6e600;
-  --pci-poor: #ffaa01;
-  --pci-failed: #a80000;
-
-  --distress-severity-low: var(--pci-fair);
-  --distress-severity-medium: var(--pci-poor);
-  --distress-severity-high: var(--pci-failed); */
 }
-
-/* .pci-excellent {
-  background-color: var(--pci-excellent);
-}
-
-.pci-good {
-  background-color: var(--pci-good);
-}
-
-.pci-fair {
-  background-color: var(--pci-fair);
-}
-
-.pci-poor {
-  background-color: var(--pci-poor);
-}
-
-.pci-failed {
-  background-color: var(--pci-failed);
-} */
 
 body {
   font-family: Arial, Helvetica, sans-serif;

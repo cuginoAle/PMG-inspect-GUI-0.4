@@ -13,9 +13,10 @@ type Tab = {
 type PresetsTabsProps = {
   tabs: Tab[];
   onMenuClick?: (tabId: string) => void;
+  onTabClick?: (tabId: string) => void;
 };
 
-const PresetsTabs = ({ tabs, onMenuClick }: PresetsTabsProps) => {
+const PresetsTabs = ({ tabs, onMenuClick, onTabClick }: PresetsTabsProps) => {
   if (!tabs || tabs.length === 0) return null;
 
   return (
@@ -26,13 +27,15 @@ const PresetsTabs = ({ tabs, onMenuClick }: PresetsTabsProps) => {
         });
         return (
           <div key={tab.id} className={tabCn}>
-            <Tabs.Trigger key={tab.id} value={tab.id}>
+            <Tabs.Trigger value={tab.id} onClick={() => onTabClick?.(tab.id)}>
               {tab.label}
             </Tabs.Trigger>
             <IconButton
               variant="ghost"
               className={styles.tabMenuButton}
-              onClick={() => onMenuClick?.(tab.id)}
+              onClick={() => {
+                onMenuClick?.(tab.id);
+              }}
             >
               <ThreeVertDots size={1.4} />
             </IconButton>
@@ -42,7 +45,7 @@ const PresetsTabs = ({ tabs, onMenuClick }: PresetsTabsProps) => {
 
       {/* Hardcoded tabs for demo purposes; replace with dynamic rendering as needed */}
       <Tabs.Trigger
-        onClick={() => {
+        onClick={(e) => {
           alert('create a new tab!');
         }}
         value="new"

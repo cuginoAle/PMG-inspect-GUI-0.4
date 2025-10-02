@@ -22,4 +22,7 @@
 .runAnalysisButton {
   border: 1px solid var(--accent-a6);
   min-width: 200px;
+  &:disabled {
+    border-color: var(--gray-a6);
+  }
 }

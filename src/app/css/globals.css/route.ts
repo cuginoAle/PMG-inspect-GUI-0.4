@@ -1,3 +1,7 @@
+import {
+  pciScoreColourCodes,
+  pciScoreLabelColour,
+} from '@/src/helpers/pci-score-colour-codes';
 import fs from 'fs';
 import path from 'path';
 
@@ -27,6 +31,24 @@ export async function GET() {
   const reset = readFileSafe(path.join(cssDir, 'reset.css'));
   const base = readFileSafe(path.join(cssDir, 'base.css'));
   const utils = readFileSafe(path.join(cssDir, 'utils.css'));
+
+  const pciScoreColours = Object.keys(pciScoreColourCodes)
+    .map(
+      (key) =>
+        `  --pci-${key}: ${
+          pciScoreColourCodes[key as keyof typeof pciScoreColourCodes]
+        };`,
+    )
+    .join('\n');
+
+  const pciScoreLabelColours = Object.keys(pciScoreColourCodes)
+    .map(
+      (key) =>
+        `  --pci-label-${key}: ${
+          pciScoreLabelColour[key as keyof typeof pciScoreLabelColour]
+        };`,
+    )
+    .join('\n');
 
   // Extract package versions from package.json (fallback to 'latest')
   function getPkgVersion(name: string): string {
@@ -59,6 +81,8 @@ export async function GET() {
 
   const css = [
     '@layer reset, base, radix_theme, mapbox, utilities;',
+    `:root {\n${pciScoreColours}\n}`,
+    `:root {\n${pciScoreLabelColours}\n}`,
     reset ? `@layer reset {\n${reset}\n}` : '',
     base ? `@layer base {\n${base}\n}` : '',
     radix
