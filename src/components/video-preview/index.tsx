@@ -50,7 +50,7 @@ const VideoPreview = ({ projectItem }: { projectItem?: ProjectItem }) => {
         src={src}
         aspectRatio={
           (projectItem?.media_data?.frame_width || 16) /
-          (projectItem?.media_data?.frame_heigth || 9)
+          (projectItem?.media_data?.frame_height || 9)
         }
       />
     </>
