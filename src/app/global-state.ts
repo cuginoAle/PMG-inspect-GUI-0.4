@@ -1,7 +1,12 @@
 'use client';
 import { hookstate, useHookstate } from '@hookstate/core';
 import { devtools } from '@hookstate/devtools';
-import { GetFilesListResponse, GetProjectResponse } from '@/src/types';
+import {
+  GetFilesListResponse,
+  GetProjectResponse,
+  InferenceModelDict,
+  ProcessingConfiguration,
+} from '@/src/types';
 
 type GlobalState = {
   filesList?: GetFilesListResponse;
@@ -12,13 +17,9 @@ type GlobalState = {
     userName?: string;
     localCacheSizeLimitInGB?: number;
   };
-  inferenceSettings?: Record<
-    string,
-    {
-      label: string;
-      parameters: Record<string, unknown>;
-    }
-  >; // TODO: define type
+  processingConfigurations?: ProcessingConfiguration;
+  editedProcessingConfigurations?: ProcessingConfiguration;
+  inferenceModelDictionary?: InferenceModelDict;
   selectedInferenceSettingId?: string;
   selectedVideoUrlList?: Record<string, string[]>; // { [inferenceSettingId: string]: videoUrlList as string[] }
 };

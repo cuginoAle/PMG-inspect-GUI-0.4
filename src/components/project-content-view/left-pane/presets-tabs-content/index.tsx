@@ -40,7 +40,7 @@ const PresetsTabsContent = ({
             <Flex direction={'column'} gap={'6'} height={'100%'}>
               {!tableExpanded && (
                 <ProjectAnalysisDashboard
-                  settingId={tab.id}
+                  setting={tab}
                   onChange={onChange}
                   onSave={onSave}
                   onReset={onReset}

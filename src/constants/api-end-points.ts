@@ -18,8 +18,10 @@ const BASE = USE_DIRECT ? DIRECT_API_BASE : '/api/proxy';
 const GET_FILE_LIST_ENDPOINT = 'api/v1/get_files_list';
 const GET_FILE_DETAILS_ENDPOINT = 'api/v1/parse_project';
 const GET_VIDEO_METADATA_ENDPOINT = 'api/v1/parse_video';
+const GET_PROCESSING_CONFIGURATION_ENDPOINT = 'api/v1/get_configurations';
 
 const ENDPOINT = {
+  PROCESSING_CONFIGURATION: `${BASE}/${GET_PROCESSING_CONFIGURATION_ENDPOINT}`,
   PROJECT: {
     LIST: `${BASE}/${GET_FILE_LIST_ENDPOINT}`,
     DETAILS: `${BASE}/${GET_FILE_DETAILS_ENDPOINT}`,

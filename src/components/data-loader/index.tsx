@@ -1,32 +1,57 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
+import { useFetchProcessingConfiguration } from '@/src/app/hooks/useFetchProcessingConfiguration';
 import { useFetchProject } from '@/src/app/hooks/useFetchProject';
 import { useFetchProjectList } from '@/src/app/hooks/useFetchProjectList';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 const DataLoader = () => {
-  const { selectedProject, filesList, inferenceSettings } = useGlobalState();
-  const updateInferenceSettings = inferenceSettings.set;
   const sp = useSearchParams();
   const projectPath = sp.get('path');
 
+  const {
+    selectedProject,
+    filesList,
+    processingConfigurations,
+    inferenceModelDictionary,
+  } = useGlobalState();
+
+  const selectedProjectSet = selectedProject.set;
+  const filesListSet = filesList.set;
+  const updateProcessingConfigurations = processingConfigurations.set;
+  const updateInferenceModelDictionary = inferenceModelDictionary.set;
+
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
+  const processingSettingsData = useFetchProcessingConfiguration();
 
   useEffect(() => {
-    selectedProject.set(project);
-    filesList.set(projects);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [project, projects]);
+    filesListSet(projects);
+  }, [filesListSet, projects]);
 
   useEffect(() => {
-    updateInferenceSettings({
-      setting_1: { label: 'Setting 1', parameters: {} },
-      setting_2: { label: 'Setting 2', parameters: {} },
-    });
-  }, [updateInferenceSettings]);
+    selectedProjectSet(project);
+  }, [project, selectedProjectSet]);
+
+  useEffect(() => {
+    const processingConfigurationsValue = getResponseIfSuccesful(
+      processingSettingsData,
+    );
+
+    updateInferenceModelDictionary(
+      processingConfigurationsValue?.inference_model_ids,
+    );
+    updateProcessingConfigurations(
+      processingConfigurationsValue?.processing_configurations,
+    );
+  }, [
+    updateProcessingConfigurations,
+    processingSettingsData,
+    updateInferenceModelDictionary,
+  ]);
 
   return null;
 };

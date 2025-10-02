@@ -21,10 +21,19 @@ type ProjectItem = Project['project_items'][number];
 type RoadData = ProjectItem['road_data'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
+type ProcessingConfiguration = Record<
+  // TODO: this should come from the OpenAPI!
+  string,
+  components['schemas']['ProcessingConfiguration']
+>;
+type InferenceTypes = components['schemas']['InferenceType'];
+type Inference = components['schemas']['InferenceConfiguration'];
 
 type ProjectParsingState = Project['project_items'][number]['parsing_status'];
 
 type GpsData = components['schemas']['GpsPoint'];
+
+type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
 
 type GetFilesListResponse =
   | { status: 'ok'; detail: Array<FileInfo> }
@@ -34,6 +43,16 @@ type GetProjectResponse =
   | { status: 'ok'; detail: Project }
   | FetchError
   | LoadingState;
+type GetProcessingConfigurationResponse =
+  | {
+      status: 'ok';
+      detail: {
+        processing_configurations: ProcessingConfiguration;
+        inference_model_ids: InferenceModelDict; // Maybe this prop could be renamed to inference_model_dictionary
+      };
+    }
+  | FetchError
+  | LoadingState;
 
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
@@ -41,16 +60,21 @@ export type {
   CameraData,
   FetchError,
   FileInfo,
+  FileOrigin,
   FileType,
+  Inference,
+  InferenceTypes,
+  InferenceModelDict,
   GetFilesListResponse,
+  GetProcessingConfigurationResponse,
   GetProjectResponse,
+  GpsData,
   LoadingState,
   MediaData,
+  ProcessingConfiguration,
   Project,
   ProjectItem,
-  RoadData,
-  ResponseType,
-  FileOrigin,
-  GpsData,
   ProjectParsingState,
+  ResponseType,
+  RoadData,
 };

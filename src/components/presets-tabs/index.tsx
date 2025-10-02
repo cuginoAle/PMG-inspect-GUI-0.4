@@ -3,12 +3,13 @@ import { IconButton, Tabs } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { ThreeVertDots } from '@/src/components/custom-icons';
 import classNames from 'classnames';
+import { Inference, InferenceTypes } from '@/src/types';
 
 type Tab = {
   id: string;
   label: string;
   hasUnsavedChanges?: boolean;
-  values: Record<string, unknown>; // replace it with actual type when available
+  inferences: Record<InferenceTypes, Inference>; // TODO: this should come from OpenApi
 };
 type PresetsTabsProps = {
   tabs: Tab[];

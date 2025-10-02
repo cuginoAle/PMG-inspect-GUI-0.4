@@ -9,26 +9,34 @@ import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
 
 const LeftPane = () => {
-  const { inferenceSettings, selectedInferenceSettingId } = useGlobalState();
-  const inferenceSettingsValue = inferenceSettings.get();
+  const {
+    processingConfigurations,
+    selectedInferenceSettingId,
+    editedProcessingConfigurations,
+  } = useGlobalState();
+  const processingConfigurationsValue = processingConfigurations.get();
+
+  const editedProcessingConfigurationsValue =
+    editedProcessingConfigurations.get();
+
   const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
 
-  const [tabs, setTabs] = React.useState<Tab[]>(
-    Object.keys(inferenceSettingsValue || {}).map((key: string) => ({
-      id: key,
-      label: (inferenceSettingsValue as any)?.[key].label,
-      hasUnsavedChanges: false,
-      values: (inferenceSettingsValue as any)[key].parameters,
-    })),
-  );
+  // const [tabs, setTabs] = React.useState<Tab[]>(
+  //   Object.keys(processingConfigurationsValue || {}).map((key: string) => ({
+  //     id: key,
+  //     label: processingConfigurationsValue![key]!.label,
+  //     hasUnsavedChanges: false,
+  //     values: processingConfigurationsValue![key]!.inferences,
+  //   })),
+  // );
 
   useEffect(() => {
-    const firstTabId = inferenceSettingsValue
-      ? Object.keys(inferenceSettingsValue)[0]
+    const firstTabId = processingConfigurationsValue
+      ? Object.keys(processingConfigurationsValue)[0]
       : undefined;
 
     selectedInferenceSettingIdSetter(firstTabId);
-  }, [selectedInferenceSettingIdSetter, inferenceSettingsValue]);
+  }, [selectedInferenceSettingIdSetter, processingConfigurationsValue]);
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -37,29 +45,41 @@ const LeftPane = () => {
   const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
   const handleOnChange = (tabId: string) => {
-    const tab = tabs.find((t) => t.id === tabId);
-    if (!tab) return;
-    if (tab.hasUnsavedChanges) return;
-
-    setTabs((prevTabs) =>
-      prevTabs.map((tab) => ({
-        ...tab,
-        hasUnsavedChanges: tab.id === tabId ? true : tab.hasUnsavedChanges,
-      })),
+    if (!editedProcessingConfigurationsValue) return;
+    const tab = Object.keys(editedProcessingConfigurationsValue).find(
+      (t) => t === tabId,
     );
+    if (!tab) return;
+
+    //TODO: handleOnChange shoudl return the whole configuration value
+    // and here we just update the editedProcessingConfigurationsValue
+
+    // setTabs((prevTabs) =>
+    //   prevTabs.map((tab) => ({
+    //     ...tab,
+    //     hasUnsavedChanges: tab.id === tabId ? true : tab.hasUnsavedChanges,
+    //   })),
+    // );
   };
 
   const handleOnReset = (tabId: string) => {
-    setTabs((prevTabs) =>
-      prevTabs.map((tab) => ({
-        ...tab,
-        hasUnsavedChanges: tab.id === tabId ? false : tab.hasUnsavedChanges,
-      })),
-    );
+    // setTabs((prevTabs) =>
+    //   prevTabs.map((tab) => ({
+    //     ...tab,
+    //     hasUnsavedChanges: tab.id === tabId ? false : tab.hasUnsavedChanges,
+    //   })),
+    // );
   };
 
+  const tabs = Object.keys(processingConfigurationsValue || {}).map((key) => ({
+    id: key,
+    label: processingConfigurationsValue![key]!.label,
+    inferences: processingConfigurationsValue![key]!
+      .inferences as Tab['inferences'], // TODO: fix this!
+  }));
+
   return tabs?.length === 0 ? (
-    <Warning message="No inference settings found." />
+    <Warning message="No processing configuration found." />
   ) : (
     <Tabs.Root defaultValue={tabs[0]?.id} orientation="horizontal">
       <Flex direction={'column'} gap={'6'} height={'100%'}>

@@ -2,8 +2,13 @@
 import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import { Project, ResponseType } from '@/src/types';
-import { NetworkSettings, PresetsDropDown, Slider } from '@/src/components';
+import { InferenceTypes, Project, ResponseType } from '@/src/types';
+import {
+  NetworkSettings,
+  PresetsDropDown,
+  Slider,
+  Tab,
+} from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
 
 import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
@@ -11,7 +16,7 @@ import styles from './style.module.css';
 import React from 'react';
 
 type ProjectAnalysisDashboardProps = {
-  settingId: string;
+  setting: Tab;
   className?: string;
   hasUnsavedChanges?: boolean;
   onChange?: (id: string) => void;
@@ -20,19 +25,21 @@ type ProjectAnalysisDashboardProps = {
 };
 
 const ProjectAnalysisDashboard = ({
-  settingId,
+  setting,
   className,
   hasUnsavedChanges,
   onChange,
   onReset,
   onSave,
 }: ProjectAnalysisDashboardProps) => {
-  const { selectedProject } = useGlobalState();
+  const { selectedProject, inferenceModelDictionary } = useGlobalState();
   const project = getResponseIfSuccesful<Project>(
     selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
   );
 
-  const formId = `project-analysis-dashboard-form-${settingId}`;
+  const formId = `project-analysis-dashboard-form-${setting.id}`;
+
+  console.log('inferenceModelDictionary', inferenceModelDictionary.get());
 
   return project?.project_name ? (
     <div className={className}>
@@ -75,7 +82,7 @@ const ProjectAnalysisDashboard = ({
             onSave?.(new FormData(e.currentTarget));
           }}
           onChange={() => {
-            onChange?.(settingId);
+            onChange?.(setting.id);
           }}
           onReset={(e: React.FormEvent<HTMLFormElement>) => {
             const form = e.target as HTMLFormElement;
@@ -95,15 +102,32 @@ const ProjectAnalysisDashboard = ({
                   el.dispatchEvent(new Event('change', { bubbles: true }));
                 }
               });
-              onReset?.(settingId);
+              onReset?.(setting.id);
             }, 10);
           }}
         >
           <div className={styles.networksContainer}>
-            <NetworkSettings name="Road" />
-            <NetworkSettings name="Distress" />
-            <NetworkSettings name="Weathering" />
-            <NetworkSettings name="Treatment" />
+            {Object.keys(setting.inferences).map((inferenceId) => (
+              <NetworkSettings
+                key={inferenceId}
+                name={inferenceId}
+                inference={
+                  setting.inferences[
+                    inferenceId as keyof typeof setting.inferences
+                  ]
+                }
+                models={[
+                  ...(inferenceModelDictionary.get()?.[
+                    inferenceId as InferenceTypes
+                  ] || []),
+                ]}
+                // isDefaultEnabled={
+                //   setting.inferences[
+                //     inferenceId as keyof typeof setting.inferences
+                //   ].is_enabled
+                // }
+              />
+            ))}
           </div>
 
           <Card

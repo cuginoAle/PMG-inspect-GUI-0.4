@@ -4,23 +4,22 @@ import styles from './style.module.css';
 
 import React from 'react';
 import classNames from 'classnames';
+import { Inference } from '@/src/types';
 
 type NetworkSettingsProps = {
   className?: string;
   name: string;
+  inference: Inference;
   isDefaultEnabled?: boolean; // this can be removed. Use `values` instead
   values?: any[]; // replace it with actual type when available
+  models: string[]; // list of models available for this inference
 };
-
-const dummy_model = [
-  { id: 'model_1', name: 'Model 1' },
-  { id: 'model_2', name: 'Model 2' },
-  { id: 'model_3', name: 'Model 3' },
-];
 
 const NetworkSettings = ({
   className,
   name,
+  inference,
+  models = [],
   isDefaultEnabled = false,
 }: NetworkSettingsProps) => {
   const [isEnabled, setIsEnabled] = React.useState(isDefaultEnabled);
@@ -28,13 +27,20 @@ const NetworkSettings = ({
   const rootCn = classNames(styles.root, { [styles.disabled]: !isEnabled });
   const cn = classNames(className, styles.container);
 
+  const params = inference.inference_model_parameters;
+
   return (
     <Card size={'3'} className={rootCn}>
       <div className={cn}>
         <Flex align="center" gap="2" justify={'between'}>
           <div className={styles.title}>
             <NeuralNetworkIcon />
-            <Heading size="4" as="h4">
+            <Heading
+              size="4"
+              as="h4"
+              className="ellipsis"
+              style={{ textTransform: 'capitalize' }}
+            >
               {name}
             </Heading>
           </div>
@@ -46,7 +52,7 @@ const NetworkSettings = ({
         </Flex>
         <Select.Root
           size="2"
-          defaultValue={dummy_model[0]!.id}
+          defaultValue={models[0]}
           onValueChange={(value) => {
             console.log('preset', value);
           }}
@@ -55,9 +61,9 @@ const NetworkSettings = ({
         >
           <Select.Trigger variant="soft" />
           <Select.Content position="popper">
-            {dummy_model.map((preset) => (
-              <Select.Item key={preset.id} value={preset.id}>
-                {`${name} ${preset.name}`}
+            {models.map((preset) => (
+              <Select.Item key={preset} value={preset}>
+                {preset.replaceAll('_', ' ')}
               </Select.Item>
             ))}
           </Select.Content>
@@ -68,7 +74,7 @@ const NetworkSettings = ({
           step={0.05}
           name={`${name}-confidence`}
           title="Confidence"
-          defaultValue={0.5}
+          defaultValue={params.confidence}
           disabled={!isEnabled}
           valueLabel={(value) => value.toFixed(2)}
         />
@@ -78,7 +84,7 @@ const NetworkSettings = ({
           step={0.05}
           name={`${name}-iou`}
           title="Intersection over Union"
-          defaultValue={0.25}
+          defaultValue={params.iou}
           disabled={!isEnabled}
         />
       </div>
