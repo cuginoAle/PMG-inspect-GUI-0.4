@@ -3,17 +3,17 @@ import type { ProjectItem, ProjectParsingState } from '@/src/types';
 import { Flex, Progress, Text, TextProps } from '@radix-ui/themes';
 import {
   CheckCircledIcon,
-  DownloadIcon,
   PersonIcon,
   UpdateIcon,
 } from '@radix-ui/react-icons';
-import { PciScoreBox, NeuralNetworkIcon } from '@/src/components';
+import { PciScoreBox, NeuralNetworkIcon, DownloadIcon } from '@/src/components';
 
 const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
-  downloading: <DownloadIcon width={18} height={18} className="blinking" />,
+  // downloading: <DownloadIcon width={18} height={18} className="blinking" />,
+  downloading: <DownloadIcon size={1.8} className="downloading" />,
   parsing: <UpdateIcon width={18} height={18} className="spinning" />,
   ready: <CheckCircledIcon width={18} height={18} />,
-  download_error: <DownloadIcon width={18} height={18} />,
+  download_error: <DownloadIcon size={1.8} />,
   parsing_error: <UpdateIcon width={18} height={18} />,
 };
 

@@ -1,5 +1,11 @@
 import { Flex, Tabs } from '@radix-ui/themes';
-import { FileLogoTitle, PresetsTabs, Tab, Warning } from '@/src/components';
+import {
+  FileLogoTitle,
+  LoadingToast,
+  PresetsTabs,
+  Tab,
+  Warning,
+} from '@/src/components';
 
 import React, { useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -7,6 +13,7 @@ import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const LeftPane = () => {
   const {
@@ -14,7 +21,10 @@ const LeftPane = () => {
     selectedInferenceSettingId,
     editedProcessingConfigurations,
   } = useGlobalState();
-  const processingConfigurationsValue = processingConfigurations.get();
+  const processingConfigurationsFetchState = processingConfigurations.get();
+  const processingConfigurationsValue = getResponseIfSuccesful(
+    processingConfigurationsFetchState,
+  )?.processing_configurations;
 
   const editedProcessingConfigurationsValue =
     editedProcessingConfigurations.get();
@@ -78,7 +88,15 @@ const LeftPane = () => {
       .inferences as Tab['inferences'], // TODO: fix this!
   }));
 
-  return tabs?.length === 0 ? (
+  if (processingConfigurationsFetchState?.status === 'loading') {
+    return (
+      <div className="center">
+        <LoadingToast message="Loading processing configurations..." />
+      </div>
+    );
+  }
+
+  return processingConfigurationsFetchState?.status === 'error' ? (
     <Warning message="No processing configuration found." />
   ) : (
     <Tabs.Root defaultValue={tabs[0]?.id} orientation="horizontal">

@@ -3,6 +3,7 @@ import { hookstate, useHookstate } from '@hookstate/core';
 import { devtools } from '@hookstate/devtools';
 import {
   GetFilesListResponse,
+  GetProcessingConfigurationResponse,
   GetProjectResponse,
   InferenceModelDict,
   ProcessingConfiguration,
@@ -17,7 +18,7 @@ type GlobalState = {
     userName?: string;
     localCacheSizeLimitInGB?: number;
   };
-  processingConfigurations?: ProcessingConfiguration;
+  processingConfigurations?: GetProcessingConfigurationResponse;
   editedProcessingConfigurations?: ProcessingConfiguration;
   inferenceModelDictionary?: InferenceModelDict;
   selectedInferenceSettingId?: string;

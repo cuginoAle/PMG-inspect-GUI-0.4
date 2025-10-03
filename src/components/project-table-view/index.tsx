@@ -196,6 +196,11 @@ const ProjectTableView = ({
                   key={row.id}
                   id={getRowId(row.original)}
                   tabIndex={0}
+                  style={{
+                    contentVisibility: 'auto',
+                    containIntrinsicSize: 'auto 40px',
+                    cursor: 'pointer',
+                  }}
                   className={row.getIsSelected() ? styles.selected : ''}
                   onMouseEnter={() => {
                     onMouseOver?.(row.original);
@@ -216,7 +221,6 @@ const ProjectTableView = ({
                       onRowSelect?.(row.original);
                     }
                   }}
-                  style={{ cursor: 'pointer' }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <Table.Cell key={cell.id}>

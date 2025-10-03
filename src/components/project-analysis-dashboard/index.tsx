@@ -39,8 +39,6 @@ const ProjectAnalysisDashboard = ({
 
   const formId = `project-analysis-dashboard-form-${setting.id}`;
 
-  console.log('inferenceModelDictionary', inferenceModelDictionary.get());
-
   return project?.project_name ? (
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>

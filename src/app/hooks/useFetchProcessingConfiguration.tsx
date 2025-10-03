@@ -8,7 +8,7 @@ const useFetchProcessingConfiguration = () => {
 
   React.useEffect(() => {
     let cancelled = false;
-
+    setSettings({ status: 'loading' });
     fetchProcessingConfiguration()
       .then((response) => {
         if (!cancelled) {
