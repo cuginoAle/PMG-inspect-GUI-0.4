@@ -16,29 +16,16 @@ import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const LeftPane = () => {
-  const {
-    processingConfigurations,
-    selectedInferenceSettingId,
-    editedProcessingConfigurations,
-  } = useGlobalState();
+  const { processingConfigurations, selectedInferenceSettingId } =
+    useGlobalState();
   const processingConfigurationsFetchState = processingConfigurations.get();
   const processingConfigurationsValue = getResponseIfSuccesful(
     processingConfigurationsFetchState,
   )?.processing_configurations;
 
-  const editedProcessingConfigurationsValue =
-    editedProcessingConfigurations.get();
-
   const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
 
-  // const [tabs, setTabs] = React.useState<Tab[]>(
-  //   Object.keys(processingConfigurationsValue || {}).map((key: string) => ({
-  //     id: key,
-  //     label: processingConfigurationsValue![key]!.label,
-  //     hasUnsavedChanges: false,
-  //     values: processingConfigurationsValue![key]!.inferences,
-  //   })),
-  // );
+  const [tabs, setTabs] = React.useState<Tab[]>([]);
 
   useEffect(() => {
     const firstTabId = processingConfigurationsValue
@@ -55,40 +42,44 @@ const LeftPane = () => {
   const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
   const handleOnChange = (tabId: string) => {
-    if (!editedProcessingConfigurationsValue) return;
-    const tab = Object.keys(editedProcessingConfigurationsValue).find(
-      (t) => t === tabId,
+    const prevTab = tabs.find((tab) => tab.id === tabId);
+    if (!prevTab) return;
+    if (prevTab.hasUnsavedChanges) return; // no need to update if already has unsaved changes
+    const newTab = { ...prevTab, hasUnsavedChanges: true };
+    setTabs((prevTabs) =>
+      prevTabs.map((tab) => (tab.id === tabId ? newTab : tab)),
     );
-    if (!tab) return;
-
-    //TODO: handleOnChange shoudl return the whole configuration value
-    // and here we just update the editedProcessingConfigurationsValue
-
-    // setTabs((prevTabs) =>
-    //   prevTabs.map((tab) => ({
-    //     ...tab,
-    //     hasUnsavedChanges: tab.id === tabId ? true : tab.hasUnsavedChanges,
-    //   })),
-    // );
   };
 
   const handleOnReset = (tabId: string) => {
-    // setTabs((prevTabs) =>
-    //   prevTabs.map((tab) => ({
-    //     ...tab,
-    //     hasUnsavedChanges: tab.id === tabId ? false : tab.hasUnsavedChanges,
-    //   })),
-    // );
+    setTabs((prevTabs) =>
+      prevTabs.map((tab) => ({
+        ...tab,
+        hasUnsavedChanges: tab.id === tabId ? false : tab.hasUnsavedChanges,
+      })),
+    );
   };
 
-  const tabs = Object.keys(processingConfigurationsValue || {}).map((key) => ({
-    id: key,
-    label: processingConfigurationsValue![key]!.label,
-    inferences: processingConfigurationsValue![key]!
-      .inferences as Tab['inferences'], // TODO: fix this!
-  }));
+  useEffect(() => {
+    if (processingConfigurationsFetchState?.status !== 'ok') return;
+    const newTabs: Tab[] = Object.keys(processingConfigurationsValue || {}).map(
+      (key) => ({
+        id: key,
+        label: processingConfigurationsValue![key]!.label,
+        hasUnsavedChanges: false,
+        inferences: processingConfigurationsValue![key]!
+          .inferences as Tab['inferences'], // TODO: fix this!
+      }),
+    );
 
-  if (processingConfigurationsFetchState?.status === 'loading') {
+    setTabs(newTabs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [processingConfigurationsFetchState?.status]);
+
+  if (
+    processingConfigurationsFetchState?.status === 'loading' ||
+    tabs.length === 0
+  ) {
     return (
       <div className="center">
         <LoadingToast message="Loading processing configurations..." />
