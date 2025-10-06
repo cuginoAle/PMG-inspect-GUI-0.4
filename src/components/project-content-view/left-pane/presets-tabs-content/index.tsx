@@ -7,6 +7,7 @@ import React from 'react';
 import styles from './style.module.css';
 import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
 import { useGlobalState } from '@/src/app/global-state';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 type PresetsTabsContentProps = {
   tabs: Tab[];
@@ -22,7 +23,9 @@ const PresetsTabsContent = ({
 }: PresetsTabsContentProps) => {
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
-  const { selectedVideoUrlList, selectedInferenceSettingId } = useGlobalState();
+  const { selectedVideoUrlList, selectedInferenceSettingId, selectedProject } =
+    useGlobalState();
+  const selectedProjectValue = getResponseIfSuccesful(selectedProject.get());
   const selectedVideoUrlListValue = selectedVideoUrlList.get();
   const selectedInferenceSettingIdValue =
     selectedInferenceSettingId.get() || '';
@@ -30,7 +33,7 @@ const PresetsTabsContent = ({
   const selectedVideos =
     selectedVideoUrlListValue?.[selectedInferenceSettingIdValue] || [];
 
-  const [tableExpanded, setTableExpanded] = React.useState(false);
+  const [tableExpanded, setTableExpanded] = React.useState(true);
 
   return (
     <>
@@ -70,18 +73,20 @@ const PresetsTabsContent = ({
                 )}
                 <ProjectTableViewContainer />
 
-                <Flex justify={'center'}>
-                  <Button
-                    className={styles.runAnalysisButton}
-                    type="button"
-                    size={'3'}
-                    color="blue"
-                    variant="soft"
-                    disabled={selectedVideos.length === 0}
-                  >
-                    <RocketIcon /> Run analysis
-                  </Button>
-                </Flex>
+                {selectedProjectValue?.project_items.length && (
+                  <Flex justify={'center'}>
+                    <Button
+                      className={styles.runAnalysisButton}
+                      type="button"
+                      size={'3'}
+                      color="blue"
+                      variant="soft"
+                      disabled={selectedVideos.length === 0}
+                    >
+                      <RocketIcon /> Run analysis
+                    </Button>
+                  </Flex>
+                )}
               </div>
             </Flex>
           </Tabs.Content>

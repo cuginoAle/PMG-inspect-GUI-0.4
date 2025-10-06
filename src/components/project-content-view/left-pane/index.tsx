@@ -2,6 +2,7 @@ import { Flex, Tabs } from '@radix-ui/themes';
 import {
   FileLogoTitle,
   LoadingToast,
+  NoProjectSelected,
   PresetsTabs,
   Tab,
   Warning,
@@ -16,14 +17,18 @@ import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const LeftPane = () => {
-  const { processingConfigurations, selectedInferenceSettingId } =
-    useGlobalState();
+  const {
+    processingConfigurations,
+    selectedInferenceSettingId,
+    selectedProject,
+  } = useGlobalState();
   const processingConfigurationsFetchState = processingConfigurations.get();
   const processingConfigurationsValue = getResponseIfSuccesful(
     processingConfigurationsFetchState,
   )?.processing_configurations;
 
   const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
+  const selectedInferenceSettingIdValue = selectedInferenceSettingId.get();
 
   const [tabs, setTabs] = React.useState<Tab[]>([]);
 
@@ -32,8 +37,14 @@ const LeftPane = () => {
       ? Object.keys(processingConfigurationsValue)[0]
       : undefined;
 
-    selectedInferenceSettingIdSetter(firstTabId);
-  }, [selectedInferenceSettingIdSetter, processingConfigurationsValue]);
+    selectedInferenceSettingIdSetter(
+      selectedInferenceSettingIdValue || firstTabId, // THIS FEELS A BIT HACKY! the effect should not re-run
+    );
+  }, [
+    processingConfigurationsValue,
+    selectedInferenceSettingIdValue,
+    selectedInferenceSettingIdSetter,
+  ]);
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -85,6 +96,10 @@ const LeftPane = () => {
         <LoadingToast message="Loading processing configurations..." />
       </div>
     );
+  }
+
+  if (!selectedProject.get()) {
+    return <NoProjectSelected />;
   }
 
   return processingConfigurationsFetchState?.status === 'error' ? (

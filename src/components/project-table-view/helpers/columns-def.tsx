@@ -9,7 +9,6 @@ import {
 import { PciScoreBox, NeuralNetworkIcon, DownloadIcon } from '@/src/components';
 
 const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
-  // downloading: <DownloadIcon width={18} height={18} className="blinking" />,
   downloading: <DownloadIcon size={1.8} className="downloading" />,
   parsing: <UpdateIcon width={18} height={18} className="spinning" />,
   ready: <CheckCircledIcon width={18} height={18} />,
@@ -32,6 +31,14 @@ const statusTitleMap: Record<ProjectParsingState, string> = {
   parsing_error: 'Parsing error',
   ready: 'Ready',
 };
+
+const dummyVideoStatuses: ProjectParsingState[] = [
+  'download_error',
+  'ready',
+  'parsing',
+  'parsing_error',
+  'downloading',
+];
 
 const columnHelper = createColumnHelper<ProjectItem>();
 
@@ -92,7 +99,7 @@ const columnsDef = [
     ),
     cell: (info) => {
       const value =
-        info.cell.row.index === 1
+        info.cell.row.index == 1
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
@@ -130,7 +137,7 @@ const columnsDef = [
       const index = info.row.index;
       const color = index > 2 ? 'green' : index > 1 ? 'red' : 'yellow';
       const value =
-        info.cell.row.index === 1
+        info.cell.row.index <= 1
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
@@ -154,19 +161,20 @@ const columnsDef = [
       // const status = info.getValue() as ProjectParsingState;
 
       // TODO: replace with the value above ⬆︎
-      const keys = Object.keys(parsingMap);
-      const status = keys[Math.round(Math.random() * 4)] as ProjectParsingState;
-
-      const color = statusColorsMap[status];
+      // const keys = Object.keys(parsingMap);
+      // const status = keys[Math.round(Math.random() * 4)] as ProjectParsingState;
+      const status =
+        dummyVideoStatuses[info.row.index % dummyVideoStatuses.length];
+      const color = statusColorsMap[status!];
 
       return (
         <Text
           as="p"
           align={'center'}
           color={color}
-          title={statusTitleMap[status]}
+          title={statusTitleMap[status!]}
         >
-          {parsingMap[status]}
+          {parsingMap[status!]}
         </Text>
       );
     },

@@ -126,7 +126,8 @@ const ProjectTableView = ({
         const selectedValues = formData.getAll('selected') as string[];
 
         setSelectAllChecked(
-          selectedValues.length === table.getRowModel().rows.length,
+          selectedValues.length > 0 &&
+            selectedValues.length === table.getRowModel().rows.length,
         );
         onChange?.(selectedValues);
       }}

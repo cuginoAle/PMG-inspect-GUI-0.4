@@ -13,6 +13,7 @@ const scrollChildIntoView = ({
   direction = 'horizontal',
   behavior = 'smooth',
 }: Props) => {
+  if (!container || !child) return;
   const containerRect = container.getBoundingClientRect();
   const childRect = child.getBoundingClientRect();
 
