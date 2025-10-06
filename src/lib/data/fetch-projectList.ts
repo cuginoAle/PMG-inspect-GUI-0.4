@@ -1,12 +1,10 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { GetFilesListResponse } from '@/src/types';
+import { FileInfo } from '@/src/types';
 
-async function fetchProjectList(
-  relativePath?: string,
-): Promise<GetFilesListResponse> {
+async function fetchProjectList(relativePath?: string): Promise<FileInfo[]> {
   const queryParam = new URLSearchParams();
   if (relativePath) {
-    queryParam.append('relative_path', relativePath);
+    queryParam.append('folder_relative_path', relativePath);
   }
 
   const fullUrl =
@@ -14,24 +12,20 @@ async function fetchProjectList(
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
   return new Promise((resolve, reject) => {
-    fetch(fullUrl)
+    return fetch(fullUrl)
       .then(async (res) => {
         const body = await res.json();
 
         if (!res.ok) {
-          reject({ code: res.status, status: 'error', detail: body.detail });
+          reject(`${res.status} - ${body.detail.message}`);
         }
 
-        resolve({
-          status: 'ok',
-          detail: body,
-        });
+        resolve(body);
       })
       .catch((error) => {
         reject({
-          status: 'error',
           code: 'NetworkError',
-          detail: { message: error.message },
+          detail: error.message,
         });
       });
   });

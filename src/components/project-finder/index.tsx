@@ -1,27 +1,37 @@
 'use client';
-import { SplitView, ProjectContentView } from '@/src/components';
+import { SplitView, Warning } from '@/src/components';
 
 import styles from './style.module.css';
-import { ProjectsTreeViewContainer } from '@/src/containers/projects-tree-view-container';
+import { ReactNode } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-const Left = ({ projectPath }: { projectPath?: string }) => (
-  <div className={styles.leftView}>
-    <ProjectsTreeViewContainer projectPath={projectPath} />
-  </div>
-);
-
-const Right = () => (
-  <div className={styles.rightView}>
-    <ProjectContentView />
-  </div>
-);
-
-const ProjectFinder = ({ projectPath }: { projectPath?: string }) => {
+const ProjectFinder = ({
+  left,
+  right,
+}: {
+  left: ReactNode;
+  right: ReactNode;
+}) => {
   return (
     <SplitView
       name="project-finder-split-view"
-      left={<Left projectPath={projectPath} />}
-      right={<Right />}
+      left={
+        <div className={styles.leftView}>
+          <ErrorBoundary
+            fallbackRender={({ error }) => (
+              <div className="center">
+                <Warning
+                  title="Failed to load projects"
+                  message={error.message}
+                />
+              </div>
+            )}
+          >
+            {left}
+          </ErrorBoundary>
+        </div>
+      }
+      right={<div className={styles.rightView}>{right}</div>}
     />
   );
 };
