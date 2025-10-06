@@ -10,7 +10,6 @@ const useFetchProjectList = () => {
   React.useEffect(() => {
     let cancelled = false;
 
-    setProjects({ status: 'loading' });
     fetchProjectList()
       .then((response) => {
         if (cancelled) return;

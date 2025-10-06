@@ -6,35 +6,50 @@ async function fetchProjectList(
 ): Promise<GetFilesListResponse> {
   const queryParam = new URLSearchParams();
   if (relativePath) {
-    queryParam.append('relative_path', relativePath);
+    queryParam.append('folder_relative_path', relativePath);
   }
 
   const fullUrl =
     ENDPOINT.PROJECT.LIST +
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
-  return new Promise((resolve, reject) => {
-    fetch(fullUrl)
-      .then(async (res) => {
-        const body = await res.json();
+  console.log('fullUrl', fullUrl);
+  return fetch(fullUrl).then(async (res) => {
+    const body = await res.json();
 
-        if (!res.ok) {
-          reject({ code: res.status, status: 'error', detail: body.detail });
-        }
+    if (!res.ok) {
+      throw {
+        code: res.status,
+        status: 'error',
+        detail: body.detail?.message || res.statusText,
+      };
+    }
 
-        resolve({
-          status: 'ok',
-          detail: body,
-        });
-      })
-      .catch((error) => {
-        reject({
-          status: 'error',
-          code: 'NetworkError',
-          detail: { message: error.message },
-        });
-      });
+    return body;
   });
+  // return new Promise((resolve, reject) =>
+  //   fetch(fullUrl)
+  //     .then(async (res) => {
+  //       const body = await res.json();
+
+  //       if (!res.ok) {
+  //         reject({
+  //           code: res.status,
+  //           status: 'error',
+  //           detail: body.detail.message,
+  //         });
+  //       }
+
+  //       resolve(body);
+  //     })
+  //     .catch((error) => {
+  //       reject({
+  //         status: 'error',
+  //         code: 'NetworkError',
+  //         detail: error.message,
+  //       });
+  //     }),
+  // );
 }
 
 export { fetchProjectList };

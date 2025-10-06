@@ -1,36 +1,43 @@
-import { useGlobalState } from '@/src/app/global-state';
-import { Warning, ProjectsTreeView, LoadingToast } from '@/src/components';
+'use server';
+import { LoadingToast, ProjectsTreeView, Warning } from '@/src/components';
+import { fetchProjectList } from '@/src/lib/data/fetch-projectList';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-const ProjectsTreeViewContainer = ({
-  projectPath,
-}: {
-  projectPath?: string;
-}) => {
-  const { filesList } = useGlobalState();
-  const projects = filesList.get();
+const ProjectsTreeViewContainer = () => {
+  // const { filesList } = useGlobalState();
+  // const searchParams = useSearchParams();
+  // const headerList = await headers();
 
-  if (!projects) {
-    return null;
-  }
+  // const url = new URLSearchParams(headerList.get('x-current-url') || '');
+  // const pathname = searchParams.get('path') || '';
+  const projects = fetchProjectList();
 
-  if (projects?.status === 'loading') {
-    return (
-      <div className="center">
-        <LoadingToast message="Loading projects..." />
-      </div>
-    );
-  }
-
-  if (projects?.status === 'error') {
-    return (
-      <div className="center">
-        <Warning message={projects.detail.message} />
-      </div>
-    );
-  }
+  // projects.then((projects) => filesList.set(projects));
 
   return (
-    <ProjectsTreeView files={projects.detail} selectedPath={projectPath} />
+    <ErrorBoundary
+      fallback={<Warning message="Failed to load projects" title="Error" />}
+      // fallbackRender={({ error }) => (
+      //   <Warning
+      //     message={`Failed to load projects: ${error.code} - ${error.detail}`}
+      //     title="Error"
+      //   />
+      // )}
+    >
+      <Suspense
+        fallback={
+          <div className="center">
+            <LoadingToast message="Loading projects..." />
+          </div>
+        }
+      >
+        <ProjectsTreeView
+          filesPromise={projects}
+          selectedPath={'test%2Fground_truthdata_heath_small.xlsx'}
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

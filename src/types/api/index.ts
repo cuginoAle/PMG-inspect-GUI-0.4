@@ -35,10 +35,7 @@ type GpsData = components['schemas']['GpsPoint'];
 
 type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
 
-type GetFilesListResponse =
-  | { status: 'ok'; detail: Array<FileInfo> }
-  | FetchError
-  | LoadingState;
+type GetFilesListResponse = Array<FileInfo>;
 type GetProjectResponse =
   | { status: 'ok'; detail: Project }
   | FetchError

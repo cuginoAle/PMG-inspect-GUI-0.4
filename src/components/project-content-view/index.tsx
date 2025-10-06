@@ -2,13 +2,12 @@
 import { SplitView } from '@/src/components';
 
 import styles from './style.module.css';
-import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
 import { Flex } from '@radix-ui/themes';
-import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
-import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 import React from 'react';
-import { LeftPane } from './left-pane';
+import { ProjectMapContainer } from '@/src/containers/project-map-container';
+import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
+import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
 
 const ProjectContentView = () => {
   return (
@@ -18,11 +17,7 @@ const ProjectContentView = () => {
         leftMinSize={500}
         rightMinSize={100}
         proportionalLayout={true}
-        left={
-          <div className={styles.leftPane}>
-            <LeftPane />
-          </div>
-        }
+        left={<div className={styles.leftPane}>{/* <LeftPane /> */}</div>}
         right={
           <div className={styles.rightPane}>
             <Flex direction="column" gap={'4'}>

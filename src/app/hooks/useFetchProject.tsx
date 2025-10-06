@@ -31,7 +31,7 @@ const useFetchProject = (projectPath?: string | null) => {
       if (cancelled) return;
       setProject({ status: 'loading' });
 
-      fetchProjectDetails(projectPath)
+      return fetchProjectDetails(projectPath)
         .then((data) => {
           Cache.set('projectDetails', projectPath, data);
           if (!cancelled) setProject(data);

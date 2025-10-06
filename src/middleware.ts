@@ -93,9 +93,12 @@ export function middleware(request: NextRequest) {
     resetAttempts(clientKey);
   }
 
-  const response = NextResponse.next();
+  // // Add a new header x-current-path which passes the path to downstream components
+  // const headers = new Headers(request.headers);
 
-  return response;
+  // headers.set('x-current-url', request.nextUrl.search);
+  // return NextResponse.next({ headers });
+  return NextResponse.next();
 }
 
 export const config = {

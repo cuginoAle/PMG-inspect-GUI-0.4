@@ -1,29 +1,17 @@
 'use client';
-import { SplitView, ProjectContentView } from '@/src/components';
+import { SplitView } from '@/src/components';
 
-import styles from './style.module.css';
-import { ProjectsTreeViewContainer } from '@/src/containers/projects-tree-view-container';
-
-const Left = ({ projectPath }: { projectPath?: string }) => (
-  <div className={styles.leftView}>
-    <ProjectsTreeViewContainer projectPath={projectPath} />
-  </div>
-);
-
-const Right = () => (
-  <div className={styles.rightView}>
-    <ProjectContentView />
-  </div>
-);
-
-const ProjectFinder = ({ projectPath }: { projectPath?: string }) => {
+const ProjectFinder = ({
+  left,
+  right,
+}: {
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+}) => {
   return (
-    <SplitView
-      name="project-finder-split-view"
-      left={<Left projectPath={projectPath} />}
-      right={<Right />}
-    />
+    <SplitView name="project-finder-split-view" left={left} right={right} />
   );
 };
 
 export { ProjectFinder };
+export * from './views';
