@@ -9,10 +9,10 @@ import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
 import { Immutable, ImmutableObject } from '@hookstate/core';
+import { useSearchParams } from 'next/navigation';
 
 type ProjectsTreeViewProps = {
   filesPromise: Promise<FileInfo[]>;
-  selectedPath?: string;
 };
 
 // Feature flag (compile-time) to enable top-level Remote/Local grouping nodes in the tree
@@ -31,10 +31,9 @@ type TreeNode = typeof enableRemoteAndLocalNodes extends true
   ? RemoteLocalNode
   : ImmutableObject<FileInfo>;
 
-const ProjectsTreeView = ({
-  filesPromise,
-  selectedPath,
-}: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ filesPromise }: ProjectsTreeViewProps) => {
+  const selectedPath = useSearchParams().get('path') || undefined;
+
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
   const files = use(filesPromise);

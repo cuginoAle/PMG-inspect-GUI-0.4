@@ -1,15 +1,8 @@
 import { LoadingToast, ProjectsTreeView } from '@/src/components';
 import { fetchProjectList } from '@/src/lib/data/fetch-projectList';
-import { PageSearchParams } from '@/src/types';
 import { Suspense } from 'react';
 
-const ProjectsTreeViewContainer = async ({
-  searchParams,
-}: {
-  searchParams: PageSearchParams;
-}) => {
-  const { path: pathSP } = await searchParams;
-  const projectPath = Array.isArray(pathSP) ? pathSP[0] : pathSP || undefined;
+const ProjectsTreeViewContainer = async () => {
   const projects = fetchProjectList();
 
   return (
@@ -20,7 +13,7 @@ const ProjectsTreeViewContainer = async ({
         </div>
       }
     >
-      <ProjectsTreeView filesPromise={projects} selectedPath={projectPath} />
+      <ProjectsTreeView filesPromise={projects} />
     </Suspense>
   );
 };

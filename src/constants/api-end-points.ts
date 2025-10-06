@@ -6,6 +6,7 @@ const DIRECT_API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8088';
 // Heuristic: if we're in the browser, use the proxy prefix unless explicit opt-out flag present on window.
 // (We defensively check typeof window.)
+
 const USING_BROWSER = typeof window !== 'undefined';
 const USE_DIRECT =
   USING_BROWSER && (window as any).__API_DIRECT__ === true

@@ -1,3 +1,4 @@
+'use client';
 import { Flex, Tabs } from '@radix-ui/themes';
 import {
   FileLogoTitle,
@@ -16,7 +17,7 @@ import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
-const LeftPane = () => {
+const MainContentPane = () => {
   const {
     processingConfigurations,
     selectedInferenceSettingId,
@@ -137,4 +138,4 @@ const LeftPane = () => {
   );
 };
 
-export { LeftPane };
+export { MainContentPane };

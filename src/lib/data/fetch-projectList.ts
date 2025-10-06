@@ -23,10 +23,7 @@ async function fetchProjectList(relativePath?: string): Promise<FileInfo[]> {
         resolve(body);
       })
       .catch((error) => {
-        reject({
-          code: 'NetworkError',
-          detail: error.message,
-        });
+        reject(`NetworkError - ${error.message}`);
       });
   });
 }
