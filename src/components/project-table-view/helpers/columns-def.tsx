@@ -137,7 +137,7 @@ const columnsDef = [
       const index = info.row.index;
       const color = index > 2 ? 'green' : index > 1 ? 'red' : 'yellow';
       const value =
-        info.cell.row.index <= 1
+        info.cell.row.index === 1
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
@@ -156,7 +156,7 @@ const columnsDef = [
 
   columnHelper.accessor((row) => row.parsing_status, {
     id: 'parsing_status',
-    header: () => <span style={{ margin: 'auto' }}>Status</span>,
+    header: () => <span style={{ margin: 'auto' }}>State</span>,
     cell: (info) => {
       // const status = info.getValue() as ProjectParsingState;
 
