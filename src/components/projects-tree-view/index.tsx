@@ -2,18 +2,17 @@
 import { Tree, TreeApi } from 'react-arborist';
 import { TreeViewNode } from './tree-view-node';
 import { Button, Flex, TextField } from '@radix-ui/themes';
-// Toggle to enable top-level Remote/Local grouping nodes in the tree
-// When grouping is enabled, top-level nodes wrap the FileInfo[] in `content`
+
 import { MagnifyingGlassIcon, UploadIcon } from '@radix-ui/react-icons';
-import React, { useCallback } from 'react';
+import React, { use, useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
 import { Immutable, ImmutableObject } from '@hookstate/core';
+import { useSearchParams } from 'next/navigation';
 
 type ProjectsTreeViewProps = {
-  files: Immutable<FileInfo[]>;
-  selectedPath?: string;
+  filesPromise: Promise<FileInfo[]>;
 };
 
 // Feature flag (compile-time) to enable top-level Remote/Local grouping nodes in the tree
@@ -32,9 +31,12 @@ type TreeNode = typeof enableRemoteAndLocalNodes extends true
   ? RemoteLocalNode
   : ImmutableObject<FileInfo>;
 
-const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ filesPromise }: ProjectsTreeViewProps) => {
+  const selectedPath = useSearchParams().get('path') || undefined;
+
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
+  const files = use(filesPromise);
 
   const treeRef = React.useRef<TreeApi<TreeNode> | undefined>(undefined);
 

@@ -8,9 +8,12 @@ import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-me
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 import React from 'react';
-import { LeftPane } from './left-pane';
 
-const ProjectContentView = () => {
+const ProjectContentView = ({
+  mainContent,
+}: {
+  mainContent: React.ReactNode;
+}) => {
   return (
     <div className={styles.root}>
       <SplitView
@@ -18,11 +21,7 @@ const ProjectContentView = () => {
         leftMinSize={500}
         rightMinSize={100}
         proportionalLayout={true}
-        left={
-          <div className={styles.leftPane}>
-            <LeftPane />
-          </div>
-        }
+        left={<div className={styles.leftPane}>{mainContent}</div>}
         right={
           <div className={styles.rightPane}>
             <Flex direction="column" gap={'4'}>

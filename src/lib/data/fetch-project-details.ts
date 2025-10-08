@@ -1,44 +1,27 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError, GetProjectResponse } from '@/src/types';
+import { Project } from '@/src/types';
 
-async function fetchProjectDetails(
-  path?: string,
-): Promise<GetProjectResponse | undefined> {
-  if (!path) {
-    return Promise.resolve(undefined);
-  }
-
+async function fetchProjectDetails(path: string): Promise<Project> {
   // building the query string
   const sp = new URLSearchParams();
   sp.append('project_relative_path', path);
 
   const fullUrl = `${ENDPOINT.PROJECT.DETAILS}?${sp.toString()}`;
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) =>
     fetch(fullUrl)
       .then(async (res) => {
         const body = await res.json();
         if (!res.ok) {
-          reject({
-            status: 'error',
-            code: res.status.toString(),
-            detail: { message: res.statusText },
-          } as FetchError);
+          reject(`${res.status} - ${body.detail.message}`);
         }
 
-        resolve({
-          status: 'ok',
-          detail: body,
-        });
+        resolve(body);
       })
       .catch((error) => {
-        reject({
-          status: 'error',
-          code: error.status,
-          detail: { message: error.message },
-        } as FetchError);
-      });
-  });
+        reject(`NetworkError - ${error.message}`);
+      }),
+  );
 }
 
 export { fetchProjectDetails };
