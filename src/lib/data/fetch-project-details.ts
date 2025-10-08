@@ -1,5 +1,5 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError, Project } from '@/src/types';
+import { Project } from '@/src/types';
 
 async function fetchProjectDetails(path: string): Promise<Project> {
   // building the query string
@@ -19,11 +19,7 @@ async function fetchProjectDetails(path: string): Promise<Project> {
         resolve(body);
       })
       .catch((error) => {
-        reject({
-          status: 'error',
-          code: error.status,
-          detail: { message: error.message },
-        } as FetchError);
+        reject(`NetworkError - ${error.message}`);
       }),
   );
 }

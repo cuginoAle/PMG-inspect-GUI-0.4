@@ -11,8 +11,8 @@ async function fetchProjectList(relativePath?: string): Promise<FileInfo[]> {
     ENDPOINT.PROJECT.LIST +
     (queryParam.toString() ? '?' + queryParam.toString() : '');
 
-  return new Promise((resolve, reject) => {
-    return fetch(fullUrl)
+  return new Promise((resolve, reject) =>
+    fetch(fullUrl)
       .then(async (res) => {
         const body = await res.json();
 
@@ -24,8 +24,8 @@ async function fetchProjectList(relativePath?: string): Promise<FileInfo[]> {
       })
       .catch((error) => {
         reject(`NetworkError - ${error.message}`);
-      });
-  });
+      }),
+  );
 }
 
 export { fetchProjectList };

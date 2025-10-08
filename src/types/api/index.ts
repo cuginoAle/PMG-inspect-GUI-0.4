@@ -43,17 +43,10 @@ type GetProjectResponse =
   | { status: 'ok'; detail: Project }
   | FetchError
   | LoadingState;
-type GetProcessingConfigurationResponse =
-  | {
-      status: 'ok';
-      detail: {
-        processing_configurations: ProcessingConfiguration;
-        inference_model_ids: InferenceModelDict; // Maybe this prop could be renamed to inference_model_dictionary
-      };
-    }
-  | FetchError
-  | LoadingState;
-
+type GetProcessingConfigurationResponse = {
+  processing_configurations: ProcessingConfiguration;
+  inference_model_ids: InferenceModelDict; // Maybe this prop could be renamed to inference_model_dictionary
+};
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
 export type {

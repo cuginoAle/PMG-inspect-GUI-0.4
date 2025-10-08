@@ -17,6 +17,8 @@ const ProjectContentContainer = async ({
 
   const project = fetchProjectDetails(projectPath);
 
+  //TODO: pass project to MainContentPane when ready
+
   return <ProjectContentView mainContent={<MainContentPane />} />;
 };
 
