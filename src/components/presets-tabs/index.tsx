@@ -3,28 +3,40 @@ import { IconButton, Tabs } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { ThreeVertDots } from '@/src/components/custom-icons';
 import classNames from 'classnames';
-import { Inference, InferenceTypes } from '@/src/types';
+import { DummyAnalysisResult } from '@/src/types';
 
 type Tab = {
   id: string;
   label: string;
-  hasUnsavedChanges?: boolean;
-  inferences: Record<InferenceTypes, Inference>; // TODO: this should come from OpenApi
+  inferences: DummyAnalysisResult['setting_details'];
 };
 type PresetsTabsProps = {
-  tabs: Tab[];
+  data?: DummyAnalysisResult[];
   onMenuClick?: (tabId: string) => void;
   onTabClick?: (tabId: string) => void;
+  unsavedTabIds?: string[];
 };
 
-const PresetsTabs = ({ tabs, onMenuClick, onTabClick }: PresetsTabsProps) => {
+const PresetsTabs = ({
+  data,
+  onMenuClick,
+  onTabClick,
+  unsavedTabIds,
+}: PresetsTabsProps) => {
+  const tabs: Tab[] =
+    data?.map((item) => ({
+      id: item.setting_id,
+      label: item.setting_label,
+      hasUnsavedChanges: false,
+      inferences: item.setting_details,
+    })) || [];
   if (!tabs || tabs.length === 0) return null;
 
   return (
     <Tabs.List size="2">
       {tabs.map((tab) => {
         const tabCn = classNames(styles.tabWrapper, {
-          [styles.unsavedChanges]: tab.hasUnsavedChanges,
+          [styles.unsavedChanges]: unsavedTabIds?.includes(tab.id),
         });
         return (
           <div key={tab.id} className={tabCn}>

@@ -1,11 +1,10 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
 import { ProjectTableView } from '@/src/components/project-table-view';
-import { LoadingToast } from '@/src/components/loading-toast';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
-import { Warning } from '@/src/components/warning';
 import { ProjectItem } from '@/src/types';
 import { useCallback } from 'react';
+import { MySuspense } from '@/src/components/my-suspense';
 
 const ProjectTableViewContainer = () => {
   const {
@@ -41,28 +40,20 @@ const ProjectTableViewContainer = () => {
     return <NoProjectSelected />;
   }
 
-  if (project.status === 'loading') {
-    return (
-      <div className="center">
-        <LoadingToast size="small" message="Loading project..." />
-      </div>
-    );
-  }
-
-  if (project.status === 'error') {
-    return (
-      <div className="center">
-        <Warning message={`${project.code}: ${project.detail.message}`} />
-      </div>
-    );
-  }
-
   return (
-    <ProjectTableView
-      project={project.detail}
-      onMouseOver={setHoveredVideoUrl}
-      onChange={onSelectedVideoChange}
-    />
+    <MySuspense
+      data={project}
+      loadingSize="large"
+      loadingMessage="Loading project..."
+    >
+      {(data) => (
+        <ProjectTableView
+          project={data}
+          onMouseOver={setHoveredVideoUrl}
+          onChange={onSelectedVideoChange}
+        />
+      )}
+    </MySuspense>
   );
 };
 

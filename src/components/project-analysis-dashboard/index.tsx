@@ -2,13 +2,13 @@
 import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import { InferenceTypes, Project, ResponseType } from '@/src/types';
 import {
-  NetworkSettings,
-  PresetsDropDown,
-  Slider,
-  Tab,
-} from '@/src/components';
+  DummyAnalysisResult,
+  InferenceTypes,
+  Project,
+  ResponseType,
+} from '@/src/types';
+import { NetworkSettings, PresetsDropDown, Slider } from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
 
 import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
@@ -16,7 +16,7 @@ import styles from './style.module.css';
 import React from 'react';
 
 type ProjectAnalysisDashboardProps = {
-  setting: Tab;
+  setting: DummyAnalysisResult;
   className?: string;
   hasUnsavedChanges?: boolean;
   onChange?: (id: string) => void;
@@ -37,7 +37,7 @@ const ProjectAnalysisDashboard = ({
     selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
   );
 
-  const formId = `project-analysis-dashboard-form-${setting.id}`;
+  const formId = `project-analysis-dashboard-form-${setting.setting_id}`;
 
   return project?.project_name ? (
     <div className={className}>
@@ -80,7 +80,7 @@ const ProjectAnalysisDashboard = ({
             onSave?.(new FormData(e.currentTarget));
           }}
           onChange={() => {
-            onChange?.(setting.id);
+            onChange?.(setting.setting_id);
           }}
           onReset={(e: React.FormEvent<HTMLFormElement>) => {
             const form = e.target as HTMLFormElement;
@@ -100,23 +100,25 @@ const ProjectAnalysisDashboard = ({
                   el.dispatchEvent(new Event('change', { bubbles: true }));
                 }
               });
-              onReset?.(setting.id);
+              onReset?.(setting.setting_id);
             }, 10);
           }}
         >
           <div className={styles.networksContainer}>
-            {Object.keys(setting.inferences).map((inferenceId) => (
+            {setting.setting_details.map((network) => (
               <NetworkSettings
-                key={inferenceId}
-                name={inferenceId}
-                inference={
-                  setting.inferences[
-                    inferenceId as keyof typeof setting.inferences
-                  ]
-                }
+                key={network.inference_model_id}
+                name={network.network_name}
+                inference={{
+                  inference_model_id: network.network_name,
+                  inference_model_parameters: {
+                    confidence: network.inference_model_parameters.confidence,
+                    iou: network.inference_model_parameters.iou,
+                  },
+                }}
                 models={[
                   ...(inferenceModelDictionary.get()?.[
-                    inferenceId as InferenceTypes
+                    network.inference_model_id as InferenceTypes
                   ] || []),
                 ]}
                 // isDefaultEnabled={

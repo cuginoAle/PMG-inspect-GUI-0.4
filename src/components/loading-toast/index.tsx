@@ -1,8 +1,9 @@
+import { sizeType } from '@/src/types';
 import { Flex, Spinner, Text } from '@radix-ui/themes';
 import React from 'react';
 
 const sizeMap: Record<
-  'small' | 'medium' | 'large',
+  sizeType,
   { spinner: '1' | '2' | '3'; text: '3' | '4' | '5'; padding: string }
 > = {
   small: {
@@ -27,7 +28,7 @@ const LoadingToast = ({
   size = 'large',
 }: {
   message: React.ReactNode;
-  size?: 'small' | 'medium' | 'large';
+  size?: sizeType;
 }) => {
   return (
     <Flex

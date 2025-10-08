@@ -56,21 +56,53 @@ type GetProcessingConfigurationResponse =
 
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
+type GetAnalysisResultResponse =
+  // TODO: update with OpenApi spec
+  { status: 'ok'; detail: DummyAnalysisResult[] } | FetchError | LoadingState;
+
+type Network = {
+  // TODO: update with OpenApi spec
+  network_name: string;
+} & Inference;
+
+type DummyAnalysisResult = {
+  // TODO: update with OpenApi spec
+  setting_id: string;
+  setting_label: string;
+
+  setting_details: Array<Network>;
+  frame_rate: {
+    fps?: number;
+    distance?: number;
+  };
+  analysed_video_list: {
+    video_url: string;
+    frames: {
+      index: number;
+      pci_score_value: number | null;
+      pci_score_state: 'ok' | 'error';
+    };
+  };
+};
+
 export type {
   CameraData,
+  DummyAnalysisResult, // TODO: update with OpenApi spec
   FetchError,
   FileInfo,
   FileOrigin,
   FileType,
-  Inference,
-  InferenceTypes,
-  InferenceModelDict,
+  GetAnalysisResultResponse,
   GetFilesListResponse,
   GetProcessingConfigurationResponse,
   GetProjectResponse,
   GpsData,
+  Inference,
+  InferenceModelDict,
+  InferenceTypes,
   LoadingState,
   MediaData,
+  Network, // TODO: update with OpenApi spec
   ProcessingConfiguration,
   Project,
   ProjectItem,

@@ -1,9 +1,9 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError, GetProjectResponse } from '@/src/types';
+import { FetchError, GetAnalysisResultResponse } from '@/src/types';
 
-async function fetchProjectDetails(
+async function fetchAnalysisResults(
   path?: string,
-): Promise<GetProjectResponse | undefined> {
+): Promise<GetAnalysisResultResponse | undefined> {
   if (!path) {
     return undefined;
   }
@@ -12,7 +12,7 @@ async function fetchProjectDetails(
   const sp = new URLSearchParams();
   sp.append('project_relative_path', path);
 
-  const fullUrl = `${ENDPOINT.PROJECT.DETAILS}?${sp.toString()}`;
+  const fullUrl = `${ENDPOINT.PROJECT.ANALYSIS}?${sp.toString()}`;
 
   try {
     const res = await fetch(fullUrl);
@@ -39,4 +39,4 @@ async function fetchProjectDetails(
   }
 }
 
-export { fetchProjectDetails };
+export { fetchAnalysisResults };

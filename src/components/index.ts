@@ -25,3 +25,5 @@ export * from './video-metadata';
 export * from './video-preview';
 export * from './warning';
 export * from './pci-score-box';
+export * from './project-tabbed-view';
+export * from './my-suspense';

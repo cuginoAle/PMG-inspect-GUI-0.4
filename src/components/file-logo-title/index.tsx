@@ -2,8 +2,7 @@ import { Text } from '@radix-ui/themes';
 import { Responsive } from '@radix-ui/themes/props';
 import { FileIcon, FileIconType } from '@/src/components';
 import styles from './style.module.css';
-
-type sizeType = 'small' | 'medium' | 'large';
+import { sizeType } from '@/src/types';
 
 const sizeMap: Record<sizeType, Responsive<'2' | '6' | '7'>> = {
   small: '2',

@@ -1,5 +1,5 @@
 'use client';
-import { SplitView } from '@/src/components';
+import { SplitView, ProjectTabbedView } from '@/src/components';
 
 import styles from './style.module.css';
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
@@ -8,7 +8,6 @@ import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-me
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 import React from 'react';
-import { LeftPane } from './left-pane';
 
 const ProjectContentView = () => {
   return (
@@ -20,7 +19,7 @@ const ProjectContentView = () => {
         proportionalLayout={true}
         left={
           <div className={styles.leftPane}>
-            <LeftPane />
+            <ProjectTabbedView />
           </div>
         }
         right={

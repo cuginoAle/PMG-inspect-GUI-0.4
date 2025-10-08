@@ -1,4 +1,3 @@
-import { Tab } from '@/src/components/presets-tabs';
 import { ProjectAnalysisDashboard } from '@/src/components/project-analysis-dashboard';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 import { Button, Flex, IconButton, Separator, Tabs } from '@radix-ui/themes';
@@ -8,18 +7,22 @@ import styles from './style.module.css';
 import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
 import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
+import { DummyAnalysisResult } from '@/src/types';
+import { Immutable } from '@hookstate/core';
 
 type PresetsTabsContentProps = {
-  tabs: Tab[];
+  data: Immutable<DummyAnalysisResult[]>;
   onChange?: (tabId: string) => void;
   onSave?: (data: FormData) => void;
   onReset?: (tabId: string) => void;
+  unsavedTabIds?: string[];
 };
 const PresetsTabsContent = ({
-  tabs,
+  data,
   onChange,
   onSave,
   onReset,
+  unsavedTabIds,
 }: PresetsTabsContentProps) => {
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -37,17 +40,23 @@ const PresetsTabsContent = ({
 
   return (
     <>
-      {tabs.map((tab) => {
+      {data.map((setting) => {
         return (
-          <Tabs.Content key={tab.id} value={tab.id} forceMount>
+          <Tabs.Content
+            key={setting.setting_id}
+            value={setting.setting_id}
+            forceMount
+          >
             <Flex direction={'column'} gap={'6'} height={'100%'}>
               {!tableExpanded && (
                 <ProjectAnalysisDashboard
-                  setting={tab}
+                  setting={setting as DummyAnalysisResult}
                   onChange={onChange}
                   onSave={onSave}
                   onReset={onReset}
-                  hasUnsavedChanges={tab.hasUnsavedChanges}
+                  hasUnsavedChanges={unsavedTabIds?.includes(
+                    setting.setting_id,
+                  )}
                 />
               )}
 

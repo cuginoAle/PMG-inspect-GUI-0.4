@@ -1,10 +1,11 @@
 import { getPciScoreLabelFromValue } from '@/src/helpers/get-pci-score-label-from-value';
 import styles from './style.module.css';
 import classNames from 'classnames';
+import { sizeType } from '@/src/types';
 
 type PciScoreBoxProps = {
   value?: number;
-  size?: 'small' | 'medium' | 'large';
+  size?: sizeType;
   className?: string;
 };
 

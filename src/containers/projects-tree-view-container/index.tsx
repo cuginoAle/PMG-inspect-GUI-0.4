@@ -1,5 +1,6 @@
 import { useGlobalState } from '@/src/app/global-state';
-import { Warning, ProjectsTreeView, LoadingToast } from '@/src/components';
+import { ProjectsTreeView } from '@/src/components';
+import { MySuspense } from '@/src/components';
 
 const ProjectsTreeViewContainer = ({
   projectPath,
@@ -9,28 +10,15 @@ const ProjectsTreeViewContainer = ({
   const { filesList } = useGlobalState();
   const projects = filesList.get();
 
-  if (!projects) {
-    return null;
-  }
-
-  if (projects?.status === 'loading') {
-    return (
-      <div className="center">
-        <LoadingToast message="Loading projects..." />
-      </div>
-    );
-  }
-
-  if (projects?.status === 'error') {
-    return (
-      <div className="center">
-        <Warning message={projects.detail.message} />
-      </div>
-    );
-  }
-
   return (
-    <ProjectsTreeView files={projects.detail} selectedPath={projectPath} />
+    <MySuspense
+      data={projects}
+      errorTitle="Failed to load projects!"
+      loadingMessage="Loading projects..."
+      loadingSize="large"
+    >
+      {(data) => <ProjectsTreeView files={data} selectedPath={projectPath} />}
+    </MySuspense>
   );
 };
 

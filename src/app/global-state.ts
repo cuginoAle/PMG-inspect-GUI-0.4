@@ -2,6 +2,7 @@
 import { hookstate, useHookstate } from '@hookstate/core';
 import { devtools } from '@hookstate/devtools';
 import {
+  GetAnalysisResultResponse,
   GetFilesListResponse,
   GetProcessingConfigurationResponse,
   GetProjectResponse,
@@ -18,6 +19,7 @@ type GlobalState = {
     userName?: string;
     localCacheSizeLimitInGB?: number;
   };
+  analysisResults?: GetAnalysisResultResponse;
   processingConfigurations?: GetProcessingConfigurationResponse;
   editedProcessingConfigurations?: ProcessingConfiguration;
   inferenceModelDictionary?: InferenceModelDict;
