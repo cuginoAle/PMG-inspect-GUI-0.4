@@ -1,5 +1,5 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { IconButton, Tabs } from '@radix-ui/themes';
+import { Flex, IconButton, Tabs } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { ThreeVertDots } from '@/src/components/custom-icons';
 import classNames from 'classnames';
@@ -66,7 +66,9 @@ const PresetsTabs = ({
         }}
         value="new"
       >
-        <PlusCircledIcon />
+        <Flex align="center" gap="2">
+          <PlusCircledIcon /> New setting
+        </Flex>
       </Tabs.Trigger>
     </Tabs.List>
   );

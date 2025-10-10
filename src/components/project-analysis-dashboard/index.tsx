@@ -8,7 +8,12 @@ import {
   Project,
   ResponseType,
 } from '@/src/types';
-import { NetworkSettings, PresetsDropDown, Slider } from '@/src/components';
+import {
+  AddNetworkButton,
+  NetworkSettings,
+  PresetsDropDown,
+  Slider,
+} from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
 
 import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
@@ -124,6 +129,10 @@ const ProjectAnalysisDashboard = ({
                 isDefaultEnabled={network.enabled}
               />
             ))}
+            {setting.setting_details.length !==
+              Object.keys(inferenceModelDictionary).length && (
+              <AddNetworkButton />
+            )}
           </div>
 
           <Card
