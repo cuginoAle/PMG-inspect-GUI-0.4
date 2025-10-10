@@ -38,6 +38,7 @@ const PresetsTabs = ({
         const tabCn = classNames(styles.tabWrapper, {
           [styles.unsavedChanges]: unsavedTabIds?.includes(tab.id),
         });
+
         return (
           <div key={tab.id} className={tabCn}>
             <Tabs.Trigger value={tab.id} onClick={() => onTabClick?.(tab.id)}>

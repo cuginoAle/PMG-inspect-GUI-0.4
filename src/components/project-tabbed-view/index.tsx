@@ -1,6 +1,11 @@
 'use client';
 import { Flex, Tabs } from '@radix-ui/themes';
-import { FileLogoTitle, PresetsTabs, MySuspense } from '@/src/components';
+import {
+  FileLogoTitle,
+  PresetsTabs,
+  MySuspense,
+  NoProjectSelected,
+} from '@/src/components';
 
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -9,32 +14,16 @@ import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
 import { DummyAnalysisResult } from '@/src/types';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const ProjectTabbedView = () => {
-  const {
-    processingConfigurations,
-    selectedInferenceSettingId,
-    analysisResults,
-  } = useGlobalState();
+  const { selectedInferenceSettingId, analysisResults } = useGlobalState();
 
   const [unsavedTabIds, setUnsavedTabIds] = React.useState<string[]>([]);
+  const analysisResultsValue = getResponseIfSuccesful(analysisResults.get());
 
   const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
   const selectedInferenceSettingIdValue = selectedInferenceSettingId.get();
-
-  // useEffect(() => {
-  //   const firstTabId = processingConfigurationsValue
-  //     ? Object.keys(processingConfigurationsValue)[0]
-  //     : undefined;
-
-  //   selectedInferenceSettingIdSetter(
-  //     selectedInferenceSettingIdValue || firstTabId, // THIS FEELS A BIT HACKY! the effect should not re-run
-  //   );
-  // }, [
-  //   processingConfigurationsValue,
-  //   selectedInferenceSettingIdValue,
-  //   selectedInferenceSettingIdSetter,
-  // ]);
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
@@ -52,12 +41,17 @@ const ProjectTabbedView = () => {
     setUnsavedTabIds((prev) => prev.filter((id) => id !== tabId));
   };
 
-  // if (!project) {
-  //   return <NoProjectSelected />;
-  // }
+  if (!projectPath) {
+    return <NoProjectSelected />;
+  }
 
   return (
-    <Tabs.Root defaultValue={'CHANGE_ME'} orientation="horizontal">
+    <Tabs.Root
+      value={
+        selectedInferenceSettingIdValue || analysisResultsValue?.[0]?.setting_id
+      }
+      orientation="horizontal"
+    >
       <Flex direction={'column'} gap={'6'} height={'100%'}>
         {projectPath && (
           <FileLogoTitle

@@ -1,6 +1,7 @@
 import { GetAnalysisResultResponse } from '@/src/types';
 import React from 'react';
-import { fetchAnalysisResults } from '@/src/lib/data/fetch-analysis-results';
+import { analysisResultsDummy } from './dummy-data';
+// import { fetchAnalysisResults } from '@/src/lib/data/fetch-analysis-results';
 
 const useFetchAnalysisResults = (projectPath?: string | null) => {
   const [analysisResults, setAnalysisResults] = React.useState<
@@ -15,15 +16,23 @@ const useFetchAnalysisResults = (projectPath?: string | null) => {
     let cancelled = false;
 
     setAnalysisResults({ status: 'loading' });
-    fetchAnalysisResults(projectPath)
-      .then((response) => {
-        if (cancelled) return;
 
-        setAnalysisResults(response);
-      })
-      .catch((error) => {
-        if (!cancelled) setAnalysisResults(error);
-      });
+    // fetchAnalysisResults(projectPath)
+    //   .then((response) => {
+    //     if (cancelled) return;
+    //     setAnalysisResults(response);
+    //   })
+    //   .catch((error) => {
+    //     if (!cancelled) setAnalysisResults(error);
+    //   });
+
+    // ****** TODO: Remove this mock and uncomment the fetch above ******
+    // Return dummy data
+    setTimeout(() => {
+      if (!cancelled) {
+        setAnalysisResults(analysisResultsDummy);
+      }
+    }, 500);
 
     if (cancelled) return;
     return () => {

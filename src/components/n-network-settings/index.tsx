@@ -34,7 +34,7 @@ const NetworkSettings = ({
       <div className={cn}>
         <Flex align="center" gap="2" justify={'between'}>
           <div className={styles.title}>
-            <NeuralNetworkIcon />
+            <NeuralNetworkIcon className={styles.aiIcon} />
             <Heading
               size="4"
               as="h4"

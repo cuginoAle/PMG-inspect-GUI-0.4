@@ -31,3 +31,7 @@
     height: 2em;
   }
 }
+
+.aiIcon {
+  flex-shrink: 0;
+}
