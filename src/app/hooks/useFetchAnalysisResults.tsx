@@ -32,7 +32,7 @@ const useFetchAnalysisResults = (projectPath?: string | null) => {
       if (!cancelled) {
         setAnalysisResults(analysisResultsDummy);
       }
-    }, 500);
+    }, 4000);
 
     if (cancelled) return;
     return () => {

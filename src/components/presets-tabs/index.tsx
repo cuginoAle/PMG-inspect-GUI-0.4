@@ -15,6 +15,7 @@ type PresetsTabsProps = {
   onMenuClick?: (tabId: string) => void;
   onTabClick?: (tabId: string) => void;
   unsavedTabIds?: string[];
+  onAddClick?: () => void;
 };
 
 const PresetsTabs = ({
@@ -22,6 +23,7 @@ const PresetsTabs = ({
   onMenuClick,
   onTabClick,
   unsavedTabIds,
+  onAddClick,
 }: PresetsTabsProps) => {
   const tabs: Tab[] =
     data?.map((item) => ({
@@ -30,7 +32,7 @@ const PresetsTabs = ({
       hasUnsavedChanges: false,
       inferences: item.setting_details,
     })) || [];
-  if (!tabs || tabs.length === 0) return null;
+  if (!tabs) return null;
 
   return (
     <Tabs.List size="2">
@@ -59,8 +61,8 @@ const PresetsTabs = ({
 
       {/* Hardcoded tabs for demo purposes; replace with dynamic rendering as needed */}
       <Tabs.Trigger
-        onClick={(e) => {
-          alert('create a new tab!');
+        onClick={() => {
+          onAddClick?.();
         }}
         value="new"
       >

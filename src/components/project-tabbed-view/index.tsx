@@ -3,7 +3,6 @@ import { Flex, Tabs } from '@radix-ui/themes';
 import {
   FileLogoTitle,
   PresetsTabs,
-  MySuspense,
   NoProjectSelected,
 } from '@/src/components';
 
@@ -13,14 +12,29 @@ import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { PresetsTabsContent } from './presets-tabs-content';
 import { useGlobalState } from '@/src/app/global-state';
-import { DummyAnalysisResult } from '@/src/types';
-import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
+import {
+  DummyAnalysisResult,
+  InferenceModelDict,
+  ProcessingConfiguration,
+} from '@/src/types';
+import { ImmutableObject } from '@hookstate/core';
 
-const ProjectTabbedView = () => {
-  const { selectedInferenceSettingId, analysisResults } = useGlobalState();
+const ProjectTabbedView = ({
+  processingData,
+  analysisData,
+}: {
+  processingData: ImmutableObject<{
+    processing_configurations: ProcessingConfiguration;
+    inference_model_ids: InferenceModelDict;
+  }>;
+  analysisData: ImmutableObject<DummyAnalysisResult[]>;
+}) => {
+  const [currentAnalysisData, setCurrentAnalysisData] = React.useState<
+    DummyAnalysisResult[]
+  >(analysisData as DummyAnalysisResult[]);
 
   const [unsavedTabIds, setUnsavedTabIds] = React.useState<string[]>([]);
-  const analysisResultsValue = getResponseIfSuccesful(analysisResults.get());
+  const { selectedInferenceSettingId } = useGlobalState();
 
   const selectedInferenceSettingIdSetter = selectedInferenceSettingId.set;
   const selectedInferenceSettingIdValue = selectedInferenceSettingId.get();
@@ -41,6 +55,48 @@ const ProjectTabbedView = () => {
     setUnsavedTabIds((prev) => prev.filter((id) => id !== tabId));
   };
 
+  const createNewSetting = () => {
+    const firstDefaultSetting = Object.values(
+      processingData.processing_configurations || {},
+    )[0];
+    if (firstDefaultSetting) {
+      const newSetting = [
+        {
+          setting_id: firstDefaultSetting.label,
+          setting_label: firstDefaultSetting.label,
+          setting_details: Object.entries(firstDefaultSetting.inferences).map(
+            ([network_name, inference]) => ({
+              network_name,
+              ...inference,
+            }),
+          ),
+          frame_rate: {
+            fps: undefined,
+            distance: undefined,
+          },
+          analysed_video_list: {
+            video_url: '',
+            frames: {
+              index: 0,
+              pci_score_value: null,
+              pci_score_state: 'ok' as const,
+            },
+          },
+        },
+      ];
+      const newTabId = Date.now().toString();
+      setCurrentAnalysisData((prev) => [
+        ...prev,
+        {
+          ...newSetting[0],
+          setting_id: newTabId,
+        } as DummyAnalysisResult,
+      ]);
+      selectedInferenceSettingIdSetter(newTabId);
+      setUnsavedTabIds((prev) => [...prev, newTabId]);
+    }
+  };
+
   if (!projectPath) {
     return <NoProjectSelected />;
   }
@@ -48,7 +104,7 @@ const ProjectTabbedView = () => {
   return (
     <Tabs.Root
       value={
-        selectedInferenceSettingIdValue || analysisResultsValue?.[0]?.setting_id
+        selectedInferenceSettingIdValue || currentAnalysisData?.[0]?.setting_id
       }
       orientation="horizontal"
     >
@@ -63,40 +119,25 @@ const ProjectTabbedView = () => {
           />
         )}
 
-        <MySuspense
-          data={analysisResults.get()}
-          errorTitle="Processing configuration"
-          loadingMessage="Loading processing configurations..."
-        >
-          {(data) => (
-            <PresetsTabs
-              unsavedTabIds={unsavedTabIds}
-              data={data as DummyAnalysisResult[]}
-              onTabClick={selectedInferenceSettingIdSetter}
-            />
-          )}
-        </MySuspense>
+        <PresetsTabs
+          unsavedTabIds={unsavedTabIds}
+          data={currentAnalysisData}
+          onTabClick={selectedInferenceSettingIdSetter}
+          onAddClick={createNewSetting}
+        />
 
-        <MySuspense
-          data={analysisResults.get()}
-          errorTitle="Analysis results"
-          loadingMessage="Loading analysis results..."
-        >
-          {(data) => (
-            <PresetsTabsContent
-              data={data}
-              unsavedTabIds={unsavedTabIds}
-              onChange={handleOnChange}
-              onReset={handleOnReset}
-              onSave={(data) => {
-                console.log(
-                  'save the current tab!',
-                  Object.fromEntries(data.entries()),
-                );
-              }}
-            />
-          )}
-        </MySuspense>
+        <PresetsTabsContent
+          data={currentAnalysisData}
+          unsavedTabIds={unsavedTabIds}
+          onChange={handleOnChange}
+          onReset={handleOnReset}
+          onSave={(data) => {
+            console.log(
+              'save the current tab!',
+              Object.fromEntries(data.entries()),
+            );
+          }}
+        />
       </Flex>
     </Tabs.Root>
   );

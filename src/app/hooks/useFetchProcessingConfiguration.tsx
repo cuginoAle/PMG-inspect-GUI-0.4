@@ -10,7 +10,9 @@ const useFetchProcessingConfiguration = () => {
     let cancelled = false;
     setSettings({ status: 'loading' });
     fetchProcessingConfiguration()
-      .then((response) => {
+      .then(async (response) => {
+        // wait for 2 seconds to simulate loading
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         if (!cancelled) {
           setSettings(response);
         }
