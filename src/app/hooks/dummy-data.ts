@@ -8,16 +8,18 @@ const analysisResultsDummy = {
       setting_label: 'Default Configuration',
       setting_details: [
         {
-          network_name: 'Road Detection Network',
-          inference_model_id: 'road_model_v1',
+          network_name: 'road',
+          enabled: true,
+          inference_model_id: 'road_model',
           inference_model_parameters: {
             confidence: 0.75,
             iou: 0.45,
           },
         },
         {
-          network_name: 'Distress Detection Network',
-          inference_model_id: 'distress_model_v1',
+          network_name: 'distress',
+          enabled: true,
+          inference_model_id: 'distress_severity_ver1',
           inference_model_parameters: {
             confidence: 0.8,
             iou: 0.5,
@@ -42,43 +44,39 @@ const analysisResultsDummy = {
       setting_label: 'High Accuracy Configuration',
       setting_details: [
         {
-          network_name: 'Advanced Road Detection',
-          inference_model_id: 'road_model_v2',
+          network_name: 'road',
+          enabled: true,
+          inference_model_id: 'road_model',
           inference_model_parameters: {
             confidence: 0.9,
             iou: 0.6,
           },
         },
         {
-          network_name: 'Advanced Distress Detection',
-          inference_model_id: 'distress_model_v2',
+          network_name: 'distress',
+          enabled: true,
+          inference_model_id: 'distress_severity_ver3',
           inference_model_parameters: {
             confidence: 0.92,
             iou: 0.65,
           },
         },
         {
-          network_name: 'Pothole Detection',
-          inference_model_id: 'pothole_model_v1',
+          network_name: 'weathering',
+          enabled: true,
+          inference_model_id: 'weathering_old_model',
           inference_model_parameters: {
             confidence: 0.85,
             iou: 0.55,
           },
         },
         {
-          network_name: 'Crack Detection',
-          inference_model_id: 'crack_model_v1',
+          network_name: 'treatment',
+          enabled: false,
+          inference_model_id: 'treatment_model',
           inference_model_parameters: {
             confidence: 0.88,
             iou: 0.58,
-          },
-        },
-        {
-          network_name: 'Debris Detection',
-          inference_model_id: 'debris_model_v1',
-          inference_model_parameters: {
-            confidence: 0.8,
-            iou: 0.5,
           },
         },
       ],

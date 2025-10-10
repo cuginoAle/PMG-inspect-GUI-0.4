@@ -10,7 +10,7 @@ type NetworkSettingsProps = {
   className?: string;
   name: string;
   inference: Inference;
-  isDefaultEnabled?: boolean; // this can be removed. Use `values` instead
+  isDefaultEnabled?: boolean;
   values?: any[]; // replace it with actual type when available
   models: string[]; // list of models available for this inference
 };
@@ -52,7 +52,7 @@ const NetworkSettings = ({
         </Flex>
         <Select.Root
           size="2"
-          defaultValue={models[0]}
+          defaultValue={inference.inference_model_id}
           onValueChange={(value) => {
             console.log('preset', value);
           }}

@@ -45,10 +45,11 @@ const ProjectTabbedView = ({
   const fileType = useMemo(() => getFileIconType(projectPath), [projectPath]);
   const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
-  const handleOnChange = (tabId: string) => {
-    setUnsavedTabIds((prev) =>
-      prev.includes(tabId) ? prev : [...prev, tabId],
-    );
+  const handleOnChange = (data: FormData) => {
+    console.log('data', Object.fromEntries(data.entries()));
+    // setUnsavedTabIds((prev) =>
+    //   prev.includes(data.get('tabId') as string) ? prev : [...prev, data.get('tabId') as string],
+    // );
   };
 
   const handleOnReset = (tabId: string) => {

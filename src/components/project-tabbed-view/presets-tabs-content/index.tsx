@@ -12,7 +12,7 @@ import { Immutable } from '@hookstate/core';
 
 type PresetsTabsContentProps = {
   data: Immutable<DummyAnalysisResult[]>;
-  onChange?: (tabId: string) => void;
+  onChange?: (data: FormData) => void;
   onSave?: (data: FormData) => void;
   onReset?: (tabId: string) => void;
   unsavedTabIds?: string[];

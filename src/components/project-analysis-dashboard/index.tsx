@@ -19,7 +19,7 @@ type ProjectAnalysisDashboardProps = {
   setting: DummyAnalysisResult;
   className?: string;
   hasUnsavedChanges?: boolean;
-  onChange?: (id: string) => void;
+  onChange?: (data: FormData) => void;
   onSave?: (data: FormData) => void;
   onReset?: (id: string) => void;
 };
@@ -79,8 +79,8 @@ const ProjectAnalysisDashboard = ({
             e.preventDefault();
             onSave?.(new FormData(e.currentTarget));
           }}
-          onChange={() => {
-            onChange?.(setting.setting_id);
+          onChange={(e: React.FormEvent<HTMLFormElement>) => {
+            onChange?.(new FormData(e.currentTarget));
           }}
           onReset={(e: React.FormEvent<HTMLFormElement>) => {
             const form = e.target as HTMLFormElement;
@@ -107,10 +107,10 @@ const ProjectAnalysisDashboard = ({
           <div className={styles.networksContainer}>
             {setting.setting_details.map((network) => (
               <NetworkSettings
-                key={network.inference_model_id}
+                key={network.network_name}
                 name={network.network_name}
                 inference={{
-                  inference_model_id: network.network_name,
+                  inference_model_id: network.inference_model_id,
                   inference_model_parameters: {
                     confidence: network.inference_model_parameters.confidence,
                     iou: network.inference_model_parameters.iou,
@@ -118,14 +118,10 @@ const ProjectAnalysisDashboard = ({
                 }}
                 models={[
                   ...(inferenceModelDictionary.get()?.[
-                    network.inference_model_id as InferenceTypes
+                    network.network_name as InferenceTypes
                   ] || []),
                 ]}
-                // isDefaultEnabled={
-                //   setting.inferences[
-                //     inferenceId as keyof typeof setting.inferences
-                //   ].is_enabled
-                // }
+                isDefaultEnabled={network.enabled}
               />
             ))}
           </div>

@@ -63,13 +63,13 @@ type GetAnalysisResultResponse =
 type Network = {
   // TODO: update with OpenApi spec
   network_name: string;
+  enabled: boolean;
 } & Inference;
 
 type DummyAnalysisResult = {
   // TODO: update with OpenApi spec
   setting_id: string;
   setting_label: string;
-
   setting_details: Array<Network>;
   frame_rate: {
     fps?: number;
