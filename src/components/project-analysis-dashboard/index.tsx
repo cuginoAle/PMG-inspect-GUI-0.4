@@ -54,10 +54,6 @@ const ProjectAnalysisDashboard = ({
     DummyAnalysisResult['setting_details']
   >(setting?.setting_details || []);
 
-  // React.useEffect(() => {
-  //   setNetworks(setting?.setting_details || []);
-  // }, [setting?.setting_details]);
-
   const [Dialog, dialogRef] = useModal();
 
   const inferenceModelDictionaryValue = inferenceModelDictionary.get();
@@ -72,7 +68,31 @@ const ProjectAnalysisDashboard = ({
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
         <Flex align="center" justify={'between'}>
-          <PresetsDropDown />
+          <PresetsDropDown
+            onSelect={(preset) => {
+              const baseNetwork =
+                processingConfigurationsValue!.processing_configurations[
+                  preset
+                ];
+
+              setNetworks(
+                Object.keys(baseNetwork.inferences).map((key) => ({
+                  network_name: key,
+                  inference_model_id:
+                    baseNetwork.inferences[key]!.inference_model_id,
+                  inference_model_parameters:
+                    baseNetwork.inferences[key]!.inference_model_parameters,
+                })),
+              );
+              const data = new FormData();
+              data.append('setting_id', setting.setting_id);
+              data.append('setting_label', baseNetwork.label);
+
+              onChange?.(data);
+              // onReset?.(setting.setting_id);
+              console.log('Networks:', networks);
+            }}
+          />
 
           <Dialog>
             <NetworkSelector
@@ -168,6 +188,7 @@ const ProjectAnalysisDashboard = ({
             }, 10);
           }}
         >
+          <input type="hidden" name="setting_id" value={setting.setting_id} />
           <div className={styles.networksContainer}>
             {networks.map((network) => (
               <NetworkSettings

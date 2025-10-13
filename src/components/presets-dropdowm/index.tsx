@@ -6,6 +6,7 @@ import { DropdownMenu, Button, Spinner } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
+import { InferenceTypes } from '@/src/types';
 
 const LabelStateMap = {
   ok: (
@@ -28,15 +29,19 @@ const LabelStateMap = {
   ),
 };
 
-const PresetsDropDown = () => {
+const PresetsDropDown = ({
+  onSelect,
+}: {
+  onSelect: (preset: InferenceTypes) => void;
+}) => {
   const { processingConfigurations } = useGlobalState();
   const processingConfigurationsFetchState = processingConfigurations.get();
   const processingConfigurationsValue = getResponseIfSuccesful(
     processingConfigurationsFetchState,
   );
 
-  const presets =
-    processingConfigurationsValue?.processing_configurations || {};
+  if (!processingConfigurationsValue) return null;
+  const presets = processingConfigurationsValue.processing_configurations;
 
   return (
     <div className={styles.root}>
@@ -51,8 +56,8 @@ const PresetsDropDown = () => {
           }
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          {Object.keys(presets).map((key) => (
-            <DropdownMenu.Item key={key}>
+          {(Object.keys(presets) as InferenceTypes[]).map((key) => (
+            <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
               {presets[key]?.label}
             </DropdownMenu.Item>
           ))}

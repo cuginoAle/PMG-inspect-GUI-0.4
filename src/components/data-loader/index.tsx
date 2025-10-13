@@ -49,6 +49,8 @@ const DataLoader = () => {
       processingSettingsData,
     );
 
+    console.log('processingSettingsData', processingSettingsData);
+
     updateInferenceModelDictionary(
       processingConfigurationsValue?.inference_model_ids,
     );

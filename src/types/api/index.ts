@@ -23,7 +23,7 @@ type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
 type ProcessingConfiguration = Record<
   // TODO: this should come from the OpenAPI!
-  string,
+  InferenceTypes,
   components['schemas']['ProcessingConfiguration']
 >;
 type InferenceTypes = components['schemas']['InferenceType'];

@@ -1,3 +1,4 @@
+'use client';
 import { Slider, NeuralNetworkIcon } from '@/src/components';
 import { Card, Flex, Heading, Select } from '@radix-ui/themes';
 import styles from './style.module.css';
@@ -14,6 +15,8 @@ type NetworkSettingsProps = {
   values?: any[]; // replace it with actual type when available
   models: string[]; // list of models available for this inference
 };
+
+const formatValueLabel = (value: number) => value.toFixed(2);
 
 const NetworkSettings = ({
   className,
@@ -73,7 +76,7 @@ const NetworkSettings = ({
           name={`${name}-confidence`}
           title="Confidence"
           defaultValue={params.confidence}
-          valueLabel={(value) => value.toFixed(2)}
+          valueLabel={formatValueLabel}
         />
         <Slider
           min={0}
@@ -82,6 +85,7 @@ const NetworkSettings = ({
           name={`${name}-iou`}
           title="Intersection over Union"
           defaultValue={params.iou}
+          valueLabel={formatValueLabel}
         />
       </div>
     </Card>

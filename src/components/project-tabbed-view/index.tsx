@@ -2,7 +2,7 @@
 import { Flex, Tabs } from '@radix-ui/themes';
 import { FileLogoTitle, PresetsTabs } from '@/src/components';
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
@@ -41,16 +41,20 @@ const ProjectTabbedView = ({
   const fileType = useMemo(() => getFileIconType(projectPath), [projectPath]);
   const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
-  const handleOnChange = (data: FormData) => {
-    console.log('data', Object.fromEntries(data.entries()));
-    // setUnsavedTabIds((prev) =>
-    //   prev.includes(data.get('tabId') as string) ? prev : [...prev, data.get('tabId') as string],
-    // );
-  };
+  const handleOnChange = useCallback(
+    (data: FormData) => {
+      console.log('data', Object.fromEntries(data.entries()));
+      if (unsavedTabIds.includes(data.get('setting_id') as string)) {
+        return;
+      }
+      setUnsavedTabIds((prev) => [...prev, data.get('setting_id') as string]);
+    },
+    [unsavedTabIds],
+  );
 
-  const handleOnReset = (tabId: string) => {
+  const handleOnReset = useCallback((tabId: string) => {
     setUnsavedTabIds((prev) => prev.filter((id) => id !== tabId));
-  };
+  }, []);
 
   const createNewSetting = () => {
     const firstDefaultSetting = Object.values(
@@ -124,12 +128,12 @@ const ProjectTabbedView = ({
           unsavedTabIds={unsavedTabIds}
           onChange={handleOnChange}
           onReset={handleOnReset}
-          onSave={(data) => {
-            console.log(
-              'save the current tab!',
-              Object.fromEntries(data.entries()),
-            );
-          }}
+          // onSave={(data) => {
+          //   console.log(
+          //     'save the current tab!',
+          //     Object.fromEntries(data.entries()),
+          //   );
+          // }}
         />
       </Flex>
     </Tabs.Root>
