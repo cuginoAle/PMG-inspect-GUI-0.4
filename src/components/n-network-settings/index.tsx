@@ -1,4 +1,4 @@
-import { Slider, NeuralNetworkIcon, Toggle } from '@/src/components';
+import { Slider, NeuralNetworkIcon } from '@/src/components';
 import { Card, Flex, Heading, Select } from '@radix-ui/themes';
 import styles from './style.module.css';
 
@@ -10,7 +10,7 @@ type NetworkSettingsProps = {
   className?: string;
   name: string;
   inference: Inference;
-  isDefaultEnabled?: boolean;
+
   values?: any[]; // replace it with actual type when available
   models: string[]; // list of models available for this inference
 };
@@ -20,11 +20,10 @@ const NetworkSettings = ({
   name,
   inference,
   models = [],
-  isDefaultEnabled = false,
 }: NetworkSettingsProps) => {
-  const [isEnabled, setIsEnabled] = React.useState(isDefaultEnabled);
+  // const [isEnabled, setIsEnabled] = React.useState(isDefaultEnabled);
 
-  const rootCn = classNames(styles.root, { [styles.disabled]: !isEnabled });
+  const rootCn = classNames(styles.root);
   const cn = classNames(className, styles.container);
 
   const params = inference.inference_model_parameters;
@@ -44,11 +43,11 @@ const NetworkSettings = ({
               {name}
             </Heading>
           </div>
-          <Toggle
+          {/* <Toggle
             size={1}
             onChange={setIsEnabled}
             defaultChecked={isDefaultEnabled}
-          />
+          /> */}
         </Flex>
         <Select.Root
           size="2"
@@ -56,7 +55,6 @@ const NetworkSettings = ({
           onValueChange={(value) => {
             console.log('preset', value);
           }}
-          disabled={!isEnabled}
           name={`${name}-model`}
         >
           <Select.Trigger variant="soft" />
@@ -75,7 +73,6 @@ const NetworkSettings = ({
           name={`${name}-confidence`}
           title="Confidence"
           defaultValue={params.confidence}
-          disabled={!isEnabled}
           valueLabel={(value) => value.toFixed(2)}
         />
         <Slider
@@ -85,7 +82,6 @@ const NetworkSettings = ({
           name={`${name}-iou`}
           title="Intersection over Union"
           defaultValue={params.iou}
-          disabled={!isEnabled}
         />
       </div>
     </Card>

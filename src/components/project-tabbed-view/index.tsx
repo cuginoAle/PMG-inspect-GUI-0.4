@@ -1,10 +1,6 @@
 'use client';
 import { Flex, Tabs } from '@radix-ui/themes';
-import {
-  FileLogoTitle,
-  PresetsTabs,
-  NoProjectSelected,
-} from '@/src/components';
+import { FileLogoTitle, PresetsTabs } from '@/src/components';
 
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -97,10 +93,6 @@ const ProjectTabbedView = ({
       setUnsavedTabIds((prev) => [...prev, newTabId]);
     }
   };
-
-  if (!projectPath) {
-    return <NoProjectSelected />;
-  }
 
   return (
     <Tabs.Root

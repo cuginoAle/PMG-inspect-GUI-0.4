@@ -1,0 +1,42 @@
+.networkSelector {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.networkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.networkButton {
+  padding: 8px 12px;
+  border: 1px solid var(--gray-a6);
+  border-radius: var(--space-1);
+  background-color: var(--gray-a2);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  color: var(--gray-a9);
+  width: 100%;
+  text-transform: capitalize;
+
+  font-size: 1.2em;
+  &:hover {
+    background-color: var(--gray-a4);
+    color: var(--gray-a11);
+  }
+}
+
+.closeButton {
+  margin-left: var(--space-8);
+}

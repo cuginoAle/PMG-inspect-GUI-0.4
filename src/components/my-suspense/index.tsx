@@ -8,15 +8,17 @@ const MySuspense = <T,>({
   loadingMessage = 'Loading...',
   loadingSize = 'small',
   errorTitle,
+  undefinedDataComponent = 'No data available',
 }: {
   children: React.ReactNode | ((data: T) => React.ReactNode);
   data?: ResponseType<T> | null;
   loadingMessage?: string;
   errorTitle?: string;
   loadingSize?: sizeType;
+  undefinedDataComponent?: React.ReactNode;
 }) => {
   if (!data) {
-    return null;
+    return undefinedDataComponent;
   }
 
   const isLoading = data?.status === 'loading';

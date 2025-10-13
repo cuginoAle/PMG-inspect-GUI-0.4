@@ -10,6 +10,7 @@ import {
 } from '@/src/types';
 import {
   AddNetworkButton,
+  NetworkSelector,
   NetworkSettings,
   PresetsDropDown,
   Slider,
@@ -19,6 +20,7 @@ import { Button, Card, Flex } from '@radix-ui/themes';
 import { DiscIcon, ResetIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import React from 'react';
+import { useModal } from '@/src/app/hooks/useModal';
 
 type ProjectAnalysisDashboardProps = {
   setting: DummyAnalysisResult;
@@ -37,18 +39,75 @@ const ProjectAnalysisDashboard = ({
   onReset,
   onSave,
 }: ProjectAnalysisDashboardProps) => {
-  const { selectedProject, inferenceModelDictionary } = useGlobalState();
+  const {
+    selectedProject,
+    inferenceModelDictionary,
+    processingConfigurations,
+  } = useGlobalState();
+  const processingConfigurationsValue = getResponseIfSuccesful(
+    processingConfigurations.get(),
+  );
   const project = getResponseIfSuccesful<Project>(
     selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
   );
+  const [networks, setNetworks] = React.useState<
+    DummyAnalysisResult['setting_details']
+  >(setting?.setting_details || []);
+
+  // React.useEffect(() => {
+  //   setNetworks(setting?.setting_details || []);
+  // }, [setting?.setting_details]);
+
+  const [Dialog, dialogRef] = useModal();
+
+  const inferenceModelDictionaryValue = inferenceModelDictionary.get();
 
   const formId = `project-analysis-dashboard-form-${setting.setting_id}`;
+
+  const onAddNetwork = () => {
+    dialogRef.current?.showModal();
+  };
 
   return project?.project_name ? (
     <div className={className}>
       <Flex direction={'column'} gap={'4'}>
         <Flex align="center" justify={'between'}>
           <PresetsDropDown />
+
+          <Dialog>
+            <NetworkSelector
+              onClose={() => dialogRef.current?.close()}
+              availableNetworks={Object.keys(
+                inferenceModelDictionaryValue || {},
+              )}
+              selectedNetworks={networks.map((n) => n.network_name)}
+              onSelect={(networkName) => {
+                const networkConfig =
+                  processingConfigurationsValue?.processing_configurations?.[
+                    networkName as InferenceTypes
+                  ];
+
+                setNetworks((prev) => [
+                  ...prev,
+                  {
+                    network_name: networkName,
+                    // default to the first model if available
+                    inference_model_id:
+                      inferenceModelDictionaryValue?.[
+                        networkName as InferenceTypes
+                      ]?.[0] || '',
+                    // default parameters
+                    inference_model_parameters: {
+                      confidence: 0.5,
+                      iou: 0.5,
+                    },
+                    ...networkConfig,
+                  },
+                ]);
+                dialogRef.current?.close();
+              }}
+            />
+          </Dialog>
 
           <Flex gap="3">
             <Button
@@ -110,7 +169,7 @@ const ProjectAnalysisDashboard = ({
           }}
         >
           <div className={styles.networksContainer}>
-            {setting.setting_details.map((network) => (
+            {networks.map((network) => (
               <NetworkSettings
                 key={network.network_name}
                 name={network.network_name}
@@ -126,12 +185,11 @@ const ProjectAnalysisDashboard = ({
                     network.network_name as InferenceTypes
                   ] || []),
                 ]}
-                isDefaultEnabled={network.enabled}
               />
             ))}
-            {setting.setting_details.length !==
+            {networks.length !==
               Object.keys(inferenceModelDictionary).length && (
-              <AddNetworkButton />
+              <AddNetworkButton onClick={onAddNetwork} />
             )}
           </div>
 

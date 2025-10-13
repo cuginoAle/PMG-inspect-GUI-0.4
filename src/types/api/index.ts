@@ -63,7 +63,6 @@ type GetAnalysisResultResponse =
 type Network = {
   // TODO: update with OpenApi spec
   network_name: string;
-  enabled: boolean;
 } & Inference;
 
 type DummyAnalysisResult = {

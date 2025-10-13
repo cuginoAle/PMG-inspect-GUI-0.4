@@ -9,7 +9,6 @@ const analysisResultsDummy = {
       setting_details: [
         {
           network_name: 'road',
-          enabled: true,
           inference_model_id: 'road_model',
           inference_model_parameters: {
             confidence: 0.75,
@@ -18,11 +17,26 @@ const analysisResultsDummy = {
         },
         {
           network_name: 'distress',
-          enabled: true,
           inference_model_id: 'distress_severity_ver1',
           inference_model_parameters: {
             confidence: 0.8,
             iou: 0.5,
+          },
+        },
+        {
+          network_name: 'weathering',
+          inference_model_id: 'weathering_old_model',
+          inference_model_parameters: {
+            confidence: 0.85,
+            iou: 0.55,
+          },
+        },
+        {
+          network_name: 'treatment',
+          inference_model_id: 'treatment_model',
+          inference_model_parameters: {
+            confidence: 0.88,
+            iou: 0.58,
           },
         },
       ],
@@ -45,7 +59,6 @@ const analysisResultsDummy = {
       setting_details: [
         {
           network_name: 'road',
-          enabled: true,
           inference_model_id: 'road_model',
           inference_model_parameters: {
             confidence: 0.9,
@@ -54,7 +67,6 @@ const analysisResultsDummy = {
         },
         {
           network_name: 'distress',
-          enabled: true,
           inference_model_id: 'distress_severity_ver3',
           inference_model_parameters: {
             confidence: 0.92,
@@ -63,7 +75,6 @@ const analysisResultsDummy = {
         },
         {
           network_name: 'weathering',
-          enabled: true,
           inference_model_id: 'weathering_old_model',
           inference_model_parameters: {
             confidence: 0.85,
@@ -72,7 +83,6 @@ const analysisResultsDummy = {
         },
         {
           network_name: 'treatment',
-          enabled: false,
           inference_model_id: 'treatment_model',
           inference_model_parameters: {
             confidence: 0.88,
