@@ -128,12 +128,12 @@ const ProjectTabbedView = ({
           unsavedTabIds={unsavedTabIds}
           onChange={handleOnChange}
           onReset={handleOnReset}
-          // onSave={(data) => {
-          //   console.log(
-          //     'save the current tab!',
-          //     Object.fromEntries(data.entries()),
-          //   );
-          // }}
+          onSave={(data) => {
+            console.log(
+              'save the current tab!',
+              Object.fromEntries(data.entries()),
+            );
+          }}
         />
       </Flex>
     </Tabs.Root>

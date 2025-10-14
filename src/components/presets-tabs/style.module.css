@@ -24,8 +24,9 @@
 }
 .tabMenuButton {
   position: absolute;
-  right: 0;
+  right: -3px;
   display: none;
+  padding: var(--space-2) var(--space-2) var(--space-2) 0px;
 
   &:hover {
     background-color: transparent;

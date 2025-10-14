@@ -1,5 +1,5 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { Flex, IconButton, Tabs } from '@radix-ui/themes';
+import { Flex, IconButton, Tabs, DropdownMenu } from '@radix-ui/themes';
 import styles from './style.module.css';
 import { ThreeVertDots } from '@/src/components/custom-icons';
 import classNames from 'classnames';
@@ -17,6 +17,18 @@ type PresetsTabsProps = {
   unsavedTabIds?: string[];
   onAddClick?: () => void;
 };
+
+const tabContextMenu = [
+  {
+    id: 'rename',
+    label: 'Rename',
+  },
+
+  {
+    id: 'delete',
+    label: 'Delete',
+  },
+];
 
 const PresetsTabs = ({
   data,
@@ -46,26 +58,29 @@ const PresetsTabs = ({
             <Tabs.Trigger value={tab.id} onClick={() => onTabClick?.(tab.id)}>
               {tab.label}
             </Tabs.Trigger>
-            <IconButton
-              variant="ghost"
-              className={styles.tabMenuButton}
-              onClick={() => {
-                onMenuClick?.(tab.id);
-              }}
-            >
-              <ThreeVertDots size={1.4} />
-            </IconButton>
+
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className={styles.tabMenuButton}>
+                <IconButton variant="ghost">
+                  <ThreeVertDots size={1.4} />
+                </IconButton>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                {tabContextMenu.map((menu) => (
+                  <DropdownMenu.Item
+                    key={menu.id}
+                    onSelect={() => onMenuClick?.(tab.id)}
+                  >
+                    {menu.label}
+                  </DropdownMenu.Item>
+                ))}
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
           </div>
         );
       })}
 
-      {/* Hardcoded tabs for demo purposes; replace with dynamic rendering as needed */}
-      <Tabs.Trigger
-        onClick={() => {
-          onAddClick?.();
-        }}
-        value="new"
-      >
+      <Tabs.Trigger onClick={onAddClick} value="new">
         <Flex align="center" gap="2">
           <PlusCircledIcon /> New setting
         </Flex>
