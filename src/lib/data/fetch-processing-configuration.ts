@@ -6,31 +6,46 @@ async function fetchProcessingConfiguration(): Promise<
 > {
   const fullUrl = `${ENDPOINT.PROCESSING_CONFIGURATION}`;
 
-  return new Promise((resolve, reject) => {
-    fetch(fullUrl)
-      .then(async (res) => {
-        const body = await res.json();
-        if (!res.ok) {
-          reject({
-            status: 'error',
-            code: res.status.toString(),
-            detail: { message: res.statusText },
-          } as FetchError);
-        }
+  try {
+    const res = await fetch(fullUrl);
 
-        resolve({
-          status: 'ok',
-          detail: body,
-        });
-      })
-      .catch((error) => {
-        reject({
+    if (!res.ok) {
+      if (res.status === 500) {
+        throw {
+          code: String(res.status),
           status: 'error',
-          code: error.status,
-          detail: { message: error.message },
-        } as FetchError);
-      });
-  });
+          detail: {
+            message: res.statusText,
+          },
+        } as FetchError;
+      }
+
+      const body = await res.json();
+      throw {
+        code: String(res.status),
+        status: 'error',
+        detail: body.detail,
+      } as FetchError;
+    }
+
+    const body = await res.json();
+    return {
+      status: 'ok',
+      detail: body,
+    };
+  } catch (error) {
+    // Handle both FetchError and network/other errors
+    if ((error as FetchError).code) {
+      throw error;
+    }
+    throw {
+      status: 'error',
+      code: '0',
+      detail: {
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+    } as FetchError;
+  }
 }
 
 export { fetchProcessingConfiguration };

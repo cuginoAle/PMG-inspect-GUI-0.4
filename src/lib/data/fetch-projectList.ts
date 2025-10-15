@@ -1,5 +1,5 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { GetFilesListResponse } from '@/src/types';
+import { FetchError, GetFilesListResponse } from '@/src/types';
 
 async function fetchProjectList(
   relativePath?: string,
@@ -15,7 +15,6 @@ async function fetchProjectList(
 
   try {
     const res = await fetch(fullUrl);
-    const body = await res.json();
 
     // NOTE: this end-point doesn't handle the errors properly
     // so res.json() may throw an error (trying to parse an html error page)
@@ -23,6 +22,16 @@ async function fetchProjectList(
     // If the server DOES return a json with an error status, then we handle it here
 
     if (!res.ok) {
+      if (res.status === 500) {
+        return Promise.reject({
+          code: res.status,
+          status: 'error',
+          detail: {
+            message: res.statusText,
+          },
+        });
+      }
+      const body = await res.json();
       return Promise.reject({
         code: res.status,
         status: 'error',
@@ -30,16 +39,24 @@ async function fetchProjectList(
       });
     }
 
+    const body = await res.json();
+
     return {
       status: 'ok',
       detail: body,
     };
   } catch (error: any) {
-    return Promise.reject({
+    // Handle both FetchError and network/other errors
+    if ((error as FetchError).code) {
+      throw error;
+    }
+    throw {
       status: 'error',
-      code: error.code || error.errno || 'NetworkError',
-      detail: { message: error.message || String(error) },
-    });
+      code: '0',
+      detail: {
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+    } as FetchError;
   }
 }
 

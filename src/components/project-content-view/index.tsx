@@ -20,6 +20,7 @@ const ProjectContentView = () => {
         proportionalLayout={true}
         left={
           <div className={styles.leftPane}>
+            {/* Example usages of VideoAnalysisProgress component */}
             <div
               style={{
                 fontSize: '1.7em',
@@ -28,16 +29,22 @@ const ProjectContentView = () => {
                 padding: '10px',
               }}
             >
+              <VideoAnalysisProgress progress={70} pciScore={91} />
               <VideoAnalysisProgress progress={60} pciScore={75} />
               <VideoAnalysisProgress progress={50} pciScore={65} />
               <VideoAnalysisProgress progress={80} pciScore={45} />
               <VideoAnalysisProgress progress={40} pciScore={25} />
+              <hr />
+              <VideoAnalysisProgress progress={100} pciScore={91} />
               <VideoAnalysisProgress progress={100} pciScore={75} />
               <VideoAnalysisProgress progress={100} pciScore={65} />
               <VideoAnalysisProgress progress={100} pciScore={45} />
               <VideoAnalysisProgress progress={100} pciScore={25} />
+              <hr />
               <VideoAnalysisProgress progress={70} pciScore={65} hasErrors />
             </div>
+            {/* remove */}
+
             <ProjectContentViewContainer />
           </div>
         }

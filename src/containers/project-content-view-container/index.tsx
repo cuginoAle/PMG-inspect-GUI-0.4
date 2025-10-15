@@ -13,6 +13,7 @@ const ProjectContentViewContainer = () => {
       loadingMessage="Loading processing configurations..."
       loadingSize="large"
       data={processingConfigurations.get()}
+      errorTitle="Processing configurations"
     >
       {(processingData) => {
         return (
