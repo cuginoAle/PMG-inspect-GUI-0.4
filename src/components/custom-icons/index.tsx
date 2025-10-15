@@ -4,3 +4,4 @@ export * from './remote-storage';
 export * from './neural-network';
 export * from './three-vert-dots';
 export * from './download';
+export * from './circle';

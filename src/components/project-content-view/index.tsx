@@ -1,5 +1,5 @@
 'use client';
-import { SplitView } from '@/src/components';
+import { SplitView, VideoAnalysisProgress } from 'src/components';
 
 import styles from './style.module.css';
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
@@ -20,6 +20,24 @@ const ProjectContentView = () => {
         proportionalLayout={true}
         left={
           <div className={styles.leftPane}>
+            <div
+              style={{
+                fontSize: '1.7em',
+                display: 'flex',
+                gap: '20px',
+                padding: '10px',
+              }}
+            >
+              <VideoAnalysisProgress progress={60} pciScore={75} />
+              <VideoAnalysisProgress progress={50} pciScore={65} />
+              <VideoAnalysisProgress progress={80} pciScore={45} />
+              <VideoAnalysisProgress progress={40} pciScore={25} />
+              <VideoAnalysisProgress progress={100} pciScore={75} />
+              <VideoAnalysisProgress progress={100} pciScore={65} />
+              <VideoAnalysisProgress progress={100} pciScore={45} />
+              <VideoAnalysisProgress progress={100} pciScore={25} />
+              <VideoAnalysisProgress progress={70} pciScore={65} hasErrors />
+            </div>
             <ProjectContentViewContainer />
           </div>
         }

@@ -1,0 +1,59 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 100px;
+  :global(.circle-progress) {
+    stroke-dashoffset: var(--progress);
+    stroke: var(--colour);
+  }
+
+  &.complete {
+    background-color: var(--colour);
+    color: var(--label-colour);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75) inset;
+
+    .score {
+      top: 50%;
+      font-size: 0.54em;
+    }
+
+    .icon {
+      visibility: hidden;
+    }
+  }
+}
+
+.icon {
+  transform: rotate(-90deg);
+}
+
+.score {
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.45em;
+  font-weight: bold;
+}
+
+.errorIcon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  top: -10%;
+  right: -30%;
+  width: 1.3em;
+  height: 1.3em;
+  font-size: 0.4em;
+  color: red;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid red;
+}

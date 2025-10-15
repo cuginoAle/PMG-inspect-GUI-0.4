@@ -29,3 +29,4 @@ export * from './project-tabbed-view';
 export * from './my-suspense';
 export * from './add-network-button';
 export * from './network-selector';
+export * from './video-analysis-progress';
