@@ -16,27 +16,14 @@ async function fetchProjectList(
   try {
     const res = await fetch(fullUrl);
 
-    // NOTE: this end-point doesn't handle the errors properly
-    // so res.json() may throw an error (trying to parse an html error page)
-    // this would be caught in the catch block below - i.e. it would look like a network error even if the server did respond.
-    // If the server DOES return a json with an error status, then we handle it here
-
     if (!res.ok) {
-      if (res.status === 500) {
-        return Promise.reject({
-          code: res.status,
-          status: 'error',
-          detail: {
-            message: res.statusText,
-          },
-        });
-      }
-      const body = await res.json();
-      return Promise.reject({
-        code: res.status,
+      throw {
+        code: String(res.status),
         status: 'error',
-        detail: body.detail,
-      });
+        detail: {
+          message: res.statusText,
+        },
+      } as FetchError;
     }
 
     const body = await res.json();

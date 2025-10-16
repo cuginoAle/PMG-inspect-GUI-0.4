@@ -13,10 +13,12 @@ const VideoAnalysisProgress = ({
   progress?: number;
   hasErrors?: boolean;
 }) => {
+  const unavailable = pciScore === undefined;
   const fullCircumference = 10 * 6.28; // 10 is the radius of the circle and 2π is the circumference of a circle
   const roundedProgress = progress > 90 && progress < 100 ? 90 : progress; // Cap the progress at 90% if it's between 90 and 100 to avoid full circle overlap
   const cn = classNames(styles.root, {
     [styles.complete]: roundedProgress === 100,
+    [styles.unavailable]: unavailable,
   });
   const customStyle = {
     '--progress': roundedProgress
@@ -28,8 +30,8 @@ const VideoAnalysisProgress = ({
 
   return (
     <div className={cn} style={customStyle}>
-      <CircleIcon className={styles.icon} />
-      <span className={styles.score}>{pciScore}</span>
+      <CircleIcon className={styles.ring} />
+      <span className={styles.score}>{pciScore || '-'}</span>
       {hasErrors && <span className={styles.errorIcon}>!</span>}
     </div>
   );

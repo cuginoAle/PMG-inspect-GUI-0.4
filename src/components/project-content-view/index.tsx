@@ -9,6 +9,7 @@ import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
 import React from 'react';
 import { ProjectContentViewContainer } from '@/src/containers/project-content-view-container';
+import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 
 const ProjectContentView = () => {
   return (
@@ -43,6 +44,8 @@ const ProjectContentView = () => {
               <hr />
               <VideoAnalysisProgress progress={70} pciScore={65} hasErrors />
             </div>
+
+            <ProjectTableViewContainer />
             {/* remove */}
 
             <ProjectContentViewContainer />

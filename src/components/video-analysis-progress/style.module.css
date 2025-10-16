@@ -7,6 +7,7 @@
   height: 1em;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 100px;
+
   :global(.circle-progress) {
     stroke-dashoffset: var(--progress);
     stroke: var(--colour);
@@ -15,20 +16,38 @@
   &.complete {
     background-color: var(--colour);
     color: var(--label-colour);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75) inset;
+    border-radius: 3px;
+
+    font-size: 0.8em;
 
     .score {
       top: 50%;
-      font-size: 0.54em;
+      font-size: 0.52em;
     }
 
-    .icon {
+    .ring {
       visibility: hidden;
+    }
+  }
+
+  &.unavailable {
+    background-color: var(--gray-a5);
+    border-radius: 3px;
+    color: var(--gray-a10);
+
+    font-size: 0.8em;
+
+    .score {
+      font-size: 0.45em;
+    }
+
+    :global(.circle-track) {
+      display: none;
     }
   }
 }
 
-.icon {
+.ring {
   transform: rotate(-90deg);
 }
 

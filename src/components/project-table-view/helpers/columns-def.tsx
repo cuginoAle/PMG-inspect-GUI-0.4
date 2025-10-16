@@ -1,12 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import type { ProjectItem, ProjectParsingState } from '@/src/types';
-import { Flex, Progress, Text, TextProps } from '@radix-ui/themes';
+import { Flex, Text, TextProps } from '@radix-ui/themes';
 import {
   CheckCircledIcon,
   PersonIcon,
   UpdateIcon,
 } from '@radix-ui/react-icons';
-import { PciScoreBox, NeuralNetworkIcon, DownloadIcon } from '@/src/components';
+import {
+  NeuralNetworkIcon,
+  DownloadIcon,
+  VideoAnalysisProgress,
+} from '@/src/components';
 
 const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
   downloading: <DownloadIcon size={1.8} className="downloading" />,
@@ -103,8 +107,8 @@ const columnsDef = [
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
-        <Flex justify="center" gap="1">
-          <PciScoreBox value={value} />
+        <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+          <VideoAnalysisProgress pciScore={value} progress={100} />
         </Flex>
       );
     },
@@ -119,8 +123,8 @@ const columnsDef = [
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
-        <Flex justify="center" gap="1">
-          <PciScoreBox value={value} />
+        <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+          <VideoAnalysisProgress pciScore={value} progress={100} />
         </Flex>
       );
     },
@@ -128,26 +132,22 @@ const columnsDef = [
   columnHelper.accessor((row) => row.pci_score_avg_ai, {
     id: 'pci_score_avg_ai',
     header: () => (
-      <Flex align={'center'} gap="1">
+      <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
         <span>Pci</span>
         <NeuralNetworkIcon size={1.6} />
       </Flex>
     ),
     cell: (info) => {
-      const index = info.row.index;
-      const color = index > 2 ? 'green' : index > 1 ? 'red' : 'yellow';
       const value =
         info.cell.row.index === 1
           ? undefined
           : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
-        <Flex align="center" gap="1">
-          <PciScoreBox value={value} />
-          <Progress
-            color={color}
-            value={index > 2 ? 100 : value ? 30 + Math.random() * 50 : 0} // TODO: replace with actual value
-            size={'1'}
-            radius="medium"
+        <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+          <VideoAnalysisProgress
+            pciScore={value}
+            progress={info.cell.row.index === 2 ? 100 : value}
+            hasErrors={info.cell.row.index === 0}
           />
         </Flex>
       );

@@ -9,22 +9,15 @@ async function fetchProcessingConfiguration(): Promise<
   try {
     const res = await fetch(fullUrl);
 
-    if (!res.ok) {
-      if (res.status === 500) {
-        throw {
-          code: String(res.status),
-          status: 'error',
-          detail: {
-            message: res.statusText,
-          },
-        } as FetchError;
-      }
+    console.log('res', res);
 
-      const body = await res.json();
+    if (!res.ok) {
       throw {
         code: String(res.status),
         status: 'error',
-        detail: body.detail,
+        detail: {
+          message: res.statusText,
+        },
       } as FetchError;
     }
 

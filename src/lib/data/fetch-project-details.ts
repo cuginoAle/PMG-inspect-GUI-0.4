@@ -17,21 +17,13 @@ async function fetchProjectDetails(
   try {
     const res = await fetch(fullUrl);
     if (!res.ok) {
-      if (res.status === 500) {
-        return Promise.reject({
-          code: res.status,
-          status: 'error',
-          detail: {
-            message: res.statusText,
-          },
-        });
-      }
-      const body = await res.json();
-      return Promise.reject({
-        code: res.status,
+      throw {
+        code: String(res.status),
         status: 'error',
-        detail: body.detail,
-      });
+        detail: {
+          message: res.statusText,
+        },
+      } as FetchError;
     }
 
     const body = await res.json();

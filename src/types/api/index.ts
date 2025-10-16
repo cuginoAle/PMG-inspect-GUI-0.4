@@ -16,22 +16,19 @@ type FileType = components['schemas']['FileType'];
 type FileInfo = components['schemas']['FileInfo'] & {
   file_origin?: FileOrigin;
 };
-type Project = components['schemas']['ParseProjectResponse'];
-type ProjectItem = Project['project_items'][number];
-type RoadData = ProjectItem['road_data'];
+type Project = components['schemas']['ProjectInventory'];
+type ProjectItem = Project['items'][keyof Project['items']];
+type RoadData = components['schemas']['RoadData'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
-type ProcessingConfiguration = Record<
-  // TODO: this should come from the OpenAPI!
-  InferenceTypes,
-  components['schemas']['ProcessingConfiguration']
->;
+type GpsData = components['schemas']['GpsPoint'];
+
+type InferenceModel = components['schemas']['InferenceModel'];
 type InferenceTypes = components['schemas']['InferenceType'];
-type Inference = components['schemas']['InferenceConfiguration'];
+type ProcessingConfiguration =
+  components['schemas']['ProcessingConfiguration-Input'];
 
 type ProjectParsingState = Project['project_items'][number]['parsing_status'];
-
-type GpsData = components['schemas']['GpsPoint'];
 
 type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
 

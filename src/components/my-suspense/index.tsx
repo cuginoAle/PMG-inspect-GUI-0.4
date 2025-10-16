@@ -17,7 +17,6 @@ const MySuspense = <T,>({
   loadingSize?: sizeType;
   undefinedDataComponent?: React.ReactNode;
 }) => {
-  console.log('data', data);
   if (!data) {
     return undefinedDataComponent;
   }
