@@ -42,6 +42,11 @@ const ProjectTableView = ({
   const videoUrl = searchParams.get('videoUrl');
   const router = useRouter();
 
+  const projectItems = useMemo(
+    () => Object.values(project.items || {}),
+    [project.items],
+  );
+
   const onRowSelect = useCallback(
     (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
       if (!projectItem) return;
@@ -66,13 +71,15 @@ const ProjectTableView = ({
   );
 
   useEffect(() => {
+    if (!projectItems.length) return;
+
     const selectedRowIndex = Math.max(
-      project?.project_items.findIndex((item) => item.video_url === videoUrl),
+      projectItems.findIndex((item) => item.video_url === videoUrl),
       0,
     );
 
     setRowSelection({ [selectedRowIndex]: true });
-    const item = project?.project_items[selectedRowIndex] as ProjectItem;
+    const item = projectItems[selectedRowIndex] as ProjectItem;
     if (!videoUrl) {
       onRowSelect(item);
     } else {
@@ -83,7 +90,7 @@ const ProjectTableView = ({
         direction: 'vertical',
       });
     }
-  }, [onRowSelect, project?.project_items, videoUrl]);
+  }, [onRowSelect, projectItems, videoUrl]);
 
   const onRowDoubleClick = (projectItem: ProjectItem) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
@@ -94,8 +101,8 @@ const ProjectTableView = ({
 
   const tableData = useMemo(
     // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
-    () => [...project.project_items] as ProjectItem[],
-    [project.project_items],
+    () => [...projectItems] as ProjectItem[],
+    [projectItems],
   );
 
   const table = useReactTable({

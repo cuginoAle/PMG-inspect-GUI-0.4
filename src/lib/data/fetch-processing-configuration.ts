@@ -9,8 +9,6 @@ async function fetchProcessingConfiguration(): Promise<
   try {
     const res = await fetch(fullUrl);
 
-    console.log('res', res);
-
     if (!res.ok) {
       throw {
         code: String(res.status),

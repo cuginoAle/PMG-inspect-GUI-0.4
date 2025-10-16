@@ -16,9 +16,7 @@ const ProjectVideoMetadataContainer = () => {
     return null;
   }
 
-  const selectedVideo = project.detail.project_items.find(
-    (item) => item.video_url === sp.get('videoUrl'),
-  );
+  const selectedVideo = project.detail.items?.[sp.get('videoUrl') || ''];
 
   if (!selectedVideo) {
     return (

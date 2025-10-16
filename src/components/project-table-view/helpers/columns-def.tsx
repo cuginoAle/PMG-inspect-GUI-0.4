@@ -1,48 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import type { ProjectItem, ProjectParsingState } from '@/src/types';
-import { Flex, Text, TextProps } from '@radix-ui/themes';
-import {
-  CheckCircledIcon,
-  PersonIcon,
-  UpdateIcon,
-} from '@radix-ui/react-icons';
-import {
-  NeuralNetworkIcon,
-  DownloadIcon,
-  VideoAnalysisProgress,
-} from '@/src/components';
-
-const parsingMap: Record<ProjectParsingState, React.ReactNode> = {
-  downloading: <DownloadIcon size={1.8} className="downloading" />,
-  parsing: <UpdateIcon width={18} height={18} className="spinning" />,
-  ready: <CheckCircledIcon width={18} height={18} />,
-  download_error: <DownloadIcon size={1.8} />,
-  parsing_error: <UpdateIcon width={18} height={18} />,
-};
-
-const statusColorsMap: Record<ProjectParsingState, TextProps['color']> = {
-  download_error: 'red',
-  downloading: 'blue',
-  parsing: 'blue',
-  parsing_error: 'red',
-  ready: 'green',
-};
-
-const statusTitleMap: Record<ProjectParsingState, string> = {
-  download_error: 'Download error',
-  downloading: 'Dowloading...',
-  parsing: 'Parsing...',
-  parsing_error: 'Parsing error',
-  ready: 'Ready',
-};
-
-const dummyVideoStatuses: ProjectParsingState[] = [
-  'download_error',
-  'ready',
-  'parsing',
-  'parsing_error',
-  'downloading',
-];
+import type { ProjectItem } from '@/src/types';
+import { Flex, Text } from '@radix-ui/themes';
+import { PersonIcon } from '@radix-ui/react-icons';
+import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
+import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 
 const columnHelper = createColumnHelper<ProjectItem>();
 
@@ -62,39 +23,57 @@ const columnsDef = [
       );
     },
   }),
-  columnHelper.accessor((row) => row.road_data.road_name, {
+  columnHelper.accessor((row) => row.road_data?.road_name, {
     id: 'road_name',
     header: 'Road Name',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.road_data.road_surface, {
+  columnHelper.accessor((row) => row.road_data?.road_surface, {
     id: 'road_surface',
     header: 'Surface',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.road_data.road_lanes, {
+  columnHelper.accessor((row) => row.road_data?.road_lanes, {
     id: 'road_lanes',
     header: 'Lanes',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.road_data.road_length, {
+
+  columnHelper.accessor((row) => row.road_data?.road_length, {
     id: 'road_length',
     header: 'Length (m)',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.road_data.road_area, {
+  columnHelper.accessor((row) => row.configuration, {
+    // This should come from another endpoint
+    id: 'configuration',
+    header: 'Configuration',
+    cell: (info) => {
+      // TODO: replace with actual value
+      return (
+        <select>
+          <option>dummy_Pci_01</option>
+          <option>dummy_Pci_02</option>
+          <option>dummy_Pci_03</option>
+          <option>dummy_Pci_04</option>
+        </select>
+      );
+      // info.getValue()
+    },
+  }),
+  columnHelper.accessor((row) => row.road_data?.road_area, {
     id: 'road_area',
     header: 'Area (m²)',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor((row) => row.road_data.road_functional_class, {
+  columnHelper.accessor((row) => row.road_data?.road_functional_class, {
     id: 'road_functional_class',
     header: 'Functional Class',
     cell: (info) => info.getValue(),
   }),
 
-  columnHelper.accessor((row) => row.pci_score_avg_human_inspector, {
-    id: 'pci_score_avg_human',
+  columnHelper.accessor((row) => row.avg_pci_score_human_inspector, {
+    id: 'avg_pci_score_human_inspector',
     header: () => (
       <Flex justify="center" align={'center'} gap="1" width={'100%'}>
         <span>Pci</span>
@@ -102,34 +81,27 @@ const columnsDef = [
       </Flex>
     ),
     cell: (info) => {
-      const value =
-        info.cell.row.index == 1
-          ? undefined
-          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-          <VideoAnalysisProgress pciScore={value} progress={100} />
+          <VideoAnalysisProgress pciScore={info.getValue()} progress={100} />
         </Flex>
       );
     },
   }),
 
-  columnHelper.accessor((row) => row.pci_score_avg_human_qc, {
-    id: 'pci_score_avg_human_qc',
+  columnHelper.accessor((row) => row.avg_pci_score_human_qg, {
+    id: 'avg_pci_score_human_qg',
     header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
     cell: (info) => {
-      const value =
-        info.cell.row.index === 1
-          ? undefined
-          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-          <VideoAnalysisProgress pciScore={value} progress={100} />
+          <VideoAnalysisProgress pciScore={info.getValue()} progress={100} />
         </Flex>
       );
     },
   }),
   columnHelper.accessor((row) => row.pci_score_avg_ai, {
+    // TODO: this data should come from another endpoint
     id: 'pci_score_avg_ai',
     header: () => (
       <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
@@ -138,33 +110,22 @@ const columnsDef = [
       </Flex>
     ),
     cell: (info) => {
-      const value =
-        info.cell.row.index === 1
-          ? undefined
-          : Math.round(10 + Math.random() * 90); // TODO: replace with actual value
       return (
         <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
           <VideoAnalysisProgress
-            pciScore={value}
-            progress={info.cell.row.index === 2 ? 100 : value}
-            hasErrors={info.cell.row.index === 0}
+            pciScore={info.getValue()}
+            progress={undefined}
           />
         </Flex>
       );
     },
   }),
 
-  columnHelper.accessor((row) => row.parsing_status, {
-    id: 'parsing_status',
+  columnHelper.accessor((row) => row.video_status, {
+    id: 'video_status',
     header: () => <span style={{ margin: 'auto' }}>State</span>,
     cell: (info) => {
-      // const status = info.getValue() as ProjectParsingState;
-
-      // TODO: replace with the value above ⬆︎
-      // const keys = Object.keys(parsingMap);
-      // const status = keys[Math.round(Math.random() * 4)] as ProjectParsingState;
-      const status =
-        dummyVideoStatuses[info.row.index % dummyVideoStatuses.length];
+      const status = info.getValue();
       const color = statusColorsMap[status!];
 
       return (

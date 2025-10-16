@@ -17,7 +17,7 @@ type FileInfo = components['schemas']['FileInfo'] & {
   file_origin?: FileOrigin;
 };
 type Project = components['schemas']['ProjectInventory'];
-type ProjectItem = Project['items'][keyof Project['items']];
+type ProjectItem = components['schemas']['VideoCaptureData'];
 type RoadData = components['schemas']['RoadData'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
@@ -28,7 +28,7 @@ type InferenceTypes = components['schemas']['InferenceType'];
 type ProcessingConfiguration =
   components['schemas']['ProcessingConfiguration-Input'];
 
-type ProjectParsingState = Project['project_items'][number]['parsing_status'];
+type ProjectParsingState = components['schemas']['VideoStatus'];
 
 type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
 

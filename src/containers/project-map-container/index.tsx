@@ -50,13 +50,16 @@ const ProjectMapContainer = () => {
       setPathsToDraw(undefined);
       return;
     }
-    const gpsData = selectedProject.project_items.reduce((acc, d, index) => {
-      const key = selectedProject.project_items[index]?.video_url;
-      if (key && d?.gps_points) {
-        acc[key] = [...d.gps_points]; // clone to convert from readonly (ImmutableArray) to mutable array
-      }
-      return acc;
-    }, {} as Record<string, GpsData[]>);
+
+    const gpsData = selectedProject.items
+      ? Object.keys(selectedProject.items).reduce((acc, key) => {
+          const item = selectedProject.items?.[key];
+          if (item?.gps_points) {
+            acc[key] = Object.values(item.gps_points); // clone to convert from readonly (ImmutableArray) to mutable array
+          }
+          return acc;
+        }, {} as Record<string, Immutable<GpsData[]> | null | undefined>)
+      : {};
 
     setPathsToDraw(getMapData(gpsData));
   }, [selectedProject]);
