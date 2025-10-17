@@ -14,7 +14,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Flex, Table, TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
-import { columnsDef } from './helpers/columns-def';
+import { useColumnsDef } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
 import { Project, ProjectItem } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -31,7 +31,7 @@ const ProjectTableView = ({
   onMouseOver?: (projectIterm?: ProjectItem) => void;
   onChange?: (selectedItemIdList: string[] | []) => void;
 }) => {
-  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -47,6 +47,19 @@ const ProjectTableView = ({
     [project.items],
   );
 
+  const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = (e.target as HTMLInputElement).closest(
+      'form',
+    ) as HTMLFormElement;
+    const formData = new FormData(form);
+    const checkedValues = formData.getAll('selected') as string[];
+    setSelectedValues(checkedValues);
+    // setSelectAllChecked(
+    //   selectedValues.length > 0 &&
+    //     selectedValues.length === table.getRowModel().rows.length,
+    // );
+    onChange?.(selectedValues);
+  };
   const onRowSelect = useCallback(
     (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
       if (!projectItem) return;
@@ -107,7 +120,7 @@ const ProjectTableView = ({
 
   const table = useReactTable({
     data: tableData,
-    columns: columnsDef,
+    columns: useColumnsDef(selectedValues),
     state: {
       sorting,
       globalFilter,
@@ -124,21 +137,7 @@ const ProjectTableView = ({
   });
 
   return (
-    <form
-      onChange={(e) => {
-        const form = (e.target as HTMLInputElement).closest(
-          'form',
-        ) as HTMLFormElement;
-        const formData = new FormData(form);
-        const selectedValues = formData.getAll('selected') as string[];
-
-        setSelectAllChecked(
-          selectedValues.length > 0 &&
-            selectedValues.length === table.getRowModel().rows.length,
-        );
-        onChange?.(selectedValues);
-      }}
-    >
+    <form onChange={onFormChange}>
       <Flex direction="column" gap="2" height={'100%'}>
         <div className={styles.searchBox}>
           <TextField.Root
@@ -179,7 +178,10 @@ const ProjectTableView = ({
                           <input
                             title="Select All"
                             type="checkbox"
-                            checked={selectAllChecked}
+                            checked={
+                              selectedValues.length > 0 &&
+                              selectedValues.length === tableData.length
+                            }
                             onChange={() => void 0}
                             onClick={(e) => {
                               tBodyRef.current

@@ -8,6 +8,7 @@ import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useFetchProjectStatus } from '@/src/app/hooks/useFetchProjectStatus';
 
 const DataLoader = () => {
   const sp = useSearchParams();
@@ -19,6 +20,7 @@ const DataLoader = () => {
     processingConfigurations,
     inferenceModelDictionary,
     analysisResults,
+    projectStatus,
   } = useGlobalState();
 
   const selectedProjectSet = selectedProject.set;
@@ -29,8 +31,14 @@ const DataLoader = () => {
 
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
+  const projectStatusData = useFetchProjectStatus(projectPath);
+  const updateProjectStatus = projectStatus.set;
   const processingSettingsData = useFetchProcessingConfiguration();
   const analysisResultsData = useFetchAnalysisResults(projectPath as string);
+
+  useEffect(() => {
+    updateProjectStatus(getResponseIfSuccesful(projectStatusData));
+  }, [projectStatusData, updateProjectStatus]);
 
   useEffect(() => {
     updateAnalysisResults(analysisResultsData);
@@ -52,6 +60,7 @@ const DataLoader = () => {
     updateInferenceModelDictionary(
       processingConfigurationsValue?.inference_model_ids,
     );
+
     updateProcessingConfigurations(processingSettingsData);
   }, [
     updateProcessingConfigurations,

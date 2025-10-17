@@ -17,6 +17,7 @@ type FileInfo = components['schemas']['FileInfo'] & {
   file_origin?: FileOrigin;
 };
 type Project = components['schemas']['ProjectInventory'];
+type ProjectStatus = components['schemas']['ProjectStatus'];
 type ProjectItem = components['schemas']['VideoCaptureData'];
 type RoadData = components['schemas']['RoadData'];
 type CameraData = components['schemas']['CameraData'];
@@ -32,6 +33,10 @@ type ProjectParsingState = components['schemas']['VideoStatus'];
 
 type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
 
+type GetProjectStatusResponse =
+  | { status: 'ok'; detail: ProjectStatus }
+  | FetchError
+  | LoadingState;
 type GetFilesListResponse =
   | { status: 'ok'; detail: Array<FileInfo> }
   | FetchError
@@ -92,6 +97,7 @@ export type {
   GetFilesListResponse,
   GetProcessingConfigurationResponse,
   GetProjectResponse,
+  GetProjectStatusResponse,
   GpsData,
   Inference,
   InferenceModelDict,
@@ -101,6 +107,7 @@ export type {
   Network, // TODO: update with OpenApi spec
   ProcessingConfiguration,
   Project,
+  ProjectStatus,
   ProjectItem,
   ProjectParsingState,
   ResponseType,

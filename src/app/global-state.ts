@@ -8,11 +8,13 @@ import {
   GetProjectResponse,
   InferenceModelDict,
   ProcessingConfiguration,
+  ProjectStatus,
 } from '@/src/types';
 
 type GlobalState = {
   filesList?: GetFilesListResponse;
   selectedProject?: GetProjectResponse;
+  projectStatus?: ProjectStatus;
   hoveredVideoUrl?: string;
   userPreferences?: {
     unit?: 'metric' | 'imperial';
