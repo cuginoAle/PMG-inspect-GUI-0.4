@@ -8,10 +8,8 @@ import { PinBottomIcon, PinTopIcon, RocketIcon } from '@radix-ui/react-icons';
 import { useGlobalState } from '@/src/app/global-state';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { DummyAnalysisResult } from '@/src/types';
-import { Immutable } from '@hookstate/core';
-
 type PresetsTabsContentProps = {
-  data: Immutable<DummyAnalysisResult[]>;
+  data: DummyAnalysisResult[];
   onChange?: (data: FormData) => void;
   onSave?: (data: FormData) => void;
   onReset?: (tabId: string) => void;
@@ -26,15 +24,18 @@ const PresetsTabsContent = ({
 }: PresetsTabsContentProps) => {
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';
-  const { selectedVideoUrlList, selectedInferenceSettingId, selectedProject } =
-    useGlobalState();
-  const selectedProjectValue = getResponseIfSuccesful(selectedProject.get());
-  const selectedVideoUrlListValue = selectedVideoUrlList.get();
-  const selectedInferenceSettingIdValue =
-    selectedInferenceSettingId.get() || '';
+  const selectedVideoUrlList = useGlobalState(
+    (state) => state.selectedVideoUrlList,
+  );
+  const selectedInferenceSettingIdValue = useGlobalState(
+    (state) => state.selectedInferenceSettingId,
+  );
+  const selectedProjectData = useGlobalState((state) => state.selectedProject);
+
+  const selectedProjectValue = getResponseIfSuccesful(selectedProjectData);
 
   const selectedVideos =
-    selectedVideoUrlListValue?.[selectedInferenceSettingIdValue] || [];
+    selectedVideoUrlList?.[selectedInferenceSettingIdValue || ''] || [];
 
   const [tableExpanded, setTableExpanded] = React.useState(true);
 

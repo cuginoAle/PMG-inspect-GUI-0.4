@@ -1,12 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import type { ProjectItem } from '@/src/types';
+import type { AugmentedProjectItemData } from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
 
-const columnHelper = createColumnHelper<ProjectItem>();
+const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
 const useColumnsDef = (selectedValues: string[]) => {
   return useMemo(
@@ -49,27 +49,27 @@ const useColumnsDef = (selectedValues: string[]) => {
         cell: (info) => info.getValue(),
       }),
       columnHelper.accessor((row) => row.configuration, {
-        // This should come from another endpoint
-        id: 'configuration',
-        header: 'Configuration',
+        id: 'configurations',
+        header: 'Configurations',
         cell: (info) => {
-          // TODO: replace with actual value
+          const configs = Object.values(info.getValue() || {});
           return (
             <select
+              onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
-              value={info.getValue()}
+              value={configs[0]?.processing_configuration_name || ''} // <<= TODO: the selected configuration needs to be persisted on the client side!!!
               disabled={
                 selectedValues.length > 0 &&
                 !selectedValues.includes(info.row.original.video_url)
               }
             >
-              <option>dummy_Pci_01</option>
-              <option>dummy_Pci_02</option>
-              <option>dummy_Pci_03</option>
-              <option>dummy_Pci_04</option>
+              {configs.map((config) => (
+                <option key={config.processing_configuration_name}>
+                  {config.label}
+                </option>
+              ))}
             </select>
           );
-          // info.getValue()
         },
       }),
       columnHelper.accessor((row) => row.road_data?.road_area, {

@@ -34,14 +34,15 @@ const PresetsDropDown = ({
 }: {
   onSelect: (preset: InferenceTypes) => void;
 }) => {
-  const { processingConfigurations } = useGlobalState();
-  const processingConfigurationsFetchState = processingConfigurations.get();
+  const processingConfigurationsFetchState = useGlobalState(
+    (state) => state.processingConfigurations,
+  );
   const processingConfigurationsValue = getResponseIfSuccesful(
     processingConfigurationsFetchState,
   );
 
   if (!processingConfigurationsValue) return null;
-  const presets = processingConfigurationsValue.processing_configurations;
+  const presets = processingConfigurationsValue.inference_configurations;
 
   return (
     <div className={styles.root}>
@@ -58,7 +59,7 @@ const PresetsDropDown = ({
         <DropdownMenu.Content>
           {(Object.keys(presets) as InferenceTypes[]).map((key) => (
             <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
-              {presets[key]?.label}
+              {presets[key]?.inference_model_name}
             </DropdownMenu.Item>
           ))}
         </DropdownMenu.Content>

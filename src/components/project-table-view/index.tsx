@@ -16,10 +16,9 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { useColumnsDef } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
-import { Project, ProjectItem } from '@/src/types';
+import { AugmentedProject, AugmentedProjectItemData } from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
-import { Immutable } from '@hookstate/core';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 
 const ProjectTableView = ({
@@ -27,8 +26,8 @@ const ProjectTableView = ({
   onMouseOver,
   onChange,
 }: {
-  project: Immutable<Project>;
-  onMouseOver?: (projectIterm?: ProjectItem) => void;
+  project: AugmentedProject;
+  onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
   onChange?: (selectedItemIdList: string[] | []) => void;
 }) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -54,16 +53,13 @@ const ProjectTableView = ({
     const formData = new FormData(form);
     const checkedValues = formData.getAll('selected') as string[];
     setSelectedValues(checkedValues);
-    // setSelectAllChecked(
-    //   selectedValues.length > 0 &&
-    //     selectedValues.length === table.getRowModel().rows.length,
-    // );
+
     onChange?.(selectedValues);
   };
   const onRowSelect = useCallback(
-    (projectItem?: ProjectItem | Immutable<ProjectItem>) => {
+    (projectItem?: AugmentedProjectItemData) => {
       if (!projectItem) return;
-      const item = projectItem as ProjectItem;
+      const item = projectItem;
       const urlSearchParams = new URLSearchParams(searchParams.toString());
       urlSearchParams.set('videoUrl', item.video_url);
 
@@ -92,7 +88,7 @@ const ProjectTableView = ({
     );
 
     setRowSelection({ [selectedRowIndex]: true });
-    const item = projectItems[selectedRowIndex] as ProjectItem;
+    const item = projectItems[selectedRowIndex] as AugmentedProjectItemData;
     if (!videoUrl) {
       onRowSelect(item);
     } else {
@@ -105,7 +101,7 @@ const ProjectTableView = ({
     }
   }, [onRowSelect, projectItems, videoUrl]);
 
-  const onRowDoubleClick = (projectItem: ProjectItem) => {
+  const onRowDoubleClick = (projectItem: AugmentedProjectItemData) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
     urlSearchParams.set('videoUrl', projectItem.video_url);
 
@@ -114,7 +110,7 @@ const ProjectTableView = ({
 
   const tableData = useMemo(
     // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
-    () => [...projectItems] as ProjectItem[],
+    () => [...projectItems] as AugmentedProjectItemData[],
     [projectItems],
   );
 
@@ -143,7 +139,9 @@ const ProjectTableView = ({
           <TextField.Root
             placeholder="Search all columns..."
             value={globalFilter ?? ''}
-            onChange={(e) => setGlobalFilter(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setGlobalFilter(e.target.value)
+            }
             size={'3'}
           >
             <TextField.Slot>
@@ -213,7 +211,7 @@ const ProjectTableView = ({
                   }}
                   className={row.getIsSelected() ? styles.selected : ''}
                   onMouseEnter={() => {
-                    onMouseOver?.(row.original);
+                    onMouseOver?.(row.original as AugmentedProjectItemData);
                   }}
                   onMouseLeave={() => {
                     onMouseOver?.(undefined);

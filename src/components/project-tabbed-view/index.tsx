@@ -12,26 +12,24 @@ import {
   InferenceModelDict,
   ProcessingConfiguration,
 } from '@/src/types';
-import { ImmutableObject } from '@hookstate/core';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 
 const ProjectTabbedView = ({
   processingData,
   analysisData,
 }: {
-  processingData: ImmutableObject<{
+  processingData: {
     processing_configurations: ProcessingConfiguration;
     inference_model_ids: InferenceModelDict;
-  }>;
-  analysisData: ImmutableObject<DummyAnalysisResult[]>;
+  };
+  analysisData: DummyAnalysisResult[];
 }) => {
-  const [currentAnalysisData, setCurrentAnalysisData] = React.useState<
-    DummyAnalysisResult[]
-  >(analysisData as DummyAnalysisResult[]);
+  const [currentAnalysisData, setCurrentAnalysisData] =
+    React.useState<DummyAnalysisResult[]>(analysisData);
 
-  const { selectedInferenceSettingId } = useGlobalState();
-
-  const selectedInferenceSettingIdValue = selectedInferenceSettingId.get();
+  const selectedInferenceSettingIdValue = useGlobalState(
+    (state) => state.selectedInferenceSettingId,
+  );
 
   const sp = useSearchParams();
   const projectPath = sp.get('path') || '';

@@ -6,19 +6,22 @@ import {
 } from '@/src/components';
 
 const ProjectContentViewContainer = () => {
-  const { analysisResults, processingConfigurations } = useGlobalState();
+  const analysisResults = useGlobalState((state) => state.analysisResults);
+  const processingConfigurations = useGlobalState(
+    (state) => state.processingConfigurations,
+  );
 
   return (
     <MySuspense
       loadingMessage="Loading processing configurations..."
       loadingSize="large"
-      data={processingConfigurations.get()}
+      data={processingConfigurations}
       errorTitle="Processing configurations"
     >
       {(processingData) => {
         return (
           <MySuspense
-            data={analysisResults.get()}
+            data={analysisResults}
             errorTitle="Analysis results"
             loadingMessage="Loading analysis results..."
             loadingSize="large"

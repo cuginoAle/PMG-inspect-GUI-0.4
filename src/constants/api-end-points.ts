@@ -21,8 +21,10 @@ const GET_VIDEO_METADATA_ENDPOINT = 'api/v1/parse_video';
 const GET_ANALYSIS_RESULTS_ENDPOINT = 'api/v1/get_analysis_results';
 const GET_PROCESSING_CONFIGURATION_ENDPOINT = 'api/v1/get_inference_models';
 const GET_PROJECT_STATUS_ENDPOINT = 'api/v1/get_project_status';
+const GET_INFERENCE_MODELS = 'api/v1/get_inference_models';
 
 const ENDPOINT = {
+  INFERENCE_MODELS: `${BASE}/${GET_INFERENCE_MODELS}`,
   PROCESSING_CONFIGURATION: `${BASE}/${GET_PROCESSING_CONFIGURATION_ENDPOINT}`,
   PROJECT: {
     LIST: `${BASE}/${GET_FILE_LIST_ENDPOINT}`,

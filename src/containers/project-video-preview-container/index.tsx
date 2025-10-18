@@ -9,8 +9,7 @@ import React from 'react';
 const ProjectVideoPreviewContainer = () => {
   const searchParams = useSearchParams();
   const videoUrl = searchParams.get('videoUrl') || undefined;
-  const gState = useGlobalState();
-  const selectedProject = gState.selectedProject.get();
+  const selectedProject = useGlobalState((state) => state.selectedProject);
 
   if (!selectedProject || !videoUrl) {
     return null;

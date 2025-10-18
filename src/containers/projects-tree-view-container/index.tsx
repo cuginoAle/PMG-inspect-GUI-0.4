@@ -7,12 +7,11 @@ const ProjectsTreeViewContainer = ({
 }: {
   projectPath?: string;
 }) => {
-  const { filesList } = useGlobalState();
-  const projects = filesList.get();
+  const filesList = useGlobalState((state) => state.filesList);
 
   return (
     <MySuspense
-      data={projects}
+      data={filesList}
       errorTitle="Failed to load projects!"
       loadingMessage="Loading projects..."
       loadingSize="large"
