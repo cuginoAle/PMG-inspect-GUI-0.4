@@ -16,7 +16,7 @@ const DataLoader = () => {
   const {
     setSelectedProject,
     setFilesList,
-    setProcessingConfigurations,
+    setProcessingConfigurationsDefinition,
     setAnalysisResults,
     setProjectStatus,
   } = useGlobalState((state) => state);
@@ -24,7 +24,7 @@ const DataLoader = () => {
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
   const projectStatusData = useFetchProjectStatus(projectPath);
-  const processingSettingsData = useFetchProcessingConfiguration();
+  const processingConfigurations = useFetchProcessingConfiguration();
   const analysisResultsData = useFetchAnalysisResults(projectPath as string);
 
   // Sync data to global state
@@ -39,8 +39,8 @@ const DataLoader = () => {
   useEffect(() => setFilesList(projects), [setFilesList, projects]);
   useEffect(() => setSelectedProject(project), [project, setSelectedProject]);
   useEffect(
-    () => setProcessingConfigurations(processingSettingsData),
-    [setProcessingConfigurations, processingSettingsData],
+    () => setProcessingConfigurationsDefinition(processingConfigurations),
+    [setProcessingConfigurationsDefinition, processingConfigurations],
   );
 
   return null;

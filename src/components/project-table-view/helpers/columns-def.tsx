@@ -1,5 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import type { AugmentedProjectItemData } from '@/src/types';
+import type {
+  AugmentedProjectItemData,
+  ProcessingConfiguration,
+} from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
@@ -8,7 +11,10 @@ import { useMemo } from 'react';
 
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
-const useColumnsDef = (selectedValues: string[]) => {
+const useColumnsDef = (
+  selectedValues: string[],
+  processingConfiguration: ProcessingConfiguration[],
+) => {
   return useMemo(
     () => [
       columnHelper.display({
@@ -48,23 +54,29 @@ const useColumnsDef = (selectedValues: string[]) => {
         header: 'Length (m)',
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor((row) => row.configuration, {
+      columnHelper.accessor((row) => row.selected_configuration, {
         id: 'configurations',
         header: 'Configurations',
         cell: (info) => {
-          const configs = Object.values(info.getValue() || {});
           return (
             <select
+              data-video-url={info.row.original.video_url}
               onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
-              value={configs[0]?.processing_configuration_name || ''} // <<= TODO: the selected configuration needs to be persisted on the client side!!!
+              value={
+                info.row.original.selected_configuration ||
+                processingConfiguration[0]?.processing_configuration_name
+              }
               disabled={
                 selectedValues.length > 0 &&
                 !selectedValues.includes(info.row.original.video_url)
               }
             >
-              {configs.map((config) => (
-                <option key={config.processing_configuration_name}>
+              {processingConfiguration.map((config) => (
+                <option
+                  value={config.processing_configuration_name}
+                  key={config.processing_configuration_name}
+                >
                   {config.label}
                 </option>
               ))}

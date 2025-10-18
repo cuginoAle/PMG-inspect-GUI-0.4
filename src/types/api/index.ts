@@ -18,7 +18,7 @@ type FileInfo = components['schemas']['FileInfo'] & {
 };
 type Project = components['schemas']['ProjectInventory'];
 type AugmentedProjectItemData = ProjectItem & {
-  configuration?: Array<ProcessingConfiguration>;
+  selected_configuration?: components['schemas']['ProcessingConfiguration-Input']['processing_configuration_name'];
 };
 type AugmentedProject = Project & {
   items: Record<string, AugmentedProjectItemData>;

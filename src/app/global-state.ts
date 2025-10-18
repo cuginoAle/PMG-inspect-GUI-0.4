@@ -13,7 +13,6 @@ import {
 } from '@/src/types';
 
 type GlobalState = {
-  inferenceModels?: GetInferenceModelResponse;
   filesList?: GetFilesListResponse;
   selectedProject?: GetProjectResponse;
   projectStatus?: GetProjectStatusResponse;
@@ -24,27 +23,23 @@ type GlobalState = {
     localCacheSizeLimitInGB?: number;
   };
   analysisResults?: GetAnalysisResultResponse;
-  processingConfigurations?: GetProcessingConfigurationResponse;
+  processingConfigurationsDefinition?: GetProcessingConfigurationResponse;
   editedProcessingConfigurations?: ProcessingConfiguration;
-  selectedInferenceSettingId?: string;
-  selectedVideoUrlList?: Record<string, string[]>; // { [inferenceSettingId: string]: videoUrlList as string[] }
+  inferenceModels?: GetInferenceModelResponse;
 };
 
 type GlobalStateActions = {
-  setInferenceModels: (inferenceModels?: InferenceModel) => void;
   setFilesList: (filesList?: GetFilesListResponse) => void;
   setSelectedProject: (project?: GetProjectResponse) => void;
   setProjectStatus: (status?: GetProjectStatusResponse) => void;
   setHoveredVideoUrl: (url?: string) => void;
   setUserPreferences: (prefs?: GlobalState['userPreferences']) => void;
   setAnalysisResults: (results?: GetAnalysisResultResponse) => void;
-  setProcessingConfigurations: (
+  setProcessingConfigurationsDefinition: (
     configs?: GetProcessingConfigurationResponse,
   ) => void;
   setEditedProcessingConfigurations: (config?: ProcessingConfiguration) => void;
-  setSelectedInferenceSettingId: (id?: string) => void;
-  setSelectedVideoUrlList: (list?: Record<string, string[]>) => void;
-  mergeSelectedVideoUrlList: (list: Record<string, string[]>) => void;
+  setInferenceModels: (inferenceModels?: GetInferenceModelResponse) => void;
 };
 
 type GlobalStore = GlobalState & GlobalStateActions;
@@ -59,10 +54,9 @@ const useGlobalState = create<GlobalStore>()(
       hoveredVideoUrl: undefined,
       userPreferences: undefined,
       analysisResults: undefined,
-      processingConfigurations: undefined,
+      processingConfigurationsDefinition: undefined,
       editedProcessingConfigurations: undefined,
       selectedInferenceSettingId: undefined,
-      selectedVideoUrlList: undefined,
       inferenceModels: undefined,
 
       // Actions
@@ -72,18 +66,12 @@ const useGlobalState = create<GlobalStore>()(
       setHoveredVideoUrl: (hoveredVideoUrl) => set({ hoveredVideoUrl }),
       setUserPreferences: (userPreferences) => set({ userPreferences }),
       setAnalysisResults: (analysisResults) => set({ analysisResults }),
-      setProcessingConfigurations: (processingConfigurations) =>
-        set({ processingConfigurations }),
+      setProcessingConfigurationsDefinition: (
+        processingConfigurationsDefinition,
+      ) => set({ processingConfigurationsDefinition }),
       setEditedProcessingConfigurations: (editedProcessingConfigurations) =>
         set({ editedProcessingConfigurations }),
-      setSelectedInferenceSettingId: (selectedInferenceSettingId) =>
-        set({ selectedInferenceSettingId }),
-      setSelectedVideoUrlList: (selectedVideoUrlList) =>
-        set({ selectedVideoUrlList }),
-      mergeSelectedVideoUrlList: (list) =>
-        set((state) => ({
-          selectedVideoUrlList: { ...state.selectedVideoUrlList, ...list },
-        })),
+      setInferenceModels: (inferenceModels) => set({ inferenceModels }),
     }),
     { name: 'Inspect-globalState' },
   ),

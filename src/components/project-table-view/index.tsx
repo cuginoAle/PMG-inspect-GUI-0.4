@@ -16,19 +16,27 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import styles from './style.module.css';
 import { useColumnsDef } from './helpers/columns-def';
 import { getColumnSortIcon } from './helpers/columnSortIcon';
-import { AugmentedProject, AugmentedProjectItemData } from '@/src/types';
+import {
+  AugmentedProject,
+  AugmentedProjectItemData,
+  ProcessingConfiguration,
+} from '@/src/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 
 const ProjectTableView = ({
+  processingConfiguration = [],
   project,
   onMouseOver,
-  onChange,
+  onRowSelected,
+  onConfigurationChange,
 }: {
+  processingConfiguration?: ProcessingConfiguration[];
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
-  onChange?: (selectedItemIdList: string[] | []) => void;
+  onRowSelected?: (selectedItemIdList: string[] | []) => void;
+  onConfigurationChange?: (videoUrl: string, selectedValue: string) => void;
 }) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
@@ -51,11 +59,24 @@ const ProjectTableView = ({
       'form',
     ) as HTMLFormElement;
     const formData = new FormData(form);
-    const checkedValues = formData.getAll('selected') as string[];
-    setSelectedValues(checkedValues);
+    const target = e.target as HTMLElement;
 
-    onChange?.(selectedValues);
+    // Handle different input types
+    switch (target.tagName) {
+      case 'INPUT':
+        const checkedValues = formData.getAll('selected') as string[];
+
+        setSelectedValues(checkedValues);
+        onRowSelected?.(checkedValues);
+        break;
+      case 'SELECT':
+        const videoUrl = target.dataset['videoUrl'];
+        const selectedValue = (target as HTMLSelectElement).value;
+        onConfigurationChange?.(videoUrl!, selectedValue);
+        break;
+    }
   };
+
   const onRowSelect = useCallback(
     (projectItem?: AugmentedProjectItemData) => {
       if (!projectItem) return;
@@ -116,7 +137,7 @@ const ProjectTableView = ({
 
   const table = useReactTable({
     data: tableData,
-    columns: useColumnsDef(selectedValues),
+    columns: useColumnsDef(selectedValues, processingConfiguration),
     state: {
       sorting,
       globalFilter,

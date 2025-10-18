@@ -7,11 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { getFileIconType } from '@/src/helpers/get-file-icon-type';
 import { removeFileExtension } from '@/src/helpers/remove-file-extension';
 import { useGlobalState } from '@/src/app/global-state';
-import {
-  DummyAnalysisResult,
-  InferenceModelDict,
-  ProcessingConfiguration,
-} from '@/src/types';
+import { ProcessingConfiguration } from '@/src/types';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 
 const ProjectTabbedView = ({
@@ -38,26 +34,19 @@ const ProjectTabbedView = ({
   const label = useMemo(() => removeFileExtension(projectPath), [projectPath]);
 
   return (
-    <Tabs.Root
-      value={
-        selectedInferenceSettingIdValue || currentAnalysisData?.[0]?.setting_id
-      }
-      orientation="horizontal"
-    >
-      <Flex direction={'column'} gap={'6'} height={'100%'}>
-        {projectPath && (
-          <FileLogoTitle
-            as="div"
-            fileType={fileType}
-            label={label}
-            size="medium"
-            componentId="project-analysis-dashboard-file-title"
-          />
-        )}
+    <Flex direction={'column'} gap={'6'} height={'100%'}>
+      {projectPath && (
+        <FileLogoTitle
+          as="div"
+          fileType={fileType}
+          label={label}
+          size="medium"
+          componentId="project-analysis-dashboard-file-title"
+        />
+      )}
 
-        <ProjectTableViewContainer />
-      </Flex>
-    </Tabs.Root>
+      <ProjectTableViewContainer />
+    </Flex>
   );
 };
 
