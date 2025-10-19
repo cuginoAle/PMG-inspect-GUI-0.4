@@ -1,43 +1,51 @@
+import { getVideoId } from '@/src/components/project-table-view/helpers/getVideoId';
 import { AugmentedProject, Project } from '@/src/types';
 import { useEffect, useState } from 'react';
+import { Cache } from '@/src/lib/indexeddb';
 
-const augmentProject = (project: Project): AugmentedProject => {
+const savedConfigsIDBKey = 'saved_video_configurations';
+const savedConfigsIDBStore = 'savedConfigs';
+
+const augmentProject = async (project: Project): Promise<AugmentedProject> => {
   // Retrieve saved configurations from localStorage
-  const savedVideoConfigurations: Record<string, string> = JSON.parse(
-    window.localStorage.getItem('saved_video_configurations') || '{}',
+  const savedVideoConfigurations = await Cache.get<Record<string, string>>(
+    savedConfigsIDBStore,
+    savedConfigsIDBKey,
   );
 
   // Augment project items with selected configurations
   return {
     ...project,
-    items: Object.entries(project?.items || {}).reduce(
-      (acc, [key, item]) => ({
+    items: Object.entries(project?.items || {}).reduce((acc, [key, item]) => {
+      const videoId = getVideoId({
+        projectName: project.project_name,
+        videoUrl: item.video_url,
+      });
+      return {
         ...acc,
         [key]: {
           ...item,
-          selected_configuration: savedVideoConfigurations[key],
+          selected_configuration: savedVideoConfigurations?.[videoId],
         },
-      }),
-      {},
-    ),
+      };
+    }, {}),
   };
 };
 
-const handleConfigChange = (videoUrl: string, selectedValue: string) => {
+const handleConfigChange = async (videoId: string, selectedValue: string) => {
   // Save the selected configuration to localStorage
-  const savedVideoConfigurations: Record<string, string> = JSON.parse(
-    window.localStorage.getItem('saved_video_configurations') || '{}',
+  // Retrieve saved configurations from localStorage
+  const savedVideoConfigurations = await Cache.get<Record<string, string>>(
+    savedConfigsIDBStore,
+    savedConfigsIDBKey,
   );
 
   const newConfigurations = {
     ...savedVideoConfigurations,
-    [videoUrl]: selectedValue,
+    [videoId]: selectedValue,
   };
 
-  window.localStorage.setItem(
-    'saved_video_configurations',
-    JSON.stringify(newConfigurations),
-  );
+  return Cache.set(savedConfigsIDBStore, savedConfigsIDBKey, newConfigurations);
 };
 
 const TransformProjectData = ({
@@ -50,31 +58,32 @@ const TransformProjectData = ({
     onConfigurationChange,
   }: {
     augmentedProject: AugmentedProject;
-    onConfigurationChange: (videoUrl: string, selectedValue: string) => void;
+    onConfigurationChange: (videoId: string, selectedValue: string) => void;
   }) => React.ReactNode;
 }) => {
-  const [data, setData] = useState<AugmentedProject>(augmentProject(project));
+  const [data, setData] = useState<AugmentedProject>();
 
   useEffect(() => {
     // Re-augment project data when the project prop changes
-    setData(augmentProject(project));
+    augmentProject(project).then((data) => setData(data));
   }, [project]);
 
-  const onConfigurationChange = (videoUrl: string, selectedValue: string) => {
+  const onConfigurationChange = (videoId: string, selectedValue: string) => {
     // Handle configuration change
-    handleConfigChange(videoUrl, selectedValue);
-    // Update localStorage and re-augment project data
-    setData(augmentProject(project));
+    handleConfigChange(videoId, selectedValue).then(() => {
+      // Update localStorage and re-augment project data
+      augmentProject(project).then(setData);
+    });
   };
 
-  return (
+  return data ? (
     <>
       {children({
         augmentedProject: data,
         onConfigurationChange,
       })}
     </>
-  );
+  ) : null;
 };
 
 export { TransformProjectData };

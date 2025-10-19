@@ -24,6 +24,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
+import { getVideoId } from './helpers/getVideoId';
 
 const ProjectTableView = ({
   processingConfiguration = [],
@@ -36,7 +37,7 @@ const ProjectTableView = ({
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
   onRowSelected?: (selectedItemIdList: string[] | []) => void;
-  onConfigurationChange?: (videoUrl: string, selectedValue: string) => void;
+  onConfigurationChange?: (videoId: string, selectedValue: string) => void;
 }) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
@@ -70,9 +71,14 @@ const ProjectTableView = ({
         onRowSelected?.(checkedValues);
         break;
       case 'SELECT':
-        const videoUrl = target.dataset['videoUrl'];
+        const videoUrl = target.dataset['videoId'] as string;
+        const videoId = getVideoId({
+          projectName: project.project_name,
+          videoUrl: videoUrl,
+        });
         const selectedValue = (target as HTMLSelectElement).value;
-        onConfigurationChange?.(videoUrl!, selectedValue);
+
+        onConfigurationChange?.(videoId, selectedValue);
         break;
     }
   };
@@ -135,9 +141,15 @@ const ProjectTableView = ({
     [projectItems],
   );
 
+  console.log('project', project);
+
   const table = useReactTable({
     data: tableData,
-    columns: useColumnsDef(selectedValues, processingConfiguration),
+    columns: useColumnsDef({
+      projectId: project.project_name,
+      selectedValues,
+      processingConfiguration,
+    }),
     state: {
       sorting,
       globalFilter,

@@ -1,7 +1,8 @@
 // Lightweight IndexedDB helper with safe SSR/unsupported fallbacks
 // DB: PMGCache, Stores: projectDetails, videoMetadata
 
-type StoreName = 'projectDetails' | 'videoMetadata';
+const Stores = ['projectDetails', 'videoMetadata', 'savedConfigs'] as const;
+type StoreName = (typeof Stores)[number];
 
 const DB_NAME = 'PMGCache';
 const DB_VERSION = 1;
@@ -21,12 +22,11 @@ function openDB(): Promise<IDBDatabase> {
 
     request.onupgradeneeded = () => {
       const db = request.result;
-      if (!db.objectStoreNames.contains('projectDetails')) {
-        db.createObjectStore('projectDetails', { keyPath: 'key' });
-      }
-      if (!db.objectStoreNames.contains('videoMetadata')) {
-        db.createObjectStore('videoMetadata', { keyPath: 'key' });
-      }
+      Stores.forEach((storeName) => {
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: 'key' });
+        }
+      });
     };
 
     request.onsuccess = () => resolve(request.result);

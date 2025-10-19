@@ -11,10 +11,15 @@ import { useMemo } from 'react';
 
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
-const useColumnsDef = (
-  selectedValues: string[],
-  processingConfiguration: ProcessingConfiguration[],
-) => {
+const useColumnsDef = ({
+  projectId,
+  selectedValues,
+  processingConfiguration,
+}: {
+  projectId: string;
+  selectedValues: string[];
+  processingConfiguration: ProcessingConfiguration[];
+}) => {
   return useMemo(
     () => [
       columnHelper.display({
@@ -60,7 +65,7 @@ const useColumnsDef = (
         cell: (info) => {
           return (
             <select
-              data-video-url={info.row.original.video_url}
+              data-video-id={info.row.original.video_url}
               onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
               value={
