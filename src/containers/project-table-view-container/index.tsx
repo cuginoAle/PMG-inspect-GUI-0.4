@@ -45,7 +45,10 @@ const ProjectTableViewContainer = () => {
           undefinedDataComponent="No project data available"
         >
           {(project) => (
-            <TransformProjectData project={project}>
+            <TransformProjectData
+              project={project}
+              selectedVideoUrlList={selectedVideoUrlList}
+            >
               {({ augmentedProject, onConfigurationChange }) => (
                 <ProjectTableView
                   processingConfiguration={Object.values(

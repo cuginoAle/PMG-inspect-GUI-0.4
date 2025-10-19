@@ -39,7 +39,7 @@ const ProjectTableView = ({
   onRowSelected?: (selectedItemIdList: string[] | []) => void;
   onConfigurationChange?: (videoId: string, selectedValue: string) => void;
 }) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedRowCheckbox, setSelectedRowCheckbox] = useState<string[]>([]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -67,7 +67,7 @@ const ProjectTableView = ({
       case 'INPUT':
         const checkedValues = formData.getAll('selected') as string[];
 
-        setSelectedValues(checkedValues);
+        setSelectedRowCheckbox(checkedValues);
         onRowSelected?.(checkedValues);
         break;
       case 'SELECT':
@@ -147,7 +147,7 @@ const ProjectTableView = ({
     data: tableData,
     columns: useColumnsDef({
       projectId: project.project_name,
-      selectedValues,
+      selectedValues: selectedRowCheckbox,
       processingConfiguration,
     }),
     state: {
@@ -210,8 +210,8 @@ const ProjectTableView = ({
                             title="Select All"
                             type="checkbox"
                             checked={
-                              selectedValues.length > 0 &&
-                              selectedValues.length === tableData.length
+                              selectedRowCheckbox.length > 0 &&
+                              selectedRowCheckbox.length === tableData.length
                             }
                             onChange={() => void 0}
                             onClick={(e) => {

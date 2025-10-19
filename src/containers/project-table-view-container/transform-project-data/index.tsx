@@ -3,14 +3,13 @@ import { AugmentedProject, Project } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
 
-const savedConfigsIDBKey = 'saved_video_configurations';
+// const savedConfigsIDBKey = 'saved_video_configurations';
 const savedConfigsIDBStore = 'savedConfigs';
 
 const augmentProject = async (project: Project): Promise<AugmentedProject> => {
   // Retrieve saved configurations from localStorage
-  const savedVideoConfigurations = await Cache.get<Record<string, string>>(
+  const savedVideoConfigurations = await Cache.getAll<Record<string, string>>(
     savedConfigsIDBStore,
-    savedConfigsIDBKey,
   );
 
   // Augment project items with selected configurations
@@ -32,27 +31,21 @@ const augmentProject = async (project: Project): Promise<AugmentedProject> => {
   };
 };
 
-const handleConfigChange = async (videoId: string, selectedValue: string) => {
-  // Save the selected configuration to localStorage
-  // Retrieve saved configurations from localStorage
-  const savedVideoConfigurations = await Cache.get<Record<string, string>>(
-    savedConfigsIDBStore,
-    savedConfigsIDBKey,
-  );
-
-  const newConfigurations = {
-    ...savedVideoConfigurations,
-    [videoId]: selectedValue,
-  };
-
-  return Cache.set(savedConfigsIDBStore, savedConfigsIDBKey, newConfigurations);
-};
+const handleConfigChange = async (videoIds: string[], selectedValue: string) =>
+  Cache.batch(async () => {
+    console.log('videoIds', videoIds);
+    return videoIds.forEach(async (videoId) => {
+      await Cache.set(savedConfigsIDBStore, videoId, selectedValue);
+    });
+  });
 
 const TransformProjectData = ({
   project,
+  selectedVideoUrlList,
   children,
 }: {
   project: Project;
+  selectedVideoUrlList: string[];
   children: ({
     augmentedProject,
     onConfigurationChange,
@@ -69,8 +62,16 @@ const TransformProjectData = ({
   }, [project]);
 
   const onConfigurationChange = (videoId: string, selectedValue: string) => {
+    const videoIds = selectedVideoUrlList?.length
+      ? selectedVideoUrlList.map((videoUrl) =>
+          getVideoId({
+            projectName: project.project_name,
+            videoUrl,
+          }),
+        )
+      : [videoId];
     // Handle configuration change
-    handleConfigChange(videoId, selectedValue).then(() => {
+    handleConfigChange(videoIds, selectedValue).then(() => {
       // Update localStorage and re-augment project data
       augmentProject(project).then(setData);
     });

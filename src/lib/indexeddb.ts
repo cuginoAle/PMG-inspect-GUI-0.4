@@ -144,6 +144,35 @@ async function idbGet<T = unknown>(
   });
 }
 
+async function idbGetAll<T = unknown>(
+  store: StoreName,
+): Promise<Record<string, T>> {
+  if (!isBrowserWithIDB()) {
+    return {};
+  }
+  const db = await openDB();
+
+  return new Promise<Record<string, T>>((resolve, reject) => {
+    const tx = db.transaction(store, 'readonly');
+    const os = tx.objectStore(store);
+    const req = os.getAll();
+
+    req.onsuccess = () => {
+      const records = req.result as CacheRecord<T>[];
+      const result: Record<string, T> = {};
+
+      records.forEach((record) => {
+        result[record.key] = record.value;
+      });
+
+      resolve(result);
+    };
+
+    req.onerror = () =>
+      reject(req.error ?? new Error('IndexedDB getAll error'));
+  });
+}
+
 async function idbSet<T = unknown>(
   store: StoreName,
   key: string,
@@ -194,6 +223,7 @@ async function batch<T>(fn: () => Promise<T> | T): Promise<T> {
 
 export const Cache = {
   get: idbGet,
+  getAll: idbGetAll,
   set: idbSet,
   onChange,
   batch,
