@@ -2,28 +2,18 @@
 import { useGlobalState } from '@/src/app/global-state';
 import { ProjectTableView } from '@/src/components/project-table-view';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
-import { ProjectItem } from '@/src/types';
 import { MySuspense } from '@/src/components/my-suspense';
 import { useState } from 'react';
 import { TransformProjectData } from './transform-project-data';
 
 const ProjectTableViewContainer = () => {
   const selectedProject = useGlobalState((state) => state.selectedProject);
+  const projectStatus = useGlobalState((state) => state.projectStatus);
   const [selectedVideoUrlList, setSelectedVideoUrlList] = useState<string[]>(
     [],
   );
 
   console.log('selectedVideoUrlList', selectedVideoUrlList);
-
-  const projectStatus = useGlobalState((state) => state.projectStatus);
-
-  const setHoveredVideoUrl = useGlobalState(
-    (state) => state.setHoveredVideoUrl,
-  );
-
-  const handleSetHoveredVideoUrl = (projectItem?: ProjectItem) => {
-    setHoveredVideoUrl(projectItem?.video_url);
-  };
 
   if (!selectedProject) {
     return <NoProjectSelected />;
@@ -49,17 +39,23 @@ const ProjectTableViewContainer = () => {
               project={project}
               selectedVideoUrlList={selectedVideoUrlList}
             >
-              {({ augmentedProject, onConfigurationChange }) => (
-                <ProjectTableView
-                  processingConfiguration={Object.values(
-                    status.processing_configurations || {},
-                  )}
-                  project={augmentedProject}
-                  onMouseOver={handleSetHoveredVideoUrl}
-                  onRowSelected={setSelectedVideoUrlList}
-                  onConfigurationChange={onConfigurationChange}
-                />
-              )}
+              {({
+                augmentedProject,
+                onConfigurationChange,
+                handleSetHoveredVideoUrl,
+              }) => {
+                return (
+                  <ProjectTableView
+                    processingConfiguration={Object.values(
+                      status.processing_configurations || {},
+                    )}
+                    project={augmentedProject}
+                    onMouseOver={handleSetHoveredVideoUrl}
+                    onRowSelected={setSelectedVideoUrlList}
+                    onConfigurationChange={onConfigurationChange}
+                  />
+                );
+              }}
             </TransformProjectData>
           )}
         </MySuspense>

@@ -31,7 +31,7 @@ const statusTitleMap: Record<ProjectParsingState, string> = {
   download_error: 'Download error',
   downloading: 'Dowloading...',
   download_ready: 'Download ready',
-  road_data: 'Enqueued for processing',
+  road_data: 'Enqueued for downloading',
   road_data_error: 'Error processing road data',
   media_data_error: 'Error processing media data',
   camera_data_error: 'Error processing camera data',

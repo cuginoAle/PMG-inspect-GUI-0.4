@@ -13,13 +13,17 @@ const DataLoader = () => {
   const sp = useSearchParams();
   const projectPath = sp.get('path');
 
-  const {
-    setSelectedProject,
-    setFilesList,
-    setProcessingConfigurationsDefinition,
-    setAnalysisResults,
-    setProjectStatus,
-  } = useGlobalState((state) => state);
+  const setSelectedProject = useGlobalState(
+    (state) => state.setSelectedProject,
+  );
+  const setFilesList = useGlobalState((state) => state.setFilesList);
+  const setProcessingConfigurationsDefinition = useGlobalState(
+    (state) => state.setProcessingConfigurationsDefinition,
+  );
+  const setAnalysisResults = useGlobalState(
+    (state) => state.setAnalysisResults,
+  );
+  const setProjectStatus = useGlobalState((state) => state.setProjectStatus);
 
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();

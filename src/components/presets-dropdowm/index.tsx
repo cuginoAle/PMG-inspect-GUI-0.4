@@ -35,7 +35,7 @@ const PresetsDropDown = ({
   onSelect: (preset: InferenceTypes) => void;
 }) => {
   const processingConfigurationsFetchState = useGlobalState(
-    (state) => state.processingConfigurations,
+    (state) => state.processingConfigurationsDefinition,
   );
   const processingConfigurationsValue = getResponseIfSuccesful(
     processingConfigurationsFetchState,

@@ -2,7 +2,7 @@
 import { useGlobalState } from '@/src/app/global-state';
 import { GpsData } from '@/src/types';
 import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { useSearchParams } from 'next/navigation';
@@ -34,8 +34,8 @@ const ProjectMapContainer = () => {
   const videoUrl = sp.get('videoUrl') || undefined;
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
-  const { hoveredVideoUrl, selectedProject: selectedProjectData } =
-    useGlobalState((state) => state);
+  const hoveredVideoUrl = useGlobalState((state) => state.hoveredVideoUrl);
+  const selectedProjectData = useGlobalState((state) => state.selectedProject);
 
   const selectedProject = getResponseIfSuccesful(selectedProjectData);
 
@@ -61,11 +61,20 @@ const ProjectMapContainer = () => {
     setPathsToDraw(getMapData(gpsData));
   }, [selectedProject]);
 
+  // Memoize the highlight path to prevent unnecessary re-renders
+  const highlightPath = useMemo(
+    () => hoveredVideoUrl || videoUrl,
+    [hoveredVideoUrl, videoUrl],
+  );
+
+  // Throttle the highlight path updates to max once every 200ms
+  // const throttledHighlightPath = useThrottledValue(highlightPath, 200);
+
   useDrawPaths({
     mapRef: mapBoxRef,
     styleLoaded,
     pathsToDraw,
-    highlightPath: hoveredVideoUrl || videoUrl,
+    highlightPath: highlightPath,
   });
 
   if (!pathsToDraw) return null;

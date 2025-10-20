@@ -1,7 +1,9 @@
 import { getVideoId } from '@/src/components/project-table-view/helpers/getVideoId';
-import { AugmentedProject, Project } from '@/src/types';
+import { AugmentedProject, Project, ProjectItem } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
+import { useGlobalState } from '@/src/app/global-state';
+import { useDebounce } from '@/src/hooks/useDebounce';
 
 const savedConfigsIDBStore = 'savedConfigs';
 
@@ -50,9 +52,18 @@ const TransformProjectData = ({
   }: {
     augmentedProject: AugmentedProject;
     onConfigurationChange: (videoId: string, selectedValue: string) => void;
+    handleSetHoveredVideoUrl: (projectItem?: ProjectItem) => void;
   }) => React.ReactNode;
 }) => {
   const [data, setData] = useState<AugmentedProject>();
+  const setHoveredVideoUrl = useDebounce(
+    useGlobalState((state) => state.setHoveredVideoUrl),
+    100,
+  );
+
+  const handleSetHoveredVideoUrl = (projectItem?: ProjectItem) => {
+    setHoveredVideoUrl(projectItem?.video_url);
+  };
 
   useEffect(() => {
     // Re-augment project data when the project prop changes
@@ -80,6 +91,7 @@ const TransformProjectData = ({
       {children({
         augmentedProject: data,
         onConfigurationChange,
+        handleSetHoveredVideoUrl,
       })}
     </>
   ) : null;
