@@ -34,8 +34,8 @@ const ProjectMapContainer = () => {
   const videoUrl = sp.get('videoUrl') || undefined;
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
-  const hoveredVideoUrl = useGlobalState((state) => state.hoveredVideoUrl);
-  const selectedProjectData = useGlobalState((state) => state.selectedProject);
+  const { hoveredVideoUrl, selectedProject: selectedProjectData } =
+    useGlobalState((state) => state);
 
   const selectedProject = getResponseIfSuccesful(selectedProjectData);
 

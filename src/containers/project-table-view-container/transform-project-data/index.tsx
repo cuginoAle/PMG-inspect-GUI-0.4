@@ -3,7 +3,6 @@ import { AugmentedProject, Project } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
 
-// const savedConfigsIDBKey = 'saved_video_configurations';
 const savedConfigsIDBStore = 'savedConfigs';
 
 const augmentProject = async (project: Project): Promise<AugmentedProject> => {
@@ -33,7 +32,6 @@ const augmentProject = async (project: Project): Promise<AugmentedProject> => {
 
 const handleConfigChange = async (videoIds: string[], selectedValue: string) =>
   Cache.batch(async () => {
-    console.log('videoIds', videoIds);
     return videoIds.forEach(async (videoId) => {
       await Cache.set(savedConfigsIDBStore, videoId, selectedValue);
     });

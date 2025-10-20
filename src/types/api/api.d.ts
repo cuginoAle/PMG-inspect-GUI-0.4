@@ -460,7 +460,7 @@ export interface components {
          * FunctionalClassType
          * @enum {string}
          */
-        FunctionalClassType: "none" | "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
+        FunctionalClassType: "invalid_value" | "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
         /** GpsPoint */
         GpsPoint: {
             /** Latitude */
@@ -682,24 +682,24 @@ export interface components {
         /** RoadData */
         RoadData: {
             /** Road Name */
-            road_name: string;
+            road_name?: string | null;
             /** Road Section */
-            road_section: string;
+            road_section?: string | null;
             /** Road From */
-            road_from: string;
+            road_from?: string | null;
             /** Road To */
-            road_to: string;
+            road_to?: string | null;
             /** Road Length */
-            road_length: number;
+            road_length?: number | null;
             /** Road Width */
-            road_width: number;
+            road_width?: number | null;
             /** Road Area */
-            road_area: number;
-            road_functional_class: components["schemas"]["FunctionalClassType"];
-            road_surface: components["schemas"]["SurfaceType"];
+            road_area?: number | null;
+            road_functional_class?: components["schemas"]["FunctionalClassType"] | null;
+            road_surface?: components["schemas"]["SurfaceType"] | null;
             /** Road Lanes */
-            road_lanes: number;
-            road_shoulder?: components["schemas"]["ShoulderType"];
+            road_lanes?: number | null;
+            road_shoulder?: components["schemas"]["ShoulderType"] | null;
         };
         /**
          * SamplerType
@@ -710,12 +710,12 @@ export interface components {
          * ShoulderType
          * @enum {string}
          */
-        ShoulderType: "none" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "vg";
+        ShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "vg";
         /**
          * SurfaceType
          * @enum {string}
          */
-        SurfaceType: "none" | "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
+        SurfaceType: "invalid_value" | "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -731,7 +731,7 @@ export interface components {
             video_url: string;
             /** Video File */
             video_file?: string | null;
-            /** @default enqueued */
+            /** @default road_data */
             video_status: components["schemas"]["VideoStatus"] | null;
             road_data: components["schemas"]["RoadData"] | null;
             media_data?: components["schemas"]["MediaData"] | null;
@@ -749,7 +749,7 @@ export interface components {
          * VideoStatus
          * @enum {string}
          */
-        VideoStatus: "enqueued" | "road_data_error" | "downloading" | "download_error" | "download_ready" | "media_data_error" | "camera_data_error" | "gps_points_error" | "ready";
+        VideoStatus: "road_data" | "road_data_error" | "downloading" | "download_error" | "download_ready" | "media_data_error" | "camera_data_error" | "gps_points_error" | "ready";
     };
     responses: never;
     parameters: never;
