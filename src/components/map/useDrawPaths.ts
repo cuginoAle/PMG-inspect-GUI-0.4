@@ -7,8 +7,8 @@ import mapboxgl, {
 
 type PathsToDraw = Record<string, LngLatLike[]>;
 
-const baseWidth = 30;
-const baseZoom = 17;
+const baseWidth = 5;
+const baseZoom = 15;
 const baseHighligthedWidth = 80;
 const baseHighlightedZoom = 17;
 

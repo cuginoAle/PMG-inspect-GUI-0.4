@@ -6,10 +6,12 @@ import { useDebounce } from '@/src/hooks/useDebounce';
 import React from 'react';
 
 const STANDARD_MAP_STYLE = 'mapbox://styles/mapbox/standard';
+const FADED_MAP_STYLE = 'mapbox://styles/cuginoale/cmgzb37ku001c01qxgtd077kd';
 const SATELLITE_MAP_STYLE = 'mapbox://styles/mapbox/satellite';
 
 const MAP_STYLE = {
   standard: STANDARD_MAP_STYLE,
+  faded: FADED_MAP_STYLE,
   satellite: SATELLITE_MAP_STYLE,
 };
 
@@ -26,7 +28,7 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current as HTMLElement,
-        style: MAP_STYLE.standard,
+        style: MAP_STYLE.faded,
         center: [-74.0242, 40.6941],
         zoom: 10.12,
       });
