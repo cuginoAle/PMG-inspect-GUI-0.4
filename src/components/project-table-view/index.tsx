@@ -143,8 +143,6 @@ const ProjectTableView = ({
     [projectItems],
   );
 
-  console.log('project', project);
-
   const table = useReactTable({
     data: tableData,
     columns: useColumnsDef({

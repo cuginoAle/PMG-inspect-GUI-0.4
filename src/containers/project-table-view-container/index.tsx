@@ -16,8 +16,6 @@ const ProjectTableViewContainer = () => {
     [],
   );
 
-  console.log('selectedVideoUrlList', selectedVideoUrlList);
-
   if (!selectedProject) {
     return <NoProjectSelected />;
   }

@@ -146,7 +146,6 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
     // Auto fit/pan after drawing
     if (bounds && totalPoints > 0) {
-      console.log('fitBounds');
       if (totalPoints === 1 && firstCoord) {
         // Single point: center without changing zoom
         map.setCenter(firstCoord);
@@ -284,8 +283,6 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       if (normalizedPath.length === 0) {
         return;
       }
-
-      console.log('panToPath');
 
       if (normalizedPath.length === 1) {
         const firstPoint = normalizedPath[0];

@@ -27,9 +27,11 @@ const transformMetadata = (
     </span>
   );
 
-  const modifyDate = dateTimeFormat
-    .format(new Date(metadata['modify_date'] as number))
-    .split(', ');
+  const modifyDate = metadata['modify_date']
+    ? dateTimeFormat
+        .format(new Date(metadata['modify_date'] as number))
+        .split(', ')
+    : ['N/A', '-'];
 
   transformed['modify_date'] = (
     <span>
