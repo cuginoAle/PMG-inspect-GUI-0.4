@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { TransformProjectData } from './transform-project-data';
 
 const ProjectTableViewContainer = () => {
+  const setVideoUrlToDrawOnTheMap = useGlobalState(
+    (state) => state.setVideoUrlToDrawOnTheMap,
+  );
   const selectedProject = useGlobalState((state) => state.selectedProject);
   const projectStatus = useGlobalState((state) => state.projectStatus);
   const [selectedVideoUrlList, setSelectedVideoUrlList] = useState<string[]>(
@@ -51,8 +54,11 @@ const ProjectTableViewContainer = () => {
                     )}
                     project={augmentedProject}
                     onMouseOver={handleSetHoveredVideoUrl}
-                    onRowSelected={setSelectedVideoUrlList}
+                    onRowCheckbox={setSelectedVideoUrlList}
                     onConfigurationChange={onConfigurationChange}
+                    onRowClick={(item) =>
+                      setVideoUrlToDrawOnTheMap(item?.video_url)
+                    }
                   />
                 );
               }}

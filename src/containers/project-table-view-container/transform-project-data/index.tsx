@@ -58,7 +58,7 @@ const TransformProjectData = ({
   const [data, setData] = useState<AugmentedProject>();
   const setHoveredVideoUrl = useDebounce(
     useGlobalState((state) => state.setHoveredVideoUrl),
-    100,
+    200,
   );
 
   const handleSetHoveredVideoUrl = (projectItem?: ProjectItem) => {

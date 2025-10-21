@@ -4,6 +4,8 @@ import { useRef, useEffect } from 'react';
 import styles from './style.module.css';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import React from 'react';
+import { IconButton } from '@radix-ui/themes';
+import { CornersIcon } from '@radix-ui/react-icons';
 
 const STANDARD_MAP_STYLE = 'mapbox://styles/mapbox/standard';
 const FADED_MAP_STYLE = 'mapbox://styles/cuginoale/cmgzb37ku001c01qxgtd077kd';
@@ -17,10 +19,15 @@ const MAP_STYLE = {
 
 interface MapProps {
   onStyleLoaded?: (loaded: boolean) => void;
+  showZoomOutButton?: boolean;
+  onZoomOutButtonClick?: () => void;
 }
 
 const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
-  ({ onStyleLoaded }: MapProps, ref) => {
+  (
+    { onStyleLoaded, showZoomOutButton, onZoomOutButtonClick }: MapProps,
+    ref,
+  ) => {
     const mapRef = useRef<mapboxgl.Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -69,7 +76,24 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
       };
     }, [debouncedResize]);
 
-    return <div className={styles.root} ref={mapContainerRef} />;
+    return (
+      <div className={styles.root}>
+        {showZoomOutButton && (
+          <IconButton
+            variant="solid"
+            color="amber"
+            className={styles.zoomOutButton}
+            title="Zoom out"
+            onClick={() => {
+              onZoomOutButtonClick?.();
+            }}
+          >
+            <CornersIcon width={24} height={24} />
+          </IconButton>
+        )}
+        <div className={styles.mapContainer} ref={mapContainerRef} />
+      </div>
+    );
   },
 );
 

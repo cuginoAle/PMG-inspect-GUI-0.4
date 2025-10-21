@@ -9,7 +9,6 @@ import {
   GetProjectStatusResponse,
   GetInferenceModelResponse,
   ProcessingConfiguration,
-  InferenceModel,
 } from '@/src/types';
 
 type GlobalState = {
@@ -26,6 +25,7 @@ type GlobalState = {
   processingConfigurationsDefinition?: GetProcessingConfigurationResponse;
   editedProcessingConfigurations?: ProcessingConfiguration;
   inferenceModels?: GetInferenceModelResponse;
+  videoUrlToDrawOnTheMap?: string;
 };
 
 type GlobalStateActions = {
@@ -40,6 +40,7 @@ type GlobalStateActions = {
   ) => void;
   setEditedProcessingConfigurations: (config?: ProcessingConfiguration) => void;
   setInferenceModels: (inferenceModels?: GetInferenceModelResponse) => void;
+  setVideoUrlToDrawOnTheMap: (url?: string) => void;
 };
 
 type GlobalStore = GlobalState & GlobalStateActions;
@@ -58,6 +59,7 @@ const useGlobalState = create<GlobalStore>()(
       editedProcessingConfigurations: undefined,
       selectedInferenceSettingId: undefined,
       inferenceModels: undefined,
+      videoUrlToDrawOnTheMap: undefined,
 
       // Actions
       setFilesList: (filesList) => set({ filesList }),
@@ -72,6 +74,8 @@ const useGlobalState = create<GlobalStore>()(
       setEditedProcessingConfigurations: (editedProcessingConfigurations) =>
         set({ editedProcessingConfigurations }),
       setInferenceModels: (inferenceModels) => set({ inferenceModels }),
+      setVideoUrlToDrawOnTheMap: (videoUrlToDrawOnTheMap) =>
+        set({ videoUrlToDrawOnTheMap }),
     }),
     { name: 'Inspect-globalState' },
   ),

@@ -34,10 +34,19 @@ const ProjectMapContainer = () => {
   const videoUrl = sp.get('videoUrl') || undefined;
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
+  const videoUrlToDrawOnTheMap = useGlobalState(
+    (state) => state.videoUrlToDrawOnTheMap,
+  );
+  const setVideoUrlToDrawOnTheMap = useGlobalState(
+    (state) => state.setVideoUrlToDrawOnTheMap,
+  );
   const hoveredVideoUrl = useGlobalState((state) => state.hoveredVideoUrl);
   const selectedProjectData = useGlobalState((state) => state.selectedProject);
 
   const selectedProject = getResponseIfSuccesful(selectedProjectData);
+
+  const selectedVideo =
+    videoUrlToDrawOnTheMap && selectedProject?.items?.[videoUrlToDrawOnTheMap];
 
   const mapBoxRef = useRef<mapboxgl.Map | null>(null);
   const [styleLoaded, setStyleLoaded] = useState(false);
@@ -67,18 +76,33 @@ const ProjectMapContainer = () => {
     [hoveredVideoUrl, videoUrl],
   );
 
-  // Throttle the highlight path updates to max once every 200ms
-  // const throttledHighlightPath = useThrottledValue(highlightPath, 200);
-
-  useDrawPaths({
+  const { panToPath } = useDrawPaths({
     mapRef: mapBoxRef,
     styleLoaded,
     pathsToDraw,
     highlightPath: highlightPath,
   });
 
+  useEffect(() => {
+    if (!pathsToDraw) return;
+    if (selectedVideo && selectedVideo.gps_points) {
+      const gpsPointsArray = Object.values(selectedVideo.gps_points);
+      const data = getMapData({ [videoUrlToDrawOnTheMap]: gpsPointsArray });
+      data && panToPath({ pathData: Object.values(data)[0], padding: 100 });
+    } else {
+      panToPath({ pathData: Object.values(pathsToDraw).flat() });
+    }
+  }, [selectedVideo, videoUrlToDrawOnTheMap, pathsToDraw, panToPath]);
+
   if (!pathsToDraw) return null;
-  return <Map ref={mapBoxRef} onStyleLoaded={setStyleLoaded} />;
+  return (
+    <Map
+      showZoomOutButton={Boolean(videoUrlToDrawOnTheMap)}
+      onZoomOutButtonClick={setVideoUrlToDrawOnTheMap}
+      ref={mapBoxRef}
+      onStyleLoaded={setStyleLoaded}
+    />
+  );
 };
 
 export { ProjectMapContainer };

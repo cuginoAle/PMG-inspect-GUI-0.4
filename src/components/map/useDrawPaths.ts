@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import mapboxgl, {
   DataDrivenPropertyValueSpecification,
   LngLatLike,
@@ -7,17 +7,19 @@ import mapboxgl, {
 
 type PathsToDraw = Record<string, LngLatLike[]>;
 
-const baseWidth = 5;
-const baseZoom = 15;
-const baseHighligthedWidth = 80;
-const baseHighlightedZoom = 17;
+const baseWidth = 4;
+const baseZoom = 16;
+const baseHighligthedWidth = 10;
+
+const maxZoomLevel = 16;
 
 const exponentinalLineWidth: DataDrivenPropertyValueSpecification<number> = {
   type: 'exponential',
   base: 2,
   stops: [
-    [0, baseWidth * Math.pow(2, 0 - baseZoom)],
-    [30, baseWidth * Math.pow(2, 30 - baseZoom)],
+    [0, baseWidth],
+    [13, baseWidth],
+    [22, 2 * Math.pow(2, 22 - baseZoom)],
   ],
 };
 
@@ -26,8 +28,9 @@ const exponentinalHighligthedLineWidth: DataDrivenPropertyValueSpecification<num
     type: 'exponential',
     base: 2,
     stops: [
-      [0, baseHighligthedWidth * Math.pow(2, 0 - baseHighlightedZoom)],
-      [30, baseHighligthedWidth * Math.pow(2, 30 - baseHighlightedZoom)],
+      [0, baseHighligthedWidth],
+      [13, baseHighligthedWidth],
+      [22, 2 * Math.pow(2, 22 - baseZoom)],
     ],
   };
 
@@ -143,6 +146,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
     // Auto fit/pan after drawing
     if (bounds && totalPoints > 0) {
+      console.log('fitBounds');
       if (totalPoints === 1 && firstCoord) {
         // Single point: center without changing zoom
         map.setCenter(firstCoord);
@@ -249,13 +253,68 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#ff0000',
+          'line-color': '#ffc53d',
           'line-opacity': 0.8,
           'line-width': exponentinalHighligthedLineWidth,
         },
       });
     }
   }, [props.styleLoaded, props.highlightPath, props.pathsToDraw, props.mapRef]);
+
+  const panToPath = useCallback(
+    ({
+      pathData,
+      padding = 30,
+    }: {
+      pathData?: LngLatLike[];
+      padding?: number;
+    }) => {
+      if (!props.mapRef.current) {
+        return;
+      }
+
+      const map = props.mapRef.current;
+
+      if (!pathData || pathData.length === 0) {
+        return;
+      }
+
+      const normalizedPath = pathData.map(normalizeCoord).filter(isFiniteCoord);
+
+      if (normalizedPath.length === 0) {
+        return;
+      }
+
+      console.log('panToPath');
+
+      if (normalizedPath.length === 1) {
+        const firstPoint = normalizedPath[0];
+        if (firstPoint) {
+          map.easeTo({
+            center: firstPoint,
+            zoom: Math.min(map.getZoom(), maxZoomLevel),
+            duration: 1000,
+          });
+        }
+        return;
+      }
+
+      const firstPoint = normalizedPath[0];
+      if (!firstPoint) return;
+
+      const bounds = normalizedPath
+        .slice(1)
+        .reduce(
+          (b, coord) => b.extend(coord),
+          new mapboxgl.LngLatBounds(firstPoint, firstPoint),
+        );
+
+      map.fitBounds(bounds, { padding, duration: 1000, maxZoom: maxZoomLevel });
+    },
+    [props.mapRef],
+  );
+
+  return { panToPath };
 };
 
 export type { PathsToDraw };

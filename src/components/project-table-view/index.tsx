@@ -30,13 +30,15 @@ const ProjectTableView = ({
   processingConfiguration = [],
   project,
   onMouseOver,
-  onRowSelected,
+  onRowCheckbox,
+  onRowClick,
   onConfigurationChange,
 }: {
   processingConfiguration?: ProcessingConfiguration[];
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
-  onRowSelected?: (selectedItemIdList: string[] | []) => void;
+  onRowCheckbox?: (selectedItemIdList: string[] | []) => void;
+  onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
   onConfigurationChange?: (videoId: string, selectedValue: string) => void;
 }) => {
   const [selectedRowCheckbox, setSelectedRowCheckbox] = useState<string[]>([]);
@@ -68,7 +70,7 @@ const ProjectTableView = ({
         const checkedValues = formData.getAll('selected') as string[];
 
         setSelectedRowCheckbox(checkedValues);
-        onRowSelected?.(checkedValues);
+        onRowCheckbox?.(checkedValues);
         break;
       case 'SELECT':
         const videoUrl = target.dataset['videoId'] as string;
@@ -252,6 +254,7 @@ const ProjectTableView = ({
                   onClick={() => {
                     row.toggleSelected(true);
                     onRowSelect?.(row.original);
+                    onRowClick?.(row.original);
                   }}
                   onDoubleClick={() => {
                     onRowDoubleClick(row.original);
