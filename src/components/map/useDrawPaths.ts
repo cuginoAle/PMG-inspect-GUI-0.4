@@ -252,7 +252,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#ffc53d',
+          'line-color': '#ffb404',
           'line-opacity': 0.8,
           'line-width': exponentinalHighligthedLineWidth,
         },

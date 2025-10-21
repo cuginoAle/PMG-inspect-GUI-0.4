@@ -109,10 +109,11 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
+          const value = Math.round(Math.random() * 100);
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
               <VideoAnalysisProgress
-                pciScore={info.getValue()}
+                pciScore={value} // TODO: this data should come from another endpoint
                 progress={100}
               />
             </Flex>
@@ -124,12 +125,10 @@ const useColumnsDef = ({
         id: 'avg_pci_score_human_qg',
         header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
         cell: (info) => {
+          const value = Math.round(Math.random() * 100);
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisProgress
-                pciScore={info.getValue()}
-                progress={100}
-              />
+              <VideoAnalysisProgress pciScore={value} progress={100} />
             </Flex>
           );
         },
@@ -144,12 +143,11 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
+          const value = Math.round(Math.random() * 60) + 40;
+          const progress = Math.min(100, Math.round(Math.random() * 70) + 50);
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisProgress
-                pciScore={info.getValue()}
-                progress={undefined}
-              />
+              <VideoAnalysisProgress pciScore={value} progress={progress} />
             </Flex>
           );
         },

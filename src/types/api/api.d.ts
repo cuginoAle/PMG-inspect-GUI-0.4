@@ -28,7 +28,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Inference Models */
+        /**
+         * Get Inference Models
+         * @description ## Info
+         *     Returns *list[InferenceModels]*, Inference model is pointed by **ProcessingConfiguration.inferences**
+         *     using inference_model_name property.
+         */
         get: operations["get_inference_models_api_v1_get_inference_models_get"];
         put?: never;
         post?: never;
@@ -48,7 +53,7 @@ export interface paths {
         /**
          * Get Processing Configurations
          * @description ## Info
-         *     Returns **default** processing_configurations that are copied to each new project.
+         *     Returns *list[ProcessingConfiguration]* that are the **default** processing_configurations, copied to each new project.
          */
         get: operations["get_processing_configurations_api_v1_get_processing_configurations_get"];
         put?: never;
@@ -74,6 +79,8 @@ export interface paths {
          *     - processing_done = true | false
          *     - **video_status** = dict[video_url: str, **VideoStatus**]
          *     - **processing_configurations** = dict[processing_configuration_name: str, ProcessingConfiguration]
+         *     ## Errors
+         *     - **HTTP_428_PRECONDITION_REQUIRED**: project not parsed yet
          */
         get: operations["get_project_status_api_v1_get_project_status_get"];
         put?: never;
@@ -139,7 +146,11 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Delete Project Processing Configuration */
+        /**
+         * Delete Project Processing Configuration
+         * @description ## Info
+         *     Delete a processing configuration for a project.
+         */
         delete: operations["delete_project_processing_configuration_api_v1_delete_project_processing_configuration_delete"];
         options?: never;
         head?: never;
@@ -158,9 +169,11 @@ export interface paths {
         /**
          * Get Video Pci Scores
          * @description ## Info
-         *     Do not calculate any new inference, just collect data from db. It will:
+         *     Returns data collected from db (no processing done). It will:
          *     - select video by video_url and frames applying sampler option specified in processing_configuration
          *     - search **db.pci_score_collection** by video_url, frame_index, processing_configuration_id
+         *     ## Errors
+         *     - **HTTP_428_PRECONDITION_REQUIRED**: video_data_capture not parsed or, if sampler_type==DistanceSampler, gps_points missing
          */
         post: operations["get_video_pci_scores_api_v1_get_video_pci_scores_post"];
         delete?: never;
@@ -186,7 +199,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/process_images": {
+    "/api/v1/process_image": {
         parameters: {
             query?: never;
             header?: never;
@@ -195,11 +208,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /**
-         * Process Images
-         * @description ## TO BE IMPLEMENTED!!!
-         */
-        post: operations["process_images_api_v1_process_images_post"];
+        /** Process Image */
+        post: operations["process_image_api_v1_process_image_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -590,6 +600,15 @@ export interface components {
             /** Data */
             data: string;
         };
+        /** ProcessImage */
+        ProcessImage: {
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
+            };
+            /** Image */
+            image: string;
+        };
         /** ProcessingConfiguration */
         "ProcessingConfiguration-Input": {
             /** Processing Configuration Name */
@@ -700,6 +719,12 @@ export interface components {
             /** Road Lanes */
             road_lanes?: number | null;
             road_shoulder?: components["schemas"]["ShoulderType"] | null;
+            /** Qc Pci Gauge Min */
+            qc_pci_gauge_min?: number | null;
+            /** Qc Pci Gauge Max */
+            qc_pci_gauge_max?: number | null;
+            /** Inspector Pci */
+            inspector_pci?: number | null;
         };
         /**
          * SamplerType
@@ -710,7 +735,7 @@ export interface components {
          * ShoulderType
          * @enum {string}
          */
-        ShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "vg";
+        ShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "curbed" | "vg";
         /**
          * SurfaceType
          * @enum {string}
@@ -731,7 +756,7 @@ export interface components {
             video_url: string;
             /** Video File */
             video_file?: string | null;
-            /** @default road_data */
+            /** @default road_data_ready */
             video_status: components["schemas"]["VideoStatus"] | null;
             road_data: components["schemas"]["RoadData"] | null;
             media_data?: components["schemas"]["MediaData"] | null;
@@ -740,16 +765,12 @@ export interface components {
             gps_points?: {
                 [key: string]: components["schemas"]["GpsPoint"];
             } | null;
-            /** Avg Pci Score Human Inspector */
-            avg_pci_score_human_inspector?: number | null;
-            /** Avg Pci Score Human Qg */
-            avg_pci_score_human_qg?: number | null;
         };
         /**
          * VideoStatus
          * @enum {string}
          */
-        VideoStatus: "road_data" | "road_data_error" | "downloading" | "download_error" | "download_ready" | "media_data_error" | "camera_data_error" | "gps_points_error" | "ready";
+        VideoStatus: "road_data_ready" | "road_data_error" | "downloading" | "download_error" | "download_ready" | "media_data_error" | "camera_data_error" | "gps_points_error" | "ready";
     };
     responses: never;
     parameters: never;
@@ -913,7 +934,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": boolean;
                 };
             };
             /** @description Validation Error */
@@ -945,7 +966,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": boolean;
                 };
             };
             /** @description Validation Error */
@@ -1032,20 +1053,16 @@ export interface operations {
             };
         };
     };
-    process_images_api_v1_process_images_post: {
+    process_image_api_v1_process_image_post: {
         parameters: {
-            query: {
-                image: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": {
-                    [key: string]: components["schemas"]["InferenceConfiguration-Input"];
-                };
+                "application/json": components["schemas"]["ProcessImage"];
             };
         };
         responses: {
@@ -1055,7 +1072,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProcessingResults"][];
+                    "application/json": components["schemas"]["ProcessingResults"];
                 };
             };
             /** @description Validation Error */
