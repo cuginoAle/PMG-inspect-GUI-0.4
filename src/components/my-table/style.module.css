@@ -1,0 +1,46 @@
+.root {
+  width: 100%;
+  overflow: auto;
+}
+
+.table {
+  position: relative;
+  td,
+  th {
+    padding: 0.5em;
+  }
+}
+.tableRow {
+  position: relative;
+  opacity: 0.8;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 30px;
+}
+
+.radioLabel {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  input {
+    position: absolute;
+    visibility: hidden;
+  }
+}
+
+.tableRow:hover {
+  background-color: var(--accent-a4);
+  opacity: 1;
+}
+
+.tableHeader {
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background-color: var(--gray-3);
+  z-index: 1;
+}
+
+.tableRow:has(input:checked) {
+  background-color: var(--accent-6);
+  opacity: 1;
+}

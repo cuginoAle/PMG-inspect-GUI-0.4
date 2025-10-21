@@ -41,7 +41,7 @@ const ProjectTableView = ({
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
   onConfigurationChange?: (videoId: string, selectedValue: string) => void;
 }) => {
-  const [selectedRowCheckbox, setSelectedRowCheckbox] = useState<string[]>([]);
+  // const [selectedRowCheckbox, setSelectedRowCheckbox] = useState<string[]>([]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -69,8 +69,8 @@ const ProjectTableView = ({
       case 'INPUT':
         const checkedValues = formData.getAll('selected') as string[];
 
-        setSelectedRowCheckbox(checkedValues);
-        onRowCheckbox?.(checkedValues);
+        // setSelectedRowCheckbox(checkedValues);
+        // onRowCheckbox?.(checkedValues);
         break;
       case 'SELECT':
         const videoUrl = target.dataset['videoId'] as string;
@@ -146,8 +146,6 @@ const ProjectTableView = ({
   const table = useReactTable({
     data: tableData,
     columns: useColumnsDef({
-      projectId: project.project_name,
-      selectedValues: selectedRowCheckbox,
       processingConfiguration,
     }),
     state: {
@@ -208,11 +206,12 @@ const ProjectTableView = ({
                         {header.column.columnDef.id === 'select_all' && (
                           <input
                             title="Select All"
+                            id="selectAllCheckbox"
                             type="checkbox"
-                            checked={
-                              selectedRowCheckbox.length > 0 &&
-                              selectedRowCheckbox.length === tableData.length
-                            }
+                            // checked={
+                            //   selectedRowCheckbox.length > 0 &&
+                            //   selectedRowCheckbox.length === tableData.length
+                            // }
                             onChange={() => void 0}
                             onClick={(e) => {
                               tBodyRef.current
@@ -251,8 +250,8 @@ const ProjectTableView = ({
                   }}
                   onClick={() => {
                     row.toggleSelected(true);
-                    onRowSelect?.(row.original);
-                    onRowClick?.(row.original);
+                    // onRowSelect?.(row.original);
+                    // onRowClick?.(row.original);
                   }}
                   onDoubleClick={() => {
                     onRowDoubleClick(row.original);
