@@ -12,7 +12,7 @@
 }
 .tableRow {
   position: relative;
-  opacity: 0.8;
+  opacity: 0.5;
   content-visibility: auto;
   contain-intrinsic-size: auto 30px;
 }
@@ -21,15 +21,10 @@
   position: absolute;
   inset: 0;
   cursor: pointer;
-  input {
+  input[type='radio'] {
     position: absolute;
     visibility: hidden;
   }
-}
-
-.tableRow:hover {
-  background-color: var(--accent-a4);
-  opacity: 1;
 }
 
 .tableHeader {
@@ -38,9 +33,21 @@
   top: 0;
   background-color: var(--gray-3);
   z-index: 1;
+  & th::first-letter {
+    text-transform: capitalize;
+  }
 }
 
-.tableRow:has(input:checked) {
+.tableRow:has(input[data-type='row-selector']:checked) {
+  background-color: var(--indigo-a2);
+  opacity: 0.7;
+}
+.tableRow:has(input[type='radio']:checked) {
   background-color: var(--accent-6);
   opacity: 1;
+}
+
+.tableRow:hover {
+  background-color: var(--gray-a3);
+  opacity: 1 !important;
 }

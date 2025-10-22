@@ -54,38 +54,55 @@ const ProjectTableViewContainer = () => {
                 // handleSetHoveredVideoUrl,
               }) => {
                 const items = Object.values(augmentedProject.items || {});
-                const tableHeader = Object.keys(items[0]?.road_data || {}).map(
-                  (key) => key.replaceAll('_', ' ').toUpperCase(),
-                );
+                const tableHeader = [
+                  'Select all',
+                  ...Object.keys(items[0]?.road_data || {}).map((key) =>
+                    key.replaceAll('_', ' ').toLowerCase(),
+                  ),
+                ];
 
-                const tableBody = items.map((item) => {
-                  return Object.keys(item.road_data || {}).map((key) => {
-                    return item.road_data
-                      ? item.road_data[key as keyof typeof item.road_data]
-                      : '';
-                  });
-                });
+                const tableBody: [string, React.ReactNode[]][] = items.map(
+                  (item) => {
+                    return [
+                      item.video_url,
+                      [
+                        <input
+                          data-type="row-selector"
+                          key={item.video_url}
+                          type="checkbox"
+                          name={item.video_url}
+                          // onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                          style={{
+                            position: 'relative',
+                            zIndex: 2,
+                          }}
+                        />,
+                        ...Object.keys(item.road_data || {}).map((key) => {
+                          return item.road_data
+                            ? item.road_data[key as keyof typeof item.road_data]
+                            : '';
+                        }),
+                      ],
+                    ];
+                  },
+                );
 
                 return (
                   <>
                     <MyTable
+                      defaultSelectedRowId={
+                        searchParams.get('videoUrl') || undefined
+                      }
                       header={tableHeader}
                       body={tableBody}
-                      onMouseOver={(index) =>
-                        setHoveredVideoUrl(
-                          index !== undefined
-                            ? items[index]?.video_url
-                            : undefined,
-                        )
-                      }
-                      onRowClick={(index) => {
-                        const item = items[index]!;
-                        setVideoUrlToDrawOnTheMap(item.video_url);
+                      onMouseOver={(id) => setHoveredVideoUrl(id)}
+                      onRowClick={(id) => {
+                        // setVideoUrlToDrawOnTheMap(id);
 
                         const urlSearchParams = new URLSearchParams(
                           searchParams.toString(),
                         );
-                        urlSearchParams.set('videoUrl', item.video_url);
+                        urlSearchParams.set('videoUrl', id);
 
                         // scrollChildIntoView({
                         //   container: tBodyRef.current!,

@@ -79,6 +79,8 @@ export interface paths {
          *     - processing_done = true | false
          *     - **video_status** = dict[video_url: str, **VideoStatus**]
          *     - **processing_configurations** = dict[processing_configuration_name: str, ProcessingConfiguration]
+         *     ## Errors
+         *     - **HTTP_428_PRECONDITION_REQUIRED**: project not parsed yet
          */
         get: operations["get_project_status_api_v1_get_project_status_get"];
         put?: never;
