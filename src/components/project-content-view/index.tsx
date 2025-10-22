@@ -19,7 +19,7 @@ const ProjectContentView = () => {
         rightMinSize={100}
         proportionalLayout={true}
         left={
-          <div className={styles.leftPane}>
+          <div className={styles.leftPane} id="project-content-left-pane">
             <ProjectContentViewContainer />
           </div>
         }

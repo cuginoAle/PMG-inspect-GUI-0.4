@@ -29,6 +29,7 @@ const useColumnsDef = ({
               type="checkbox"
               data-component-id="row-select-checkbox"
               onClick={(e) => e.stopPropagation()}
+              onDoubleClick={(e) => e.stopPropagation()}
             />
           );
         },
@@ -46,11 +47,6 @@ const useColumnsDef = ({
         header: 'Surface',
         cell: (info) => info.getValue(),
       }),
-      // columnHelper.accessor((row) => row.road_data?.road_lanes, {
-      //   id: 'road_lanes',
-      //   header: 'Lanes',
-      //   cell: (info) => info.getValue(),
-      // }),
 
       columnHelper.accessor((row) => row.road_data?.road_length, {
         id: 'road_length',

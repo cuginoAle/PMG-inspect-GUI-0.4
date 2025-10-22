@@ -4,6 +4,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   RowSelectionState,
   SortingState,
@@ -21,11 +22,12 @@ import {
   AugmentedProjectItemData,
   ProcessingConfiguration,
 } from '@/src/types';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { getVideoId } from './helpers/getVideoId';
 import { useDebounce } from '@/src/hooks/useDebounce';
+import { Pagination } from './pagination';
 
 const ProjectTableView = ({
   processingConfiguration = [],
@@ -48,11 +50,9 @@ const ProjectTableView = ({
   const tBodyRef = useRef<HTMLTableSectionElement>(null);
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const searchParams = useMemo(
-    () => new URLSearchParams(window.location.search || ''),
-    [],
-  );
-  const videoUrl = searchParams.get('videoUrl');
+  const searchParams = useSearchParams();
+  const videoUrl = searchParams.get('videoUrl') || '';
+  const page = parseInt(searchParams.get('page') || '0');
   const router = useRouter();
 
   const projectItems = useMemo(
@@ -114,51 +114,35 @@ const ProjectTableView = ({
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
 
-        // generating query selector string to select all the dropdowns of selected rows
-        const querySelectorString = allCheckedVideoUrls.map((videoUrl) => {
-          return `[data-video-id="${videoUrl}"]`;
-        });
-
-        // Small timeout to set the new value AFTER React has processed the change (this is a controlled component)
-        setTimeout(() => {
-          // Update all selected dropdowns in the form
-          form
-            .querySelectorAll(querySelectorString.join(','))
-            .forEach((selectElement) => {
-              (selectElement as HTMLSelectElement).value = selectedValue;
-            });
-        }, 30);
-
-        // TODO: once the user selects a new configuration, we need to also
-        // manually update the PCI scores to avoid a table refresh!!
-
         onConfigurationChange?.(videoIds, selectedValue);
         break;
     }
   };
 
-  const onRowSelect = useCallback(
-    (projectItem?: AugmentedProjectItemData) => {
-      if (!projectItem) return;
-      const item = projectItem;
-      const urlSearchParams = new URLSearchParams(searchParams.toString());
-      urlSearchParams.set('videoUrl', item.video_url);
+  const onRowSelect = useCallback((projectItem?: AugmentedProjectItemData) => {
+    if (!projectItem) return;
+    const item = projectItem;
 
-      scrollChildIntoView({
-        container: tBodyRef.current!,
-        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
-        behavior: 'smooth',
-        direction: 'vertical',
-      });
+    const urlSearchParams = new URLSearchParams(
+      new URLSearchParams(window.location.search || '').toString(),
+    );
+    urlSearchParams.set('videoUrl', item.video_url);
 
-      window.history.pushState(
-        null,
-        '',
-        `/protected?${urlSearchParams.toString()}`,
-      );
-    },
-    [searchParams],
-  );
+    scrollChildIntoView({
+      container: tBodyRef.current!,
+      child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
+      behavior: 'smooth',
+      direction: 'vertical',
+    });
+
+    console.log('urlSearchParams', urlSearchParams.toString());
+
+    window.history.pushState(
+      null,
+      '',
+      `/protected?${urlSearchParams.toString()}`,
+    );
+  }, []);
 
   useEffect(() => {
     if (!projectItems.length) return;
@@ -170,11 +154,14 @@ const ProjectTableView = ({
 
     setRowSelection({ [selectedRowIndex]: true });
     const item = projectItems[selectedRowIndex] as AugmentedProjectItemData;
+
     if (!videoUrl) {
       onRowSelect(item);
     } else {
       scrollChildIntoView({
-        container: tBodyRef.current!,
+        container: tBodyRef.current?.closest(
+          '#project-content-left-pane',
+        ) as HTMLElement,
         child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
         behavior: 'smooth',
         direction: 'vertical',
@@ -189,14 +176,8 @@ const ProjectTableView = ({
     router.push(`/protected/edit?${urlSearchParams.toString()}`);
   };
 
-  const tableData = useMemo(
-    // Spread to create a mutable array for @tanstack/react-table (original is Immutable/readonly)
-    () => [...projectItems] as AugmentedProjectItemData[],
-    [projectItems],
-  );
-
   const table = useReactTable({
-    data: tableData,
+    data: projectItems,
     columns: useColumnsDef({
       processingConfiguration,
     }),
@@ -204,6 +185,10 @@ const ProjectTableView = ({
       sorting,
       globalFilter,
       rowSelection,
+      pagination: {
+        pageIndex: page,
+        pageSize: 80,
+      },
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
@@ -211,6 +196,7 @@ const ProjectTableView = ({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     enableRowSelection: true,
     enableMultiRowSelection: false,
   });
@@ -231,6 +217,8 @@ const ProjectTableView = ({
             </TextField.Slot>
           </TextField.Root>
         </div>
+
+        <Pagination table={table} />
 
         <div className={styles.tableContainer}>
           <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
@@ -323,6 +311,8 @@ const ProjectTableView = ({
             </Table.Body>
           </Table.Root>
         </div>
+
+        <Pagination table={table} />
       </Flex>
     </form>
   );

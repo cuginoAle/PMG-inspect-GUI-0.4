@@ -4,9 +4,9 @@ import { SplitView, ProjectContentView } from '@/src/components';
 import styles from './style.module.css';
 import { ProjectsTreeViewContainer } from '@/src/containers/projects-tree-view-container';
 
-const Left = ({ projectPath }: { projectPath?: string }) => (
+const Left = () => (
   <div className={styles.leftView}>
-    <ProjectsTreeViewContainer projectPath={projectPath} />
+    <ProjectsTreeViewContainer />
   </div>
 );
 
@@ -16,11 +16,11 @@ const Right = () => (
   </div>
 );
 
-const ProjectFinder = ({ projectPath }: { projectPath?: string }) => {
+const ProjectFinder = () => {
   return (
     <SplitView
       name="project-finder-split-view"
-      left={<Left projectPath={projectPath} />}
+      left={<Left />}
       right={<Right />}
     />
   );

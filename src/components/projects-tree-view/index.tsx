@@ -9,10 +9,10 @@ import React, { useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
+import { useSearchParams } from 'next/navigation';
 
 type ProjectsTreeViewProps = {
   files: FileInfo[];
-  selectedPath?: string;
 };
 
 // Feature flag (compile-time) to enable top-level Remote/Local grouping nodes in the tree
@@ -31,7 +31,11 @@ type TreeNode = typeof enableRemoteAndLocalNodes extends true
   ? RemoteLocalNode
   : FileInfo;
 
-const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ files }: ProjectsTreeViewProps) => {
+  const sp = useSearchParams();
+  const pathSP = sp.get('path');
+  const selectedPath = Array.isArray(pathSP) ? pathSP[0] : pathSP || undefined;
+
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
 

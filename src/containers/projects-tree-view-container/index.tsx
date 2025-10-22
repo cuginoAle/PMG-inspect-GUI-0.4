@@ -2,11 +2,7 @@ import { useGlobalState } from '@/src/app/global-state';
 import { ProjectsTreeView } from '@/src/components';
 import { MySuspense } from '@/src/components';
 
-const ProjectsTreeViewContainer = ({
-  projectPath,
-}: {
-  projectPath?: string;
-}) => {
+const ProjectsTreeViewContainer = () => {
   const filesList = useGlobalState((state) => state.filesList);
 
   console.log('filesList', filesList);
@@ -18,7 +14,7 @@ const ProjectsTreeViewContainer = ({
       loadingMessage="Loading projects..."
       loadingSize="large"
     >
-      {(data) => <ProjectsTreeView files={data} selectedPath={projectPath} />}
+      {(data) => <ProjectsTreeView files={data} />}
     </MySuspense>
   );
 };

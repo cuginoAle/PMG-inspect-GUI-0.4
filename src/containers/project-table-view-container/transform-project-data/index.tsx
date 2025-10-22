@@ -83,7 +83,7 @@ const TransformProjectData = ({
     // Handle configuration change
     saveSelectedConfigsToIDB(videoIds, selectedValue).then(() => {
       // Update localStorage and re-augment project data
-      // augmentProject(project).then(setData);
+      augmentProject(project).then(setData);
       console.log('Saved configurations to IDB');
     });
   };
