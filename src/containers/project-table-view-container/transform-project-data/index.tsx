@@ -32,7 +32,10 @@ const augmentProject = async (project: Project): Promise<AugmentedProject> => {
   };
 };
 
-const handleConfigChange = async (videoIds: string[], selectedValue: string) =>
+const saveSelectedConfigsToIDB = async (
+  videoIds: string[],
+  selectedValue: string,
+) =>
   Cache.batch(async () => {
     return videoIds.forEach(async (videoId) => {
       await Cache.set(savedConfigsIDBStore, videoId, selectedValue);
@@ -41,17 +44,20 @@ const handleConfigChange = async (videoIds: string[], selectedValue: string) =>
 
 const TransformProjectData = ({
   project,
-  selectedVideoUrlList,
+  // selectedVideoUrlList,
   children,
 }: {
   project: Project;
-  selectedVideoUrlList: string[];
+  // selectedVideoUrlList: string[];
   children: ({
     augmentedProject,
-    onConfigurationChange,
+    persistConfigurationChange,
   }: {
     augmentedProject: AugmentedProject;
-    onConfigurationChange: (videoId: string, selectedValue: string) => void;
+    persistConfigurationChange: (
+      videoIds: string[],
+      selectedValue: string,
+    ) => void;
     handleSetHoveredVideoUrl: (projectItem?: ProjectItem) => void;
   }) => React.ReactNode;
 }) => {
@@ -70,19 +76,15 @@ const TransformProjectData = ({
     augmentProject(project).then((data) => setData(data));
   }, [project]);
 
-  const onConfigurationChange = (videoId: string, selectedValue: string) => {
-    const videoIds = selectedVideoUrlList?.length
-      ? selectedVideoUrlList.map((videoUrl) =>
-          getVideoId({
-            projectName: project.project_name,
-            videoUrl,
-          }),
-        )
-      : [videoId];
+  const persistConfigurationChange = (
+    videoIds: string[],
+    selectedValue: string,
+  ) => {
     // Handle configuration change
-    handleConfigChange(videoIds, selectedValue).then(() => {
+    saveSelectedConfigsToIDB(videoIds, selectedValue).then(() => {
       // Update localStorage and re-augment project data
-      augmentProject(project).then(setData);
+      // augmentProject(project).then(setData);
+      console.log('Saved configurations to IDB');
     });
   };
 
@@ -90,7 +92,7 @@ const TransformProjectData = ({
     <>
       {children({
         augmentedProject: data,
-        onConfigurationChange,
+        persistConfigurationChange,
         handleSetHoveredVideoUrl,
       })}
     </>

@@ -3,7 +3,6 @@ import { useGlobalState } from '@/src/app/global-state';
 import { ProjectTableView } from '@/src/components/project-table-view';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
 import { MySuspense } from '@/src/components/my-suspense';
-import { useState } from 'react';
 import { TransformProjectData } from './transform-project-data';
 
 const ProjectTableViewContainer = () => {
@@ -12,9 +11,8 @@ const ProjectTableViewContainer = () => {
   );
   const selectedProject = useGlobalState((state) => state.selectedProject);
   const projectStatus = useGlobalState((state) => state.projectStatus);
-  const [selectedVideoUrlList, setSelectedVideoUrlList] = useState<string[]>(
-    [],
-  );
+
+  console.log('ProjectTableViewContainer');
 
   if (!selectedProject) {
     return <NoProjectSelected />;
@@ -36,30 +34,25 @@ const ProjectTableViewContainer = () => {
           undefinedDataComponent="No project data available"
         >
           {(project) => (
-            <TransformProjectData
-              project={project}
-              selectedVideoUrlList={selectedVideoUrlList}
-            >
+            <TransformProjectData project={project}>
               {({
                 augmentedProject,
-                onConfigurationChange,
+                persistConfigurationChange,
                 handleSetHoveredVideoUrl,
-              }) => {
-                return (
-                  <ProjectTableView
-                    processingConfiguration={Object.values(
-                      status.processing_configurations || {},
-                    )}
-                    project={augmentedProject}
-                    onMouseOver={handleSetHoveredVideoUrl}
-                    onRowCheckbox={setSelectedVideoUrlList}
-                    onConfigurationChange={onConfigurationChange}
-                    onRowClick={(item) =>
-                      setVideoUrlToDrawOnTheMap(item?.video_url)
-                    }
-                  />
-                );
-              }}
+              }) => (
+                <ProjectTableView
+                  processingConfiguration={Object.values(
+                    status.processing_configurations || {},
+                  )}
+                  project={augmentedProject}
+                  onMouseOver={handleSetHoveredVideoUrl}
+                  // onRowCheckbox={setSelectedVideoUrlList}
+                  onConfigurationChange={persistConfigurationChange}
+                  onRowClick={(item) =>
+                    setVideoUrlToDrawOnTheMap(item?.video_url)
+                  }
+                />
+              )}
             </TransformProjectData>
           )}
         </MySuspense>

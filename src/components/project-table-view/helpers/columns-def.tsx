@@ -12,12 +12,8 @@ import { useMemo } from 'react';
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
 const useColumnsDef = ({
-  projectId,
-  selectedValues,
   processingConfiguration,
 }: {
-  projectId: string;
-  selectedValues: string[];
   processingConfiguration: ProcessingConfiguration[];
 }) => {
   return useMemo(
@@ -28,31 +24,33 @@ const useColumnsDef = ({
           return (
             <input
               id={info.row.original.video_url}
-              name="selected"
+              name="selectedRowCheckbox"
               value={info.row.original.video_url}
               type="checkbox"
-              checked={selectedValues.includes(info.row.original.video_url)}
-              readOnly
+              data-component-id="row-select-checkbox"
               onClick={(e) => e.stopPropagation()}
             />
           );
         },
       }),
-      columnHelper.accessor((row) => row.road_data?.road_name, {
-        id: 'road_name',
-        header: 'Road Name',
-        cell: (info) => info.getValue(),
-      }),
+      columnHelper.accessor(
+        (row) => `${row.road_data?.road_name} - ${row.road_data?.road_section}`,
+        {
+          id: 'road_name',
+          header: 'Road Name',
+          cell: (info) => info.getValue(),
+        },
+      ),
       columnHelper.accessor((row) => row.road_data?.road_surface, {
         id: 'road_surface',
         header: 'Surface',
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor((row) => row.road_data?.road_lanes, {
-        id: 'road_lanes',
-        header: 'Lanes',
-        cell: (info) => info.getValue(),
-      }),
+      // columnHelper.accessor((row) => row.road_data?.road_lanes, {
+      //   id: 'road_lanes',
+      //   header: 'Lanes',
+      //   cell: (info) => info.getValue(),
+      // }),
 
       columnHelper.accessor((row) => row.road_data?.road_length, {
         id: 'road_length',
@@ -66,15 +64,12 @@ const useColumnsDef = ({
           return (
             <select
               data-video-id={info.row.original.video_url}
+              data-component-id="configuration-select"
               onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
               value={
                 info.row.original.selected_configuration ||
                 processingConfiguration[0]?.processing_configuration_name
-              }
-              disabled={
-                selectedValues.length > 0 &&
-                !selectedValues.includes(info.row.original.video_url)
               }
             >
               {processingConfiguration.map((config) => (
@@ -96,7 +91,7 @@ const useColumnsDef = ({
       }),
       columnHelper.accessor((row) => row.road_data?.road_functional_class, {
         id: 'road_functional_class',
-        header: 'Functional Class',
+        header: 'Fun. Class',
         cell: (info) => info.getValue(),
       }),
 
@@ -173,7 +168,7 @@ const useColumnsDef = ({
         },
       }),
     ],
-    [selectedValues],
+    [processingConfiguration],
   );
 };
 

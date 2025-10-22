@@ -21,10 +21,11 @@ import {
   AugmentedProjectItemData,
   ProcessingConfiguration,
 } from '@/src/types';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { getVideoId } from './helpers/getVideoId';
+import { useDebounce } from '@/src/hooks/useDebounce';
 
 const ProjectTableView = ({
   processingConfiguration = [],
@@ -39,16 +40,18 @@ const ProjectTableView = ({
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
   onRowCheckbox?: (selectedItemIdList: string[] | []) => void;
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
-  onConfigurationChange?: (videoId: string, selectedValue: string) => void;
+  onConfigurationChange?: (videoIds: string[], selectedValue: string) => void;
 }) => {
-  const [selectedRowCheckbox, setSelectedRowCheckbox] = useState<string[]>([]);
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const tBodyRef = useRef<HTMLTableSectionElement>(null);
+  const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const searchParams = useSearchParams();
+  const searchParams = useMemo(
+    () => new URLSearchParams(window.location.search || ''),
+    [],
+  );
   const videoUrl = searchParams.get('videoUrl');
   const router = useRouter();
 
@@ -57,30 +60,79 @@ const ProjectTableView = ({
     [project.items],
   );
 
+  const debouncedOnSearchChange = useDebounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setGlobalFilter(e.target.value);
+    },
+    300,
+  );
+
   const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
     const form = (e.target as HTMLInputElement).closest(
       'form',
     ) as HTMLFormElement;
     const formData = new FormData(form);
     const target = e.target as HTMLElement;
+    const checkedValues = formData.getAll('selectedRowCheckbox') as string[];
 
     // Handle different input types
     switch (target.tagName) {
       case 'INPUT':
-        const checkedValues = formData.getAll('selected') as string[];
+        selectAllCheckboxRef.current!.checked =
+          checkedValues.length === projectItems.length;
 
-        setSelectedRowCheckbox(checkedValues);
+        //all the select element in the form
+        form
+          .querySelectorAll<HTMLSelectElement>(
+            'select[data-component-id="configuration-select"]',
+          )
+          .forEach((selectElement) => {
+            // Disable select elements that are not checked
+            selectElement.disabled =
+              checkedValues.length > 0 &&
+              !checkedValues.includes(selectElement.dataset['videoId']!);
+          });
+
+        // setSelectedRowCheckbox(checkedValues);
         onRowCheckbox?.(checkedValues);
         break;
       case 'SELECT':
-        const videoUrl = target.dataset['videoId'] as string;
-        const videoId = getVideoId({
-          projectName: project.project_name,
-          videoUrl: videoUrl,
-        });
+        const selectedVideoUrl = target.dataset['videoId']!;
+
+        const allCheckedVideoUrls = [...checkedValues];
+
+        if (checkedValues.length === 0) {
+          allCheckedVideoUrls.push(selectedVideoUrl);
+        }
+
+        const videoIds = allCheckedVideoUrls.map((videoUrl) =>
+          getVideoId({
+            projectName: project.project_name,
+            videoUrl: videoUrl,
+          }),
+        );
+        // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
 
-        onConfigurationChange?.(videoId, selectedValue);
+        // generating query selector string to select all the dropdowns of selected rows
+        const querySelectorString = allCheckedVideoUrls.map((videoUrl) => {
+          return `[data-video-id="${videoUrl}"]`;
+        });
+
+        // Small timeout to set the new value AFTER React has processed the change (this is a controlled component)
+        setTimeout(() => {
+          // Update all selected dropdowns in the form
+          form
+            .querySelectorAll(querySelectorString.join(','))
+            .forEach((selectElement) => {
+              (selectElement as HTMLSelectElement).value = selectedValue;
+            });
+        }, 30);
+
+        // TODO: once the user selects a new configuration, we need to also
+        // manually update the PCI scores to avoid a table refresh!!
+
+        onConfigurationChange?.(videoIds, selectedValue);
         break;
     }
   };
@@ -146,8 +198,6 @@ const ProjectTableView = ({
   const table = useReactTable({
     data: tableData,
     columns: useColumnsDef({
-      projectId: project.project_name,
-      selectedValues: selectedRowCheckbox,
       processingConfiguration,
     }),
     state: {
@@ -165,16 +215,15 @@ const ProjectTableView = ({
     enableMultiRowSelection: false,
   });
 
+  console.log('ProjectTableView');
+
   return (
     <form onChange={onFormChange}>
       <Flex direction="column" gap="2" height={'100%'}>
         <div className={styles.searchBox}>
           <TextField.Root
             placeholder="Search all columns..."
-            value={globalFilter ?? ''}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setGlobalFilter(e.target.value)
-            }
+            onChange={debouncedOnSearchChange}
             size={'3'}
           >
             <TextField.Slot>
@@ -209,12 +258,8 @@ const ProjectTableView = ({
                           <input
                             title="Select All"
                             type="checkbox"
-                            checked={
-                              selectedRowCheckbox.length > 0 &&
-                              selectedRowCheckbox.length === tableData.length
-                            }
-                            onChange={() => void 0}
-                            onClick={(e) => {
+                            ref={selectAllCheckboxRef}
+                            onChange={(e) => {
                               tBodyRef.current
                                 ?.querySelectorAll('input[type="checkbox"]')
                                 .forEach((checkbox) => {
@@ -250,9 +295,10 @@ const ProjectTableView = ({
                     onMouseOver?.(undefined);
                   }}
                   onClick={() => {
-                    row.toggleSelected(true);
                     onRowSelect?.(row.original);
                     onRowClick?.(row.original);
+
+                    row.toggleSelected(true);
                   }}
                   onDoubleClick={() => {
                     onRowDoubleClick(row.original);

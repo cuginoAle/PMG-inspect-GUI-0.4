@@ -89,7 +89,7 @@ const ProjectMapContainer = () => {
       // If there is a selected video, pan to its path
       const gpsPointsArray = Object.values(selectedVideo.gps_points);
       const data = getMapData({ [videoUrlToDrawOnTheMap]: gpsPointsArray });
-      data && panToPath({ pathData: Object.values(data)[0], padding: 100 });
+      data && panToPath({ pathData: Object.values(data)[0], padding: 80 });
     } else {
       // If no selectedVideo, pan to show all paths
       panToPath({ pathData: Object.values(pathsToDraw).flat() });
