@@ -3,9 +3,17 @@ import styles from './style.module.css';
 import { Table } from '@tanstack/react-table';
 import { AugmentedProjectItemData } from '@/src/types';
 import Link from 'next/link';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@radix-ui/react-icons';
+import { useSearchParams } from 'next/navigation';
 
 const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
-  const searchParams = new URLSearchParams(window.location.search);
+  const sp = useSearchParams();
+  const searchParams = new URLSearchParams(sp.toString());
 
   const currentPage = table.getState().pagination.pageIndex;
 
@@ -54,7 +62,7 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
             currentPage === 0 ? styles.disabled : ''
           }`}
         >
-          {'<<'}
+          <DoubleArrowLeftIcon />
         </Link>
         <Link
           type="button"
@@ -64,7 +72,7 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
             currentPage === 0 ? styles.disabled : ''
           }`}
         >
-          {'<'}
+          <ChevronLeftIcon />
         </Link>
         <Link
           type="button"
@@ -74,7 +82,7 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
             currentPage === lastPage ? styles.disabled : ''
           }`}
         >
-          {'>'}
+          <ChevronRightIcon />
         </Link>
         <Link
           type="button"
@@ -84,7 +92,7 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
             currentPage === lastPage ? styles.disabled : ''
           }`}
         >
-          {'>>'}
+          <DoubleArrowRightIcon />
         </Link>
       </Flex>
       <Flex gap="2" align="center">

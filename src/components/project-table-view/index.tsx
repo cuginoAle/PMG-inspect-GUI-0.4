@@ -47,10 +47,13 @@ const ProjectTableView = ({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const tBodyRef = useRef<HTMLTableSectionElement>(null);
-  const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
-
   const searchParams = useSearchParams();
+  const tBodyRef = useRef<HTMLTableSectionElement>(null);
+
+  const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
+  const selectAllRows =
+    searchParams.get('selectAllRows') === 'true' ? true : false;
+
   const videoUrl = searchParams.get('videoUrl') || '';
   const page = parseInt(searchParams.get('page') || '0');
   const router = useRouter();
@@ -99,7 +102,9 @@ const ProjectTableView = ({
       case 'SELECT':
         const selectedVideoUrl = target.dataset['videoId']!;
 
-        const allCheckedVideoUrls = [...checkedValues];
+        const allCheckedVideoUrls = selectAllRows
+          ? projectItems.map((item) => item.video_url)
+          : [...checkedValues];
 
         if (checkedValues.length === 0) {
           allCheckedVideoUrls.push(selectedVideoUrl);
@@ -247,14 +252,17 @@ const ProjectTableView = ({
                             title="Select All"
                             type="checkbox"
                             ref={selectAllCheckboxRef}
+                            checked={selectAllRows}
                             onChange={(e) => {
-                              tBodyRef.current
-                                ?.querySelectorAll('input[type="checkbox"]')
-                                .forEach((checkbox) => {
-                                  (checkbox as HTMLInputElement).checked =
-                                    e.currentTarget.checked;
-                                });
-                              return false;
+                              const isChecked = e.currentTarget.checked;
+                              const sp = new URLSearchParams(
+                                window.location.search,
+                              );
+
+                              if (isChecked) sp.set('selectAllRows', 'true');
+                              else sp.delete('selectAllRows');
+
+                              router.replace(`/protected?${sp.toString()}`);
                             }}
                           />
                         )}

@@ -8,6 +8,7 @@ import { PersonIcon } from '@radix-ui/react-icons';
 import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
@@ -16,6 +17,9 @@ const useColumnsDef = ({
 }: {
   processingConfiguration: ProcessingConfiguration[];
 }) => {
+  const searchParams = useSearchParams();
+  const selectAllRows =
+    searchParams.get('selectAllRows') === 'true' ? true : false;
   return useMemo(
     () => [
       columnHelper.display({
@@ -28,8 +32,10 @@ const useColumnsDef = ({
               value={info.row.original.video_url}
               type="checkbox"
               data-component-id="row-select-checkbox"
+              onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
               onDoubleClick={(e) => e.stopPropagation()}
+              defaultChecked={selectAllRows}
             />
           );
         },
@@ -164,7 +170,7 @@ const useColumnsDef = ({
         },
       }),
     ],
-    [processingConfiguration],
+    [processingConfiguration, selectAllRows],
   );
 };
 
