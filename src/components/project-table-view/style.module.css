@@ -37,4 +37,7 @@
 
 :global(.rt-TableRow) {
   white-space: nowrap;
+  &:hover {
+    background-color: var(--gray-3);
+  }
 }

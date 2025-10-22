@@ -206,6 +206,16 @@ const ProjectTableView = ({
     enableMultiRowSelection: false,
   });
 
+  useEffect(() => {
+    const currentPage = table.getState().pagination.pageIndex;
+    const resultsLength = table.getRowModel().rows.length;
+    const sp = new URLSearchParams(window.location.search);
+
+    if (globalFilter && resultsLength == 0 && currentPage !== 0) {
+      sp.delete('page');
+      router.push(`/protected?${sp.toString()}`);
+    }
+  }, [globalFilter, router, table]);
   console.log('ProjectTableView');
 
   return (
