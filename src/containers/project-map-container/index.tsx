@@ -57,6 +57,7 @@ const ProjectMapContainer = () => {
       return;
     }
 
+    console.time('Compute paths to draw on map');
     const gpsData = selectedProject.items
       ? Object.keys(selectedProject.items).reduce((acc, key) => {
           const item = selectedProject.items?.[key];
@@ -68,6 +69,7 @@ const ProjectMapContainer = () => {
       : {};
 
     setPathsToDraw(getMapData(gpsData));
+    console.timeEnd('Compute paths to draw on map');
   }, [selectedProject]);
 
   // Memoize the highlight path to prevent unnecessary re-renders

@@ -25,7 +25,6 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
-import { getVideoId } from './helpers/getVideoId';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import { Pagination } from './pagination';
 import { selectAllCheckboxHandler } from './helpers/select-all-checkbox-handler';
@@ -53,8 +52,6 @@ const ProjectTableView = ({
   const checkedRowIdsRef = useRef<Set<string>>(new Set());
 
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
-  // const selectAllRows =
-  //   searchParams.get('selectAllRows') === 'true' ? true : false;
 
   const videoUrl = searchParams.get('videoUrl') || '';
   const page = parseInt(searchParams.get('page') || '0');
@@ -73,10 +70,6 @@ const ProjectTableView = ({
   );
 
   const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const form = (e.target as HTMLInputElement).closest(
-      'form',
-    ) as HTMLFormElement;
-
     const target = e.target as HTMLElement;
 
     // Get all checked checkbox values
@@ -89,6 +82,7 @@ const ProjectTableView = ({
       case 'INPUT':
         if (isSelectAllCheckbox) {
           updateAllCheckboxes((target as HTMLInputElement).checked);
+          updateAllConfigDropdowns(checkedValues);
           break;
         }
 
@@ -100,21 +94,7 @@ const ProjectTableView = ({
 
         // Get all checked checkbox values (including the current change)
         const updatedCheckedValues = Array.from(checkedRowIdsRef.current);
-
-        //all the select element in the form
-        form
-          .querySelectorAll<HTMLSelectElement>(
-            'select[data-component-id="configuration-select"]',
-          )
-          .forEach((selectElement) => {
-            // Disable select elements that are not checked
-            selectElement.disabled =
-              updatedCheckedValues.length > 0 &&
-              !updatedCheckedValues.includes(selectElement.dataset['videoId']!);
-          });
-
-        selectAllCheckboxRef.current!.checked =
-          updatedCheckedValues.length === projectItems.length;
+        updateAllConfigDropdowns(updatedCheckedValues);
 
         onRowCheckbox?.(updatedCheckedValues);
         break;
@@ -127,16 +107,11 @@ const ProjectTableView = ({
           allAffectedVideoUrls.push(selectedVideoUrl);
         }
 
-        const videoIds = allAffectedVideoUrls.map((videoUrl) =>
-          getVideoId({
-            projectName: project.project_name,
-            videoUrl: videoUrl,
-          }),
-        );
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
 
-        onConfigurationChange?.(videoIds, selectedValue);
+        onConfigurationChange?.(allAffectedVideoUrls, selectedValue);
+
         break;
     }
   };
@@ -233,11 +208,13 @@ const ProjectTableView = ({
     }
   }, [globalFilter, router, table]);
 
-  const { updateAllCheckboxes } = selectAllCheckboxHandler({
-    tBodyRef,
-    checkedRowIdsRef,
-    projectItems,
-  });
+  const { updateAllCheckboxes, updateAllConfigDropdowns } =
+    selectAllCheckboxHandler({
+      tBodyRef,
+      checkedRowIdsRef,
+      projectItems,
+      selectAllCheckboxRef,
+    });
 
   return (
     <form onChange={onFormChange}>
