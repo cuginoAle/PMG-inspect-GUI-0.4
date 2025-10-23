@@ -28,6 +28,7 @@ import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { getVideoId } from './helpers/getVideoId';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import { Pagination } from './pagination';
+import { selectAllCheckboxHandler } from './helpers/select-all-checkbox-handler';
 
 const ProjectTableView = ({
   processingConfiguration = [],
@@ -49,10 +50,11 @@ const ProjectTableView = ({
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const searchParams = useSearchParams();
   const tBodyRef = useRef<HTMLTableSectionElement>(null);
+  const checkedRowIdsRef = useRef<Set<string>>(new Set());
 
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
-  const selectAllRows =
-    searchParams.get('selectAllRows') === 'true' ? true : false;
+  // const selectAllRows =
+  //   searchParams.get('selectAllRows') === 'true' ? true : false;
 
   const videoUrl = searchParams.get('videoUrl') || '';
   const page = parseInt(searchParams.get('page') || '0');
@@ -74,15 +76,30 @@ const ProjectTableView = ({
     const form = (e.target as HTMLInputElement).closest(
       'form',
     ) as HTMLFormElement;
-    const formData = new FormData(form);
+
     const target = e.target as HTMLElement;
-    const checkedValues = formData.getAll('selectedRowCheckbox') as string[];
+
+    // Get all checked checkbox values
+    const checkedValues = Array.from(checkedRowIdsRef.current);
 
     // Handle different input types
+    const isSelectAllCheckbox =
+      target.dataset['componentId'] === 'select_all_header_checkbox';
     switch (target.tagName) {
       case 'INPUT':
-        selectAllCheckboxRef.current!.checked =
-          checkedValues.length === projectItems.length;
+        if (isSelectAllCheckbox) {
+          updateAllCheckboxes((target as HTMLInputElement).checked);
+          break;
+        }
+
+        if (!(target as HTMLInputElement).checked) {
+          checkedRowIdsRef.current.delete((target as HTMLInputElement).value);
+        } else {
+          checkedRowIdsRef.current.add((target as HTMLInputElement).value);
+        }
+
+        // Get all checked checkbox values (including the current change)
+        const updatedCheckedValues = Array.from(checkedRowIdsRef.current);
 
         //all the select element in the form
         form
@@ -92,25 +109,25 @@ const ProjectTableView = ({
           .forEach((selectElement) => {
             // Disable select elements that are not checked
             selectElement.disabled =
-              checkedValues.length > 0 &&
-              !checkedValues.includes(selectElement.dataset['videoId']!);
+              updatedCheckedValues.length > 0 &&
+              !updatedCheckedValues.includes(selectElement.dataset['videoId']!);
           });
 
-        // setSelectedRowCheckbox(checkedValues);
-        onRowCheckbox?.(checkedValues);
+        selectAllCheckboxRef.current!.checked =
+          updatedCheckedValues.length === projectItems.length;
+
+        onRowCheckbox?.(updatedCheckedValues);
         break;
       case 'SELECT':
         const selectedVideoUrl = target.dataset['videoId']!;
 
-        const allCheckedVideoUrls = selectAllRows
-          ? projectItems.map((item) => item.video_url)
-          : [...checkedValues];
+        const allAffectedVideoUrls = [...checkedValues];
 
         if (checkedValues.length === 0) {
-          allCheckedVideoUrls.push(selectedVideoUrl);
+          allAffectedVideoUrls.push(selectedVideoUrl);
         }
 
-        const videoIds = allCheckedVideoUrls.map((videoUrl) =>
+        const videoIds = allAffectedVideoUrls.map((videoUrl) =>
           getVideoId({
             projectName: project.project_name,
             videoUrl: videoUrl,
@@ -139,8 +156,6 @@ const ProjectTableView = ({
       behavior: 'smooth',
       direction: 'vertical',
     });
-
-    console.log('urlSearchParams', urlSearchParams.toString());
 
     window.history.pushState(
       null,
@@ -185,6 +200,7 @@ const ProjectTableView = ({
     data: projectItems,
     columns: useColumnsDef({
       processingConfiguration,
+      checkedRowIds: Array.from(checkedRowIdsRef.current),
     }),
     state: {
       sorting,
@@ -216,7 +232,12 @@ const ProjectTableView = ({
       router.push(`/protected?${sp.toString()}`);
     }
   }, [globalFilter, router, table]);
-  console.log('ProjectTableView');
+
+  const { updateAllCheckboxes } = selectAllCheckboxHandler({
+    tBodyRef,
+    checkedRowIdsRef,
+    projectItems,
+  });
 
   return (
     <form onChange={onFormChange}>
@@ -260,19 +281,16 @@ const ProjectTableView = ({
                         {header.column.columnDef.id === 'select_all' && (
                           <input
                             title="Select All"
+                            data-component-id="select_all_header_checkbox"
                             type="checkbox"
                             ref={selectAllCheckboxRef}
-                            checked={selectAllRows}
+                            defaultChecked={
+                              checkedRowIdsRef.current.size ===
+                              projectItems.length
+                            }
                             onChange={(e) => {
                               const isChecked = e.currentTarget.checked;
-                              const sp = new URLSearchParams(
-                                window.location.search,
-                              );
-
-                              if (isChecked) sp.set('selectAllRows', 'true');
-                              else sp.delete('selectAllRows');
-
-                              router.replace(`/protected?${sp.toString()}`);
+                              updateAllCheckboxes(isChecked);
                             }}
                           />
                         )}

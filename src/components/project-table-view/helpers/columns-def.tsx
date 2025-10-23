@@ -8,18 +8,16 @@ import { PersonIcon } from '@radix-ui/react-icons';
 import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
 const useColumnsDef = ({
   processingConfiguration,
+  checkedRowIds,
 }: {
   processingConfiguration: ProcessingConfiguration[];
+  checkedRowIds: string[];
 }) => {
-  const searchParams = useSearchParams();
-  const selectAllRows =
-    searchParams.get('selectAllRows') === 'true' ? true : false;
   return useMemo(
     () => [
       columnHelper.display({
@@ -35,7 +33,9 @@ const useColumnsDef = ({
               onChange={() => void 0}
               onClick={(e) => e.stopPropagation()}
               onDoubleClick={(e) => e.stopPropagation()}
-              defaultChecked={selectAllRows}
+              defaultChecked={checkedRowIds?.includes(
+                info.row.original.video_url,
+              )}
             />
           );
         },
@@ -64,25 +64,38 @@ const useColumnsDef = ({
         header: 'Configurations',
         cell: (info) => {
           return (
-            <select
-              data-video-id={info.row.original.video_url}
-              data-component-id="configuration-select"
-              onChange={() => void 0}
-              onClick={(e) => e.stopPropagation()}
-              value={
-                info.row.original.selected_configuration ||
-                processingConfiguration[0]?.processing_configuration_name
-              }
+            <div
+              // Prevent row selection on interacting with the select dropdown
+              // I had to put this on a div wrapping the select because putting it directly on the select
+              // did not work
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
-              {processingConfiguration.map((config) => (
-                <option
-                  value={config.processing_configuration_name}
-                  key={config.processing_configuration_name}
-                >
-                  {config.label}
-                </option>
-              ))}
-            </select>
+              <select
+                data-video-id={info.row.original.video_url}
+                data-component-id="configuration-select"
+                onChange={() => void 0}
+                onDoubleClick={(e) => e.stopPropagation()}
+                disabled={
+                  checkedRowIds.length > 0 &&
+                  !checkedRowIds?.includes(info.row.original.video_url)
+                }
+                value={
+                  info.row.original.selected_configuration ||
+                  processingConfiguration[0]?.processing_configuration_name
+                }
+              >
+                {processingConfiguration.map((config) => (
+                  <option
+                    value={config.processing_configuration_name}
+                    key={config.processing_configuration_name}
+                  >
+                    {config.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           );
         },
       }),
@@ -170,7 +183,7 @@ const useColumnsDef = ({
         },
       }),
     ],
-    [processingConfiguration, selectAllRows],
+    [processingConfiguration, checkedRowIds],
   );
 };
 
