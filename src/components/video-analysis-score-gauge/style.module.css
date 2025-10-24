@@ -1,0 +1,32 @@
+.root {
+  font-size: 12px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  gap: 1px;
+}
+
+.min,
+.max {
+  display: flex;
+  width: 2.5em;
+  height: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.min {
+  background-color: var(--colour-min);
+  color: var(--label-colour-min);
+}
+.max {
+  background-color: var(--colour-max);
+  color: var(--label-colour-max);
+}

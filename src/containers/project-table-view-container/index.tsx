@@ -12,8 +12,6 @@ const ProjectTableViewContainer = () => {
   const selectedProject = useGlobalState((state) => state.selectedProject);
   const projectStatus = useGlobalState((state) => state.projectStatus);
 
-  console.log('ProjectTableViewContainer');
-
   if (!selectedProject) {
     return <NoProjectSelected />;
   }

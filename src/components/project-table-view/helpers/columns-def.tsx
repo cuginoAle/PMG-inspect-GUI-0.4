@@ -5,7 +5,11 @@ import type {
 } from '@/src/types';
 import { Flex, Text } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
-import { NeuralNetworkIcon, VideoAnalysisProgress } from '@/src/components';
+import {
+  NeuralNetworkIcon,
+  VideoAnalysisProgress,
+  VideoAnalysisScoreGauge,
+} from '@/src/components';
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
 
@@ -107,8 +111,8 @@ const useColumnsDef = ({
         cell: (info) => info.getValue(),
       }),
 
-      columnHelper.accessor((row) => row.avg_pci_score_human_inspector, {
-        id: 'avg_pci_score_human_inspector',
+      columnHelper.accessor((row) => row.road_data?.inspector_pci, {
+        id: 'inspector_pci',
         header: () => (
           <Flex justify="center" align={'center'} gap="1" width={'100%'}>
             <span>Pci</span>
@@ -116,26 +120,25 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
-          const value = Math.round(Math.random() * 100);
+          const value = info.getValue()!;
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisProgress
-                pciScore={value} // TODO: this data should come from another endpoint
-                progress={100}
-              />
+              <VideoAnalysisProgress pciScore={value} progress={100} />
             </Flex>
           );
         },
       }),
 
-      columnHelper.accessor((row) => row.avg_pci_score_human_qg, {
-        id: 'avg_pci_score_human_qg',
+      columnHelper.accessor((row) => row.road_data, {
+        id: 'qc_pci_gauge_min',
         header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
         cell: (info) => {
-          const value = Math.round(Math.random() * 100);
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisProgress pciScore={value} progress={100} />
+              <VideoAnalysisScoreGauge
+                min={info.getValue()?.qc_pci_gauge_min}
+                max={info.getValue()?.qc_pci_gauge_max}
+              />
             </Flex>
           );
         },

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
 
 const itemsCount = 20000;
-const useMockData = true;
+const useMockData = false;
 
 // Seeded random number generator for consistent random values
 const seededRandom = (seed: number) => {

@@ -7,6 +7,7 @@
   height: 1em;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 100px;
+  font-size: 24px;
 
   :global(.circle-progress) {
     stroke-dashoffset: var(--progress);
@@ -18,7 +19,7 @@
     color: var(--label-colour);
     border-radius: 3px;
 
-    font-size: 0.8em;
+    /* font-size: 0.8em; */
 
     .score {
       top: 50%;
@@ -49,6 +50,8 @@
 
 .ring {
   transform: rotate(-90deg);
+  position: absolute;
+  font-size: 1.3em;
 }
 
 .score {
@@ -56,7 +59,7 @@
   top: 51%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.45em;
+  font-size: 0.5em;
   font-weight: bold;
 }
 
