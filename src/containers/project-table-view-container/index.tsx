@@ -34,7 +34,10 @@ const ProjectTableViewContainer = () => {
           undefinedDataComponent="No project data available"
         >
           {(project) => (
-            <TransformProjectData project={project}>
+            <TransformProjectData
+              project={project}
+              defaultConfiguration={status.processing_configurations}
+            >
               {({
                 augmentedProject,
                 persistConfigurationChange,

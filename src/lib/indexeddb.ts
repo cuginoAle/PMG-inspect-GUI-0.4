@@ -198,6 +198,26 @@ async function idbSet<T = unknown>(
   });
 }
 
+async function idbDelete(store: StoreName, key: string): Promise<void> {
+  if (!isBrowserWithIDB()) return;
+  const db = await openDB();
+
+  return new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    const os = tx.objectStore(store);
+    const req = os.delete(key);
+    req.onerror = () =>
+      reject(req.error ?? new Error('IndexedDB delete error'));
+    tx.oncomplete = () => {
+      recordMutation(store);
+      resolve();
+    };
+    tx.onerror = () => {
+      reject(tx.error ?? new Error('IndexedDB transaction error'));
+    };
+  });
+}
+
 /**
  * Batch multiple cache mutations so that only a single notification per store
  * is emitted after the batch completes. Supports nesting.
@@ -225,6 +245,7 @@ export const Cache = {
   get: idbGet,
   getAll: idbGetAll,
   set: idbSet,
+  delete: idbDelete,
   onChange,
   batch,
 } as const;

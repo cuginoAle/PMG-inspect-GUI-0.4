@@ -40,14 +40,11 @@ const useColumnsDef = ({
           );
         },
       }),
-      columnHelper.accessor(
-        (row) => `${row.road_data?.road_name} - ${row.road_data?.road_section}`,
-        {
-          id: 'road_name',
-          header: 'Road Name',
-          cell: (info) => info.getValue(),
-        },
-      ),
+      columnHelper.accessor((row) => `${row.video_name}`, {
+        id: 'road_name',
+        header: 'Road Name',
+        cell: (info) => info.getValue(),
+      }),
       columnHelper.accessor((row) => row.road_data?.road_surface, {
         id: 'road_surface',
         header: 'Surface',

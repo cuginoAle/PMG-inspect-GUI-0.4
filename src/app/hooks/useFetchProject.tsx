@@ -1,8 +1,11 @@
+import { fetchProjectDetails } from '@/src/lib/data/fetch-project-details';
 import { GetProjectResponse, ProjectItem } from '@/src/types';
 import React from 'react';
 import { useEffect } from 'react';
+import { Cache } from '@/src/lib/indexeddb';
 
 const itemsCount = 20000;
+const useMockData = true;
 
 // Seeded random number generator for consistent random values
 const seededRandom = (seed: number) => {
@@ -17,6 +20,7 @@ const generateMockProject = (projectPath: string): GetProjectResponse => {
   for (let i = 0; i < itemsCount; i++) {
     const videoUrl = `/mock/videos/video_${i.toString().padStart(4, '0')}.mp4`;
     items[videoUrl] = {
+      video_name: `video_${i.toString().padStart(4, '0')}.mp4`,
       video_url: videoUrl,
       video_file: `/path/to/video_${i}.mp4`,
       video_status: 'ready',
@@ -95,38 +99,37 @@ const useFetchProject = (projectPath?: string | null) => {
     }
     let cancelled = false;
     (async () => {
-      // Return mock data with 1000 projects immediately
-      if (!cancelled) {
+      // Return mock data with a LOAT of projects immediately
+      if (useMockData) {
         const mockData = generateMockProject(projectPath);
         setProject(mockData);
-      }
+      } else {
+        // Original implementation commented out for testing
 
-      // Original implementation commented out for testing
-      /*
-      try {
-        const cached = await Cache.get<GetProjectResponse>(
-          'projectDetails',
-          projectPath,
-        );
-        if (!cancelled && cached) {
-          setProject(cached);
-          return; // Skip fetching since we have cache
+        try {
+          const cached = await Cache.get<GetProjectResponse>(
+            'projectDetails',
+            projectPath,
+          );
+          if (!cancelled && cached) {
+            setProject(cached);
+            return; // Skip fetching since we have cache
+          }
+        } catch {
+          // ignore cache errors
         }
-      } catch {
-        // ignore cache errors
-      }
-      if (cancelled) return;
-      setProject({ status: 'loading' });
+        if (cancelled) return;
+        setProject({ status: 'loading' });
 
-      fetchProjectDetails(projectPath)
-        .then((data) => {
-          Cache.set('projectDetails', projectPath, data);
-          if (!cancelled) setProject(data);
-        })
-        .catch((error) => {
-          if (!cancelled) setProject(error);
-        });
-      */
+        fetchProjectDetails(projectPath)
+          .then((data) => {
+            Cache.set('projectDetails', projectPath, data);
+            if (!cancelled) setProject(data);
+          })
+          .catch((error) => {
+            if (!cancelled) setProject(error);
+          });
+      }
     })();
 
     return () => {

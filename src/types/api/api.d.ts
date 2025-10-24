@@ -408,6 +408,8 @@ export interface components {
             modify_date?: string | null;
             /** Model */
             model?: string | null;
+            /** Media Mode */
+            media_mode?: string | null;
             /** Digital Zoom On */
             digital_zoom_on?: boolean | null;
             /** Digital Zoom */
@@ -486,6 +488,15 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** ImageProcessingDataWrapper */
+        ImageProcessingDataWrapper: {
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
+            };
+            /** Image */
+            image: string;
         };
         /** InferenceConfiguration */
         "InferenceConfiguration-Input": {
@@ -599,15 +610,6 @@ export interface components {
             shape: number[];
             /** Data */
             data: string;
-        };
-        /** ProcessImage */
-        ProcessImage: {
-            /** Inference Configurations */
-            inference_configurations: {
-                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
-            };
-            /** Image */
-            image: string;
         };
         /** ProcessingConfiguration */
         "ProcessingConfiguration-Input": {
@@ -758,13 +760,15 @@ export interface components {
             video_file?: string | null;
             /** @default road_data_ready */
             video_status: components["schemas"]["VideoStatus"] | null;
-            road_data: components["schemas"]["RoadData"] | null;
+            road_data?: components["schemas"]["RoadData"] | null;
             media_data?: components["schemas"]["MediaData"] | null;
             camera_data?: components["schemas"]["CameraData"] | null;
             /** Gps Points */
             gps_points?: {
                 [key: string]: components["schemas"]["GpsPoint"];
             } | null;
+            /** Video Name */
+            readonly video_name: string | null;
         };
         /**
          * VideoStatus
@@ -1062,7 +1066,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProcessImage"];
+                "application/json": components["schemas"]["ImageProcessingDataWrapper"];
             };
         };
         responses: {

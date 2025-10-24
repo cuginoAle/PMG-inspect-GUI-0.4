@@ -72,15 +72,20 @@ const ProjectTableView = ({
   const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLElement;
 
-    // Get all checked checkbox values
-    const checkedValues = Array.from(checkedRowIdsRef.current);
-
     // Handle different input types
     const isSelectAllCheckbox =
       target.dataset['componentId'] === 'select_all_header_checkbox';
     switch (target.tagName) {
       case 'INPUT':
         if (isSelectAllCheckbox) {
+          const isChecked = (target as HTMLInputElement).checked;
+          const checkedValues = isChecked
+            ? projectItems.map((item) => item.video_url)
+            : [];
+
+          checkedRowIdsRef.current = new Set(isChecked ? checkedValues : []);
+          // Get all checked checkbox values
+
           updateAllCheckboxes((target as HTMLInputElement).checked);
           updateAllConfigDropdowns(checkedValues);
           break;
@@ -101,11 +106,17 @@ const ProjectTableView = ({
       case 'SELECT':
         const selectedVideoUrl = target.dataset['videoId']!;
 
+        const checkedValues = Array.from(checkedRowIdsRef.current);
+
+        console.log('checkedValues', checkedValues);
+
         const allAffectedVideoUrls = [...checkedValues];
 
         if (checkedValues.length === 0) {
           allAffectedVideoUrls.push(selectedVideoUrl);
         }
+
+        console.log('allAffectedVideoUrls ****', allAffectedVideoUrls);
 
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
@@ -211,7 +222,6 @@ const ProjectTableView = ({
   const { updateAllCheckboxes, updateAllConfigDropdowns } =
     selectAllCheckboxHandler({
       tBodyRef,
-      checkedRowIdsRef,
       projectItems,
       selectAllCheckboxRef,
     });

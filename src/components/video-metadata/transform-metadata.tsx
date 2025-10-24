@@ -15,9 +15,11 @@ const transformMetadata = (
   };
 
   transformed['model'] = <GoProModel model={metadata['model'] as string} />;
-  const createDate = dateTimeFormat
-    .format(new Date(metadata['create_date'] as number))
-    .split(', ');
+  const createDate = metadata['create_date']
+    ? dateTimeFormat
+        .format(new Date(metadata['create_date'] as number))
+        .split(', ')
+    : ['N/A', ''];
   transformed['create_date'] = (
     <span>
       <Text color="amber" weight="bold">
@@ -31,7 +33,7 @@ const transformMetadata = (
     ? dateTimeFormat
         .format(new Date(metadata['modify_date'] as number))
         .split(', ')
-    : ['N/A', '-'];
+    : ['N/A', ''];
 
   transformed['modify_date'] = (
     <span>

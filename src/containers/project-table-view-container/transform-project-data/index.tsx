@@ -3,6 +3,7 @@ import {
   AugmentedProjectItemData,
   Project,
   ProjectItem,
+  ProjectStatus,
 } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
@@ -24,14 +25,9 @@ const augmentProject = async ({
 
   if (!videoIds) {
     // Retrieve saved configurations from localStorage
-    // TODO: fetch all saved configurations for the given project!!!   <<<<======= TODO!!
-    videoConfigurations =
-      (await Cache.get<Record<string, string>>(
-        savedConfigsIDBStore,
-        project.project_name,
-      )) || {};
-
-    console.log('videoConfigurations 1', videoConfigurations);
+    videoConfigurations = await loadProjectSavedConfigurations(
+      project.project_name,
+    );
 
     if (Object.keys(videoConfigurations).length === 0) {
       // No saved configurations, return the project as is
@@ -44,7 +40,6 @@ const augmentProject = async ({
     });
   }
 
-  console.log('videoConfigurations 2', videoConfigurations);
   const projectClone = { ...project, items: { ...project.items } };
 
   Object.entries(videoConfigurations).forEach(
@@ -55,56 +50,27 @@ const augmentProject = async ({
       } as AugmentedProjectItemData),
   );
 
-  console.time('Augment project data');
-  // Augment project items with selected configurations
-  // const data = {
-  //   ...project,
-  //   items: Object.entries(project?.items || {}).reduce((acc, [key, item]) => {
-  //     const videoId = getVideoId({
-  //       projectName: project.project_name,
-  //       videoUrl: item.video_url,
-  //     });
-  //     acc[key] = {
-  //       ...item,
-  //       selected_configuration: videoConfigurations?.[videoId] as
-  //         | string
-  //         | undefined,
-  //     };
-
-  //     return acc;
-  //   }, {} as Record<string, ProjectItem & { selected_configuration?: string }>),
-  // };
-
-  console.timeEnd('Augment project data');
-
   return projectClone;
 };
 
-const saveSelectedConfigsToIDB = async ({
-  videoUrls,
-  projectName,
-  selectedValue,
-}: {
-  videoUrls: string[];
-  projectName: string;
-  selectedValue: string;
-}) =>
-  Cache.set(
-    savedConfigsIDBStore,
-    projectName,
-    videoUrls.reduce((acc, videoUrl) => {
-      acc[videoUrl] = selectedValue;
-      return acc;
-    }, {} as Record<string, string>),
-  );
+const loadProjectSavedConfigurations = async (
+  projectName: string,
+): Promise<Record<string, string>> => {
+  const savedConfigs =
+    (await Cache.get<Record<string, string>>(
+      savedConfigsIDBStore,
+      projectName,
+    )) || {};
+  return savedConfigs;
+};
 
 const TransformProjectData = ({
   project,
-  // selectedVideoUrlList,
   children,
+  defaultConfiguration,
 }: {
   project: Project;
-  // selectedVideoUrlList: string[];
+  defaultConfiguration: ProjectStatus['processing_configurations'];
   children: ({
     augmentedProject,
     persistConfigurationChange,
@@ -117,6 +83,10 @@ const TransformProjectData = ({
     handleSetHoveredVideoUrl: (projectItem?: ProjectItem) => void;
   }) => React.ReactNode;
 }) => {
+  const defaultProcessingConfigurationName = defaultConfiguration
+    ? Object.values(defaultConfiguration)[0]?.processing_configuration_name
+    : undefined;
+
   const [data, setData] = useState<AugmentedProject>();
   const setHoveredVideoUrl = useDebounce(
     useGlobalState((state) => state.setHoveredVideoUrl),
@@ -136,16 +106,27 @@ const TransformProjectData = ({
     videoIds: string[],
     selectedValue: string,
   ) => {
-    // Handle configuration change
-    saveSelectedConfigsToIDB({
-      videoUrls: videoIds,
-      projectName: project.project_name,
-      selectedValue,
-    }).then(() => {
-      // Update localStorage and re-augment project data
-      console.log('Saved configurations to IDB');
-    });
-    augmentProject({ project, videoIds, selectedValue }).then(setData);
+    // Read the project data and save the selected configurations to IndexedDB
+    loadProjectSavedConfigurations(project.project_name).then(
+      (existingConfigs) => {
+        const updatedConfigs = { ...existingConfigs };
+        videoIds.forEach((videoId) => {
+          // If the selected value is the default, remove it from saved configs
+          if (selectedValue === defaultProcessingConfigurationName) {
+            delete updatedConfigs[videoId];
+          } else {
+            updatedConfigs[videoId] = selectedValue;
+          }
+        });
+
+        augmentProject({
+          project: data || project,
+          videoIds,
+          selectedValue,
+        }).then(setData);
+        Cache.set(savedConfigsIDBStore, project.project_name, updatedConfigs);
+      },
+    );
   };
 
   return data ? (
