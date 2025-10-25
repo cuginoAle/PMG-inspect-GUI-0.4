@@ -3,13 +3,8 @@
 import { Flex, Table, Text, Theme } from '@radix-ui/themes';
 import { transformMetadata } from './transform-metadata';
 import { CameraData } from '@/src/types';
-import { Immutable } from '@hookstate/core';
 
-const VideoMetaData = ({
-  cameraData,
-}: {
-  cameraData?: Immutable<CameraData> | null;
-}) => {
+const VideoMetaData = ({ cameraData }: { cameraData?: CameraData | null }) => {
   if (!cameraData) {
     return null;
   }

@@ -5,20 +5,15 @@ import { Warning } from '@/src/components/warning';
 import { useSearchParams } from 'next/navigation';
 
 const ProjectVideoMetadataContainer = () => {
-  const { selectedProject } = useGlobalState();
+  const selectedProject = useGlobalState((state) => state.selectedProject);
   const sp = useSearchParams();
 
-  const project = selectedProject.get({
-    noproxy: true,
-  });
-
-  if (!project || project.status !== 'ok') {
+  if (!selectedProject || selectedProject.status !== 'ok') {
     return null;
   }
 
-  const selectedVideo = project.detail.project_items.find(
-    (item) => item.video_url === sp.get('videoUrl'),
-  );
+  const selectedVideo =
+    selectedProject.detail.items?.[sp.get('videoUrl') || ''];
 
   if (!selectedVideo) {
     return (

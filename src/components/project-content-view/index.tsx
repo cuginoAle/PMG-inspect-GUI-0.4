@@ -1,5 +1,5 @@
 'use client';
-import { SplitView } from '@/src/components';
+import { SplitView } from 'src/components';
 
 import styles from './style.module.css';
 import { ProjectVideoPreviewContainer } from '@/src/containers/project-video-preview-container';
@@ -19,7 +19,7 @@ const ProjectContentView = () => {
         rightMinSize={100}
         proportionalLayout={true}
         left={
-          <div className={styles.leftPane}>
+          <div className={styles.leftPane} id="project-content-left-pane">
             <ProjectContentViewContainer />
           </div>
         }

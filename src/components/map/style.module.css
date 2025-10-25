@@ -1,5 +1,17 @@
 .root {
   position: relative;
+}
+
+.mapContainer {
+  position: relative;
   min-height: 200px;
   aspect-ratio: 16/9;
+}
+
+.zoomOutButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }

@@ -1,8 +1,5 @@
 .searchBox {
   max-width: 400px;
-  /* display: flex;
-  align-items: center;
-  gap: var(--space-4); */
 }
 
 .headerCell {
@@ -19,7 +16,7 @@
   }
 
   :global(.rt-TableRow) {
-    &:hover {
+    paginationControls &:hover {
       background-color: var(--accent-a2);
     }
     &.selected {
@@ -36,4 +33,11 @@
   position: sticky;
   top: 0;
   background-color: var(--gray-3);
+}
+
+:global(.rt-TableRow) {
+  white-space: nowrap;
+  &:hover {
+    background-color: var(--gray-3);
+  }
 }

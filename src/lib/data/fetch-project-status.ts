@@ -1,13 +1,21 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError, GetProcessingConfigurationResponse } from '@/src/types';
+import { FetchError, GetProjectStatusResponse } from '@/src/types';
 
-async function fetchProcessingConfiguration(): Promise<
-  GetProcessingConfigurationResponse | undefined
-> {
-  const fullUrl = `${ENDPOINT.PROCESSING_CONFIGURATION}`;
+async function fetchProjectStatus(
+  path?: string,
+): Promise<GetProjectStatusResponse | undefined> {
+  if (!path) {
+    return undefined;
+  }
+
+  // building the query string
+  const sp = new URLSearchParams();
+  sp.append('project_relative_path', path);
+
+  const fullUrl = `${ENDPOINT.PROJECT.STATUS}?${sp.toString()}`;
+
   try {
     const res = await fetch(fullUrl);
-
     if (!res.ok) {
       throw {
         code: String(res.status),
@@ -19,11 +27,12 @@ async function fetchProcessingConfiguration(): Promise<
     }
 
     const body = await res.json();
+
     return {
       status: 'ok',
       detail: body,
     };
-  } catch (error) {
+  } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
       throw error;
@@ -38,4 +47,4 @@ async function fetchProcessingConfiguration(): Promise<
   }
 }
 
-export { fetchProcessingConfiguration };
+export { fetchProjectStatus };

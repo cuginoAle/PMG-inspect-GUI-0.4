@@ -9,18 +9,17 @@ import React, { useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import styles from './style.module.css';
 import { FileInfo } from '@/src/types';
-import { Immutable, ImmutableObject } from '@hookstate/core';
+import { useSearchParams } from 'next/navigation';
 
 type ProjectsTreeViewProps = {
-  files: Immutable<FileInfo[]>;
-  selectedPath?: string;
+  files: FileInfo[];
 };
 
 // Feature flag (compile-time) to enable top-level Remote/Local grouping nodes in the tree
 const enableRemoteAndLocalNodes = false as const;
 
 type RemoteLocalNode = {
-  content: Immutable<FileInfo[]>;
+  content: FileInfo[];
   file_type?: string;
   file_origin?: string;
   name: string;
@@ -30,9 +29,13 @@ type RemoteLocalNode = {
 // Resolve the node type used by the Tree (compile-time based on the flag)
 type TreeNode = typeof enableRemoteAndLocalNodes extends true
   ? RemoteLocalNode
-  : ImmutableObject<FileInfo>;
+  : FileInfo;
 
-const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
+const ProjectsTreeView = ({ files }: ProjectsTreeViewProps) => {
+  const sp = useSearchParams();
+  const pathSP = sp.get('path');
+  const selectedPath = Array.isArray(pathSP) ? pathSP[0] : pathSP || undefined;
+
   const [searchTerm, setSearchTerm] = React.useState('');
   const { ref, width, height } = useResizeObserver();
 
@@ -44,7 +47,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
 
   type DataType = typeof enableRemoteAndLocalNodes extends true
     ? RemoteLocalNode[]
-    : Immutable<FileInfo[]>;
+    : FileInfo[];
 
   const groupedData: RemoteLocalNode[] = [
     {
@@ -55,7 +58,7 @@ const ProjectsTreeView = ({ files, selectedPath }: ProjectsTreeViewProps) => {
       relative_path: 'remote',
     },
     {
-      content: [] as Immutable<FileInfo[]>,
+      content: [] as FileInfo[],
       file_type: 'local',
       name: 'Local',
       relative_path: 'local',

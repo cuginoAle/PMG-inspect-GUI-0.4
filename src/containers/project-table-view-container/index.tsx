@@ -2,56 +2,61 @@
 import { useGlobalState } from '@/src/app/global-state';
 import { ProjectTableView } from '@/src/components/project-table-view';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
-import { ProjectItem } from '@/src/types';
-import { useCallback } from 'react';
 import { MySuspense } from '@/src/components/my-suspense';
+import { TransformProjectData } from './transform-project-data';
 
 const ProjectTableViewContainer = () => {
-  const {
-    hoveredVideoUrl,
-    selectedProject,
-    selectedInferenceSettingId,
-    selectedVideoUrlList,
-  } = useGlobalState();
-
-  const updateSelectedVideoUrlList = selectedVideoUrlList.merge;
-
-  const setHoveredVideoUrl = (projectItem?: ProjectItem) => {
-    hoveredVideoUrl.set(projectItem?.video_url);
-  };
-
-  const project = selectedProject.get();
-
-  const onSelectedVideoChange = useCallback(
-    (selectedItemIdList: string[] | []) => {
-      const selectedInference = selectedInferenceSettingId.get();
-      if (!selectedInference) {
-        console.log('No inference setting selected!!!');
-        return;
-      }
-      updateSelectedVideoUrlList({
-        [selectedInference]: selectedItemIdList,
-      });
-    },
-    [selectedInferenceSettingId, updateSelectedVideoUrlList],
+  const setVideoUrlToDrawOnTheMap = useGlobalState(
+    (state) => state.setVideoUrlToDrawOnTheMap,
   );
+  const selectedProject = useGlobalState((state) => state.selectedProject);
+  const projectStatus = useGlobalState((state) => state.projectStatus);
 
-  if (!project) {
+  if (!selectedProject) {
     return <NoProjectSelected />;
   }
 
   return (
     <MySuspense
-      data={project}
+      data={projectStatus}
+      loadingMessage="Loading project status..."
       loadingSize="large"
-      loadingMessage="Loading project..."
+      errorTitle="Project status"
+      undefinedDataComponent="No project status available"
     >
-      {(data) => (
-        <ProjectTableView
-          project={data}
-          onMouseOver={setHoveredVideoUrl}
-          onChange={onSelectedVideoChange}
-        />
+      {(status) => (
+        <MySuspense
+          data={selectedProject}
+          loadingSize="large"
+          loadingMessage="Loading project..."
+          undefinedDataComponent="No project data available"
+        >
+          {(project) => (
+            <TransformProjectData
+              project={project}
+              defaultConfiguration={status.processing_configurations}
+            >
+              {({
+                augmentedProject,
+                persistConfigurationChange,
+                handleSetHoveredVideoUrl,
+              }) => (
+                <ProjectTableView
+                  processingConfiguration={Object.values(
+                    status.processing_configurations || {},
+                  )}
+                  project={augmentedProject}
+                  onMouseOver={handleSetHoveredVideoUrl}
+                  // onRowCheckbox={setSelectedVideoUrlList}
+                  onConfigurationChange={persistConfigurationChange}
+                  onRowClick={(item) =>
+                    setVideoUrlToDrawOnTheMap(item?.video_url)
+                  }
+                />
+              )}
+            </TransformProjectData>
+          )}
+        </MySuspense>
       )}
     </MySuspense>
   );

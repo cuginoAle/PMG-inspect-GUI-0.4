@@ -7,12 +7,7 @@ import {
 
 import { Flex } from '@radix-ui/themes';
 
-import { PageSearchParams } from '@/src/types';
-
-const Page = async ({ searchParams }: { searchParams: PageSearchParams }) => {
-  const { path: pathSP } = await searchParams;
-  const path = Array.isArray(pathSP) ? pathSP[0] : pathSP || undefined;
-
+const Page = async () => {
   return (
     <Flex p="4" height="100%" gap={'2'} direction="column">
       <DataLoader />
@@ -21,7 +16,7 @@ const Page = async ({ searchParams }: { searchParams: PageSearchParams }) => {
         <AppSettings />
       </Flex>
 
-      <ProjectFinder projectPath={path} />
+      <ProjectFinder />
     </Flex>
   );
 };

@@ -16,25 +16,42 @@ type FileType = components['schemas']['FileType'];
 type FileInfo = components['schemas']['FileInfo'] & {
   file_origin?: FileOrigin;
 };
-type Project = components['schemas']['ParseProjectResponse'];
-type ProjectItem = Project['project_items'][number];
-type RoadData = ProjectItem['road_data'];
+type Project = components['schemas']['ProjectInventory'];
+type AugmentedProjectItemData = ProjectItem & {
+  selected_configuration?: components['schemas']['ProcessingConfiguration-Input']['processing_configuration_name'];
+};
+type AugmentedProject = Project & {
+  items: Record<string, AugmentedProjectItemData>;
+};
+// type Inference = components['schemas']['Inference'];
+type ProjectStatus = components['schemas']['ProjectStatus'];
+type ProjectItem = components['schemas']['VideoCaptureData'];
+type RoadData = components['schemas']['RoadData'];
 type CameraData = components['schemas']['CameraData'];
 type MediaData = components['schemas']['MediaData'];
-type ProcessingConfiguration = Record<
-  // TODO: this should come from the OpenAPI!
-  InferenceTypes,
-  components['schemas']['ProcessingConfiguration']
->;
-type InferenceTypes = components['schemas']['InferenceType'];
-type Inference = components['schemas']['InferenceConfiguration'];
-
-type ProjectParsingState = Project['project_items'][number]['parsing_status'];
-
 type GpsData = components['schemas']['GpsPoint'];
 
-type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
+type InferenceModel = components['schemas']['InferenceModel'];
+type InferenceTypes = components['schemas']['InferenceType'];
+type ProcessingConfiguration =
+  components['schemas']['ProcessingConfiguration-Input'];
 
+type ProjectParsingState = components['schemas']['VideoStatus'];
+
+// type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
+
+type GetInferenceModelResponse =
+  | {
+      status: 'ok';
+      detail: InferenceModel[];
+    }
+  | FetchError
+  | LoadingState;
+
+type GetProjectStatusResponse =
+  | { status: 'ok'; detail: ProjectStatus }
+  | FetchError
+  | LoadingState;
 type GetFilesListResponse =
   | { status: 'ok'; detail: Array<FileInfo> }
   | FetchError
@@ -46,64 +63,66 @@ type GetProjectResponse =
 type GetProcessingConfigurationResponse =
   | {
       status: 'ok';
-      detail: {
-        processing_configurations: ProcessingConfiguration;
-        inference_model_ids: InferenceModelDict; // Maybe this prop could be renamed to inference_model_dictionary
-      };
+      detail: ProcessingConfiguration;
     }
   | FetchError
   | LoadingState;
 
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
-type GetAnalysisResultResponse =
-  // TODO: update with OpenApi spec
-  { status: 'ok'; detail: DummyAnalysisResult[] } | FetchError | LoadingState;
+// type GetAnalysisResultResponse =
+//   // TODO: update with OpenApi spec
+//   { status: 'ok'; detail: DummyAnalysisResult[] } | FetchError | LoadingState;
 
-type Network = {
-  // TODO: update with OpenApi spec
-  network_name: string;
-} & Inference;
+// type Network = {
+//   // TODO: update with OpenApi spec
+//   network_name: string;
+// } & Inference;
 
-type DummyAnalysisResult = {
-  // TODO: update with OpenApi spec
-  setting_id: string;
-  setting_label: string;
-  setting_details: Array<Network>;
-  frame_rate: {
-    fps?: number;
-    distance?: number;
-  };
-  analysed_video_list: {
-    video_url: string;
-    frames: {
-      index: number;
-      pci_score_value: number | null;
-      pci_score_state: 'ok' | 'error';
-    };
-  };
-};
+// type DummyAnalysisResult = {
+//   // TODO: update with OpenApi spec
+//   setting_id: string;
+//   setting_label: string;
+//   setting_details: Array<Network>;
+//   frame_rate: {
+//     fps?: number;
+//     distance?: number;
+//   };
+//   analysed_video_list: {
+//     video_url: string;
+//     frames: {
+//       index: number;
+//       pci_score_value: number | null;
+//       pci_score_state: 'ok' | 'error';
+//     };
+//   };
+// };
 
 export type {
   CameraData,
-  DummyAnalysisResult, // TODO: update with OpenApi spec
+  // DummyAnalysisResult, // TODO: update with OpenApi spec
   FetchError,
   FileInfo,
   FileOrigin,
   FileType,
-  GetAnalysisResultResponse,
   GetFilesListResponse,
   GetProcessingConfigurationResponse,
   GetProjectResponse,
+  GetProjectStatusResponse,
+  GetInferenceModelResponse,
   GpsData,
-  Inference,
-  InferenceModelDict,
+  // Inference,
+  // InferenceModelDict,
   InferenceTypes,
+  InferenceModel,
   LoadingState,
   MediaData,
-  Network, // TODO: update with OpenApi spec
+  // Network, // TODO: update with OpenApi spec
   ProcessingConfiguration,
   Project,
+  AugmentedProject,
+  ProjectStatus,
+  AugmentedProjectItemData,
   ProjectItem,
   ProjectParsingState,
   ResponseType,
