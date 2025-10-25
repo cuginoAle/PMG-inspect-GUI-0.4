@@ -34,7 +34,7 @@ type GpsData = components['schemas']['GpsPoint'];
 type InferenceModel = components['schemas']['InferenceModel'];
 type InferenceTypes = components['schemas']['InferenceType'];
 type ProcessingConfiguration =
-  components['schemas']['ProcessingConfiguration-Input'];
+  components['schemas']['ProcessingConfiguration-Output'];
 
 type ProjectParsingState = components['schemas']['VideoStatus'];
 
@@ -60,15 +60,20 @@ type GetProjectResponse =
   | { status: 'ok'; detail: Project }
   | FetchError
   | LoadingState;
-type GetProcessingConfigurationResponse =
-  | {
-      status: 'ok';
-      detail: ProcessingConfiguration;
-    }
-  | FetchError
-  | LoadingState;
+// type GetProcessingConfigurationResponse =
+//   | {
+//       status: 'ok';
+//       detail: ProcessingConfiguration;
+//     }
+//   | FetchError
+//   | LoadingState;
 
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
+
+type GetPciScoreResponse =
+  | { status: 'ok'; detail: ProcessingConfiguration }
+  | FetchError
+  | LoadingState;
 
 // type GetAnalysisResultResponse =
 //   // TODO: update with OpenApi spec
@@ -106,7 +111,8 @@ export type {
   FileOrigin,
   FileType,
   GetFilesListResponse,
-  GetProcessingConfigurationResponse,
+  // GetProcessingConfigurationResponse,
+  GetPciScoreResponse,
   GetProjectResponse,
   GetProjectStatusResponse,
   GetInferenceModelResponse,

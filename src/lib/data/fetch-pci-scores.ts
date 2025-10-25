@@ -1,7 +1,7 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError, GetAnalysisResultResponse } from '@/src/types';
+import { FetchError } from '@/src/types';
 
-async function fetchAnalysisResults(
+async function fetchPciScores(
   path?: string,
 ): Promise<GetAnalysisResultResponse | undefined> {
   if (!path) {
@@ -12,7 +12,7 @@ async function fetchAnalysisResults(
   const sp = new URLSearchParams();
   sp.append('project_relative_path', path);
 
-  const fullUrl = `${ENDPOINT.PROJECT.ANALYSIS}?${sp.toString()}`;
+  const fullUrl = `${ENDPOINT.PROJECT.PCI_SCORES}?${sp.toString()}`;
 
   try {
     const res = await fetch(fullUrl);
@@ -48,4 +48,4 @@ async function fetchAnalysisResults(
   }
 }
 
-export { fetchAnalysisResults };
+export { fetchPciScores };

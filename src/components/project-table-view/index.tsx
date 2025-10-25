@@ -33,14 +33,12 @@ const ProjectTableView = ({
   processingConfiguration = [],
   project,
   onMouseOver,
-  onRowCheckbox,
   onRowClick,
   onConfigurationChange,
 }: {
   processingConfiguration?: ProcessingConfiguration[];
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
-  onRowCheckbox?: (selectedItemIdList: string[] | []) => void;
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
   onConfigurationChange?: (videoIds: string[], selectedValue: string) => void;
 }) => {
@@ -100,23 +98,16 @@ const ProjectTableView = ({
         // Get all checked checkbox values (including the current change)
         const updatedCheckedValues = Array.from(checkedRowIdsRef.current);
         updateAllConfigDropdowns(updatedCheckedValues);
-
-        onRowCheckbox?.(updatedCheckedValues);
         break;
+
       case 'SELECT':
         const selectedVideoUrl = target.dataset['videoId']!;
-
         const checkedValues = Array.from(checkedRowIdsRef.current);
-
-        console.log('checkedValues', checkedValues);
-
         const allAffectedVideoUrls = [...checkedValues];
 
         if (checkedValues.length === 0) {
           allAffectedVideoUrls.push(selectedVideoUrl);
         }
-
-        console.log('allAffectedVideoUrls ****', allAffectedVideoUrls);
 
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
@@ -187,6 +178,11 @@ const ProjectTableView = ({
     columns: useColumnsDef({
       processingConfiguration,
       checkedRowIds: Array.from(checkedRowIdsRef.current),
+      aiPciScores:
+        project.ai_pci_scores ||
+        {
+          // TODO: add support for ai_pci_scores!!!
+        },
     }),
     state: {
       sorting,

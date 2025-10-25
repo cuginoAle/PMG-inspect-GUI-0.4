@@ -3,7 +3,7 @@ import type {
   AugmentedProjectItemData,
   ProcessingConfiguration,
 } from '@/src/types';
-import { Flex, Text } from '@radix-ui/themes';
+import { Flex, Spinner, Text } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
 import {
   NeuralNetworkIcon,
@@ -18,9 +18,11 @@ const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 const useColumnsDef = ({
   processingConfiguration,
   checkedRowIds,
+  aiPciScores = {},
 }: {
   processingConfiguration: ProcessingConfiguration[];
   checkedRowIds: string[];
+  aiPciScores: Record<string, number>;
 }) => {
   return useMemo(
     () => [
@@ -129,22 +131,63 @@ const useColumnsDef = ({
         },
       }),
 
-      columnHelper.accessor((row) => row.road_data, {
-        id: 'qc_pci_gauge_min',
-        header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
-        cell: (info) => {
-          return (
-            <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisScoreGauge
-                min={info.getValue()?.qc_pci_gauge_min}
-                max={info.getValue()?.qc_pci_gauge_max}
-              />
-            </Flex>
-          );
+      columnHelper.accessor(
+        (row) => {
+          const min = row.road_data?.qc_pci_gauge_min;
+          const max = row.road_data?.qc_pci_gauge_max;
+          const inspectorPciScore = row.road_data?.inspector_pci;
+
+          if (!min || !max || !inspectorPciScore) {
+            return undefined;
+          }
+
+          if (inspectorPciScore < min) return min - inspectorPciScore + 0.1; // add 0.1 to indicate negative delta
+          if (inspectorPciScore > max) return inspectorPciScore - max;
+          return 0;
         },
-      }),
-      columnHelper.accessor((row) => row.pci_score_avg_ai, {
-        // TODO: this data should come from another endpoint
+        {
+          id: 'pci_delta',
+          header: () => <span style={{ margin: 'auto' }}>▵</span>,
+          cell: (info) => {
+            const value = info.getValue() || 0;
+            const roundedValue = Math.round(value);
+            const isNegative = value !== roundedValue;
+            return (
+              <Text as="p" weight={'bold'} align="center" color="red">
+                {isNegative && '-'}
+                {roundedValue || ''}
+              </Text>
+            );
+          },
+        },
+      ),
+
+      columnHelper.accessor(
+        (row) =>
+          row.road_data?.qc_pci_gauge_min && row.road_data?.qc_pci_gauge_max
+            ? row.road_data?.qc_pci_gauge_min +
+              row.road_data?.qc_pci_gauge_max / 100 // to keep both values in a single number
+            : undefined,
+        {
+          id: 'qc_pci_gauge_min',
+          header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
+          cell: (info) => {
+            const value = info.getValue()?.toString().split('.');
+            const min = value ? value[0] : undefined;
+            const max = value ? value[1] : undefined;
+            return (
+              <Flex justify="center" gap="1">
+                <VideoAnalysisScoreGauge
+                  min={min ? parseInt(min) : undefined}
+                  max={max ? parseInt(max) : undefined}
+                />
+              </Flex>
+            );
+          },
+        },
+      ),
+
+      columnHelper.display({
         id: 'pci_score_avg_ai',
         header: () => (
           <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
@@ -153,11 +196,24 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
-          const value = Math.round(Math.random() * 60) + 40;
-          const progress = Math.min(100, Math.round(Math.random() * 70) + 50);
+          const value = aiPciScores[info.row.original.video_url];
+          const framesCount = Object.keys(value || {}).length;
+          const processedCount = Object.values(value || {}).filter(
+            (v) => v !== null && v !== undefined,
+          ).length;
+
+          const progress =
+            framesCount > 0
+              ? Math.round((processedCount / framesCount) * 100)
+              : 100;
+
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-              <VideoAnalysisProgress pciScore={value} progress={progress} />
+              {value === undefined ? (
+                <Spinner size="2" />
+              ) : (
+                <VideoAnalysisProgress pciScore={value} progress={progress} />
+              )}
             </Flex>
           );
         },

@@ -97,7 +97,7 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
       </Flex>
       <Flex gap="2" align="center">
         <span className={styles.paginationText}>
-          Page {table.getState().pagination.pageIndex + 1} of{' '}
+          Page <strong>{table.getState().pagination.pageIndex + 1}</strong> of{' '}
           {table.getPageCount()}
         </span>
         <span className={styles.paginationText}>

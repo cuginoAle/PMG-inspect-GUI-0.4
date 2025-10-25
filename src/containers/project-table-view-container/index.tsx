@@ -47,7 +47,6 @@ const ProjectTableViewContainer = () => {
                   )}
                   project={augmentedProject}
                   onMouseOver={handleSetHoveredVideoUrl}
-                  // onRowCheckbox={setSelectedVideoUrlList}
                   onConfigurationChange={persistConfigurationChange}
                   onRowClick={(item) =>
                     setVideoUrlToDrawOnTheMap(item?.video_url)

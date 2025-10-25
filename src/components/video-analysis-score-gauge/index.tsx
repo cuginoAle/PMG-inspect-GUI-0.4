@@ -10,22 +10,26 @@ const VideoAnalysisScoreGauge = ({
   max?: number;
 }) => {
   const customStyle = {
-    '--colour-min': `var(--pci-${getPciScoreLabelFromValue(min || undefined)})`,
-    '--colour-max': `var(--pci-${getPciScoreLabelFromValue(max || undefined)})`,
+    '--colour-min': min
+      ? `var(--pci-${getPciScoreLabelFromValue(min)})`
+      : 'var(--gray-a4)',
+    '--colour-max': max
+      ? `var(--pci-${getPciScoreLabelFromValue(max)})`
+      : 'var(--gray-a4)',
 
-    '--label-colour-max': `var(--pci-label-${getPciScoreLabelFromValue(
-      max || undefined,
-    )})`,
-    '--label-colour-min': `var(--pci-label-${getPciScoreLabelFromValue(
-      min || undefined,
-    )})`,
+    '--label-colour-max': max
+      ? `var(--pci-label-${getPciScoreLabelFromValue(max)})`
+      : 'var(--gray-a8)',
+    '--label-colour-min': min
+      ? `var(--pci-label-${getPciScoreLabelFromValue(min)})`
+      : 'var(--gray-a8)',
   } as CSSProperties;
 
   return (
     <div className={styles.root} style={customStyle}>
       <div className={styles.wrapper}>
-        <span className={styles.min}>{min}</span>
-        <span className={styles.max}>{max}</span>
+        <span className={styles.min}>{min || '-'}</span>
+        <span className={styles.max}>{max || '-'}</span>
       </div>
     </div>
   );

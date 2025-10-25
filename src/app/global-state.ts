@@ -2,13 +2,12 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
-  GetAnalysisResultResponse,
   GetFilesListResponse,
-  GetProcessingConfigurationResponse,
   GetProjectResponse,
   GetProjectStatusResponse,
   GetInferenceModelResponse,
   ProcessingConfiguration,
+  GetPciScoreResponse,
 } from '@/src/types';
 
 type GlobalState = {
@@ -21,11 +20,10 @@ type GlobalState = {
     userName?: string;
     localCacheSizeLimitInGB?: number;
   };
-  analysisResults?: GetAnalysisResultResponse;
-  processingConfigurationsDefinition?: GetProcessingConfigurationResponse;
   editedProcessingConfigurations?: ProcessingConfiguration;
   inferenceModels?: GetInferenceModelResponse;
   videoUrlToDrawOnTheMap?: string;
+  aiPciScores?: GetPciScoreResponse;
 };
 
 type GlobalStateActions = {
@@ -34,13 +32,11 @@ type GlobalStateActions = {
   setProjectStatus: (status?: GetProjectStatusResponse) => void;
   setHoveredVideoUrl: (url?: string) => void;
   setUserPreferences: (prefs?: GlobalState['userPreferences']) => void;
-  setAnalysisResults: (results?: GetAnalysisResultResponse) => void;
-  setProcessingConfigurationsDefinition: (
-    configs?: GetProcessingConfigurationResponse,
-  ) => void;
+
   setEditedProcessingConfigurations: (config?: ProcessingConfiguration) => void;
   setInferenceModels: (inferenceModels?: GetInferenceModelResponse) => void;
   setVideoUrlToDrawOnTheMap: (url?: string) => void;
+  setAiPciScores: (aiPciScores?: GetPciScoreResponse) => void;
 };
 
 type GlobalStore = GlobalState & GlobalStateActions;
@@ -60,6 +56,7 @@ const useGlobalState = create<GlobalStore>()(
       selectedInferenceSettingId: undefined,
       inferenceModels: undefined,
       videoUrlToDrawOnTheMap: undefined,
+      aiPciScores: {},
 
       // Actions
       setFilesList: (filesList) => set({ filesList }),
@@ -67,15 +64,12 @@ const useGlobalState = create<GlobalStore>()(
       setProjectStatus: (projectStatus) => set({ projectStatus }),
       setHoveredVideoUrl: (hoveredVideoUrl) => set({ hoveredVideoUrl }),
       setUserPreferences: (userPreferences) => set({ userPreferences }),
-      setAnalysisResults: (analysisResults) => set({ analysisResults }),
-      setProcessingConfigurationsDefinition: (
-        processingConfigurationsDefinition,
-      ) => set({ processingConfigurationsDefinition }),
       setEditedProcessingConfigurations: (editedProcessingConfigurations) =>
         set({ editedProcessingConfigurations }),
       setInferenceModels: (inferenceModels) => set({ inferenceModels }),
       setVideoUrlToDrawOnTheMap: (videoUrlToDrawOnTheMap) =>
         set({ videoUrlToDrawOnTheMap }),
+      setAiPciScores: (aiPciScores) => set({ aiPciScores }),
     }),
     { name: 'Inspect-globalState' },
   ),
