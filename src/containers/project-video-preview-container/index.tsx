@@ -15,29 +15,11 @@ const ProjectVideoPreviewContainer = () => {
     return null;
   }
 
-  // if (selectedProject.status === 'loading') {
-  //   return <LoadingToast message="Loading video..." />;
-  // }
-
-  // if (selectedProject.status === 'error') {
-  //   return <Warning message={selectedProject.detail.message} />;
-  // }
-
-  // const selectedVideo = getResponseIfSuccesful(selectedProject);
-
-  // const selectedProjectItem = selectedVideo?.project_items.find(
-  //   (item) => item.video_url === videoUrl,
-  // );
-
-  // if (!selectedProject || !selectedProjectItem) {
-  //   return null;
-  // }
-
   return (
     <MySuspense data={selectedProject}>
       {(data) => {
         const selectedProjectItem = data.items?.[videoUrl];
-        return <VideoPreview projectItem={selectedProjectItem} />;
+        return <VideoPreview projectItem={selectedProjectItem} delay={1000} />;
       }}
     </MySuspense>
   );

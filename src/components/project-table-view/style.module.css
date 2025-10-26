@@ -33,6 +33,7 @@
   position: sticky;
   top: 0;
   background-color: var(--gray-3);
+  z-index: 1;
 }
 
 :global(.rt-TableRow) {

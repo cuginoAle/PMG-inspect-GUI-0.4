@@ -7,13 +7,17 @@ import { useSearchParams } from 'next/navigation';
 const ProjectVideoMetadataContainer = () => {
   const selectedProject = useGlobalState((state) => state.selectedProject);
   const sp = useSearchParams();
+  const videoUrl = sp.get('videoUrl');
 
-  if (!selectedProject || selectedProject.status !== 'ok') {
+  if (
+    !selectedProject ||
+    selectedProject.status !== 'ok' ||
+    videoUrl === null
+  ) {
     return null;
   }
 
-  const selectedVideo =
-    selectedProject.detail.items?.[sp.get('videoUrl') || ''];
+  const selectedVideo = selectedProject.detail.items?.[videoUrl || ''];
 
   if (!selectedVideo) {
     return (

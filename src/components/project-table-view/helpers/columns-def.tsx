@@ -18,11 +18,9 @@ const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 const useColumnsDef = ({
   processingConfiguration,
   checkedRowIds,
-  aiPciScores = {},
 }: {
   processingConfiguration: ProcessingConfiguration[];
   checkedRowIds: string[];
-  aiPciScores: Record<string, number>;
 }) => {
   return useMemo(
     () => [
@@ -154,7 +152,7 @@ const useColumnsDef = ({
             const isNegative = value !== roundedValue;
             return (
               <Text as="p" weight={'bold'} align="center" color="red">
-                {isNegative && '-'}
+                {isNegative ? '-' : !!value && '+'}
                 {roundedValue || ''}
               </Text>
             );
@@ -196,7 +194,7 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
-          const value = aiPciScores[info.row.original.video_url];
+          const value = undefined; //aiPciScores[info.row.original.video_url];
           const framesCount = Object.keys(value || {}).length;
           const processedCount = Object.values(value || {}).filter(
             (v) => v !== null && v !== undefined,

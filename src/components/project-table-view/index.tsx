@@ -52,8 +52,11 @@ const ProjectTableView = ({
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
   const videoUrl = searchParams.get('videoUrl') || '';
+  const projectPath = searchParams.get('path') || '';
   const page = parseInt(searchParams.get('page') || '0');
   const router = useRouter();
+
+  const paginationPageSize = 60;
 
   const projectItems = useMemo(
     () => Object.values(project.items || {}),
@@ -122,17 +125,17 @@ const ProjectTableView = ({
     if (!projectItem) return;
     const item = projectItem;
 
+    // using non-reactive SearchParam
+    const videoUrl = new URLSearchParams(window.location.search).get(
+      'videoUrl',
+    );
+
+    if (videoUrl === item.video_url) return;
     const urlSearchParams = new URLSearchParams(
       new URLSearchParams(window.location.search || '').toString(),
     );
-    urlSearchParams.set('videoUrl', item.video_url);
 
-    scrollChildIntoView({
-      container: tBodyRef.current!,
-      child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
-      behavior: 'smooth',
-      direction: 'vertical',
-    });
+    urlSearchParams.set('videoUrl', item.video_url);
 
     window.history.pushState(
       null,
@@ -142,7 +145,11 @@ const ProjectTableView = ({
   }, []);
 
   useEffect(() => {
-    if (!projectItems.length) return;
+    if (
+      !projectItems.length ||
+      projectPath !== project.project_file.split('/').pop()
+    )
+      return;
 
     const selectedRowIndex = Math.max(
       projectItems.findIndex((item) => item.video_url === videoUrl),
@@ -150,21 +157,29 @@ const ProjectTableView = ({
     );
 
     setRowSelection({ [selectedRowIndex]: true });
+
     const item = projectItems[selectedRowIndex] as AugmentedProjectItemData;
 
-    if (!videoUrl) {
-      onRowSelect(item);
-    } else {
-      scrollChildIntoView({
-        container: tBodyRef.current?.closest(
-          '#project-content-left-pane',
-        ) as HTMLElement,
-        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
-        behavior: 'smooth',
-        direction: 'vertical',
-      });
-    }
-  }, [onRowSelect, projectItems, videoUrl]);
+    onRowSelect(item);
+    scrollChildIntoView({
+      container: tBodyRef.current?.closest(
+        '.rt-ScrollAreaViewport',
+      ) as HTMLElement,
+      child:
+        tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`) ||
+        tBodyRef.current!.querySelector(`tr:first-child`)!,
+      behavior: 'smooth',
+      direction: 'vertical',
+    });
+  }, [
+    onRowSelect,
+    project.project_file,
+    project.project_name,
+    projectItems,
+    projectPath,
+    videoUrl,
+    page,
+  ]);
 
   const onRowDoubleClick = (projectItem: AugmentedProjectItemData) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
@@ -178,11 +193,6 @@ const ProjectTableView = ({
     columns: useColumnsDef({
       processingConfiguration,
       checkedRowIds: Array.from(checkedRowIdsRef.current),
-      aiPciScores:
-        project.ai_pci_scores ||
-        {
-          // TODO: add support for ai_pci_scores!!!
-        },
     }),
     state: {
       sorting,
@@ -190,7 +200,7 @@ const ProjectTableView = ({
       rowSelection,
       pagination: {
         pageIndex: page,
-        pageSize: 80,
+        pageSize: paginationPageSize,
       },
     },
     onSortingChange: setSorting,
@@ -223,7 +233,7 @@ const ProjectTableView = ({
     });
 
   return (
-    <form onChange={onFormChange}>
+    <form onChange={onFormChange} style={{ minHeight: '0' }}>
       <Flex direction="column" gap="2" height={'100%'}>
         <div className={styles.searchBox}>
           <TextField.Root
@@ -330,8 +340,6 @@ const ProjectTableView = ({
             </Table.Body>
           </Table.Root>
         </div>
-
-        <Pagination table={table} />
       </Flex>
     </form>
   );
