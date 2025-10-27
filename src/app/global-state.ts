@@ -8,12 +8,14 @@ import {
   GetInferenceModelResponse,
   ProcessingConfiguration,
   GetPciScoreResponse,
+  GetAugmentedProjectResponse,
 } from '@/src/types';
 
 type GlobalState = {
   filesList?: GetFilesListResponse;
   selectedProject?: GetProjectResponse;
   projectStatus?: GetProjectStatusResponse;
+  augmentedProject?: GetAugmentedProjectResponse;
   hoveredVideoUrl?: string;
   userPreferences?: {
     unit?: 'metric' | 'imperial';
@@ -30,6 +32,7 @@ type GlobalStateActions = {
   setFilesList: (filesList?: GetFilesListResponse) => void;
   setSelectedProject: (project?: GetProjectResponse) => void;
   setProjectStatus: (status?: GetProjectStatusResponse) => void;
+  setAugmentedProject: (project?: GetAugmentedProjectResponse) => void;
   setHoveredVideoUrl: (url?: string) => void;
   setUserPreferences: (prefs?: GlobalState['userPreferences']) => void;
 
@@ -48,6 +51,7 @@ const useGlobalState = create<GlobalStore>()(
       filesList: undefined,
       selectedProject: undefined,
       projectStatus: undefined,
+      augmentedProject: undefined,
       hoveredVideoUrl: undefined,
       userPreferences: undefined,
       analysisResults: undefined,
@@ -62,6 +66,7 @@ const useGlobalState = create<GlobalStore>()(
       setFilesList: (filesList) => set({ filesList }),
       setSelectedProject: (selectedProject) => set({ selectedProject }),
       setProjectStatus: (projectStatus) => set({ projectStatus }),
+      setAugmentedProject: (augmentedProject) => set({ augmentedProject }),
       setHoveredVideoUrl: (hoveredVideoUrl) => set({ hoveredVideoUrl }),
       setUserPreferences: (userPreferences) => set({ userPreferences }),
       setEditedProcessingConfigurations: (editedProcessingConfigurations) =>

@@ -40,7 +40,15 @@ const ProjectTableView = ({
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
-  onConfigurationChange?: (videoIds: string[], selectedValue: string) => void;
+  onConfigurationChange?: ({
+    projectName,
+    itemIds,
+    configurationId,
+  }: {
+    projectName: string;
+    itemIds: string[];
+    configurationId: string | undefined;
+  }) => void;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -115,7 +123,20 @@ const ProjectTableView = ({
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
 
-        onConfigurationChange?.(allAffectedVideoUrls, selectedValue);
+        setTimeout(() => {
+          // Optimistically update the select dropdown(s)
+          target.closest('select')!.value = selectedValue;
+        }, 0);
+
+        onConfigurationChange?.({
+          projectName: project.project_name,
+          itemIds: allAffectedVideoUrls,
+          configurationId:
+            selectedValue ===
+            processingConfiguration[0]?.processing_configuration_name
+              ? undefined
+              : selectedValue,
+        });
 
         break;
     }

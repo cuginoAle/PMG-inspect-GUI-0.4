@@ -10,8 +10,6 @@ import { Cache } from '@/src/lib/indexeddb';
 import { useGlobalState } from '@/src/app/global-state';
 import { useDebounce } from '@/src/hooks/useDebounce';
 
-const savedConfigsIDBStore = 'savedConfigs';
-
 const augmentProject = async ({
   project,
   videoIds,
@@ -57,10 +55,8 @@ const loadProjectSavedConfigurations = async (
   projectName: string,
 ): Promise<Record<string, string>> => {
   const savedConfigs =
-    (await Cache.get<Record<string, string>>(
-      savedConfigsIDBStore,
-      projectName,
-    )) || {};
+    (await Cache.get<Record<string, string>>('savedConfigs', projectName)) ||
+    {};
   return savedConfigs;
 };
 
@@ -124,7 +120,7 @@ const TransformProjectData = ({
           videoIds,
           selectedValue,
         }).then(setData);
-        Cache.set(savedConfigsIDBStore, project.project_name, updatedConfigs);
+        Cache.set('savedConfigs', project.project_name, updatedConfigs);
       },
     );
   };

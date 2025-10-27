@@ -28,19 +28,27 @@ const useColumnsDef = ({
         id: 'select_all',
         cell: (info) => {
           return (
-            <input
-              id={info.row.original.video_url}
-              name="selectedRowCheckbox"
-              value={info.row.original.video_url}
-              type="checkbox"
-              data-component-id="row-select-checkbox"
-              onChange={() => void 0}
+            <div
               onClick={(e) => e.stopPropagation()}
               onDoubleClick={(e) => e.stopPropagation()}
-              defaultChecked={checkedRowIds?.includes(
-                info.row.original.video_url,
-              )}
-            />
+            >
+              {/* Invisible label to make the expand the checkbox clickable area */}
+              <label
+                className="rowCheckBox"
+                htmlFor={info.row.original.video_url}
+              />
+              <input
+                id={info.row.original.video_url}
+                name="selectedRowCheckbox"
+                value={info.row.original.video_url}
+                type="checkbox"
+                data-component-id="row-select-checkbox"
+                onChange={() => void 0}
+                defaultChecked={checkedRowIds?.includes(
+                  info.row.original.video_url,
+                )}
+              />
+            </div>
           );
         },
       }),

@@ -30,3 +30,4 @@ export * from './add-network-button';
 export * from './network-selector';
 export * from './video-analysis-progress';
 export * from './video-analysis-score-gauge';
+export * from './data-transformer';

@@ -22,6 +22,11 @@ const DataLoader = () => {
   const projects = useFetchProjectList();
   const projectStatusData = useFetchProjectStatus(projectPath);
 
+  // const projectAiPciScores = useFetchProjectPciScores({
+  //   project: getResponseIfSuccesful(project),
+  //   status: getResponseIfSuccesful(projectStatusData),
+  // });
+
   // Sync data to global state
   useEffect(
     () => setProjectStatus(projectStatusData),

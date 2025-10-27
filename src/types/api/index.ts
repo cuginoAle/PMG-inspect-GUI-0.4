@@ -22,6 +22,7 @@ type AugmentedProjectItemData = ProjectItem & {
 };
 type AugmentedProject = Project & {
   items: Record<string, AugmentedProjectItemData>;
+  aiPciScores?: Record<string, number | null>;
 };
 // type Inference = components['schemas']['Inference'];
 type ProjectStatus = components['schemas']['ProjectStatus'];
@@ -38,7 +39,7 @@ type ProcessingConfiguration =
 
 type ProjectParsingState = components['schemas']['VideoStatus'];
 
-// type InferenceModelDict = Record<InferenceTypes, string[]>; // TODO: this should come from the OpenAPI!
+type PciScore = Record<string, number | null>; // TODO: update with OpenApi spec once available
 
 type GetInferenceModelResponse =
   | {
@@ -58,6 +59,11 @@ type GetFilesListResponse =
   | LoadingState;
 type GetProjectResponse =
   | { status: 'ok'; detail: Project }
+  | FetchError
+  | LoadingState;
+
+type GetAugmentedProjectResponse =
+  | { status: 'ok'; detail: AugmentedProject }
   | FetchError
   | LoadingState;
 // type GetProcessingConfigurationResponse =
@@ -112,6 +118,7 @@ export type {
   FileType,
   GetFilesListResponse,
   // GetProcessingConfigurationResponse,
+  GetAugmentedProjectResponse,
   GetPciScoreResponse,
   GetProjectResponse,
   GetProjectStatusResponse,
@@ -124,6 +131,7 @@ export type {
   LoadingState,
   MediaData,
   // Network, // TODO: update with OpenApi spec
+  PciScore,
   ProcessingConfiguration,
   Project,
   AugmentedProject,

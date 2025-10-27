@@ -1,21 +1,29 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
-import { FetchError } from '@/src/types';
+import { FetchError, PciScore, ProcessingConfiguration } from '@/src/types';
 
-async function fetchPciScores(
-  path?: string,
-): Promise<GetAnalysisResultResponse | undefined> {
-  if (!path) {
+async function fetchPciScore({
+  videoUrl,
+  processingConfiguration,
+}: {
+  videoUrl: string;
+  processingConfiguration: ProcessingConfiguration;
+}): Promise<PciScore | undefined> {
+  if (!videoUrl || !processingConfiguration) {
     return undefined;
   }
 
-  // building the query string
-  const sp = new URLSearchParams();
-  sp.append('project_relative_path', path);
-
-  const fullUrl = `${ENDPOINT.PROJECT.PCI_SCORES}?${sp.toString()}`;
-
   try {
-    const res = await fetch(fullUrl);
+    const res = await fetch(ENDPOINT.PROJECT.PCI_SCORES, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        video_url: videoUrl,
+        processing_configuration_name:
+          processingConfiguration.processing_configuration_name,
+      }),
+    });
 
     if (!res.ok) {
       throw {
@@ -48,4 +56,4 @@ async function fetchPciScores(
   }
 }
 
-export { fetchPciScores };
+export { fetchPciScore };
