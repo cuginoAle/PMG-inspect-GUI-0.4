@@ -28,6 +28,9 @@ import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import { Pagination } from './pagination';
 import { selectAllCheckboxHandler } from './helpers/select-all-checkbox-handler';
+import { LinkMapAndTableBtn } from '@/src/components';
+import { useGlobalState } from '@/src/app/global-state';
+import { PageSizer } from './page-sizer';
 
 const ProjectTableView = ({
   processingConfiguration = [],
@@ -40,6 +43,7 @@ const ProjectTableView = ({
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
+
   onConfigurationChange?: ({
     projectName,
     itemIds,
@@ -64,7 +68,9 @@ const ProjectTableView = ({
   const page = parseInt(searchParams.get('page') || '0');
   const router = useRouter();
 
-  const paginationPageSize = 60;
+  const paginationPageSize = useGlobalState(
+    (state) => state.paginationPageSize,
+  );
 
   const projectItems = useMemo(
     () => Object.values(project.items || {}),
@@ -256,18 +262,24 @@ const ProjectTableView = ({
   return (
     <form onChange={onFormChange} style={{ minHeight: '0' }}>
       <Flex direction="column" gap="2" height={'100%'}>
-        <div className={styles.searchBox}>
-          <TextField.Root
-            placeholder="Search all columns..."
-            onChange={debouncedOnSearchChange}
-            size={'3'}
-          >
-            <TextField.Slot>
-              <MagnifyingGlassIcon width="24" height="24" />
-            </TextField.Slot>
-          </TextField.Root>
-        </div>
+        <Flex align="center" justify="between" gap={'2'}>
+          <div className={styles.searchBox}>
+            <TextField.Root
+              placeholder="Search all columns..."
+              onChange={debouncedOnSearchChange}
+              size={'3'}
+            >
+              <TextField.Slot>
+                <MagnifyingGlassIcon width="24" height="24" />
+              </TextField.Slot>
+            </TextField.Root>
+          </div>
 
+          <Flex align="center" gap="4">
+            <PageSizer min={10} max={60} step={5} />
+            <LinkMapAndTableBtn />
+          </Flex>
+        </Flex>
         <Pagination table={table} />
 
         <div className={styles.tableContainer}>

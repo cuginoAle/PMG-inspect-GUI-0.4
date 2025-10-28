@@ -5,8 +5,8 @@ async function fetchPciScore({
   videoUrl,
   processingConfiguration,
 }: {
-  videoUrl: string;
-  processingConfiguration: ProcessingConfiguration;
+  videoUrl?: string;
+  processingConfiguration?: ProcessingConfiguration;
 }): Promise<PciScore | undefined> {
   if (!videoUrl || !processingConfiguration) {
     return undefined;
@@ -21,7 +21,7 @@ async function fetchPciScore({
       body: JSON.stringify({
         video_url: videoUrl,
         processing_configuration_name:
-          processingConfiguration.processing_configuration_name,
+          processingConfiguration.inference_configurations,
       }),
     });
 
@@ -35,12 +35,7 @@ async function fetchPciScore({
       } as FetchError;
     }
 
-    const body = await res.json();
-
-    return {
-      status: 'ok',
-      detail: body,
-    };
+    return res.json();
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {

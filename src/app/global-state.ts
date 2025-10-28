@@ -26,6 +26,8 @@ type GlobalState = {
   inferenceModels?: GetInferenceModelResponse;
   videoUrlToDrawOnTheMap?: string;
   aiPciScores?: GetPciScoreResponse;
+  paginationPageSize: number;
+  linkMapAndTable: boolean;
 };
 
 type GlobalStateActions = {
@@ -40,6 +42,8 @@ type GlobalStateActions = {
   setInferenceModels: (inferenceModels?: GetInferenceModelResponse) => void;
   setVideoUrlToDrawOnTheMap: (url?: string) => void;
   setAiPciScores: (aiPciScores?: GetPciScoreResponse) => void;
+  setPaginationPageSize: (pageSize?: number) => void;
+  setLinkMapAndTable: (linkMapAndTable: boolean) => void;
 };
 
 type GlobalStore = GlobalState & GlobalStateActions;
@@ -61,6 +65,8 @@ const useGlobalState = create<GlobalStore>()(
       inferenceModels: undefined,
       videoUrlToDrawOnTheMap: undefined,
       aiPciScores: {},
+      paginationPageSize: 60,
+      linkMapAndTable: false,
 
       // Actions
       setFilesList: (filesList) => set({ filesList }),
@@ -75,6 +81,9 @@ const useGlobalState = create<GlobalStore>()(
       setVideoUrlToDrawOnTheMap: (videoUrlToDrawOnTheMap) =>
         set({ videoUrlToDrawOnTheMap }),
       setAiPciScores: (aiPciScores) => set({ aiPciScores }),
+      setPaginationPageSize: (paginationPageSize) =>
+        set({ paginationPageSize }),
+      setLinkMapAndTable: (linkMapAndTable) => set({ linkMapAndTable }),
     }),
     { name: 'Inspect-globalState' },
   ),

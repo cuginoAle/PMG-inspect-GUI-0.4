@@ -125,11 +125,11 @@ const Pagination = ({ table }: { table: Table<AugmentedProjectItemData> }) => {
       </Flex>
       <Flex gap="2" align="center">
         <span className={styles.paginationText}>
-          Page <strong>{table.getState().pagination.pageIndex + 1}</strong> of{' '}
+          Page <strong>{table.getState().pagination.pageIndex + 1}</strong>/
           {table.getPageCount()}
         </span>
+        |
         <span className={styles.paginationText}>
-          | Showing {table.getRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} rows
         </span>
       </Flex>

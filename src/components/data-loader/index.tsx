@@ -6,6 +6,7 @@ import { useFetchProjectList } from '@/src/app/hooks/useFetchProjectList';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useFetchProjectStatus } from '@/src/app/hooks/useFetchProjectStatus';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const DataLoader = () => {
   const sp = useSearchParams();
@@ -20,17 +21,24 @@ const DataLoader = () => {
 
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
-  const projectStatusData = useFetchProjectStatus(projectPath);
+  const projectStatus = useFetchProjectStatus(projectPath);
+
+  const projectData = getResponseIfSuccesful(project);
+  const projectStatusData = getResponseIfSuccesful(projectStatus);
 
   // const projectAiPciScores = useFetchProjectPciScores({
-  //   project: getResponseIfSuccesful(project),
-  //   status: getResponseIfSuccesful(projectStatusData),
+  //   project: projectData,
+  //   processingConfiguration: Object.values(
+  //     projectStatusData?.processing_configurations || {},
+  //   ),
   // });
+
+  // console.log('projectAiPciScores', projectAiPciScores);
 
   // Sync data to global state
   useEffect(
-    () => setProjectStatus(projectStatusData),
-    [projectStatusData, setProjectStatus],
+    () => setProjectStatus(projectStatus),
+    [projectStatus, setProjectStatus],
   );
 
   useEffect(() => setFilesList(projects), [setFilesList, projects]);

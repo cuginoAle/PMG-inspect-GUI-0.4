@@ -13,6 +13,21 @@ import {
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
 
+const getTreatment = (pciScore: number | undefined) => {
+  if (pciScore === undefined) return 'N/A';
+  if (pciScore >= 90) {
+    return 'Rejuvenation';
+  } else if (pciScore >= 70) {
+    return 'Maintenance';
+  } else if (pciScore >= 50) {
+    return 'Preservation';
+  } else if (pciScore >= 30) {
+    return 'Structural';
+  } else {
+    return 'Rehabilitation';
+  }
+};
+
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
 const useColumnsDef = ({
@@ -53,24 +68,19 @@ const useColumnsDef = ({
         },
       }),
       columnHelper.accessor((row) => `${row.video_name}`, {
-        id: 'road_name',
-        header: 'Road Name',
+        id: 'video_name',
+        header: 'Video name',
         cell: (info) => info.getValue(),
       }),
       columnHelper.accessor((row) => row.road_data?.road_surface, {
         id: 'road_surface',
-        header: 'Surface',
+        header: 'Surface type',
         cell: (info) => info.getValue(),
       }),
 
-      columnHelper.accessor((row) => row.road_data?.road_length, {
-        id: 'road_length',
-        header: 'Length (m)',
-        cell: (info) => info.getValue(),
-      }),
       columnHelper.accessor((row) => row.selected_configuration, {
-        id: 'configurations',
-        header: 'Configurations',
+        id: 'configuration',
+        header: 'Proc. Configuration',
         cell: (info) => {
           return (
             <div
@@ -108,16 +118,6 @@ const useColumnsDef = ({
           );
         },
       }),
-      columnHelper.accessor((row) => row.road_data?.road_area, {
-        id: 'road_area',
-        header: 'Area (m²)',
-        cell: (info) => info.getValue(),
-      }),
-      columnHelper.accessor((row) => row.road_data?.road_functional_class, {
-        id: 'road_functional_class',
-        header: 'Fun. Class',
-        cell: (info) => info.getValue(),
-      }),
 
       columnHelper.accessor((row) => row.road_data?.inspector_pci, {
         id: 'inspector_pci',
@@ -136,37 +136,6 @@ const useColumnsDef = ({
           );
         },
       }),
-
-      columnHelper.accessor(
-        (row) => {
-          const min = row.road_data?.qc_pci_gauge_min;
-          const max = row.road_data?.qc_pci_gauge_max;
-          const inspectorPciScore = row.road_data?.inspector_pci;
-
-          if (!min || !max || !inspectorPciScore) {
-            return undefined;
-          }
-
-          if (inspectorPciScore < min) return min - inspectorPciScore + 0.1; // add 0.1 to indicate negative delta
-          if (inspectorPciScore > max) return inspectorPciScore - max;
-          return 0;
-        },
-        {
-          id: 'pci_delta',
-          header: () => <span style={{ margin: 'auto' }}>▵</span>,
-          cell: (info) => {
-            const value = info.getValue() || 0;
-            const roundedValue = Math.round(value);
-            const isNegative = value !== roundedValue;
-            return (
-              <Text as="p" weight={'bold'} align="center" color="red">
-                {isNegative ? '-' : !!value && '+'}
-                {roundedValue || ''}
-              </Text>
-            );
-          },
-        },
-      ),
 
       columnHelper.accessor(
         (row) =>
@@ -188,6 +157,37 @@ const useColumnsDef = ({
                   max={max ? parseInt(max) : undefined}
                 />
               </Flex>
+            );
+          },
+        },
+      ),
+
+      columnHelper.accessor(
+        (row) => {
+          const min = row.road_data?.qc_pci_gauge_min;
+          const max = row.road_data?.qc_pci_gauge_max;
+          const inspectorPciScore = row.road_data?.inspector_pci;
+
+          if (!min || !max || !inspectorPciScore) {
+            return undefined;
+          }
+
+          if (inspectorPciScore < min) return min - inspectorPciScore + 0.1; // add 0.1 to indicate negative delta
+          if (inspectorPciScore > max) return inspectorPciScore - max;
+          return 0;
+        },
+        {
+          id: 'pci_delta',
+          header: () => <span style={{ margin: 'auto' }}>QC/AI ▵</span>,
+          cell: (info) => {
+            const value = info.getValue() || 0;
+            const roundedValue = Math.round(value);
+            const isNegative = value !== roundedValue;
+            return (
+              <Text as="p" weight={'bold'} align="center" color="red">
+                {isNegative ? '-' : !!value && '+'}
+                {roundedValue || ''}
+              </Text>
             );
           },
         },
@@ -221,6 +221,37 @@ const useColumnsDef = ({
                 <VideoAnalysisProgress pciScore={value} progress={progress} />
               )}
             </Flex>
+          );
+        },
+      }),
+
+      columnHelper.accessor((row) => row.road_data?.inspector_pci, {
+        id: 'ai_treatment',
+        header: () => (
+          <span style={{ margin: 'auto' }} title="AI treatment">
+            Treat. <NeuralNetworkIcon size={1.6} />
+          </span>
+        ),
+        cell: (info) => {
+          const value = info.getValue();
+          return (
+            <Text as="p" align={'center'}>
+              {getTreatment(value || undefined)}
+            </Text>
+          );
+        },
+      }),
+
+      columnHelper.accessor((row) => row.road_data?.inspector_pci, {
+        id: 'predicted_treatment',
+        header: () => <span style={{ margin: 'auto' }}>Predicted Treat.</span>,
+        cell: (info) => {
+          const value = info.getValue();
+          return (
+            <Text as="p" align={'center'} title="Predicted treatment">
+              {' '}
+              -{' '}
+            </Text>
           );
         },
       }),

@@ -1,5 +1,6 @@
 .searchBox {
   max-width: 400px;
+  flex-grow: 1;
 }
 
 .headerCell {

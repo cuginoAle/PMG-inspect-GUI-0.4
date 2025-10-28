@@ -1,16 +1,56 @@
-import { Project, ProjectStatus } from '@/src/types';
-import { useState } from 'react';
+import { ProcessingConfiguration, Project } from '@/src/types';
+import { useEffect, useState } from 'react';
+import { fetchPciScore } from '@/src/lib/data/fetch-pci-scores';
 
 const useFetchProjectPciScores = ({
   project,
-  status,
+  processingConfiguration,
 }: {
-  project: Project | null;
-  status: ProjectStatus | null;
+  project?: Project | null;
+  processingConfiguration?: ProcessingConfiguration[] | null;
 }) => {
   const [pciScores, setPciScores] = useState<
     Record<string, Record<string, number | null>>
   >({});
+
+  useEffect(() => {
+    let cancelled = false;
+    const videoUrls = Object.values(project?.items || {}).map(
+      (item) => item.video_url,
+    );
+
+    if (!processingConfiguration || videoUrls.length === 0) {
+      setPciScores({});
+      return;
+    }
+    const scoresObj: Record<string, Record<string, number | null>> = {};
+
+    try {
+      videoUrls.forEach(async (url) => {
+        await fetchPciScore({
+          videoUrl: url,
+          processingConfiguration: processingConfiguration?.[0],
+        })
+          .then((scores) => {
+            if (cancelled) return;
+            scoresObj[url] = scores || {};
+          })
+          .catch(() => {
+            if (cancelled) return;
+            scoresObj[url] = {};
+          });
+      });
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch PCI scores');
+    }
+
+    setPciScores(scoresObj);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [project, processingConfiguration]);
 
   return pciScores;
 };
