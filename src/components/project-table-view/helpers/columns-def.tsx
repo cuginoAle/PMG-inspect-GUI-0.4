@@ -6,6 +6,7 @@ import type {
 import { Flex, Spinner, Text } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
 import {
+  CalculatorIcon,
   NeuralNetworkIcon,
   VideoAnalysisProgress,
   VideoAnalysisScoreGauge,
@@ -123,8 +124,8 @@ const useColumnsDef = ({
         id: 'inspector_pci',
         header: () => (
           <Flex justify="center" align={'center'} gap="1" width={'100%'}>
-            <span>Pci</span>
             <PersonIcon />
+            <span>Pci</span>
           </Flex>
         ),
         cell: (info) => {
@@ -145,7 +146,7 @@ const useColumnsDef = ({
             : undefined,
         {
           id: 'qc_pci_gauge_min',
-          header: () => <span style={{ margin: 'auto' }}>Pci QC</span>,
+          header: () => <span style={{ margin: 'auto' }}>QC Pci</span>,
           cell: (info) => {
             const value = info.getValue()?.toString().split('.');
             const min = value ? value[0] : undefined;
@@ -178,7 +179,11 @@ const useColumnsDef = ({
         },
         {
           id: 'pci_delta',
-          header: () => <span style={{ margin: 'auto' }}>QC/AI ▵</span>,
+          header: () => (
+            <Flex align={'center'} style={{ margin: 'auto' }}>
+              <NeuralNetworkIcon size={1.3} />/ QC
+            </Flex>
+          ),
           cell: (info) => {
             const value = info.getValue() || 0;
             const roundedValue = Math.round(value);
@@ -197,8 +202,8 @@ const useColumnsDef = ({
         id: 'pci_score_avg_ai',
         header: () => (
           <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
+            <NeuralNetworkIcon size={1.8} />
             <span>Pci</span>
-            <NeuralNetworkIcon size={1.6} />
           </Flex>
         ),
         cell: (info) => {
@@ -232,10 +237,10 @@ const useColumnsDef = ({
             align={'center'}
             style={{ margin: 'auto' }}
             gap="1"
-            title="Ai treatment"
+            title="Calculated treatment"
           >
+            <CalculatorIcon size={1.4} />
             <span>Treat.</span>
-            <NeuralNetworkIcon size={1.6} />
           </Flex>
         ),
         cell: (info) => {
@@ -250,7 +255,17 @@ const useColumnsDef = ({
 
       columnHelper.accessor((row) => row.road_data?.inspector_pci, {
         id: 'predicted_treatment',
-        header: () => <span style={{ margin: 'auto' }}>Predicted Treat.</span>,
+        header: () => (
+          <Flex
+            align={'center'}
+            style={{ margin: 'auto' }}
+            gap="1"
+            title="Predicted treatment"
+          >
+            <NeuralNetworkIcon size={1.8} />
+            <span>Treat.</span>
+          </Flex>
+        ),
         cell: (info) => {
           const value = info.getValue();
           return (
