@@ -13,7 +13,7 @@ const PageSizer = ({
   max: number;
   step: number;
 }) => {
-  const [pageSize, setPageSize] = React.useState<number>(10);
+  const [pageSize, setPageSize] = React.useState<number>(60);
 
   const setPaginationPageSize = useDebounce(
     useGlobalState((state) => state.setPaginationPageSize),

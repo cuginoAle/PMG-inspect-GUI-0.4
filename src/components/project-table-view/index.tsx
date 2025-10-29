@@ -72,6 +72,10 @@ const ProjectTableView = ({
     (state) => state.paginationPageSize,
   );
 
+  const setRenderedProjectItems = useGlobalState(
+    (state) => state.setRenderedProjectItems,
+  );
+
   const projectItems = useMemo(
     () => Object.values(project.items || {}),
     [project.items],
@@ -258,6 +262,17 @@ const ProjectTableView = ({
       projectItems,
       selectAllCheckboxRef,
     });
+
+  const rows = table.getRowModel().rows;
+
+  useEffect(() => {
+    setRenderedProjectItems(
+      rows.reduce<Record<string, AugmentedProjectItemData>>((acc, row) => {
+        acc[row.original.video_url] = row.original as AugmentedProjectItemData;
+        return acc;
+      }, {}),
+    );
+  }, [rows, setRenderedProjectItems]);
 
   return (
     <form onChange={onFormChange} style={{ minHeight: '0' }}>

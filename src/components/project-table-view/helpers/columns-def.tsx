@@ -228,9 +228,15 @@ const useColumnsDef = ({
       columnHelper.accessor((row) => row.road_data?.inspector_pci, {
         id: 'ai_treatment',
         header: () => (
-          <span style={{ margin: 'auto' }} title="AI treatment">
-            Treat. <NeuralNetworkIcon size={1.6} />
-          </span>
+          <Flex
+            align={'center'}
+            style={{ margin: 'auto' }}
+            gap="1"
+            title="Ai treatment"
+          >
+            <span>Treat.</span>
+            <NeuralNetworkIcon size={1.6} />
+          </Flex>
         ),
         cell: (info) => {
           const value = info.getValue();

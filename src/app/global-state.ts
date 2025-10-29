@@ -9,6 +9,7 @@ import {
   ProcessingConfiguration,
   GetPciScoreResponse,
   GetAugmentedProjectResponse,
+  ProjectItem,
 } from '@/src/types';
 
 type GlobalState = {
@@ -28,6 +29,7 @@ type GlobalState = {
   aiPciScores?: GetPciScoreResponse;
   paginationPageSize: number;
   linkMapAndTable: boolean;
+  renderedProjectItems?: Record<string, ProjectItem>;
 };
 
 type GlobalStateActions = {
@@ -44,6 +46,7 @@ type GlobalStateActions = {
   setAiPciScores: (aiPciScores?: GetPciScoreResponse) => void;
   setPaginationPageSize: (pageSize?: number) => void;
   setLinkMapAndTable: (linkMapAndTable: boolean) => void;
+  setRenderedProjectItems: (items?: Record<string, ProjectItem>) => void;
 };
 
 type GlobalStore = GlobalState & GlobalStateActions;
@@ -67,6 +70,7 @@ const useGlobalState = create<GlobalStore>()(
       aiPciScores: {},
       paginationPageSize: 60,
       linkMapAndTable: false,
+      renderedProjectItems: undefined,
 
       // Actions
       setFilesList: (filesList) => set({ filesList }),
@@ -84,6 +88,7 @@ const useGlobalState = create<GlobalStore>()(
       setPaginationPageSize: (paginationPageSize) =>
         set({ paginationPageSize }),
       setLinkMapAndTable: (linkMapAndTable) => set({ linkMapAndTable }),
+      setRenderedProjectItems: (items) => set({ renderedProjectItems: items }),
     }),
     { name: 'Inspect-globalState' },
   ),

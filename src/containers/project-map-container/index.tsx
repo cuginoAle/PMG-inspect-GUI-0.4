@@ -1,6 +1,6 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { GpsData } from '@/src/types';
+import { GpsData, ProjectItem } from '@/src/types';
 import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
@@ -37,6 +37,12 @@ const ProjectMapContainer = () => {
   const videoUrlToDrawOnTheMap = useGlobalState(
     (state) => state.videoUrlToDrawOnTheMap,
   );
+
+  const linkMapAndTable = useGlobalState((state) => state.linkMapAndTable);
+  const renderedProjectItems = useGlobalState(
+    (state) => state.renderedProjectItems,
+  );
+
   const setVideoUrlToDrawOnTheMap = useGlobalState(
     (state) => state.setVideoUrlToDrawOnTheMap,
   );
@@ -51,16 +57,28 @@ const ProjectMapContainer = () => {
   const mapBoxRef = useRef<mapboxgl.Map | null>(null);
   const [styleLoaded, setStyleLoaded] = useState(false);
 
+  const [itemsToRender, setItemsToRender] = useState<
+    Record<string, ProjectItem> | undefined
+  >();
+
+  useEffect(() => {
+    // Determine which items to render based on linkMapAndTable state
+    if (linkMapAndTable) {
+      setItemsToRender(renderedProjectItems);
+    } else {
+      setItemsToRender(selectedProject?.items);
+    }
+  }, [linkMapAndTable, renderedProjectItems, selectedProject]);
+
   useEffect(() => {
     if (!selectedProject) {
       setPathsToDraw(undefined);
       return;
     }
 
-    console.time('Compute paths to draw on map');
-    const gpsData = selectedProject.items
-      ? Object.keys(selectedProject.items).reduce((acc, key) => {
-          const item = selectedProject.items?.[key];
+    const gpsData = itemsToRender
+      ? Object.keys(itemsToRender).reduce((acc, key) => {
+          const item = itemsToRender?.[key];
           if (item?.gps_points) {
             acc[key] = Object.values(item.gps_points);
           }
@@ -69,8 +87,7 @@ const ProjectMapContainer = () => {
       : {};
 
     setPathsToDraw(getMapData(gpsData));
-    console.timeEnd('Compute paths to draw on map');
-  }, [selectedProject]);
+  }, [itemsToRender, selectedProject]);
 
   // Memoize the highlight path to prevent unnecessary re-renders
   const highlightPath = useMemo(
