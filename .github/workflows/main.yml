@@ -1,4 +1,4 @@
-name: Send Slack message every 30 minutes
+name: Check Cerbero's health status every 30 minutes
 
 on:
   schedule:
