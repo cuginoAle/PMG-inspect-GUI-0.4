@@ -2,6 +2,8 @@ import { ProcessingConfiguration, Project } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { fetchPciScore } from '@/src/lib/data/fetch-pci-scores';
 
+// TODO: refactor this to send just ONE request for ALL videos in the project
+
 const useFetchProjectPciScores = ({
   project,
   processingConfiguration,

@@ -9,12 +9,9 @@ export * from './greetings';
 export * from './loading-toast';
 export * from './map';
 export * from './map/useDrawPaths';
-export * from './n-network-settings';
+
 export * from './no-project-selected';
 export * from './pmg-inspect-logo';
-export * from './presets-dropdowm';
-export * from './presets-tabs';
-export * from './project-analysis-dashboard';
 export * from './project-content-view';
 export * from './data-loader';
 export * from './project-finder';
