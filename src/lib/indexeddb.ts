@@ -1,7 +1,8 @@
 // Lightweight IndexedDB helper with safe SSR/unsupported fallbacks
 // DB: PMGCache, Stores: projectDetails, videoMetadata
 
-type StoreName = 'projectDetails' | 'videoMetadata';
+const Stores = ['projectDetails', 'videoMetadata', 'savedConfigs'] as const;
+type StoreName = (typeof Stores)[number];
 
 const DB_NAME = 'PMGCache';
 const DB_VERSION = 1;
@@ -21,12 +22,11 @@ function openDB(): Promise<IDBDatabase> {
 
     request.onupgradeneeded = () => {
       const db = request.result;
-      if (!db.objectStoreNames.contains('projectDetails')) {
-        db.createObjectStore('projectDetails', { keyPath: 'key' });
-      }
-      if (!db.objectStoreNames.contains('videoMetadata')) {
-        db.createObjectStore('videoMetadata', { keyPath: 'key' });
-      }
+      Stores.forEach((storeName) => {
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: 'key' });
+        }
+      });
     };
 
     request.onsuccess = () => resolve(request.result);
@@ -144,6 +144,35 @@ async function idbGet<T = unknown>(
   });
 }
 
+async function idbGetAll<T = unknown>(
+  store: StoreName,
+): Promise<Record<string, T>> {
+  if (!isBrowserWithIDB()) {
+    return {};
+  }
+  const db = await openDB();
+
+  return new Promise<Record<string, T>>((resolve, reject) => {
+    const tx = db.transaction(store, 'readonly');
+    const os = tx.objectStore(store);
+    const req = os.getAll();
+
+    req.onsuccess = () => {
+      const records = req.result as CacheRecord<T>[];
+      const result: Record<string, T> = {};
+
+      records.forEach((record) => {
+        result[record.key] = record.value;
+      });
+
+      resolve(result);
+    };
+
+    req.onerror = () =>
+      reject(req.error ?? new Error('IndexedDB getAll error'));
+  });
+}
+
 async function idbSet<T = unknown>(
   store: StoreName,
   key: string,
@@ -164,6 +193,26 @@ async function idbSet<T = unknown>(
     };
     tx.onerror = () => {
       // If transaction fails, ensure promise rejects (req.onerror might not fire for all cases)
+      reject(tx.error ?? new Error('IndexedDB transaction error'));
+    };
+  });
+}
+
+async function idbDelete(store: StoreName, key: string): Promise<void> {
+  if (!isBrowserWithIDB()) return;
+  const db = await openDB();
+
+  return new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    const os = tx.objectStore(store);
+    const req = os.delete(key);
+    req.onerror = () =>
+      reject(req.error ?? new Error('IndexedDB delete error'));
+    tx.oncomplete = () => {
+      recordMutation(store);
+      resolve();
+    };
+    tx.onerror = () => {
       reject(tx.error ?? new Error('IndexedDB transaction error'));
     };
   });
@@ -194,7 +243,9 @@ async function batch<T>(fn: () => Promise<T> | T): Promise<T> {
 
 export const Cache = {
   get: idbGet,
+  getAll: idbGetAll,
   set: idbSet,
+  delete: idbDelete,
   onChange,
   batch,
 } as const;

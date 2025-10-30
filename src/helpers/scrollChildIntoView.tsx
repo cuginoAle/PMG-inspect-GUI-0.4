@@ -18,6 +18,12 @@ const scrollChildIntoView = ({
   const childRect = child.getBoundingClientRect();
 
   if (direction === 'horizontal') {
+    // Check if child is already fully visible horizontally
+    const isVisible =
+      childRect.left >= containerRect.left &&
+      childRect.right <= containerRect.right;
+    if (isVisible) return;
+
     // Child left relative to container's scrollable content
     const childLeft =
       childRect.left - containerRect.left + container.scrollLeft;
@@ -32,6 +38,12 @@ const scrollChildIntoView = ({
   }
 
   // Vertical
+  // Check if child is already fully visible vertically
+  const isVisible =
+    childRect.top >= containerRect.top &&
+    childRect.bottom <= containerRect.bottom;
+  if (isVisible) return;
+
   const childTop = childRect.top - containerRect.top + container.scrollTop;
   const childCenterY = childTop + childRect.height / 2;
   let targetTop = childCenterY - container.clientHeight / 2;

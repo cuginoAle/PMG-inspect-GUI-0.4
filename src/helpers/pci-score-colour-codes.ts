@@ -10,9 +10,9 @@ const pciScoreColourCodes: Record<PCIScoreColourLabels, string> = {
 
 const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
   excellent: '#ffffff',
-  good: '#000000aa',
-  fair: '#000000aa',
-  poor: '#000000aa',
+  good: '#000000ca',
+  fair: '#000000ca',
+  poor: '#000000ca',
   failed: '#ffffff',
 };
 

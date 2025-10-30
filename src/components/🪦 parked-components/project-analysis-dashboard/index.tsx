@@ -2,17 +2,11 @@
 import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import {
-  DummyAnalysisResult,
-  InferenceTypes,
-  Project,
-  ResponseType,
-} from '@/src/types';
+import { InferenceTypes, Project, ResponseType } from '@/src/types';
 import {
   AddNetworkButton,
   NetworkSelector,
   NetworkSettings,
-  PresetsDropDown,
   Slider,
 } from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';
@@ -39,16 +33,19 @@ const ProjectAnalysisDashboard = ({
   onReset,
   onSave,
 }: ProjectAnalysisDashboardProps) => {
-  const {
-    selectedProject,
-    inferenceModelDictionary,
-    processingConfigurations,
-  } = useGlobalState();
+  const selectedProjectData = useGlobalState((state) => state.selectedProject);
+  const inferenceModelDictionary = useGlobalState(
+    (state) => state.inferenceModelDictionary,
+  );
+  const processingConfigurationsData = useGlobalState(
+    (state) => state.processingConfigurations,
+  );
+
   const processingConfigurationsValue = getResponseIfSuccesful(
-    processingConfigurations.get(),
+    processingConfigurationsData,
   );
   const project = getResponseIfSuccesful<Project>(
-    selectedProject.get({ noproxy: true }) as unknown as ResponseType<Project>,
+    selectedProjectData as unknown as ResponseType<Project>,
   );
   const [networks, setNetworks] = React.useState<
     DummyAnalysisResult['setting_details']
@@ -56,7 +53,7 @@ const ProjectAnalysisDashboard = ({
 
   const [Dialog, dialogRef] = useModal();
 
-  const inferenceModelDictionaryValue = inferenceModelDictionary.get();
+  const inferenceModelDictionaryValue = inferenceModelDictionary;
 
   const formId = `project-analysis-dashboard-form-${setting.setting_id}`;
 
@@ -202,14 +199,14 @@ const ProjectAnalysisDashboard = ({
                   },
                 }}
                 models={[
-                  ...(inferenceModelDictionary.get()?.[
+                  ...(inferenceModelDictionaryValue?.[
                     network.network_name as InferenceTypes
                   ] || []),
                 ]}
               />
             ))}
             {networks.length !==
-              Object.keys(inferenceModelDictionary).length && (
+              Object.keys(inferenceModelDictionaryValue || {}).length && (
               <AddNetworkButton onClick={onAddNetwork} />
             )}
           </div>

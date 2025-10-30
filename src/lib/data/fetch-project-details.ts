@@ -16,26 +16,34 @@ async function fetchProjectDetails(
 
   try {
     const res = await fetch(fullUrl);
-    const body = await res.json();
-
     if (!res.ok) {
-      return Promise.reject({
+      throw {
+        code: String(res.status),
         status: 'error',
-        code: res.status.toString(),
-        detail: { message: res.statusText },
-      } as FetchError);
+        detail: {
+          message: res.statusText,
+        },
+      } as FetchError;
     }
+
+    const body = await res.json();
 
     return {
       status: 'ok',
       detail: body,
     };
   } catch (error: any) {
-    return Promise.reject({
+    // Handle both FetchError and network/other errors
+    if ((error as FetchError).code) {
+      throw error;
+    }
+    throw {
       status: 'error',
-      code: error.code || error.errno || 'NetworkError',
-      detail: { message: error.message || String(error) },
-    } as FetchError);
+      code: '0',
+      detail: {
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+    } as FetchError;
   }
 }
 

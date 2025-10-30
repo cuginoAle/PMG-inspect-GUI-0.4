@@ -4,6 +4,298 @@
  */
 
 export interface paths {
+    "/api/v1/get_files_list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Files List */
+        get: operations["get_files_list_api_v1_get_files_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/get_inference_models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Inference Models
+         * @description ## Info
+         *     Returns *list[InferenceModels]*, Inference model is pointed by **ProcessingConfiguration.inferences**
+         *     using inference_model_name property.
+         */
+        get: operations["get_inference_models_api_v1_get_inference_models_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/get_processing_configurations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Processing Configurations
+         * @description ## Info
+         *     Returns *list[ProcessingConfiguration]* that are the **default** processing_configurations, copied to each new project.
+         */
+        get: operations["get_processing_configurations_api_v1_get_processing_configurations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/get_project_status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Project Status
+         * @description ## Info
+         *     Returns **ProjectStatus** that contains *project* **SUMMARY**, it includes:
+         *     - parsing_done = true | false
+         *     - processing_done = true | false
+         *     - **video_status** = dict[video_url: str, **VideoStatus**]
+         *     - **processing_configurations** = dict[processing_configuration_name: str, ProcessingConfiguration]
+         *     ## Errors
+         *     - **HTTP_428_PRECONDITION_REQUIRED**: project not parsed yet
+         */
+        get: operations["get_project_status_api_v1_get_project_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/get_project_inventory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Project Inventory
+         * @description ## Info
+         *     Returns **ProjectInventory** that contains *project* **FULL DETAILS**. It includes:
+         *     - dict[video_url: str, **VideoCaptureData**] with all data about all videos in
+         *       the project. VideoCaptureData also includes **VideoStatus**.
+         */
+        get: operations["get_project_inventory_api_v1_get_project_inventory_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/put_project_processing_configuration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Project Processing Configuration
+         * @description ## Info
+         *     **Upsert** (update or insert) ProcessingConfiguration for specific project. The new or mofified configuration will be processed
+         *     by **pmg_inspect_daemon** as soon as possible.
+         */
+        put: operations["put_project_processing_configuration_api_v1_put_project_processing_configuration_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/delete_project_processing_configuration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Project Processing Configuration
+         * @description ## Info
+         *     Delete a processing configuration for a project.
+         */
+        delete: operations["delete_project_processing_configuration_api_v1_delete_project_processing_configuration_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/get_video_pci_scores": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get Video Pci Scores
+         * @description ## Info
+         *     Returns data collected from db (no processing done). It will:
+         *     - select video by video_url and frames applying sampler option specified in processing_configuration
+         *     - search **db.pci_score_collection** by video_url, frame_index, processing_configuration_id
+         *     ## Errors
+         *     - **HTTP_428_PRECONDITION_REQUIRED**: video_data_capture not parsed or, if sampler_type==DistanceSampler, gps_points missing
+         */
+        post: operations["get_video_pci_scores_api_v1_get_video_pci_scores_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/process_frames": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Process Frames */
+        post: operations["process_frames_api_v1_process_frames_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/process_image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Process Image */
+        post: operations["process_image_api_v1_process_image_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/put_inference_result_label": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Inference Result Label
+         * @description ## TO BE IMPLEMENTED!
+         */
+        put: operations["put_inference_result_label_api_v1_put_inference_result_label_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/delete_inference_result_label": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Inference Result Label
+         * @description ## TO BE IMPLEMENTED!
+         */
+        delete: operations["delete_inference_result_label_api_v1_delete_inference_result_label_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/put_pci_score_label": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Pci Score Label
+         * @description ## TO BE IMPLEMENTED!
+         */
+        put: operations["put_pci_score_label_api_v1_put_pci_score_label_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/delete_pci_score_label": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Pci Score Label
+         * @description ## TO BE IMPLEMENTED!
+         */
+        delete: operations["delete_pci_score_label_api_v1_delete_pci_score_label_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/startup": {
         parameters: {
             query?: never;
@@ -55,92 +347,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/get_files_list": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Files List */
-        get: operations["get_files_list_api_v1_get_files_list_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/get_configurations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Configurations */
-        get: operations["get_configurations_api_v1_get_configurations_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/parse_project": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Parse Project */
-        get: operations["parse_project_api_v1_parse_project_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/process_frames": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Process Frames */
-        post: operations["process_frames_api_v1_process_frames_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/save_labels": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Save Labels */
-        post: operations["save_labels_api_v1_save_labels_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/delete_labels": {
+    "/api/v1/drop_database": {
         parameters: {
             query?: never;
             header?: never;
@@ -150,8 +357,31 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Delete Labels */
-        delete: operations["delete_labels_api_v1_delete_labels_delete"];
+        /**
+         * Drop Database
+         * @description Drop production database
+         */
+        delete: operations["drop_database_api_v1_drop_database_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/clean_cache": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Clean Cache
+         * @description Cleanup videos cache
+         */
+        delete: operations["clean_cache_api_v1_clean_cache_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -178,6 +408,8 @@ export interface components {
             modify_date?: string | null;
             /** Model */
             model?: string | null;
+            /** Media Mode */
+            media_mode?: string | null;
             /** Digital Zoom On */
             digital_zoom_on?: boolean | null;
             /** Digital Zoom */
@@ -240,37 +472,55 @@ export interface components {
          * FunctionalClassType
          * @enum {string}
          */
-        FunctionalClassType: "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
-        /** GetConfigurationsResponse */
-        GetConfigurationsResponse: {
-            /** Processing Configurations */
-            processing_configurations: {
-                [key: string]: components["schemas"]["ProcessingConfiguration"];
-            };
-            /** Inference Model Ids */
-            inference_model_ids: {
-                [key: string]: string[];
-            };
-        };
+        FunctionalClassType: "invalid_value" | "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
         /** GpsPoint */
         GpsPoint: {
             /** Latitude */
             latitude: number;
             /** Longitude */
             longitude: number;
+            /** Altitude */
+            altitude: number;
             /** Speed */
-            speed: number;
+            speed?: number | null;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** ImageProcessingDataWrapper */
+        ImageProcessingDataWrapper: {
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
+            };
+            /** Image */
+            image: string;
+        };
         /** InferenceConfiguration */
-        InferenceConfiguration: {
-            /** Inference Model Id */
-            inference_model_id: string;
+        "InferenceConfiguration-Input": {
+            /** Inference Model Name */
+            inference_model_name: string;
             inference_model_parameters: components["schemas"]["InferenceModelParameters"];
+        };
+        /** InferenceConfiguration */
+        "InferenceConfiguration-Output": {
+            /** Inference Model Name */
+            inference_model_name: string;
+            inference_model_parameters: components["schemas"]["InferenceModelParameters"];
+            /** Inference Configuration Id */
+            readonly inference_configuration_id: string;
+        };
+        /** InferenceModel */
+        InferenceModel: {
+            /** Label */
+            label: string;
+            /** Inference Model Name */
+            inference_model_name: string;
+            inference_type: components["schemas"]["InferenceType"];
+            /** Model File */
+            model_file: string;
         };
         /** InferenceModelParameters */
         InferenceModelParameters: {
@@ -282,7 +532,6 @@ export interface components {
         /** InferenceResult */
         "InferenceResult-Input": {
             inference_type: components["schemas"]["InferenceType"];
-            inference_source: components["schemas"]["InferenceSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -298,11 +547,12 @@ export interface components {
             masks?: components["schemas"]["MaskItem"][] | null;
             /** Probs */
             probs?: number[] | null;
+            /** @default processing */
+            result_source: components["schemas"]["ResultSource"];
         };
         /** InferenceResult */
         "InferenceResult-Output": {
             inference_type: components["schemas"]["InferenceType"];
-            inference_source: components["schemas"]["InferenceSource"];
             /** Orig Shape */
             orig_shape: [
                 number,
@@ -318,12 +568,9 @@ export interface components {
             masks?: components["schemas"]["MaskItem"][] | null;
             /** Probs */
             probs?: number[] | null;
+            /** @default processing */
+            result_source: components["schemas"]["ResultSource"];
         };
-        /**
-         * InferenceSource
-         * @enum {string}
-         */
-        InferenceSource: "processing" | "cache" | "labelling";
         /**
          * InferenceType
          * @enum {string}
@@ -334,18 +581,9 @@ export interface components {
             bitmask: components["schemas"]["PngEncodedBitmask"];
             /** Area Pixels */
             area_pixels: number;
-            /** Polygons Mask Shape */
-            polygons_mask_shape?: [
-                number,
-                number
-            ] | null;
-            /** Polygons */
-            polygons?: number[][][] | null;
         };
         /** MediaData */
         MediaData: {
-            /** Url */
-            url: string;
             /** Fps */
             fps: number;
             /** Frame Count */
@@ -359,12 +597,12 @@ export interface components {
             /** Frame Height */
             frame_height: number;
         };
-        /** ParseProjectResponse */
-        ParseProjectResponse: {
-            /** Project Name */
-            project_name: string;
-            /** Project Items */
-            project_items: components["schemas"]["ProjectItem"][];
+        /** PciScoreResult */
+        PciScoreResult: {
+            /** Pci Score */
+            pci_score: number;
+            /** @default processing */
+            result_source: components["schemas"]["ResultSource"];
         };
         /** PngEncodedBitmask */
         PngEncodedBitmask: {
@@ -374,12 +612,14 @@ export interface components {
             data: string;
         };
         /** ProcessingConfiguration */
-        ProcessingConfiguration: {
+        "ProcessingConfiguration-Input": {
+            /** Processing Configuration Name */
+            processing_configuration_name: string;
             /** Label */
             label: string;
-            /** Inferences */
-            inferences: {
-                [key: string]: components["schemas"]["InferenceConfiguration"];
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
             };
             sampler_type: components["schemas"]["SamplerType"];
             /** Sampler Parameters */
@@ -387,64 +627,106 @@ export interface components {
                 [key: string]: number | null;
             };
         };
-        /** ProcessingResults */
-        "ProcessingResults-Input": {
-            /** Inference Results */
-            inference_results: {
-                [key: string]: components["schemas"]["InferenceResult-Input"];
+        /** ProcessingConfiguration */
+        "ProcessingConfiguration-Output": {
+            /** Processing Configuration Name */
+            processing_configuration_name: string;
+            /** Label */
+            label: string;
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Output"];
             };
-            /** Pci Score */
-            pci_score?: number | null;
+            sampler_type: components["schemas"]["SamplerType"];
+            /** Sampler Parameters */
+            sampler_parameters: {
+                [key: string]: number | null;
+            };
+            /** Processing Configuration Id */
+            readonly processing_configuration_id: string;
         };
         /** ProcessingResults */
-        "ProcessingResults-Output": {
+        ProcessingResults: {
             /** Inference Results */
             inference_results: {
                 [key: string]: components["schemas"]["InferenceResult-Output"];
             };
-            /** Pci Score */
-            pci_score?: number | null;
+            pci_score_result?: components["schemas"]["PciScoreResult"] | null;
         };
-        /** ProjectItem */
-        ProjectItem: {
-            /** Video Url */
-            video_url: string;
-            /** Video Name */
-            video_name: string;
-            parsing_status: components["schemas"]["VideoParsingStatus"];
-            road_data: components["schemas"]["RoadData"];
-            camera_data?: components["schemas"]["CameraData"] | null;
-            media_data?: components["schemas"]["MediaData"] | null;
-            /** Gps Points */
-            gps_points?: components["schemas"]["GpsPoint"][] | null;
-            /** Pci Score Avg Human Inspector */
-            pci_score_avg_human_inspector?: number | null;
-            /** Pci Score Avg Human Qc */
-            pci_score_avg_human_qc?: number | null;
-            /** Pci Score Avg Ai */
-            pci_score_avg_ai?: number | null;
+        /** ProjectInventory */
+        ProjectInventory: {
+            /**
+             * Project File
+             * Format: path
+             */
+            project_file: string;
+            /** Items */
+            items?: {
+                [key: string]: components["schemas"]["VideoCaptureData"];
+            };
+            /** Project Name */
+            readonly project_name: string;
         };
+        /** ProjectStatus */
+        ProjectStatus: {
+            /**
+             * Project File
+             * Format: path
+             */
+            project_file: string;
+            /**
+             * Parsing Done
+             * @default false
+             */
+            parsing_done: boolean;
+            /**
+             * Processing Done
+             * @default false
+             */
+            processing_done: boolean;
+            /** Processing Configurations */
+            processing_configurations?: {
+                [key: string]: components["schemas"]["ProcessingConfiguration-Output"];
+            };
+            /** Video Status */
+            video_status?: {
+                [key: string]: components["schemas"]["VideoStatus"];
+            };
+            /** Project Name */
+            readonly project_name: string;
+        };
+        /**
+         * ResultSource
+         * @enum {string}
+         */
+        ResultSource: "processing" | "cache" | "labelling";
         /** RoadData */
         RoadData: {
             /** Road Name */
-            road_name: string;
+            road_name?: string | null;
             /** Road Section */
-            road_section: string;
+            road_section?: string | null;
             /** Road From */
-            road_from: string;
+            road_from?: string | null;
             /** Road To */
-            road_to: string;
+            road_to?: string | null;
             /** Road Length */
-            road_length: number;
+            road_length?: number | null;
             /** Road Width */
-            road_width: number;
+            road_width?: number | null;
             /** Road Area */
-            road_area: number;
-            road_functional_class: components["schemas"]["FunctionalClassType"];
-            road_surface: components["schemas"]["SurfaceType"];
+            road_area?: number | null;
+            road_functional_class?: components["schemas"]["FunctionalClassType"] | null;
+            road_surface?: components["schemas"]["SurfaceType"] | null;
             /** Road Lanes */
-            road_lanes: number;
-            road_shoulder?: components["schemas"]["ShoulderType"];
+            road_lanes?: number | null;
+            road_shoulder?: components["schemas"]["ShoulderType"] | null;
+            /** Qc Pci Gauge Min */
+            qc_pci_gauge_min?: number | null;
+            /** Qc Pci Gauge Max */
+            qc_pci_gauge_max?: number | null;
+            /** Inspector Pci */
+            inspector_pci?: number | null;
         };
         /**
          * SamplerType
@@ -455,12 +737,12 @@ export interface components {
          * ShoulderType
          * @enum {string}
          */
-        ShoulderType: "none" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "vg";
+        ShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "curbed" | "vg";
         /**
          * SurfaceType
          * @enum {string}
          */
-        SurfaceType: "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
+        SurfaceType: "invalid_value" | "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -470,11 +752,29 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** VideoCaptureData */
+        VideoCaptureData: {
+            /** Video Url */
+            video_url: string;
+            /** Video File */
+            video_file?: string | null;
+            /** @default road_data_ready */
+            video_status: components["schemas"]["VideoStatus"] | null;
+            road_data?: components["schemas"]["RoadData"] | null;
+            media_data?: components["schemas"]["MediaData"] | null;
+            camera_data?: components["schemas"]["CameraData"] | null;
+            /** Gps Points */
+            gps_points?: {
+                [key: string]: components["schemas"]["GpsPoint"];
+            } | null;
+            /** Video Name */
+            readonly video_name: string | null;
+        };
         /**
-         * VideoParsingStatus
+         * VideoStatus
          * @enum {string}
          */
-        VideoParsingStatus: "downloading" | "parsing" | "download_error" | "parsing_error" | "ready";
+        VideoStatus: "road_data_ready" | "road_data_error" | "downloading" | "download_error" | "download_ready" | "media_data_error" | "camera_data_error" | "gps_points_error" | "ready";
     };
     responses: never;
     parameters: never;
@@ -484,6 +784,445 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    get_files_list_api_v1_get_files_list_get: {
+        parameters: {
+            query?: {
+                folder_relative_path?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileInfo"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_inference_models_api_v1_get_inference_models_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InferenceModel"][];
+                };
+            };
+        };
+    };
+    get_processing_configurations_api_v1_get_processing_configurations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessingConfiguration-Output"][];
+                };
+            };
+        };
+    };
+    get_project_status_api_v1_get_project_status_get: {
+        parameters: {
+            query: {
+                project_relative_path: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectStatus"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_project_inventory_api_v1_get_project_inventory_get: {
+        parameters: {
+            query: {
+                project_relative_path: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectInventory"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_project_processing_configuration_api_v1_put_project_processing_configuration_put: {
+        parameters: {
+            query: {
+                project_relative_path: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProcessingConfiguration-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_project_processing_configuration_api_v1_delete_project_processing_configuration_delete: {
+        parameters: {
+            query: {
+                project_relative_path: string;
+                processing_configuration_name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_video_pci_scores_api_v1_get_video_pci_scores_post: {
+        parameters: {
+            query: {
+                video_url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProcessingConfiguration-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    process_frames_api_v1_process_frames_post: {
+        parameters: {
+            query: {
+                video_url: string;
+                frame_indexes: number[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: components["schemas"]["InferenceConfiguration-Input"];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessingResults"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    process_image_api_v1_process_image_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImageProcessingDataWrapper"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessingResults"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_inference_result_label_api_v1_put_inference_result_label_put: {
+        parameters: {
+            query: {
+                video_url: string;
+                frame_index: number[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InferenceResult-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_inference_result_label_api_v1_delete_inference_result_label_delete: {
+        parameters: {
+            query: {
+                video_url: string;
+                frame_index?: number[] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_pci_score_label_api_v1_put_pci_score_label_put: {
+        parameters: {
+            query: {
+                video_url: string;
+                frame_index: number[];
+                pci_score: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_pci_score_label_api_v1_delete_pci_score_label_delete: {
+        parameters: {
+            query: {
+                video_url: string;
+                frame_index?: number[] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     startup_startup_get: {
         parameters: {
             query?: never;
@@ -544,38 +1283,7 @@ export interface operations {
             };
         };
     };
-    get_files_list_api_v1_get_files_list_get: {
-        parameters: {
-            query?: {
-                folder_relative_path?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FileInfo"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_configurations_api_v1_get_configurations_get: {
+    drop_database_api_v1_drop_database_delete: {
         parameters: {
             query?: never;
             header?: never;
@@ -590,122 +1298,14 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GetConfigurationsResponse"];
-                };
-            };
-        };
-    };
-    parse_project_api_v1_parse_project_get: {
-        parameters: {
-            query: {
-                project_relative_path: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ParseProjectResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    process_frames_api_v1_process_frames_post: {
-        parameters: {
-            query: {
-                video_url: string;
-                frame_indexes: number[];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": {
-                    [key: string]: components["schemas"]["InferenceConfiguration"];
-                };
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProcessingResults-Output"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    save_labels_api_v1_save_labels_post: {
-        parameters: {
-            query: {
-                video_url: string;
-                frame_index: number[];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProcessingResults-Input"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": unknown;
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    delete_labels_api_v1_delete_labels_delete: {
+    clean_cache_api_v1_clean_cache_delete: {
         parameters: {
-            query: {
-                video_url: string;
-                frame_index?: number[] | null;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -719,15 +1319,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

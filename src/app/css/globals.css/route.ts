@@ -32,6 +32,7 @@ export async function GET() {
   const base = readFileSafe(path.join(cssDir, 'base.css'));
   const utils = readFileSafe(path.join(cssDir, 'utils.css'));
 
+  // Generate CSS variables for PCI score colours
   const pciScoreColours = Object.keys(pciScoreColourCodes)
     .map(
       (key) =>

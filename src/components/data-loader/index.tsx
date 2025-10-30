@@ -1,65 +1,48 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { useFetchProcessingConfiguration } from '@/src/app/hooks/useFetchProcessingConfiguration';
 import { useFetchProject } from '@/src/app/hooks/useFetchProject';
 import { useFetchProjectList } from '@/src/app/hooks/useFetchProjectList';
-import { useFetchAnalysisResults } from '@/src/app/hooks/useFetchAnalysisResults';
-import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useFetchProjectStatus } from '@/src/app/hooks/useFetchProjectStatus';
+import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 
 const DataLoader = () => {
   const sp = useSearchParams();
   const projectPath = sp.get('path');
 
-  const {
-    selectedProject,
-    filesList,
-    processingConfigurations,
-    inferenceModelDictionary,
-    analysisResults,
-  } = useGlobalState();
+  const setSelectedProject = useGlobalState(
+    (state) => state.setSelectedProject,
+  );
+  const setFilesList = useGlobalState((state) => state.setFilesList);
 
-  const selectedProjectSet = selectedProject.set;
-  const filesListSet = filesList.set;
-  const updateProcessingConfigurations = processingConfigurations.set;
-  const updateInferenceModelDictionary = inferenceModelDictionary.set;
-  const updateAnalysisResults = analysisResults.set;
+  const setProjectStatus = useGlobalState((state) => state.setProjectStatus);
 
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
-  const processingSettingsData = useFetchProcessingConfiguration();
-  const analysisResultsData = useFetchAnalysisResults(projectPath as string);
+  const projectStatus = useFetchProjectStatus(projectPath);
 
-  useEffect(() => {
-    updateAnalysisResults(analysisResultsData);
-  }, [analysisResultsData, updateAnalysisResults]);
+  const projectData = getResponseIfSuccesful(project);
+  const projectStatusData = getResponseIfSuccesful(projectStatus);
 
-  useEffect(() => {
-    filesListSet(projects);
-  }, [filesListSet, projects]);
+  // const projectAiPciScores = useFetchProjectPciScores({
+  //   project: projectData,
+  //   processingConfiguration: Object.values(
+  //     projectStatusData?.processing_configurations || {},
+  //   ),
+  // });
 
-  useEffect(() => {
-    selectedProjectSet(project);
-  }, [project, selectedProjectSet]);
+  // console.log('projectAiPciScores', projectAiPciScores);
 
-  useEffect(() => {
-    const processingConfigurationsValue = getResponseIfSuccesful(
-      processingSettingsData,
-    );
+  // Sync data to global state
+  useEffect(
+    () => setProjectStatus(projectStatus),
+    [projectStatus, setProjectStatus],
+  );
 
-    console.log('processingSettingsData', processingSettingsData);
-
-    updateInferenceModelDictionary(
-      processingConfigurationsValue?.inference_model_ids,
-    );
-    updateProcessingConfigurations(processingSettingsData);
-  }, [
-    updateProcessingConfigurations,
-    processingSettingsData,
-    updateInferenceModelDictionary,
-  ]);
+  useEffect(() => setFilesList(projects), [setFilesList, projects]);
+  useEffect(() => setSelectedProject(project), [project, setSelectedProject]);
 
   return null;
 };

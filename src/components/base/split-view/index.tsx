@@ -28,34 +28,43 @@ const SplitView = ({
   proportionalLayout = false,
   ...rest
 }: SplitViewProps) => {
-  const [leftPreferredSize, setLeftPreferredSize] = useState(leftMinSize);
+  const [preferredSize, setPreferredSize] = useState([
+    leftMinSize,
+    rightMinSize,
+  ]);
 
   useEffect(() => {
-    const lsData = window.localStorage.getItem(name) || leftMinSize.toString();
+    const lsData = window.localStorage.getItem(name);
     if (lsData) {
-      setLeftPreferredSize(parseInt(lsData, 10));
+      setPreferredSize(lsData.split(',').map(Number));
+    } else {
+      setPreferredSize([leftMinSize, rightMinSize]); //default to leftMinSize
     }
-  }, [leftMinSize, name]);
+  }, [leftMinSize, name, rightMinSize]);
 
   return (
     <Flex gap="4" height="100%" className={styles.splitViewRoot} {...rest}>
       <Allotment
-        key={leftPreferredSize} // force re-mount when preferred size changes
-        defaultSizes={[leftPreferredSize]}
+        key={preferredSize.join(',')} // force re-mount when preferred size changes
+        defaultSizes={preferredSize}
         separator={false}
         proportionalLayout={proportionalLayout}
         onDragEnd={(sizes) => {
-          window.localStorage.setItem(name, (sizes[0] || 0).toString());
+          window.localStorage.setItem(name, sizes.join(',').toString());
         }}
       >
         <Allotment.Pane
           minSize={leftMinSize}
-          preferredSize={leftPreferredSize}
+          preferredSize={preferredSize[0]}
           visible={leftVisible}
         >
           {left}
         </Allotment.Pane>
-        <Allotment.Pane minSize={rightMinSize} visible={rightVisible}>
+        <Allotment.Pane
+          minSize={rightMinSize}
+          preferredSize={preferredSize[1]}
+          visible={rightVisible}
+        >
           {right}
         </Allotment.Pane>
       </Allotment>

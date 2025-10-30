@@ -1,10 +1,7 @@
 {
-  "extends": [
-    "next/core-web-vitals"
-  ],
-  "plugins": [
-    "unused-imports"
-  ],
+  "extends": ["next/core-web-vitals"],
+  "plugins": ["unused-imports"],
+  "ignorePatterns": ["src/components/🪦 parked-components/**"],
   "rules": {
     "no-restricted-imports": [
       "error",
@@ -28,4 +25,7 @@
       }
     ]
   }
+  // "settings": {
+  //   "import/ignore": ["src/components/parked-components/**"]
+  // }
 }

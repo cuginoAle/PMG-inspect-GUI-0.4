@@ -1,8 +1,39 @@
 'use client';
-import { useEffect } from 'react';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import { useCallback, useEffect } from 'react';
+import mapboxgl, {
+  DataDrivenPropertyValueSpecification,
+  LngLatLike,
+} from 'mapbox-gl';
 
 type PathsToDraw = Record<string, LngLatLike[]>;
+
+const baseWidth = 4;
+const baseZoom = 16;
+const baseHighligthedWidth = 10;
+
+const maxZoomLevel = 16;
+const mapPanDuration = 2000;
+
+const exponentinalLineWidth: DataDrivenPropertyValueSpecification<number> = {
+  type: 'exponential',
+  base: 2,
+  stops: [
+    [0, baseWidth],
+    [13, baseWidth],
+    [22, 2 * Math.pow(2, 22 - baseZoom)],
+  ],
+};
+
+const exponentinalHighligthedLineWidth: DataDrivenPropertyValueSpecification<number> =
+  {
+    type: 'exponential',
+    base: 2,
+    stops: [
+      [0, baseHighligthedWidth],
+      [13, baseHighligthedWidth],
+      [22, 2 * Math.pow(2, 22 - baseZoom)],
+    ],
+  };
 
 // Normalize any LngLatLike into a [lng, lat] tuple using Mapbox's built-in converter
 const normalizeCoord = (p: LngLatLike): [number, number] => {
@@ -26,6 +57,7 @@ interface DrawPathsProps {
 }
 
 export const useDrawPaths = (props: DrawPathsProps) => {
+  // Effect for drawing all base paths (only re-runs when pathsToDraw changes)
   useEffect(() => {
     if (
       !props.styleLoaded ||
@@ -42,10 +74,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
     let firstCoord: [number, number] | null = null;
 
     // Build a FeatureCollection of LineString features; each path is a separate feature
-    const features: GeoJSON.Feature<
-      GeoJSON.LineString,
-      { key: string; highlight: boolean }
-    >[] = [];
+    const features: GeoJSON.Feature<GeoJSON.LineString, { key: string }>[] = [];
     const pathKeys = Object.keys(props.pathsToDraw);
 
     (pathKeys || []).forEach((key) => {
@@ -67,7 +96,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
       features.push({
         type: 'Feature',
-        properties: { key, highlight: key === props.highlightPath },
+        properties: { key },
         geometry: {
           type: 'LineString',
           coordinates: normalizedPath,
@@ -83,7 +112,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
     const collection: GeoJSON.FeatureCollection<
       GeoJSON.LineString,
-      { key: string; highlight: boolean }
+      { key: string }
     > = {
       type: 'FeatureCollection',
       features,
@@ -109,14 +138,9 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           'line-cap': 'round',
         },
         paint: {
-          // Red when feature.highlight is true, else default color
-          'line-color': [
-            'case',
-            ['==', ['get', 'highlight'], true],
-            '#ff0000',
-            '#9f8562',
-          ],
-          'line-width': 10,
+          'line-color': '#1612fa',
+          'line-opacity': 0.7,
+          'line-width': exponentinalLineWidth,
         },
       });
     }
@@ -127,7 +151,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         // Single point: center without changing zoom
         map.setCenter(firstCoord);
       } else {
-        map.fitBounds(bounds, { padding: 40, duration: 500 });
+        map.fitBounds(bounds, { padding: 20, duration: mapPanDuration });
       }
     }
 
@@ -136,14 +160,163 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       if (!map) return;
       const layerId = 'paths-layer';
       const sourceId = 'paths-source';
+      const highlightLayerId = 'highlight-path-layer';
+      const highlightSourceId = 'highlight-path-source';
       try {
+        if (map?.getLayer(highlightLayerId)) map.removeLayer(highlightLayerId);
+        if (map?.getSource(highlightSourceId))
+          map.removeSource(highlightSourceId);
         if (map?.getLayer(layerId)) map.removeLayer(layerId);
         if (map?.getSource(sourceId)) map.removeSource(sourceId);
       } catch (error) {
         console.log('error', error);
       }
     };
-  }, [props.styleLoaded, props.pathsToDraw, props.highlightPath, props.mapRef]);
+  }, [props.styleLoaded, props.pathsToDraw, props.mapRef]);
+
+  // Separate effect for highlighting a specific path (only re-runs when highlightPath changes)
+  useEffect(() => {
+    if (!props.styleLoaded || !props.mapRef.current || !props.pathsToDraw)
+      return;
+
+    const map = props.mapRef.current;
+    const highlightSourceId = 'highlight-path-source';
+    const highlightLayerId = 'highlight-path-layer';
+
+    // If no highlight path is specified, remove the highlight layer
+    if (!props.highlightPath) {
+      try {
+        if (map.getLayer(highlightLayerId)) map.removeLayer(highlightLayerId);
+        if (map.getSource(highlightSourceId))
+          map.removeSource(highlightSourceId);
+      } catch (error) {
+        console.log('error removing highlight layer', error);
+      }
+      return;
+    }
+
+    // Get the highlighted path coordinates
+    const highlightCoords = props.pathsToDraw[props.highlightPath];
+    if (!highlightCoords || highlightCoords.length === 0) {
+      // Path key exists but has no coordinates, remove highlight
+      try {
+        if (map.getLayer(highlightLayerId)) map.removeLayer(highlightLayerId);
+        if (map.getSource(highlightSourceId))
+          map.removeSource(highlightSourceId);
+      } catch (error) {
+        console.log('error removing highlight layer', error);
+      }
+      return;
+    }
+
+    const normalizedHighlightPath = highlightCoords
+      .map(normalizeCoord)
+      .filter(isFiniteCoord);
+
+    if (normalizedHighlightPath.length === 0) return;
+
+    const highlightFeature: GeoJSON.Feature<GeoJSON.LineString> = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: normalizedHighlightPath,
+      },
+    };
+
+    const highlightCollection: GeoJSON.FeatureCollection<GeoJSON.LineString> = {
+      type: 'FeatureCollection',
+      features: [highlightFeature],
+    };
+
+    // Add or update the highlight source
+    if (!map.getSource(highlightSourceId)) {
+      map.addSource(highlightSourceId, {
+        type: 'geojson',
+        data: highlightCollection,
+      });
+    } else {
+      const src = map.getSource(highlightSourceId) as
+        | mapboxgl.GeoJSONSource
+        | undefined;
+      src?.setData(highlightCollection);
+    }
+
+    // Add the highlight layer if it doesn't exist
+    if (!map.getLayer(highlightLayerId)) {
+      map.addLayer({
+        id: highlightLayerId,
+        type: 'line',
+        source: highlightSourceId,
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#ffb404',
+          'line-opacity': 0.8,
+          'line-width': exponentinalHighligthedLineWidth,
+        },
+      });
+    }
+  }, [props.styleLoaded, props.highlightPath, props.pathsToDraw, props.mapRef]);
+
+  const panToPath = useCallback(
+    ({
+      pathData,
+      padding = 30,
+    }: {
+      pathData?: LngLatLike[];
+      padding?: number;
+    }) => {
+      if (!props.mapRef.current) {
+        return;
+      }
+
+      const map = props.mapRef.current;
+
+      if (!pathData || pathData.length === 0) {
+        return;
+      }
+
+      const normalizedPath = pathData.map(normalizeCoord).filter(isFiniteCoord);
+
+      if (normalizedPath.length === 0) {
+        return;
+      }
+
+      if (normalizedPath.length === 1) {
+        const firstPoint = normalizedPath[0];
+        if (firstPoint) {
+          map.easeTo({
+            center: firstPoint,
+            zoom: Math.min(map.getZoom(), maxZoomLevel),
+            duration: mapPanDuration,
+          });
+        }
+        return;
+      }
+
+      const firstPoint = normalizedPath[0];
+      if (!firstPoint) return;
+
+      const bounds = normalizedPath
+        .slice(1)
+        .reduce(
+          (b, coord) => b.extend(coord),
+          new mapboxgl.LngLatBounds(firstPoint, firstPoint),
+        );
+
+      map.fitBounds(bounds, {
+        padding,
+        duration: mapPanDuration,
+        maxZoom: maxZoomLevel,
+      });
+    },
+    [props.mapRef],
+  );
+
+  return { panToPath };
 };
 
 export type { PathsToDraw };
