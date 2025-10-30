@@ -5,11 +5,14 @@ import mapboxgl, {
   LngLatLike,
 } from 'mapbox-gl';
 
-type PathsToDraw = Record<string, LngLatLike[]>;
+type PathsToDraw = Record<
+  string,
+  { coordinates: LngLatLike[]; color?: string }
+>;
 
 const baseWidth = 4;
 const baseZoom = 16;
-const baseHighligthedWidth = 10;
+const baseHighligthedWidth = 20;
 
 const maxZoomLevel = 16;
 const mapPanDuration = 2000;
@@ -74,11 +77,17 @@ export const useDrawPaths = (props: DrawPathsProps) => {
     let firstCoord: [number, number] | null = null;
 
     // Build a FeatureCollection of LineString features; each path is a separate feature
-    const features: GeoJSON.Feature<GeoJSON.LineString, { key: string }>[] = [];
+    const features: GeoJSON.Feature<
+      GeoJSON.LineString,
+      { key: string; color: string }
+    >[] = [];
     const pathKeys = Object.keys(props.pathsToDraw);
 
     (pathKeys || []).forEach((key) => {
-      const normalizedPath = (props.pathsToDraw?.[key] || [])
+      const pathData = props.pathsToDraw?.[key];
+      const coordinates = pathData?.coordinates || [];
+      const color = pathData?.color || '#1612fa';
+      const normalizedPath = coordinates
         .map(normalizeCoord)
         .filter(isFiniteCoord);
       if (normalizedPath.length === 0) return;
@@ -96,7 +105,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
       features.push({
         type: 'Feature',
-        properties: { key },
+        properties: { key, color },
         geometry: {
           type: 'LineString',
           coordinates: normalizedPath,
@@ -112,7 +121,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
 
     const collection: GeoJSON.FeatureCollection<
       GeoJSON.LineString,
-      { key: string }
+      { key: string; color: string }
     > = {
       type: 'FeatureCollection',
       features,
@@ -138,7 +147,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#1612fa',
+          'line-color': ['get', 'color'],
           'line-opacity': 0.7,
           'line-width': exponentinalLineWidth,
         },
@@ -196,7 +205,8 @@ export const useDrawPaths = (props: DrawPathsProps) => {
     }
 
     // Get the highlighted path coordinates
-    const highlightCoords = props.pathsToDraw[props.highlightPath];
+    const highlightPathData = props.pathsToDraw[props.highlightPath];
+    const highlightCoords = highlightPathData?.coordinates || [];
     if (!highlightCoords || highlightCoords.length === 0) {
       // Path key exists but has no coordinates, remove highlight
       try {
@@ -243,21 +253,26 @@ export const useDrawPaths = (props: DrawPathsProps) => {
     }
 
     // Add the highlight layer if it doesn't exist
+    // Insert it before the paths layer so it renders underneath
     if (!map.getLayer(highlightLayerId)) {
-      map.addLayer({
-        id: highlightLayerId,
-        type: 'line',
-        source: highlightSourceId,
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
+      const pathsLayerId = 'paths-layer';
+      map.addLayer(
+        {
+          id: highlightLayerId,
+          type: 'line',
+          source: highlightSourceId,
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round',
+          },
+          paint: {
+            'line-color': '#ffb404',
+            'line-opacity': 0.7,
+            'line-width': exponentinalHighligthedLineWidth,
+          },
         },
-        paint: {
-          'line-color': '#ffb404',
-          'line-opacity': 0.8,
-          'line-width': exponentinalHighligthedLineWidth,
-        },
-      });
+        pathsLayerId,
+      );
     }
   }, [props.styleLoaded, props.highlightPath, props.pathsToDraw, props.mapRef]);
 

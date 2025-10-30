@@ -6,19 +6,28 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { useSearchParams } from 'next/navigation';
+import { pciScoreColourCodes } from '@/src/helpers/pci-score-colour-codes';
+import { getPciScoreLabelFromValue } from '@/src/helpers/get-pci-score-label-from-value';
 
 const getMapData = (
-  gpsData: Record<string, GpsData[] | null | undefined>,
+  gpsData: Record<
+    string,
+    { gpsPoints: GpsData[]; color?: string } | null | undefined
+  >,
 ): PathsToDraw | undefined => {
   // Logic to get map data based on selectedVideo
   if (gpsData) {
     const paths = Object.keys(gpsData);
     const data = paths.reduce((acc, curr) => {
-      if (gpsData[curr]) {
-        acc[curr] = gpsData[curr].map((point) => [
-          point.longitude,
-          point.latitude,
-        ]);
+      const pathData = gpsData[curr];
+      if (pathData?.gpsPoints) {
+        acc[curr] = {
+          coordinates: pathData.gpsPoints.map((point) => [
+            point.longitude,
+            point.latitude,
+          ]),
+          ...(pathData.color && { color: pathData.color }),
+        };
       }
       return acc;
     }, {} as PathsToDraw);
@@ -80,10 +89,18 @@ const ProjectMapContainer = () => {
       ? Object.keys(itemsToRender).reduce((acc, key) => {
           const item = itemsToRender?.[key];
           if (item?.gps_points) {
-            acc[key] = Object.values(item.gps_points);
+            acc[key] = {
+              gpsPoints: Object.values(item.gps_points),
+              color:
+                pciScoreColourCodes[
+                  getPciScoreLabelFromValue(
+                    item.road_data?.inspector_pci || undefined,
+                  )
+                ],
+            };
           }
           return acc;
-        }, {} as Record<string, GpsData[] | null | undefined>)
+        }, {} as Record<string, { gpsPoints: GpsData[]; color?: string } | null | undefined>)
       : {};
 
     setPathsToDraw(getMapData(gpsData));
@@ -107,11 +124,20 @@ const ProjectMapContainer = () => {
     if (selectedVideo && selectedVideo.gps_points) {
       // If there is a selected video, pan to its path
       const gpsPointsArray = Object.values(selectedVideo.gps_points);
-      const data = getMapData({ [videoUrlToDrawOnTheMap]: gpsPointsArray });
-      data && panToPath({ pathData: Object.values(data)[0], padding: 80 });
+      const data = getMapData({
+        [videoUrlToDrawOnTheMap]: { gpsPoints: gpsPointsArray },
+      });
+      data &&
+        panToPath({
+          pathData: Object.values(data)[0]?.coordinates,
+          padding: 80,
+        });
     } else {
       // If no selectedVideo, pan to show all paths
-      panToPath({ pathData: Object.values(pathsToDraw).flat() });
+      const allCoordinates = Object.values(pathsToDraw).flatMap(
+        (path) => path.coordinates,
+      );
+      panToPath({ pathData: allCoordinates });
     }
   }, [selectedVideo, videoUrlToDrawOnTheMap, pathsToDraw, panToPath]);
 
