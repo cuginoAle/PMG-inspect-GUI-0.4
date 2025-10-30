@@ -41,6 +41,7 @@ const getMapData = (
 const ProjectMapContainer = () => {
   const sp = useSearchParams();
   const videoUrl = sp.get('videoUrl') || undefined;
+  const page = sp.get('page') || 0;
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
   const videoUrlToDrawOnTheMap = useGlobalState(
@@ -78,6 +79,13 @@ const ProjectMapContainer = () => {
       setItemsToRender(selectedProject?.items);
     }
   }, [linkMapAndTable, renderedProjectItems, selectedProject]);
+
+  useEffect(() => {
+    if (linkMapAndTable) {
+      // When map and table are linked, zoom out to show all paths
+      setVideoUrlToDrawOnTheMap(undefined);
+    }
+  }, [linkMapAndTable, page, setVideoUrlToDrawOnTheMap]);
 
   useEffect(() => {
     if (!selectedProject) {
