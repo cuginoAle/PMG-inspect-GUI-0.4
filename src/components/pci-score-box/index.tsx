@@ -20,7 +20,7 @@ const PciScoreBox = ({
     styles[size as keyof typeof styles],
     className,
     {
-      [styles.na]: value === undefined,
+      [styles.na as string]: value === undefined,
     },
   );
   return (
