@@ -21,4 +21,4 @@ jobs:
       - name: Run Slack message script
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        run: node /node-scripts/cerbero-watchdog.js
+        run: node node-scripts/cerbero-watchdog.js
