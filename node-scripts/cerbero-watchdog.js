@@ -1,5 +1,5 @@
 const SLACK_TOKEN = process.env.SLACK_BOT_TOKEN;
-const CHANNEL = 'my-test-channel'; // Private channel ID
+const CHANNEL = 'the-italian-job'; // Private channel ID
 
 async function sendSlackMessage(text) {
   const response = await fetch('https://slack.com/api/chat.postMessage', {
@@ -22,7 +22,7 @@ async function sendSlackMessage(text) {
 }
 
 async function main() {
-  const response = await fetch('http://173.187.20.67:8088/healthx');
+  const response = await fetch('http://173.187.20.67:8088/health');
   if (response.status !== 200) {
     await sendSlackMessage(
       `🚨 Cerbero health check failed 🚨 
