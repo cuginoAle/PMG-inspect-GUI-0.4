@@ -1,6 +1,7 @@
 import { PCIScoreColourLabels } from './pci-score-colour-codes';
 
-const getPciScoreLabelFromValue = (value: number = 0): PCIScoreColourLabels => {
+const getPciScoreLabelFromValue = (value?: number): PCIScoreColourLabels => {
+  if (!value) return 'undefined';
   if (value < 40) {
     return 'failed';
   } else if (value < 55) {

@@ -1,4 +1,10 @@
-type PCIScoreColourLabels = 'excellent' | 'good' | 'fair' | 'poor' | 'failed';
+type PCIScoreColourLabels =
+  | 'excellent'
+  | 'good'
+  | 'fair'
+  | 'poor'
+  | 'failed'
+  | 'undefined';
 
 const pciScoreColourCodes: Record<PCIScoreColourLabels, string> = {
   excellent: '#004da8',
@@ -6,6 +12,7 @@ const pciScoreColourCodes: Record<PCIScoreColourLabels, string> = {
   fair: '#e6e600',
   poor: '#ffaa01',
   failed: '#a80000',
+  undefined: '#808080',
 };
 
 const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
@@ -14,6 +21,7 @@ const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
   fair: '#000000ca',
   poor: '#000000ca',
   failed: '#ffffff',
+  undefined: '#000000ca',
 };
 
 export { pciScoreColourCodes, pciScoreLabelColour };
