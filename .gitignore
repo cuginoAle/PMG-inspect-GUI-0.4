@@ -42,11 +42,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# generated css type files
-*.css.d.ts
-*.scss.d.ts
-*.sass.d.ts
-
 # dummy data
 /**/*.mp4
 

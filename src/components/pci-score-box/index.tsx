@@ -15,14 +15,9 @@ const PciScoreBox = ({
   className,
 }: PciScoreBoxProps) => {
   const scoreLabel = getPciScoreLabelFromValue(value);
-  const cn = classNames(
-    styles.root,
-    styles[size as keyof typeof styles],
-    className,
-    {
-      [styles.na as string]: value === undefined,
-    },
-  );
+  const cn = classNames(styles.root, styles[size], className, {
+    [styles.na]: value === undefined,
+  });
   return (
     <span
       className={cn}
