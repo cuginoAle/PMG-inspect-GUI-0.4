@@ -18,19 +18,18 @@ const BASE = USE_DIRECT ? DIRECT_API_BASE : '/api/proxy';
 const GET_FILE_LIST_ENDPOINT = 'api/v1/get_files_list';
 const GET_FILE_DETAILS_ENDPOINT = 'api/v1/get_project_inventory';
 const GET_VIDEO_METADATA_ENDPOINT = 'api/v1/parse_video';
-const GET_ANALYSIS_RESULTS_ENDPOINT = 'api/v1/get_analysis_results';
-const GET_PROCESSING_CONFIGURATION_ENDPOINT = 'api/v1/get_inference_models';
+
 const GET_PROJECT_STATUS_ENDPOINT = 'api/v1/get_project_status';
 const GET_INFERENCE_MODELS = 'api/v1/get_inference_models';
+const GET_VIDEO_PCI_SCORES = 'api/v1/get_video_pci_scores';
 
 const ENDPOINT = {
   INFERENCE_MODELS: `${BASE}/${GET_INFERENCE_MODELS}`,
-  PROCESSING_CONFIGURATION: `${BASE}/${GET_PROCESSING_CONFIGURATION_ENDPOINT}`,
   PROJECT: {
     LIST: `${BASE}/${GET_FILE_LIST_ENDPOINT}`,
     DETAILS: `${BASE}/${GET_FILE_DETAILS_ENDPOINT}`,
-    ANALYSIS: `${BASE}/${GET_ANALYSIS_RESULTS_ENDPOINT}`,
     STATUS: `${BASE}/${GET_PROJECT_STATUS_ENDPOINT}`,
+    PCI_SCORES: `${BASE}/${GET_VIDEO_PCI_SCORES}`,
   },
   VIDEOS: `${BASE}/${GET_VIDEO_METADATA_ENDPOINT}`,
   // Expose also the raw direct origin for special cases (e.g., generating openapi types)

@@ -1,5 +1,6 @@
 .searchBox {
   max-width: 400px;
+  flex-grow: 1;
 }
 
 .headerCell {
@@ -22,6 +23,19 @@
     &.selected {
       background-color: var(--accent-4);
     }
+
+    white-space: nowrap;
+    &:hover {
+      background-color: var(--gray-3);
+    }
+  }
+
+  :global(.rt-TableCell) {
+    position: relative;
+  }
+  :global(.rowCheckBox) {
+    position: absolute;
+    inset: 0;
   }
 }
 .tableContainer {
@@ -33,11 +47,5 @@
   position: sticky;
   top: 0;
   background-color: var(--gray-3);
-}
-
-:global(.rt-TableRow) {
-  white-space: nowrap;
-  &:hover {
-    background-color: var(--gray-3);
-  }
+  z-index: 1;
 }

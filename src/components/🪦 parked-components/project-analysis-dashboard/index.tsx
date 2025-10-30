@@ -2,17 +2,11 @@
 import { useGlobalState } from '@/src/app/global-state';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import {
-  DummyAnalysisResult,
-  InferenceTypes,
-  Project,
-  ResponseType,
-} from '@/src/types';
+import { InferenceTypes, Project, ResponseType } from '@/src/types';
 import {
   AddNetworkButton,
   NetworkSelector,
   NetworkSettings,
-  PresetsDropDown,
   Slider,
 } from '@/src/components';
 import { Button, Card, Flex } from '@radix-ui/themes';

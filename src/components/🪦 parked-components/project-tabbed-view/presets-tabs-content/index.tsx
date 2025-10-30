@@ -1,4 +1,4 @@
-import { ProjectAnalysisDashboard } from '@/src/components/project-analysis-dashboard';
+import { ProjectAnalysisDashboard } from '@/src/components/🪦 parked-components/project-analysis-dashboard';
 import { ProjectTableViewContainer } from '@/src/containers/project-table-view-container';
 import { Button, Flex, IconButton, Separator, Tabs } from '@radix-ui/themes';
 import { useSearchParams } from 'next/navigation';

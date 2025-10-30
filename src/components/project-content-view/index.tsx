@@ -7,7 +7,7 @@ import { Flex } from '@radix-ui/themes';
 import { ProjectVideoMetadataContainer } from '@/src/containers/project-video-metadata-container';
 import { ProjectMapContainer } from '@/src/containers/project-map-container';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ProjectContentViewContainer } from '@/src/containers/project-content-view-container';
 
 const ProjectContentView = () => {
@@ -20,15 +20,19 @@ const ProjectContentView = () => {
         proportionalLayout={true}
         left={
           <div className={styles.leftPane} id="project-content-left-pane">
-            <ProjectContentViewContainer />
+            <Suspense fallback={<div>Loading Project Finder...</div>}>
+              <ProjectContentViewContainer />
+            </Suspense>
           </div>
         }
         right={
           <div className={styles.rightPane}>
             <Flex direction="column" gap={'4'}>
-              <ProjectMapContainer />
-              <ProjectVideoPreviewContainer />
-              <ProjectVideoMetadataContainer />
+              <Suspense fallback={<div>Loading Project Finder...</div>}>
+                <ProjectMapContainer />
+                <ProjectVideoPreviewContainer />
+                <ProjectVideoMetadataContainer />
+              </Suspense>
             </Flex>
           </div>
         }

@@ -40,3 +40,26 @@
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.ctasContainer {
+  position: relative;
+}
+
+.spinner {
+  display: none;
+  position: absolute;
+  inset: 0;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.spinnerVisible {
+  .spinner {
+    display: flex;
+  }
+  .paginationButton {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}

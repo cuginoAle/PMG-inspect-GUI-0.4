@@ -27,22 +27,30 @@ const MemoVideo = React.memo(function Video({
   );
 });
 
-const VideoPreview = ({ projectItem }: { projectItem?: ProjectItem }) => {
+const VideoPreview = ({
+  projectItem,
+  delay,
+}: {
+  projectItem?: ProjectItem;
+  delay: number;
+}) => {
   const [src, setSrc] = useState<string | undefined>();
 
   useEffect(() => {
-    setSrc(projectItem?.video_url);
-  }, [projectItem?.video_url]);
+    setTimeout(() => {
+      setSrc(projectItem?.video_url);
+    }, delay);
+  }, [delay, projectItem?.video_url]);
 
   return !projectItem ? null : (
     <>
       <Flex gap={'2'} direction={'column'}>
-        <Heading weight={'light'}>{projectItem.road_data.road_name}</Heading>
+        <Heading weight={'light'}>{projectItem?.road_data?.road_name}</Heading>
         <Text color="orange" size={'2'}>
           <Flex gap={'2'} align={'center'}>
-            {projectItem.road_data.road_from}{' '}
+            {projectItem?.road_data?.road_from}{' '}
             <ArrowRightIcon height="24" width="24" />{' '}
-            {projectItem.road_data.road_to}
+            {projectItem?.road_data?.road_to}
           </Flex>
         </Text>
       </Flex>

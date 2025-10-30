@@ -3,16 +3,64 @@ import { useGlobalState } from '@/src/app/global-state';
 import { ProjectTableView } from '@/src/components/project-table-view';
 import { NoProjectSelected } from '@/src/components/no-project-selected';
 import { MySuspense } from '@/src/components/my-suspense';
-import { TransformProjectData } from './transform-project-data';
+import { getProjectSavedConfigurations } from '@/src/helpers/get-project-saved-configuration';
+import { Cache } from '@/src/lib/indexeddb';
+import { useDebounce } from '@/src/hooks/useDebounce';
+import { ProjectItem } from '@/src/types/api';
+import { useCallback } from 'react';
+
+const persistConfigurationChange = async ({
+  projectName,
+  itemIds,
+  configurationId,
+}: {
+  projectName: string;
+  itemIds: string[];
+  configurationId: string | undefined;
+}) => {
+  // Persist the configuration change to IndexedDB or localStorage
+
+  // Load existing saved configurations
+  const savedConfigs = (await getProjectSavedConfigurations(projectName)) || {};
+
+  itemIds.forEach((itemId) => {
+    // Update the configuration for each item
+    if (configurationId === undefined) {
+      delete savedConfigs[itemId];
+    } else {
+      savedConfigs[itemId] = configurationId;
+    }
+  });
+
+  // Save back to IndexedDB
+  await Cache.set('savedConfigs', projectName, savedConfigs);
+
+  console.log(
+    `Persisted configuration change for item ${itemIds} to ${configurationId}`,
+  );
+};
 
 const ProjectTableViewContainer = () => {
+  // Debounced setter for hovered video URL
+  const setHoveredVideoUrl = useDebounce(
+    useGlobalState((state) => state.setHoveredVideoUrl),
+    200,
+  );
+
   const setVideoUrlToDrawOnTheMap = useGlobalState(
     (state) => state.setVideoUrlToDrawOnTheMap,
   );
-  const selectedProject = useGlobalState((state) => state.selectedProject);
   const projectStatus = useGlobalState((state) => state.projectStatus);
+  const augmentedProject = useGlobalState((state) => state.augmentedProject);
 
-  if (!selectedProject) {
+  const handleSetHoveredVideoUrl = useCallback(
+    (projectItem?: ProjectItem) => {
+      setHoveredVideoUrl(projectItem?.video_url);
+    },
+    [setHoveredVideoUrl],
+  );
+
+  if (!augmentedProject) {
     return <NoProjectSelected />;
   }
 
@@ -26,35 +74,21 @@ const ProjectTableViewContainer = () => {
     >
       {(status) => (
         <MySuspense
-          data={selectedProject}
+          data={augmentedProject}
           loadingSize="large"
           loadingMessage="Loading project..."
           undefinedDataComponent="No project data available"
         >
           {(project) => (
-            <TransformProjectData
+            <ProjectTableView
               project={project}
-              defaultConfiguration={status.processing_configurations}
-            >
-              {({
-                augmentedProject,
-                persistConfigurationChange,
-                handleSetHoveredVideoUrl,
-              }) => (
-                <ProjectTableView
-                  processingConfiguration={Object.values(
-                    status.processing_configurations || {},
-                  )}
-                  project={augmentedProject}
-                  onMouseOver={handleSetHoveredVideoUrl}
-                  // onRowCheckbox={setSelectedVideoUrlList}
-                  onConfigurationChange={persistConfigurationChange}
-                  onRowClick={(item) =>
-                    setVideoUrlToDrawOnTheMap(item?.video_url)
-                  }
-                />
+              processingConfiguration={Object.values(
+                status.processing_configurations || {},
               )}
-            </TransformProjectData>
+              onMouseOver={handleSetHoveredVideoUrl}
+              onConfigurationChange={persistConfigurationChange}
+              onRowClick={(item) => setVideoUrlToDrawOnTheMap(item?.video_url)}
+            />
           )}
         </MySuspense>
       )}

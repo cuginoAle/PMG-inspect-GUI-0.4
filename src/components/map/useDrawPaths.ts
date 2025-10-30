@@ -12,6 +12,7 @@ const baseZoom = 16;
 const baseHighligthedWidth = 10;
 
 const maxZoomLevel = 16;
+const mapPanDuration = 2000;
 
 const exponentinalLineWidth: DataDrivenPropertyValueSpecification<number> = {
   type: 'exponential',
@@ -150,7 +151,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         // Single point: center without changing zoom
         map.setCenter(firstCoord);
       } else {
-        map.fitBounds(bounds, { padding: 20, duration: 500 });
+        map.fitBounds(bounds, { padding: 20, duration: mapPanDuration });
       }
     }
 
@@ -290,7 +291,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           map.easeTo({
             center: firstPoint,
             zoom: Math.min(map.getZoom(), maxZoomLevel),
-            duration: 1000,
+            duration: mapPanDuration,
           });
         }
         return;
@@ -306,7 +307,11 @@ export const useDrawPaths = (props: DrawPathsProps) => {
           new mapboxgl.LngLatBounds(firstPoint, firstPoint),
         );
 
-      map.fitBounds(bounds, { padding, duration: 1000, maxZoom: maxZoomLevel });
+      map.fitBounds(bounds, {
+        padding,
+        duration: mapPanDuration,
+        maxZoom: maxZoomLevel,
+      });
     },
     [props.mapRef],
   );

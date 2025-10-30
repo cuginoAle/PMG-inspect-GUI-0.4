@@ -28,21 +28,31 @@ import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { useDebounce } from '@/src/hooks/useDebounce';
 import { Pagination } from './pagination';
 import { selectAllCheckboxHandler } from './helpers/select-all-checkbox-handler';
+import { LinkMapAndTableBtn } from '@/src/components';
+import { useGlobalState } from '@/src/app/global-state';
+import { PageSizer } from './page-sizer';
 
 const ProjectTableView = ({
   processingConfiguration = [],
   project,
   onMouseOver,
-  onRowCheckbox,
   onRowClick,
   onConfigurationChange,
 }: {
   processingConfiguration?: ProcessingConfiguration[];
   project: AugmentedProject;
   onMouseOver?: (projectItem?: AugmentedProjectItemData) => void;
-  onRowCheckbox?: (selectedItemIdList: string[] | []) => void;
   onRowClick?: (projectItem?: AugmentedProjectItemData) => void;
-  onConfigurationChange?: (videoIds: string[], selectedValue: string) => void;
+
+  onConfigurationChange?: ({
+    projectName,
+    itemIds,
+    configurationId,
+  }: {
+    projectName: string;
+    itemIds: string[];
+    configurationId: string | undefined;
+  }) => void;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -54,8 +64,17 @@ const ProjectTableView = ({
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
   const videoUrl = searchParams.get('videoUrl') || '';
+  const projectPath = searchParams.get('path') || '';
   const page = parseInt(searchParams.get('page') || '0');
   const router = useRouter();
+
+  const paginationPageSize = useGlobalState(
+    (state) => state.paginationPageSize,
+  );
+
+  const setRenderedProjectItems = useGlobalState(
+    (state) => state.setRenderedProjectItems,
+  );
 
   const projectItems = useMemo(
     () => Object.values(project.items || {}),
@@ -100,28 +119,34 @@ const ProjectTableView = ({
         // Get all checked checkbox values (including the current change)
         const updatedCheckedValues = Array.from(checkedRowIdsRef.current);
         updateAllConfigDropdowns(updatedCheckedValues);
-
-        onRowCheckbox?.(updatedCheckedValues);
         break;
+
       case 'SELECT':
         const selectedVideoUrl = target.dataset['videoId']!;
-
         const checkedValues = Array.from(checkedRowIdsRef.current);
-
-        console.log('checkedValues', checkedValues);
-
         const allAffectedVideoUrls = [...checkedValues];
 
         if (checkedValues.length === 0) {
           allAffectedVideoUrls.push(selectedVideoUrl);
         }
 
-        console.log('allAffectedVideoUrls ****', allAffectedVideoUrls);
-
         // Get selected value from the changed select element
         const selectedValue = (target as HTMLSelectElement).value;
 
-        onConfigurationChange?.(allAffectedVideoUrls, selectedValue);
+        setTimeout(() => {
+          // Optimistically update the select dropdown(s)
+          target.closest('select')!.value = selectedValue;
+        }, 0);
+
+        onConfigurationChange?.({
+          projectName: project.project_name,
+          itemIds: allAffectedVideoUrls,
+          configurationId:
+            selectedValue ===
+            processingConfiguration[0]?.processing_configuration_name
+              ? undefined
+              : selectedValue,
+        });
 
         break;
     }
@@ -131,17 +156,17 @@ const ProjectTableView = ({
     if (!projectItem) return;
     const item = projectItem;
 
+    // using non-reactive SearchParam
+    const videoUrl = new URLSearchParams(window.location.search).get(
+      'videoUrl',
+    );
+
+    if (videoUrl === item.video_url) return;
     const urlSearchParams = new URLSearchParams(
       new URLSearchParams(window.location.search || '').toString(),
     );
-    urlSearchParams.set('videoUrl', item.video_url);
 
-    scrollChildIntoView({
-      container: tBodyRef.current!,
-      child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
-      behavior: 'smooth',
-      direction: 'vertical',
-    });
+    urlSearchParams.set('videoUrl', item.video_url);
 
     window.history.pushState(
       null,
@@ -151,7 +176,11 @@ const ProjectTableView = ({
   }, []);
 
   useEffect(() => {
-    if (!projectItems.length) return;
+    if (
+      !projectItems.length ||
+      projectPath !== project.project_file.split('/').pop()
+    )
+      return;
 
     const selectedRowIndex = Math.max(
       projectItems.findIndex((item) => item.video_url === videoUrl),
@@ -159,21 +188,29 @@ const ProjectTableView = ({
     );
 
     setRowSelection({ [selectedRowIndex]: true });
+
     const item = projectItems[selectedRowIndex] as AugmentedProjectItemData;
 
-    if (!videoUrl) {
-      onRowSelect(item);
-    } else {
-      scrollChildIntoView({
-        container: tBodyRef.current?.closest(
-          '#project-content-left-pane',
-        ) as HTMLElement,
-        child: tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`)!,
-        behavior: 'smooth',
-        direction: 'vertical',
-      });
-    }
-  }, [onRowSelect, projectItems, videoUrl]);
+    onRowSelect(item);
+    scrollChildIntoView({
+      container: tBodyRef.current?.closest(
+        '.rt-ScrollAreaViewport',
+      ) as HTMLElement,
+      child:
+        tBodyRef.current!.querySelector(`[id="${getRowId(item)}"]`) ||
+        tBodyRef.current!.querySelector(`tr:first-child`)!,
+      behavior: 'smooth',
+      direction: 'vertical',
+    });
+  }, [
+    onRowSelect,
+    project.project_file,
+    project.project_name,
+    projectItems,
+    projectPath,
+    videoUrl,
+    page,
+  ]);
 
   const onRowDoubleClick = (projectItem: AugmentedProjectItemData) => {
     const urlSearchParams = new URLSearchParams(searchParams.toString());
@@ -194,7 +231,7 @@ const ProjectTableView = ({
       rowSelection,
       pagination: {
         pageIndex: page,
-        pageSize: 80,
+        pageSize: paginationPageSize,
       },
     },
     onSortingChange: setSorting,
@@ -226,21 +263,38 @@ const ProjectTableView = ({
       selectAllCheckboxRef,
     });
 
-  return (
-    <form onChange={onFormChange}>
-      <Flex direction="column" gap="2" height={'100%'}>
-        <div className={styles.searchBox}>
-          <TextField.Root
-            placeholder="Search all columns..."
-            onChange={debouncedOnSearchChange}
-            size={'3'}
-          >
-            <TextField.Slot>
-              <MagnifyingGlassIcon width="24" height="24" />
-            </TextField.Slot>
-          </TextField.Root>
-        </div>
+  const rows = table.getRowModel().rows;
 
+  useEffect(() => {
+    setRenderedProjectItems(
+      rows.reduce<Record<string, AugmentedProjectItemData>>((acc, row) => {
+        acc[row.original.video_url] = row.original as AugmentedProjectItemData;
+        return acc;
+      }, {}),
+    );
+  }, [rows, setRenderedProjectItems]);
+
+  return (
+    <form onChange={onFormChange} style={{ minHeight: '0' }}>
+      <Flex direction="column" gap="2" height={'100%'}>
+        <Flex align="center" justify="between" gap={'2'}>
+          <div className={styles.searchBox}>
+            <TextField.Root
+              placeholder="Search all columns..."
+              onChange={debouncedOnSearchChange}
+              size={'3'}
+            >
+              <TextField.Slot>
+                <MagnifyingGlassIcon width="24" height="24" />
+              </TextField.Slot>
+            </TextField.Root>
+          </div>
+
+          <Flex align="center" gap="4">
+            <PageSizer min={10} max={60} step={5} />
+            <LinkMapAndTableBtn />
+          </Flex>
+        </Flex>
         <Pagination table={table} />
 
         <div className={styles.tableContainer}>
@@ -334,8 +388,6 @@ const ProjectTableView = ({
             </Table.Body>
           </Table.Root>
         </div>
-
-        <Pagination table={table} />
       </Flex>
     </form>
   );
