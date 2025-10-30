@@ -5,8 +5,8 @@ import { useDebounce } from '@/src/hooks/useDebounce';
 import React from 'react';
 
 const PageSizer = ({
-  min = 10,
-  max = 60,
+  min = 5,
+  max = 100,
   step = 5,
 }: {
   min: number;

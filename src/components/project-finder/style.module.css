@@ -15,5 +15,6 @@
   max-height: 100%;
   overflow: auto;
   padding: var(--space-4);
+  scrollbar-gutter: stable;
   scrollbar-width: thin;
 }

@@ -17,6 +17,9 @@
   }
 
   :global(.rt-TableRow) {
+    content-visibility: auto;
+    contain-intrinsic-size: 40px;
+
     paginationControls &:hover {
       background-color: var(--accent-a2);
     }

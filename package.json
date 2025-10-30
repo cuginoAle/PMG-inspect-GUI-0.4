@@ -13,7 +13,7 @@
     "type-check": "tsc --noEmit",
     "generate-css-types": "tcm src --watch",
     "generate-css-types-once": "tcm src",
-    "generate-api-types": "openapi-typescript http://173.187.20.67:8088/openapi.json --output src/types/api/api.d.ts --useOptions",
+    "generate-api-types": "openapi-typescript http://cerbero-pmg.duckdns.org:8088/openapi.json --output src/types/api/api.d.ts --useOptions",
     "test:watch": "jest --watch",
     "test:e2e": "DEBUG_MOCKS=1 playwright test",
     "test:e2e:ui": "playwright test --ui",
