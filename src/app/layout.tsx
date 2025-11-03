@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { Theme } from '@radix-ui/themes';
 import styles from './page.module.css';
 import { label } from '@/package.json';
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,6 +42,14 @@ export default function RootLayout({
           panelBackground="solid"
           radius="small"
         >
+          <Toaster
+            toastOptions={{
+              style: {
+                background: '#333',
+                color: '#fff',
+              },
+            }}
+          />
           <div className={styles.page}>
             <div className={styles.content}>{children}</div>
           </div>

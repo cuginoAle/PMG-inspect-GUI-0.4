@@ -18,10 +18,9 @@ type GlobalState = {
   projectStatus?: GetProjectStatusResponse;
   augmentedProject?: GetAugmentedProjectResponse;
   hoveredVideoUrl?: string;
-  userPreferences?: {
+  userPreferences: {
     unit?: 'metric' | 'imperial';
     userName?: string;
-    localCacheSizeLimitInGB?: number;
   };
   editedProcessingConfigurations?: ProcessingConfiguration;
   inferenceModels?: GetInferenceModelResponse;
@@ -60,7 +59,10 @@ const useGlobalState = create<GlobalStore>()(
       projectStatus: undefined,
       augmentedProject: undefined,
       hoveredVideoUrl: undefined,
-      userPreferences: undefined,
+      userPreferences: {
+        unit: 'metric',
+        userName: undefined,
+      },
       analysisResults: undefined,
       processingConfigurationsDefinition: undefined,
       editedProcessingConfigurations: undefined,

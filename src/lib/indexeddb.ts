@@ -1,7 +1,7 @@
 // Lightweight IndexedDB helper with safe SSR/unsupported fallbacks
-// DB: PMGCache, Stores: projectDetails, videoMetadata
+// DB: PMGCache, Stores: projectDetails
 
-const Stores = ['projectDetails', 'videoMetadata', 'savedConfigs'] as const;
+const Stores = ['projectDetails', 'savedConfigs'] as const;
 type StoreName = (typeof Stores)[number];
 
 const DB_NAME = 'PMGCache';
@@ -218,6 +218,26 @@ async function idbDelete(store: StoreName, key: string): Promise<void> {
   });
 }
 
+async function idbDeleteStore(store: StoreName): Promise<void> {
+  if (!isBrowserWithIDB()) return;
+  const db = await openDB();
+
+  return new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    const os = tx.objectStore(store);
+    const req = os.clear();
+    req.onerror = () =>
+      reject(req.error ?? new Error('IndexedDB clear store error'));
+    tx.oncomplete = () => {
+      recordMutation(store);
+      resolve();
+    };
+    tx.onerror = () => {
+      reject(tx.error ?? new Error('IndexedDB transaction error'));
+    };
+  });
+}
+
 /**
  * Batch multiple cache mutations so that only a single notification per store
  * is emitted after the batch completes. Supports nesting.
@@ -248,6 +268,7 @@ export const Cache = {
   delete: idbDelete,
   onChange,
   batch,
+  deleteStore: idbDeleteStore,
 } as const;
 
 export type { StoreName };
