@@ -16,8 +16,23 @@ const DataLoader = () => {
     (state) => state.setSelectedProject,
   );
   const setFilesList = useGlobalState((state) => state.setFilesList);
-
   const setProjectStatus = useGlobalState((state) => state.setProjectStatus);
+  const setUserPreferences = useGlobalState(
+    (state) => state.setUserPreferences,
+  );
+
+  // Load user preferences from localStorage on mount
+  useEffect(() => {
+    const prefsString = window.localStorage.getItem('userPreferences');
+    if (prefsString) {
+      try {
+        const prefs = JSON.parse(prefsString);
+        setUserPreferences(prefs);
+      } catch (e) {
+        console.error('Failed to parse user preferences from localStorage', e);
+      }
+    }
+  }, [setUserPreferences]);
 
   const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();

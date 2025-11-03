@@ -10,7 +10,7 @@ const DataTransformer = () => {
   const setAugmentedProject = useGlobalState(
     (state) => state.setAugmentedProject,
   );
-  const projectStatusResponse = useGlobalState((state) => state.projectStatus);
+  // const projectStatusResponse = useGlobalState((state) => state.projectStatus);
 
   const selectedProjectResponse = useGlobalState(
     (state) => state.selectedProject,
@@ -85,9 +85,8 @@ const DataTransformer = () => {
       }, {} as Record<string, (typeof augmentedProjectItems)[0]>),
     };
 
-    const projectStatus = getResponseIfSuccesful(projectStatusResponse);
+    // const projectStatus = getResponseIfSuccesful(projectStatusResponse);
 
-    console.log('augmentedProject', augmentedProject);
     setAugmentedProject({
       status: 'ok',
       detail: augmentedProject,
@@ -97,7 +96,7 @@ const DataTransformer = () => {
     projectSavedConfigs,
     setAugmentedProject,
     selectedProjectResponse,
-    projectStatusResponse,
+    // projectStatusResponse,
   ]);
 
   return null;

@@ -18,7 +18,7 @@ const persistConfigurationChange = async ({
   itemIds: string[];
   configurationId: string | undefined;
 }) => {
-  // Persist the configuration change to IndexedDB or localStorage
+  // Persist the configuration change to IndexedDB
 
   // Load existing saved configurations
   const savedConfigs = (await getProjectSavedConfigurations(projectName)) || {};

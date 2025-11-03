@@ -5,8 +5,6 @@ import { MySuspense } from '@/src/components';
 const ProjectsTreeViewContainer = () => {
   const filesList = useGlobalState((state) => state.filesList);
 
-  console.log('filesList', filesList);
-
   return (
     <MySuspense
       data={filesList}
