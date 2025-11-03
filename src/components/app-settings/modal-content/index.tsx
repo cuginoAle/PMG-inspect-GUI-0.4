@@ -54,6 +54,7 @@ const ModalContent = ({
 
   const handleClearCache = () => {
     Cache.deleteStore('projectDetails');
+    Cache.deleteStore('savedConfigs');
     onCacheCleared();
   };
 
@@ -88,10 +89,10 @@ const ModalContent = ({
           </dt>
           <dd>
             <TextField.Root
-              size="1"
+              size="2"
               placeholder="Your name..."
               defaultValue={userName}
-              style={{ width: '140px' }}
+              style={{ width: '200px' }}
               name="user_name"
             />
           </dd>
@@ -102,7 +103,7 @@ const ModalContent = ({
           </dt>
           <dd>
             <select
-              style={{ width: '140px' }}
+              style={{ width: '200px' }}
               name={'unit_of_measure'}
               defaultValue={unit}
               key={unit} // to ensure re-render on change

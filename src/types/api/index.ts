@@ -22,6 +22,10 @@ type AugmentedProjectItemData = ProjectItem & {
 };
 type AugmentedProject = Project & {
   items: Record<string, AugmentedProjectItemData>;
+  processing_configurations?: Record<
+    string,
+    components['schemas']['ProcessingConfiguration-Output']
+  >;
   aiPciScores?: Record<string, number | null>;
 };
 

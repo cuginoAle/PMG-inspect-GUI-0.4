@@ -92,29 +92,33 @@ const useColumnsDef = ({
                 e.stopPropagation();
               }}
             >
-              <select
-                data-video-id={info.row.original.video_url}
-                data-component-id="configuration-select"
-                onChange={() => void 0}
-                onDoubleClick={(e) => e.stopPropagation()}
-                disabled={
-                  checkedRowIds.length > 0 &&
-                  !checkedRowIds?.includes(info.row.original.video_url)
-                }
-                value={
-                  info.row.original.selected_configuration ||
-                  processingConfiguration[0]?.processing_configuration_name
-                }
-              >
-                {processingConfiguration.map((config) => (
-                  <option
-                    value={config.processing_configuration_name}
-                    key={config.processing_configuration_name}
-                  >
-                    {config.label}
-                  </option>
-                ))}
-              </select>
+              {processingConfiguration.length === 0 ? (
+                <Spinner size="2" mx={'auto'} />
+              ) : (
+                <select
+                  data-video-id={info.row.original.video_url}
+                  data-component-id="configuration-select"
+                  onChange={() => void 0}
+                  onDoubleClick={(e) => e.stopPropagation()}
+                  disabled={
+                    checkedRowIds.length > 0 &&
+                    !checkedRowIds?.includes(info.row.original.video_url)
+                  }
+                  value={
+                    info.row.original.selected_configuration ||
+                    processingConfiguration[0]?.processing_configuration_name
+                  }
+                >
+                  {processingConfiguration.map((config) => (
+                    <option
+                      value={config.processing_configuration_name}
+                      key={config.processing_configuration_name}
+                    >
+                      {config.label}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           );
         },

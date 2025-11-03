@@ -10,7 +10,7 @@ const DataTransformer = () => {
   const setAugmentedProject = useGlobalState(
     (state) => state.setAugmentedProject,
   );
-  // const projectStatusResponse = useGlobalState((state) => state.projectStatus);
+  const projectStatusResponse = useGlobalState((state) => state.projectStatus);
 
   const selectedProjectResponse = useGlobalState(
     (state) => state.selectedProject,
@@ -76,16 +76,20 @@ const DataTransformer = () => {
       };
     });
 
+    // Extract processing configurations from project status response
+    const { processing_configurations } =
+      getResponseIfSuccesful(projectStatusResponse) || {};
+
     // Construct the augmented project
     const augmentedProject = {
       ...selectedProject!,
+      // Add processing configurations to the augmented project
+      processing_configurations: processing_configurations,
       items: augmentedProjectItems.reduce((acc, item) => {
         acc[item.video_url] = item;
         return acc;
       }, {} as Record<string, (typeof augmentedProjectItems)[0]>),
     };
-
-    // const projectStatus = getResponseIfSuccesful(projectStatusResponse);
 
     setAugmentedProject({
       status: 'ok',
@@ -96,7 +100,7 @@ const DataTransformer = () => {
     projectSavedConfigs,
     setAugmentedProject,
     selectedProjectResponse,
-    // projectStatusResponse,
+    projectStatusResponse,
   ]);
 
   return null;

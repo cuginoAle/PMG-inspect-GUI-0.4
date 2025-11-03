@@ -12,6 +12,7 @@ const DataLoader = () => {
   const sp = useSearchParams();
   const projectPath = sp.get('path');
 
+  // Global state setters
   const setSelectedProject = useGlobalState(
     (state) => state.setSelectedProject,
   );
@@ -34,8 +35,8 @@ const DataLoader = () => {
     }
   }, [setUserPreferences]);
 
-  const project = useFetchProject(projectPath);
   const projects = useFetchProjectList();
+  const project = useFetchProject(projectPath);
   const projectStatus = useFetchProjectStatus(projectPath);
 
   const projectData = getResponseIfSuccesful(project);

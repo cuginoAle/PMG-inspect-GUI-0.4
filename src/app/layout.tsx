@@ -33,6 +33,7 @@ export default function RootLayout({
         {/* Load critical global CSS via a dedicated route to guarantee ordering */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/css/globals.css" />
+        <meta name="color-scheme" content="dark" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Analytics />
