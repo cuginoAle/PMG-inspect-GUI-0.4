@@ -1,6 +1,6 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { useFetchProject } from '@/src/hooks/fetchers/useFetchProject';
+import { useFetchProjectDetails } from '@/src/hooks/fetchers/useFetchProjectDetails';
 import { useFetchProjectList } from '@/src/hooks/fetchers/useFetchProjectList';
 
 import { useSearchParams } from 'next/navigation';
@@ -36,7 +36,7 @@ const DataLoader = () => {
 
   // Fetch project list, selected project, and project status
   const projects = useFetchProjectList();
-  const project = useFetchProject(projectPath);
+  const project = useFetchProjectDetails(projectPath);
   const projectStatus = useFetchProjectStatus(projectPath);
 
   // Sync data to global state

@@ -17,7 +17,7 @@ const useFetchProjectStatus = (projectPath?: string | null) => {
     setProjectStatus({ status: 'loading' });
 
     fetchProjectStatus(projectPath)
-      .then((response) => {
+      .then(async (response) => {
         if (cancelled) return;
 
         setProjectStatus(response);

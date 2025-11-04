@@ -8,7 +8,7 @@ import { generateMockProject } from './dummy-data';
 // change this to true to use mock data
 const useMockData = false;
 
-const useFetchProject = (projectPath?: string | null) => {
+const useFetchProjectDetails = (projectPath?: string | null) => {
   const [project, setProject] = React.useState<GetProjectResponse | undefined>(
     undefined,
   );
@@ -20,18 +20,18 @@ const useFetchProject = (projectPath?: string | null) => {
     }
     let cancelled = false;
     (async () => {
-      // Return mock data with a LOAT of projects immediately
+      // Return mock data with LOADS of projects immediately
       if (useMockData) {
         const mockData = generateMockProject(projectPath, 20000);
         setProject(mockData);
       } else {
-        // Original implementation commented out for testing
-
+        // Original implementation
         try {
           const cached = await Cache.get<GetProjectResponse>(
             'projectDetails',
             projectPath,
           );
+
           if (!cancelled && cached) {
             setProject(cached);
             return; // Skip fetching since we have cache
@@ -61,4 +61,4 @@ const useFetchProject = (projectPath?: string | null) => {
   return project;
 };
 
-export { useFetchProject };
+export { useFetchProjectDetails };

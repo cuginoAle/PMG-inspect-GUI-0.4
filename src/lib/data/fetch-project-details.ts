@@ -17,6 +17,7 @@ async function fetchProjectDetails(
 
   try {
     const res = await fetch(fullUrl);
+
     if (!res.ok) {
       logger({
         severity: 'error',
