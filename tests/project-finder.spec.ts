@@ -1,4 +1,10 @@
-// Uses the Playwright test fixture that applies route-based API mocks (see tests/mocks/playwright-mocks.ts).
+/**
+ * Project Finder E2E Tests
+ *
+ * Tests the project search, selection, and data display functionality.
+ * Uses route-based API mocks via Playwright fixtures (see tests/mocks/playwright-mocks.ts).
+ */
+
 import { test, expect } from './mocks/playwright-mocks';
 import {
   overrideGetVideoMetadataError,
@@ -6,97 +12,153 @@ import {
 } from './mocks/api-override-helpers';
 import { setValidCredentials } from './helpers';
 
-test.skip('Project finder page', async ({ page, apiUsage }) => {
-  await apiUsage.reset();
-  await setValidCredentials(page);
-  await page.goto('/protected');
-
-  const projectFinder = await page.locator(
-    'input[placeholder="Search projects..."]',
-  );
-  await expect(projectFinder).toBeVisible();
-
-  await page.waitForLoadState('networkidle');
-
-  // type in the search box and verify results update (basic sanity check)
-  await projectFinder.fill('Briarcliff');
-  const searchResults = page
-    .locator('[data-component-id="file-logo-title"]')
-    .filter({ hasText: 'Briarcliff' });
-
-  await expect(searchResults).toHaveCount(3);
-
-  //when a project is clicked, the details panel should appear
-  await searchResults.nth(1).click();
-
-  const detailsPanel = page.locator(
-    '[data-component-id="project-analysis-dashboard-file-title"]',
-    { hasText: 'debug/Briarcliff' },
-  );
-  await expect(detailsPanel).toBeVisible();
-
-  // Verify the first table row contains expected text
-  const firstTableCell = page.locator('.rt-TableCell', {
-    hasText: 'ADMIRAL WORDENS LN',
+test.describe('Project Finder', () => {
+  test.beforeEach(async ({ page, apiUsage }) => {
+    await apiUsage.reset();
+    await setValidCredentials(page);
   });
-  await expect(firstTableCell).toBeVisible();
 
-  const metaData = page.locator('text=Video Metadata:');
+  test('displays search interface and loads project list', async ({
+    page,
+    apiUsage,
+  }) => {
+    await page.goto('/protected');
 
-  await expect(metaData).toBeVisible();
+    // Verify the search input is visible
+    const searchInput = page.locator('input[placeholder="Search projects..."]');
+    await expect(searchInput).toBeVisible();
 
-  // Verify API usage
-  await apiUsage.expectHit('get_files_list');
-  await apiUsage.expectHit('parse_project');
-  await apiUsage.expectHit('parse_video');
+    // Wait for initial data load
+    await page.waitForLoadState('networkidle');
 
-  // create a snapshot for visual regression testing
-  // expect(await page.screenshot()).toMatchSnapshot('project-finder.png');
-});
+    // Verify API was called to fetch files list
+    await apiUsage.expectHit('get_files_list');
+  });
 
-// Test api calls error handling
-test.skip('Project finder handles API errors - parse_project', async ({
-  page,
-  apiUsage,
-  apiOverrides,
-}) => {
-  await apiUsage.reset();
-  await setValidCredentials(page);
+  test('filters projects based on search query', async ({ page }) => {
+    await page.goto('/protected');
 
-  // Provide an override handler BEFORE navigation so it wins over defaults.
-  // This forces the get_files_list endpoint to return a 500 and exercise the UI error path.
-  apiOverrides.push(
-    overrideParseProjectError({ message: 'What a terrible failure!' }),
-  );
+    const searchInput = page.locator('input[placeholder="Search projects..."]');
+    await expect(searchInput).toBeVisible();
+    await page.waitForLoadState('networkidle');
 
-  await page.goto('/protected?path=debug/Briarcliff');
-  const errorMessage = page.locator('text=What a terrible failure!');
-  await expect(errorMessage).toBeVisible();
+    // Type search query
+    await searchInput.fill('Briarcliff');
 
-  // Ensure the endpoint was accounted for in usage (even though overridden)
-  await apiUsage.expectHit('parse_project_error');
-});
+    // Verify filtered results
+    const searchResults = page
+      .locator('[data-component-id="file-logo-title"]')
+      .filter({ hasText: 'Briarcliff' });
 
-test.skip('Project finder handles API errors - video-metadata', async ({
-  page,
-  apiUsage,
-  apiOverrides,
-}) => {
-  await apiUsage.reset();
-  await setValidCredentials(page);
+    await expect(searchResults).toHaveCount(3);
+  });
 
-  // Provide an override handler BEFORE navigation so it wins over defaults.
-  // This forces the get_video_metadata endpoint to return a 500 and exercise the UI error path.
-  apiOverrides.push(
-    overrideGetVideoMetadataError({ message: 'Video metadata failure!' }),
-  );
+  test('displays project details when a project is selected', async ({
+    page,
+    apiUsage,
+  }) => {
+    await page.goto('/protected');
 
-  await page.goto(
-    '/protected?path=debug/Briarcliff&videoUrl=https%3A%2F%2Fstorage.googleapis.com%2Fbriarcliff_manor_2025_videos%2FBISHOP%2520LN_01.MP4',
-  );
-  const errorMessage = page.locator('text=Video metadata failure!');
-  await expect(errorMessage).toBeVisible();
+    const searchInput = page.locator('input[placeholder="Search projects..."]');
+    await page.waitForLoadState('networkidle');
 
-  // Ensure the endpoint was accounted for in usage (even though overridden)
-  await apiUsage.expectHit('get_video_metadata_error');
+    // Search and select a project
+    await searchInput.fill('Briarcliff');
+    const searchResults = page
+      .locator('[data-component-id="file-logo-title"]')
+      .filter({ hasText: 'Briarcliff' });
+
+    await searchResults.nth(1).click();
+
+    // Verify project details panel appears
+    const detailsPanel = page.locator(
+      '[data-component-id="project-analysis-dashboard-file-title"]',
+      { hasText: 'debug/Briarcliff' },
+    );
+    await expect(detailsPanel).toBeVisible();
+
+    // Verify table data is loaded
+    const tableCell = page.locator('.rt-TableCell', {
+      hasText: 'ADMIRAL WORDENS LN',
+    });
+    await expect(tableCell).toBeVisible();
+
+    // Verify video metadata section is present
+    const metadataHeading = page.locator('text=Video Metadata:');
+    await expect(metadataHeading).toBeVisible();
+
+    // Verify all required APIs were called
+    await apiUsage.expectHit('get_files_list');
+    await apiUsage.expectHit('parse_project');
+    await apiUsage.expectHit('parse_video');
+  });
+
+  test('handles parse_project API error gracefully', async ({
+    page,
+    apiUsage,
+    apiOverrides,
+  }) => {
+    // Override the parse_project endpoint to return an error BEFORE navigation
+    apiOverrides.push(
+      overrideParseProjectError({ message: 'Failed to parse project data' }),
+    );
+
+    await page.goto('/protected?path=debug/Briarcliff');
+
+    // Verify error message is displayed to user
+    const errorMessage = page.locator('text=Failed to parse project data');
+    await expect(errorMessage).toBeVisible();
+
+    // Verify the error endpoint was tracked
+    await apiUsage.expectHit('parse_project_error');
+  });
+
+  test('handles video metadata API error gracefully', async ({
+    page,
+    apiUsage,
+    apiOverrides,
+  }) => {
+    const videoUrl = encodeURIComponent(
+      'https://storage.googleapis.com/briarcliff_manor_2025_videos/BISHOP LN_01.MP4',
+    );
+
+    // Override the video metadata endpoint to return an error
+    apiOverrides.push(
+      overrideGetVideoMetadataError({
+        message: 'Unable to retrieve video metadata',
+      }),
+    );
+
+    await page.goto(`/protected?path=debug/Briarcliff&videoUrl=${videoUrl}`);
+
+    // Verify error message is displayed to user
+    const errorMessage = page.locator('text=Unable to retrieve video metadata');
+    await expect(errorMessage).toBeVisible();
+
+    // Verify the error endpoint was tracked
+    await apiUsage.expectHit('get_video_metadata_error');
+  });
+
+  test.skip('visual regression - project finder interface', async ({
+    page,
+  }) => {
+    await page.goto('/protected');
+
+    const searchInput = page.locator('input[placeholder="Search projects..."]');
+    await expect(searchInput).toBeVisible();
+    await page.waitForLoadState('networkidle');
+
+    // Search and select a project for full UI state
+    await searchInput.fill('Briarcliff');
+    const searchResults = page
+      .locator('[data-component-id="file-logo-title"]')
+      .filter({ hasText: 'Briarcliff' });
+    await searchResults.nth(1).click();
+
+    // Wait for details to load
+    await page.locator('text=Video Metadata:').waitFor({ state: 'visible' });
+
+    // Take snapshot for visual regression testing
+    expect(await page.screenshot()).toMatchSnapshot('project-finder-full.png');
+  });
 });

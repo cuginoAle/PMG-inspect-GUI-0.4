@@ -1,15 +1,15 @@
 import projectDetails from '@/tests/mocks/stubs/project-details.json';
 import { ApiHandler } from './types';
 
-const parseProjectHandler: ApiHandler = {
+const getProjectInventoryHandler: ApiHandler = {
   key: 'parse_project',
-  matches: (pathname) => pathname.endsWith('/parse_project'),
+  matches: (pathname) => pathname.endsWith('/get_project_inventory'),
   handle: async ({ route, url, bump }) => {
-    const rel = url.searchParams.get('relative_path');
+    const rel = url.searchParams.get('project_relative_path');
     bump('parse_project');
-    console.log('[TEST MOCK] Intercept parse_project', {
+    console.log('[TEST MOCK] Intercept get_project_inventory', {
       url: url.toString(),
-      relative_path: rel,
+      project_relative_path: rel,
     });
     if (!rel) {
       await route.fulfill({
@@ -19,7 +19,7 @@ const parseProjectHandler: ApiHandler = {
           detail: [
             {
               type: 'missing',
-              loc: ['query', 'relative_path'],
+              loc: ['query', 'project_relative_path'],
               msg: 'Field required',
               input: null,
             },
@@ -37,4 +37,4 @@ const parseProjectHandler: ApiHandler = {
   },
 };
 
-export default parseProjectHandler;
+export default getProjectInventoryHandler;
