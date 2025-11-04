@@ -22,11 +22,19 @@ async function sendSlackMessage(text) {
 }
 
 async function main() {
-  const response = await fetch('http://cerbero-pmg.duckdns.org:8088/health');
+  const response = await fetch(
+    'http://cerbero-pmg.duckdns.org:8088/health',
+  ).catch((error) => {
+    return {
+      status: 'Network Error',
+      statusText: 'Error fetching Cerbero health endpoint',
+    };
+  });
+
   if (response.status !== 200) {
     await sendSlackMessage(
-      `🚨 Cerbero health check failed 🚨 
-      
+      `🚨 Cerbero health check failed 🚨
+
       *${response.status}* - *${response.statusText}*`,
     );
   }
