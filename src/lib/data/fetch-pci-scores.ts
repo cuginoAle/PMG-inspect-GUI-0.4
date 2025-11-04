@@ -1,4 +1,5 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
+import { logger } from '@/src/helpers/logger';
 import { FetchError, PciScore, ProcessingConfiguration } from '@/src/types';
 
 async function fetchPciScore({
@@ -26,6 +27,14 @@ async function fetchPciScore({
     });
 
     if (!res.ok) {
+      logger({
+        severity: 'error',
+        content: {
+          source: 'fetchPciScore',
+          message: res.statusText,
+        },
+      });
+
       throw {
         code: String(res.status),
         status: 'error',
@@ -39,8 +48,24 @@ async function fetchPciScore({
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
+      logger({
+        severity: 'error',
+        content: {
+          source: 'fetchPciScore',
+          message: error.code + ' - ' + error,
+        },
+      });
       throw error;
     }
+
+    logger({
+      severity: 'error',
+      content: {
+        source: 'fetchPciScore',
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+    });
+
     throw {
       status: 'error',
       code: '0',

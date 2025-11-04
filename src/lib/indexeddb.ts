@@ -1,7 +1,7 @@
 // Lightweight IndexedDB helper with safe SSR/unsupported fallbacks
 // DB: PMGCache, Stores: projectDetails
 
-const Stores = ['projectDetails', 'savedConfigs'] as const;
+const Stores = ['projectDetails', 'savedConfigs', 'logs'] as const;
 type StoreName = (typeof Stores)[number];
 
 const DB_NAME = 'PMGCache';

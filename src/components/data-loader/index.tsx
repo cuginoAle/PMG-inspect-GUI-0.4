@@ -1,11 +1,11 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { useFetchProject } from '@/src/app/hooks/useFetchProject';
-import { useFetchProjectList } from '@/src/app/hooks/useFetchProjectList';
+import { useFetchProject } from '@/src/hooks/fetchers/useFetchProject';
+import { useFetchProjectList } from '@/src/hooks/fetchers/useFetchProjectList';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useFetchProjectStatus } from '@/src/app/hooks/useFetchProjectStatus';
+import { useFetchProjectStatus } from '@/src/hooks/fetchers/useFetchProjectStatus';
 
 const DataLoader = () => {
   const sp = useSearchParams();

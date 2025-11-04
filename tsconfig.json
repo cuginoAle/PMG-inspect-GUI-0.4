@@ -22,7 +22,9 @@
     "paths": {
       "@/*": ["./*"],
       "utils/*": ["./src/utils/*"],
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "helpers/*": ["./src/helpers/*"],
+      "lib/*": ["./src/lib/*"]
     }
   },
   "include": [

@@ -2,7 +2,7 @@
 import { GearIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 import styles from './style.module.css';
-import { useModal } from '@/src/app/hooks/useModal';
+import { useModal } from '@/src/hooks/fetchers/useModal';
 import { ModalContent } from './modal-content';
 import toast from 'react-hot-toast';
 

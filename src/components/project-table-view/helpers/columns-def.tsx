@@ -286,6 +286,10 @@ const useColumnsDef = ({
         header: () => <span style={{ margin: 'auto' }}>State</span>,
         cell: (info) => {
           const status = info.getValue();
+
+          if (!status) {
+            return <Spinner size="2" mx={'auto'} />;
+          }
           const color = statusColorsMap[status!];
 
           return (

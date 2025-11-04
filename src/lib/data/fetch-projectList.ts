@@ -1,4 +1,5 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
+import { logger } from '@/src/helpers/logger';
 import { FetchError, GetFilesListResponse } from '@/src/types';
 
 async function fetchProjectList(
@@ -17,6 +18,14 @@ async function fetchProjectList(
     const res = await fetch(fullUrl);
 
     if (!res.ok) {
+      logger({
+        severity: 'error',
+        content: {
+          source: 'fetchProjectList',
+          message: res.statusText,
+        },
+      });
+
       throw {
         code: String(res.status),
         status: 'error',
@@ -35,8 +44,23 @@ async function fetchProjectList(
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
+      logger({
+        severity: 'error',
+        content: {
+          source: 'fetchProjectList',
+          message: error.code + ' - ' + error,
+        },
+      });
       throw error;
     }
+    logger({
+      severity: 'error',
+      content: {
+        source: 'fetchProjectList',
+        message: error instanceof Error ? error.message : 'Unknown error',
+      },
+    });
+
     throw {
       status: 'error',
       code: '0',
