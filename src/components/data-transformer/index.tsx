@@ -5,8 +5,6 @@ import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful
 import { AugmentedProject } from '@/src/types';
 import { useEffect, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
-import toast from 'react-hot-toast';
-import { logger } from '@/src/helpers/logger';
 
 const DataTransformer = () => {
   const setAugmentedProject = useGlobalState(
@@ -73,17 +71,6 @@ const DataTransformer = () => {
         selected_configuration: savedConfig,
       };
     });
-
-    if (projectStatusResponse?.status === 'error') {
-      toast.error('Failed to load project status data.');
-      logger({
-        severity: 'error',
-        content: {
-          source: 'DataTransformer',
-          message: `Failed to load project status data: ${projectStatusResponse.code} - ${projectStatusResponse.detail.message}`,
-        },
-      });
-    }
 
     // Extract processing_configurations and video_status from project status response
     const { processing_configurations, video_status } =

@@ -1,6 +1,7 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
 import { logger } from '@/src/helpers/logger';
 import { FetchError, GetFilesListResponse } from '@/src/types';
+import { toast } from 'react-hot-toast/headless';
 
 async function fetchProjectList(
   relativePath?: string,
@@ -44,6 +45,7 @@ async function fetchProjectList(
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
+      toast.error('Failed to load project list data.');
       logger({
         severity: 'error',
         content: {
@@ -61,6 +63,7 @@ async function fetchProjectList(
       },
     });
 
+    toast.error('Failed to load project list data.');
     throw {
       status: 'error',
       code: '0',

@@ -1,6 +1,7 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
 import { logger } from '@/src/helpers/logger';
 import { FetchError, GetProjectResponse } from '@/src/types';
+import toast from 'react-hot-toast';
 
 async function fetchProjectDetails(
   path?: string,
@@ -44,6 +45,7 @@ async function fetchProjectDetails(
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
+      toast.error('Failed to load project details data.');
       logger({
         severity: 'error',
         content: {
@@ -61,6 +63,7 @@ async function fetchProjectDetails(
       },
     });
 
+    toast.error('Failed to load project details data.');
     throw {
       status: 'error',
       code: '0',

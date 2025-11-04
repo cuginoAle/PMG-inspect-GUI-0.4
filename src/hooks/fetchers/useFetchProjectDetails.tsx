@@ -7,6 +7,7 @@ import { generateMockProject } from './dummy-data';
 
 // change this to true to use mock data
 const useMockData = false;
+const mockDataSize = 20000; // number of files in mock data
 
 const useFetchProjectDetails = (projectPath?: string | null) => {
   const [project, setProject] = React.useState<GetProjectResponse | undefined>(
@@ -22,7 +23,7 @@ const useFetchProjectDetails = (projectPath?: string | null) => {
     (async () => {
       // Return mock data with LOADS of projects immediately
       if (useMockData) {
-        const mockData = generateMockProject(projectPath, 20000);
+        const mockData = generateMockProject(projectPath, mockDataSize);
         setProject(mockData);
       } else {
         // Original implementation
@@ -45,6 +46,7 @@ const useFetchProjectDetails = (projectPath?: string | null) => {
         fetchProjectDetails(projectPath)
           .then((data) => {
             Cache.set('projectDetails', projectPath, data);
+
             if (!cancelled) setProject(data);
           })
           .catch((error) => {
