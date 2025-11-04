@@ -21,10 +21,6 @@ const DataTransformer = () => {
     Record<string, string> | undefined
   >();
 
-  // const [videosAiPciScores, setVideosAiPciScores] = useState<
-  //   Record<string, Record<string, number | null>>
-  // >({});
-
   useEffect(() => {
     // Load saved configurations from IndexedDB
     getProjectSavedConfigurations(selectedProject?.project_name).then(
