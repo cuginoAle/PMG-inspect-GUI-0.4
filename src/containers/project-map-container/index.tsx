@@ -1,6 +1,6 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
-import { GpsData, ProjectItem } from '@/src/types';
+import { AugmentedProjectItemData, GpsData } from '@/src/types';
 import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
@@ -57,7 +57,7 @@ const ProjectMapContainer = () => {
     (state) => state.setVideoUrlToDrawOnTheMap,
   );
   const hoveredVideoUrl = useGlobalState((state) => state.hoveredVideoUrl);
-  const selectedProjectData = useGlobalState((state) => state.selectedProject);
+  const selectedProjectData = useGlobalState((state) => state.augmentedProject);
 
   const selectedProject = getResponseIfSuccesful(selectedProjectData);
 
@@ -68,7 +68,7 @@ const ProjectMapContainer = () => {
   const [styleLoaded, setStyleLoaded] = useState(false);
 
   const [itemsToRender, setItemsToRender] = useState<
-    Record<string, ProjectItem> | undefined
+    Record<string, AugmentedProjectItemData> | undefined
   >();
 
   useEffect(() => {
@@ -101,9 +101,7 @@ const ProjectMapContainer = () => {
               gpsPoints: Object.values(item.gps_points),
               color:
                 pciScoreColourCodes[
-                  getPciScoreLabelFromValue(
-                    item.road_data?.inspector_pci || undefined,
-                  )
+                  getPciScoreLabelFromValue(item.avgPciScore || undefined)
                 ],
             };
           }
