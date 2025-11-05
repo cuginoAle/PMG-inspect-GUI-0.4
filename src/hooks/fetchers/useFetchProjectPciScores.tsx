@@ -1,58 +1,54 @@
-import { ProcessingConfiguration, Project } from '@/src/types';
+import {
+  GetAiPciScoreResponse,
+  ProcessingConfiguration,
+  Project,
+} from '@/src/types';
 import { useEffect, useState } from 'react';
 import { fetchPciScore } from '@/src/lib/data/fetch-pci-scores';
 
-// TODO: refactor this to send just ONE request for ALL videos in the project
-
 const useFetchProjectPciScores = ({
   project,
-  processingConfiguration,
+  processingConfigurations,
 }: {
   project?: Project | null;
-  processingConfiguration?: ProcessingConfiguration[] | null;
+  processingConfigurations?: ProcessingConfiguration[] | null;
 }) => {
   const [pciScores, setPciScores] = useState<
-    Record<string, Record<string, number | null>>
-  >({});
+    GetAiPciScoreResponse | undefined
+  >();
 
   useEffect(() => {
+    if (!project || !processingConfigurations) {
+      setPciScores({ status: 'loading' });
+      return;
+    }
     let cancelled = false;
     const videoUrls = Object.values(project?.items || {}).map(
       (item) => item.video_url,
     );
 
-    if (!processingConfiguration || videoUrls.length === 0) {
-      setPciScores({});
+    if (!processingConfigurations || videoUrls.length === 0) {
+      setPciScores({ status: 'loading' });
       return;
     }
-    const scoresObj: Record<string, Record<string, number | null>> = {};
 
-    try {
-      videoUrls.forEach(async (url) => {
-        await fetchPciScore({
-          videoUrl: url,
-          processingConfiguration: processingConfiguration?.[0],
-        })
-          .then((scores) => {
-            if (cancelled) return;
-            scoresObj[url] = scores || {};
-          })
-          .catch(() => {
-            if (cancelled) return;
-            scoresObj[url] = {};
-          });
+    fetchPciScore({
+      videosUrl: videoUrls,
+      processingConfigurations,
+    })
+      .then((scores) => {
+        if (cancelled) return;
+        setPciScores(scores);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setPciScores(error);
       });
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to fetch PCI scores');
-    }
-
-    setPciScores(scoresObj);
 
     return () => {
       cancelled = true;
     };
-  }, [project, processingConfiguration]);
+  }, [project, processingConfigurations]);
 
   return pciScores;
 };

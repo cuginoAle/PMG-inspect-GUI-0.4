@@ -29,9 +29,9 @@ const generateMockProject = (
         road_length: 100 + (i % 50) * 10,
         road_area: (3.5 + (i % 5) * 0.5) * (100 + (i % 50) * 10),
         road_lanes: 2 + (i % 3),
-        road_functional_class: i % 2 === 0 ? 'arterial' : 'collector',
-        road_surface: i % 3 === 0 ? 'asphalt' : 'concrete',
-        road_shoulder: i % 2 === 0 ? 'curb' : 'cg',
+        road_functional_class_type: i % 2 === 0 ? 'arterial' : 'collector',
+        road_surface_type: i % 3 === 0 ? 'asphalt' : 'concrete',
+        road_shoulder_type: i % 2 === 0 ? 'curb' : 'cg',
         inspector_pci: 50 + (i % 50),
       },
       media_data: {

@@ -1,45 +1,21 @@
 import { ENDPOINT } from '@/src/constants/api-end-points';
 import { logger } from '@/src/helpers/logger';
-import {
-  FetchError,
-  GetAiPciScoreResponse,
-  ProcessingConfiguration,
-} from '@/src/types';
+import { FetchError, GetBaseConfigurationsResponse } from '@/src/types';
 import toast from 'react-hot-toast';
 
-async function fetchPciScore({
-  videosUrl,
-  processingConfigurations,
-}: {
-  videosUrl?: string[];
-  processingConfigurations?: ProcessingConfiguration[];
-}): Promise<GetAiPciScoreResponse | undefined> {
-  if (!videosUrl || !processingConfigurations) {
-    return undefined;
-  }
-
+async function fetchBaseConfigurations(): Promise<
+  GetBaseConfigurationsResponse | undefined
+> {
   try {
-    const res = await fetch(ENDPOINT.PCI_SCORES, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        video_urls: videosUrl,
-        processing_configurations: processingConfigurations,
-      }),
-    });
-
+    const res = await fetch(ENDPOINT.PROCESSING_CONFIGURATIONS);
     if (!res.ok) {
-      toast.error('Failed to load PCI score data.');
       logger({
         severity: 'error',
         content: {
-          source: 'fetchPciScore',
+          source: 'fetchBaseConfigurations',
           message: res.statusText,
         },
       });
-
       throw {
         code: String(res.status),
         status: 'error',
@@ -58,26 +34,26 @@ async function fetchPciScore({
   } catch (error: any) {
     // Handle both FetchError and network/other errors
     if ((error as FetchError).code) {
-      toast.error('Failed to load PCI score data.');
+      toast.error('Failed to load base configurations data.');
       logger({
         severity: 'error',
         content: {
-          source: 'fetchPciScore',
+          source: 'fetchBaseConfigurations',
           message: error.code + ' - ' + error,
         },
       });
       throw error;
     }
 
-    toast.error('Failed to load PCI score data.');
     logger({
       severity: 'error',
       content: {
-        source: 'fetchPciScore',
+        source: 'fetchBaseConfigurations',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
     });
 
+    toast.error('Failed to load base configurations data.');
     throw {
       status: 'error',
       code: '0',
@@ -88,4 +64,4 @@ async function fetchPciScore({
   }
 }
 
-export { fetchPciScore };
+export { fetchBaseConfigurations };

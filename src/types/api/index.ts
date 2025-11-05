@@ -19,6 +19,10 @@ type FileInfo = components['schemas']['FileInfo'] & {
 type Project = components['schemas']['ProjectInventory'];
 type AugmentedProjectItemData = ProjectItem & {
   selected_configuration?: components['schemas']['ProcessingConfiguration-Input']['processing_configuration_name'];
+  aiPciScores?: PciScore[string][string];
+  avgPciScore?: number | null;
+  avgTreatment?: string | null; // TODO: I would like to receive an enum here from the backend (processing_configuration.mappings))
+  progress?: number | null;
 };
 type AugmentedProject = Project & {
   items: Record<string, AugmentedProjectItemData>;
@@ -26,7 +30,6 @@ type AugmentedProject = Project & {
     string,
     components['schemas']['ProcessingConfiguration-Output']
   >;
-  aiPciScores?: Record<string, number | null>;
 };
 
 type ProjectStatus = components['schemas']['ProjectStatus'];
@@ -39,11 +42,17 @@ type GpsData = components['schemas']['GpsPoint'];
 type InferenceModel = components['schemas']['InferenceModel'];
 type InferenceTypes = components['schemas']['InferenceType'];
 type ProcessingConfiguration =
-  components['schemas']['ProcessingConfiguration-Output'];
+  components['schemas']['ProcessingConfiguration-Output']; // the mappings prop should be an enum of strings representing treatment types
 
 type ProjectParsingState = components['schemas']['VideoStatus'];
 
-type PciScore = Record<string, number | null>; // TODO: update with OpenApi spec once available
+type PciScore = Record<
+  string,
+  Record<
+    string,
+    Record<string, components['schemas']['InferenceDerivedResult'] | null>
+  >
+>;
 
 type GetInferenceModelResponse =
   | {
@@ -71,10 +80,15 @@ type GetAugmentedProjectResponse =
   | FetchError
   | LoadingState;
 
+type GetBaseConfigurationsResponse =
+  | { status: 'ok'; detail: ProcessingConfiguration[] }
+  | FetchError
+  | LoadingState;
+
 type ResponseType<T> = { status: 'ok'; detail: T } | FetchError | LoadingState;
 
-type GetPciScoreResponse =
-  | { status: 'ok'; detail: ProcessingConfiguration }
+type GetAiPciScoreResponse =
+  | { status: 'ok'; detail: PciScore }
   | FetchError
   | LoadingState;
 
@@ -86,10 +100,11 @@ export type {
   FileType,
   GetFilesListResponse,
   GetAugmentedProjectResponse,
-  GetPciScoreResponse,
+  GetAiPciScoreResponse,
   GetProjectResponse,
   GetProjectStatusResponse,
   GetInferenceModelResponse,
+  GetBaseConfigurationsResponse,
   GpsData,
   InferenceTypes,
   InferenceModel,

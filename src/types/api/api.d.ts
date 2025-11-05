@@ -157,7 +157,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/get_video_pci_scores": {
+    "/api/v1/get_video_inference_derived_results": {
         parameters: {
             query?: never;
             header?: never;
@@ -167,15 +167,12 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Get Video Pci Scores
+         * Get Video Inference Derived Results
          * @description ## Info
-         *     Returns data collected from db (no processing done). It will:
-         *     - select video by video_url and frames applying sampler option specified in processing_configuration
-         *     - search **db.pci_score_collection** by video_url, frame_index, processing_configuration_id
-         *     ## Errors
-         *     - **HTTP_428_PRECONDITION_REQUIRED**: video_data_capture not parsed or, if sampler_type==DistanceSampler, gps_points missing
+         *     Returns data collected from db (no processing done). Specify in the body a list of processing_configurations
+         *     and a list of video_urls.
          */
-        post: operations["get_video_pci_scores_api_v1_get_video_pci_scores_post"];
+        post: operations["get_video_inference_derived_results_api_v1_get_video_inference_derived_results_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -468,11 +465,6 @@ export interface components {
          * @enum {string}
          */
         FileType: "project" | "video" | "image" | "folder" | "unsupported";
-        /**
-         * FunctionalClassType
-         * @enum {string}
-         */
-        FunctionalClassType: "invalid_value" | "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
         /** GpsPoint */
         GpsPoint: {
             /** Latitude */
@@ -489,15 +481,6 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** ImageProcessingDataWrapper */
-        ImageProcessingDataWrapper: {
-            /** Inference Configurations */
-            inference_configurations: {
-                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
-            };
-            /** Image */
-            image: string;
-        };
         /** InferenceConfiguration */
         "InferenceConfiguration-Input": {
             /** Inference Model Name */
@@ -511,6 +494,18 @@ export interface components {
             inference_model_parameters: components["schemas"]["InferenceModelParameters"];
             /** Inference Configuration Id */
             readonly inference_configuration_id: string;
+        };
+        /**
+         * InferenceDerivedResult
+         * @description Per Frame inference derived results (takes in account all inferences)
+         */
+        InferenceDerivedResult: {
+            /** Pci Score */
+            pci_score?: number | null;
+            /** Treatment */
+            treatment?: number | null;
+            /** @default processing */
+            result_source: components["schemas"]["ResultSource"];
         };
         /** InferenceModel */
         InferenceModel: {
@@ -597,13 +592,6 @@ export interface components {
             /** Frame Height */
             frame_height: number;
         };
-        /** PciScoreResult */
-        PciScoreResult: {
-            /** Pci Score */
-            pci_score: number;
-            /** @default processing */
-            result_source: components["schemas"]["ResultSource"];
-        };
         /** PngEncodedBitmask */
         PngEncodedBitmask: {
             /** Shape */
@@ -611,21 +599,31 @@ export interface components {
             /** Data */
             data: string;
         };
+        /** ProcessImageData */
+        ProcessImageData: {
+            /** Inference Configurations */
+            inference_configurations: {
+                [key: string]: components["schemas"]["InferenceConfiguration-Input"];
+            };
+            /** Image */
+            image: string;
+        };
         /** ProcessingConfiguration */
         "ProcessingConfiguration-Input": {
             /** Processing Configuration Name */
             processing_configuration_name: string;
             /** Label */
             label: string;
+            road_surface_type: components["schemas"]["RoadSurfaceType"];
             /** Inference Configurations */
             inference_configurations: {
                 [key: string]: components["schemas"]["InferenceConfiguration-Input"];
             };
-            sampler_type: components["schemas"]["SamplerType"];
-            /** Sampler Parameters */
-            sampler_parameters: {
-                [key: string]: number | null;
-            };
+            sampler_configuration: components["schemas"]["SamplerConfiguration"];
+            /** Mappings */
+            mappings?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** ProcessingConfiguration */
         "ProcessingConfiguration-Output": {
@@ -633,15 +631,16 @@ export interface components {
             processing_configuration_name: string;
             /** Label */
             label: string;
+            road_surface_type: components["schemas"]["RoadSurfaceType"];
             /** Inference Configurations */
             inference_configurations: {
                 [key: string]: components["schemas"]["InferenceConfiguration-Output"];
             };
-            sampler_type: components["schemas"]["SamplerType"];
-            /** Sampler Parameters */
-            sampler_parameters: {
-                [key: string]: number | null;
-            };
+            sampler_configuration: components["schemas"]["SamplerConfiguration"];
+            /** Mappings */
+            mappings?: {
+                [key: string]: unknown;
+            } | null;
             /** Processing Configuration Id */
             readonly processing_configuration_id: string;
         };
@@ -651,7 +650,7 @@ export interface components {
             inference_results: {
                 [key: string]: components["schemas"]["InferenceResult-Output"];
             };
-            pci_score_result?: components["schemas"]["PciScoreResult"] | null;
+            inference_derived_result?: components["schemas"]["InferenceDerivedResult"] | null;
         };
         /** ProjectInventory */
         ProjectInventory: {
@@ -716,11 +715,11 @@ export interface components {
             road_width?: number | null;
             /** Road Area */
             road_area?: number | null;
-            road_functional_class?: components["schemas"]["FunctionalClassType"] | null;
-            road_surface?: components["schemas"]["SurfaceType"] | null;
+            road_functional_class_type?: components["schemas"]["RoadFunctionalClassType"] | null;
+            road_surface_type?: components["schemas"]["RoadSurfaceType"] | null;
             /** Road Lanes */
             road_lanes?: number | null;
-            road_shoulder?: components["schemas"]["ShoulderType"] | null;
+            road_shoulder_type?: components["schemas"]["RoadShoulderType"] | null;
             /** Qc Pci Gauge Min */
             qc_pci_gauge_min?: number | null;
             /** Qc Pci Gauge Max */
@@ -729,20 +728,33 @@ export interface components {
             inspector_pci?: number | null;
         };
         /**
+         * RoadFunctionalClassType
+         * @enum {string}
+         */
+        RoadFunctionalClassType: "invalid_value" | "residential" | "collector" | "arterial" | "local" | "major_arterial" | "minor_arterial" | "major_collector" | "local_collector" | "residential_local" | "industrial" | "alley";
+        /**
+         * RoadShoulderType
+         * @enum {string}
+         */
+        RoadShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "curbed" | "vg";
+        /**
+         * RoadSurfaceType
+         * @enum {string}
+         */
+        RoadSurfaceType: "invalid_value" | "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
+        /** SamplerConfiguration */
+        SamplerConfiguration: {
+            sampler_type: components["schemas"]["SamplerType"];
+            /** Sampler Parameters */
+            sampler_parameters: {
+                [key: string]: number | string | null;
+            };
+        };
+        /**
          * SamplerType
          * @enum {string}
          */
         SamplerType: "fpssampler" | "distancesampler";
-        /**
-         * ShoulderType
-         * @enum {string}
-         */
-        ShoulderType: "invalid_value" | "cg" | "rol" | "curb" | "curb_and_gutter" | "crb" | "curbed" | "vg";
-        /**
-         * SurfaceType
-         * @enum {string}
-         */
-        SurfaceType: "invalid_value" | "asphalt" | "concrete" | "gravel" | "dirt" | "pavement" | "other" | "brick";
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -769,6 +781,13 @@ export interface components {
             } | null;
             /** Video Name */
             readonly video_name: string | null;
+        };
+        /** VideoInferenceDerivedResultsData */
+        VideoInferenceDerivedResultsData: {
+            /** Video Urls */
+            video_urls: string[];
+            /** Processing Configurations */
+            processing_configurations: components["schemas"]["ProcessingConfiguration-Input"][];
         };
         /**
          * VideoStatus
@@ -984,18 +1003,16 @@ export interface operations {
             };
         };
     };
-    get_video_pci_scores_api_v1_get_video_pci_scores_post: {
+    get_video_inference_derived_results_api_v1_get_video_inference_derived_results_post: {
         parameters: {
-            query: {
-                video_url: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProcessingConfiguration-Input"];
+                "application/json": components["schemas"]["VideoInferenceDerivedResultsData"];
             };
         };
         responses: {
@@ -1005,7 +1022,13 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": {
+                        [key: string]: {
+                            [key: string]: {
+                                [key: string]: components["schemas"]["InferenceDerivedResult"] | null;
+                            } | null;
+                        } | null;
+                    };
                 };
             };
             /** @description Validation Error */
@@ -1066,7 +1089,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ImageProcessingDataWrapper"];
+                "application/json": components["schemas"]["ProcessImageData"];
             };
         };
         responses: {

@@ -2,24 +2,34 @@
 import { useGlobalState } from '@/src/app/global-state';
 import { getProjectSavedConfigurations } from '@/src/helpers/get-project-saved-configuration';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import { AugmentedProject } from '@/src/types';
-import { useEffect, useState } from 'react';
+import { AugmentedProject, AugmentedProjectItemData } from '@/src/types';
+import { useEffect, useRef, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
 
 const DataTransformer = () => {
-  const setAugmentedProject = useGlobalState(
-    (state) => state.setAugmentedProject,
-  );
-  const projectStatusResponse = useGlobalState((state) => state.projectStatus);
+  const augmentedProjectRef = useRef<AugmentedProject | null>(null);
 
-  const selectedProjectResponse = useGlobalState(
-    (state) => state.selectedProject,
-  );
-  const selectedProject = getResponseIfSuccesful(selectedProjectResponse);
-
+  // Local state to hold saved configurations from IndexedDB
   const [projectSavedConfigs, setProjectSavedConfigs] = useState<
     Record<string, string> | undefined
   >();
+
+  // Global state setters
+  const setAugmentedProject = useGlobalState(
+    (state) => state.setAugmentedProject,
+  );
+
+  // Global state selectors
+  const baseProcessingConfigurations = getResponseIfSuccesful(
+    useGlobalState((state) => state.baseProcessingConfigurations),
+  );
+  const aiPciScores = useGlobalState((state) => state.aiPciScores);
+  const projectStatusResponse = useGlobalState((state) => state.projectStatus);
+  const selectedProjectResponse = useGlobalState(
+    (state) => state.selectedProject,
+  );
+
+  const selectedProject = getResponseIfSuccesful(selectedProjectResponse);
 
   useEffect(() => {
     // Load saved configurations from IndexedDB
@@ -65,7 +75,9 @@ const DataTransformer = () => {
 
     const augmentedProjectItems = projectItems.map((item) => {
       // Augment each item with its saved configuration if available
-      const savedConfig = projectSavedConfigs[item.video_url];
+      const savedConfig =
+        projectSavedConfigs[item.video_url] ||
+        baseProcessingConfigurations?.[0]?.processing_configuration_name;
       return {
         ...item,
         selected_configuration: savedConfig,
@@ -90,6 +102,9 @@ const DataTransformer = () => {
       }, {} as Record<string, (typeof augmentedProjectItems)[0]>),
     };
 
+    augmentedProjectRef.current = augmentedProject;
+
+    // Update the global state with the augmented project
     setAugmentedProject({
       status: 'ok',
       detail: augmentedProject,
@@ -100,6 +115,91 @@ const DataTransformer = () => {
     setAugmentedProject,
     selectedProjectResponse,
     projectStatusResponse,
+    baseProcessingConfigurations,
+  ]);
+
+  useEffect(() => {
+    if (aiPciScores?.status !== 'ok' || !projectSavedConfigs) return;
+    const aiPciScoresData = getResponseIfSuccesful(aiPciScores)!;
+
+    setAugmentedProject((state) => {
+      const augmentedProject = getResponseIfSuccesful(state.augmentedProject);
+      if (!augmentedProject) return augmentedProject;
+
+      return {
+        status: 'ok',
+        detail: {
+          ...augmentedProject,
+          items: {
+            ...Object.values(augmentedProject.items).reduce((acc, item) => {
+              const savedConfig =
+                projectSavedConfigs[item.video_url] ||
+                baseProcessingConfigurations?.[0]
+                  ?.processing_configuration_name;
+
+              const aiPciScores =
+                aiPciScoresData[item.selected_configuration!]?.[item.video_url];
+
+              const scoreValues = Object.values(aiPciScores || {});
+              const framesCount = scoreValues.length;
+              const nonNullValues = scoreValues.filter(
+                (score) => score?.pci_score,
+              );
+              const config = baseProcessingConfigurations?.find(
+                (c) =>
+                  c.processing_configuration_name ===
+                  item.selected_configuration,
+              );
+
+              const avgTreatmentScore =
+                nonNullValues.length > 0
+                  ? Math.round(
+                      nonNullValues.reduce(
+                        (sum, v) => sum + (v?.treatment || 0),
+                        0,
+                      ) / nonNullValues.length,
+                    )
+                  : undefined;
+
+              const avgPciScore =
+                nonNullValues.length > 0
+                  ? Math.round(
+                      nonNullValues.reduce(
+                        (sum, v) => sum + (v?.pci_score || 0),
+                        0,
+                      ) / nonNullValues.length,
+                    )
+                  : null;
+
+              const progress =
+                framesCount > 0
+                  ? Math.round((nonNullValues.length / framesCount) * 100)
+                  : 100;
+
+              acc[item.video_url] = {
+                ...item,
+                selected_configuration: savedConfig,
+                aiPciScores,
+                avgPciScore,
+                avgTreatment:
+                  (
+                    config?.mappings?.treatment as
+                      | Record<number, string>
+                      | undefined
+                  )?.[avgTreatmentScore!] || 'N/A',
+                progress,
+              };
+              return acc;
+            }, {} as Record<string, AugmentedProjectItemData>),
+          },
+        },
+      };
+    });
+  }, [
+    aiPciScores,
+    baseProcessingConfigurations,
+    setAugmentedProject,
+    projectSavedConfigs,
   ]);
 
   return null;

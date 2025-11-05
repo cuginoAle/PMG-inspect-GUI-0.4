@@ -6,10 +6,10 @@ import {
   GetProjectResponse,
   GetProjectStatusResponse,
   GetInferenceModelResponse,
-  ProcessingConfiguration,
-  GetPciScoreResponse,
+  GetAiPciScoreResponse,
   GetAugmentedProjectResponse,
   ProjectItem,
+  GetBaseConfigurationsResponse,
 } from '@/src/types';
 
 type GlobalState = {
@@ -22,10 +22,10 @@ type GlobalState = {
     unit?: 'metric' | 'imperial';
     userName?: string;
   };
-  editedProcessingConfigurations?: ProcessingConfiguration;
+  baseProcessingConfigurations?: GetBaseConfigurationsResponse;
   inferenceModels?: GetInferenceModelResponse;
   videoUrlToDrawOnTheMap?: string;
-  aiPciScores?: GetPciScoreResponse;
+  aiPciScores?: GetAiPciScoreResponse;
   paginationPageSize: number;
   linkMapAndTable: boolean;
   renderedProjectItems?: Record<string, ProjectItem>;
@@ -35,14 +35,20 @@ type GlobalStateActions = {
   setFilesList: (filesList?: GetFilesListResponse) => void;
   setSelectedProject: (project?: GetProjectResponse) => void;
   setProjectStatus: (status?: GetProjectStatusResponse) => void;
-  setAugmentedProject: (project?: GetAugmentedProjectResponse) => void;
+  setAugmentedProject: (
+    project?:
+      | GetAugmentedProjectResponse
+      | ((state: GlobalState) => GetAugmentedProjectResponse | undefined),
+  ) => void;
   setHoveredVideoUrl: (url?: string) => void;
   setUserPreferences: (prefs?: GlobalState['userPreferences']) => void;
 
-  setEditedProcessingConfigurations: (config?: ProcessingConfiguration) => void;
+  setBaseProcessingConfigurations: (
+    config?: GetBaseConfigurationsResponse,
+  ) => void;
   setInferenceModels: (inferenceModels?: GetInferenceModelResponse) => void;
   setVideoUrlToDrawOnTheMap: (url?: string) => void;
-  setAiPciScores: (aiPciScores?: GetPciScoreResponse) => void;
+  setAiPciScores: (aiPciScores?: GetAiPciScoreResponse) => void;
   setPaginationPageSize: (pageSize?: number) => void;
   setLinkMapAndTable: (linkMapAndTable: boolean) => void;
   setRenderedProjectItems: (items?: Record<string, ProjectItem>) => void;
@@ -65,7 +71,7 @@ const useGlobalState = create<GlobalStore>()(
       },
       analysisResults: undefined,
       processingConfigurationsDefinition: undefined,
-      editedProcessingConfigurations: undefined,
+      baseProcessingConfigurations: undefined,
       selectedInferenceSettingId: undefined,
       inferenceModels: undefined,
       videoUrlToDrawOnTheMap: undefined,
@@ -78,11 +84,17 @@ const useGlobalState = create<GlobalStore>()(
       setFilesList: (filesList) => set({ filesList }),
       setSelectedProject: (selectedProject) => set({ selectedProject }),
       setProjectStatus: (projectStatus) => set({ projectStatus }),
-      setAugmentedProject: (augmentedProject) => set({ augmentedProject }),
+      setAugmentedProject: (augmentedProject) =>
+        set((state) => ({
+          augmentedProject:
+            typeof augmentedProject === 'function'
+              ? augmentedProject(state)
+              : augmentedProject,
+        })),
       setHoveredVideoUrl: (hoveredVideoUrl) => set({ hoveredVideoUrl }),
       setUserPreferences: (userPreferences) => set({ userPreferences }),
-      setEditedProcessingConfigurations: (editedProcessingConfigurations) =>
-        set({ editedProcessingConfigurations }),
+      setBaseProcessingConfigurations: (baseProcessingConfigurations) =>
+        set({ baseProcessingConfigurations }),
       setInferenceModels: (inferenceModels) => set({ inferenceModels }),
       setVideoUrlToDrawOnTheMap: (videoUrlToDrawOnTheMap) =>
         set({ videoUrlToDrawOnTheMap }),

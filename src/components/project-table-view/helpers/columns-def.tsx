@@ -73,7 +73,7 @@ const useColumnsDef = ({
         header: 'Video name',
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor((row) => row.road_data?.road_surface, {
+      columnHelper.accessor((row) => row.road_data?.road_surface_type, {
         id: 'road_surface',
         header: 'Surface type',
         cell: (info) => info.getValue(),
@@ -171,21 +171,27 @@ const useColumnsDef = ({
         (row) => {
           const min = row.road_data?.qc_pci_gauge_min;
           const max = row.road_data?.qc_pci_gauge_max;
-          const inspectorPciScore = row.road_data?.inspector_pci;
+          const aiPciScore = row.avgPciScore;
 
-          if (!min || !max || !inspectorPciScore) {
+          if (!min || !max || !aiPciScore) {
             return undefined;
           }
 
-          if (inspectorPciScore < min) return min - inspectorPciScore + 0.1; // add 0.1 to indicate negative delta
-          if (inspectorPciScore > max) return inspectorPciScore - max;
+          if (aiPciScore < min) return min - aiPciScore + 0.1; // add 0.1 to indicate negative delta
+          if (aiPciScore > max) return aiPciScore - max;
           return 0;
         },
         {
           id: 'pci_delta',
           header: () => (
-            <Flex align={'center'} style={{ margin: 'auto' }}>
-              <NeuralNetworkIcon size={1.3} />/ QC
+            <Flex
+              align={'center'}
+              style={{ margin: 'auto' }}
+              gap="1"
+              title="AI Pci Score delta vs QC"
+            >
+              QC |
+              <NeuralNetworkIcon size={1.3} />
             </Flex>
           ),
           cell: (info) => {
@@ -202,7 +208,7 @@ const useColumnsDef = ({
         },
       ),
 
-      columnHelper.display({
+      columnHelper.accessor((row) => row.avgPciScore, {
         id: 'pci_score_avg_ai',
         header: () => (
           <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
@@ -211,16 +217,16 @@ const useColumnsDef = ({
           </Flex>
         ),
         cell: (info) => {
-          const value = undefined; //aiPciScores[info.row.original.video_url];
-          const framesCount = Object.keys(value || {}).length;
-          const processedCount = Object.values(value || {}).filter(
-            (v) => v !== null && v !== undefined,
-          ).length;
+          if (processingConfiguration.length === 0) {
+            return (
+              <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+                <Spinner size="2" />
+              </Flex>
+            );
+          }
+          const value = info.getValue();
 
-          const progress =
-            framesCount > 0
-              ? Math.round((processedCount / framesCount) * 100)
-              : 100;
+          const progress = info.row.original.progress;
 
           return (
             <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
@@ -234,7 +240,7 @@ const useColumnsDef = ({
         },
       }),
 
-      columnHelper.accessor((row) => row.road_data?.inspector_pci, {
+      columnHelper.accessor((row) => row.avgPciScore, {
         id: 'ai_treatment',
         header: () => (
           <Flex
@@ -257,7 +263,7 @@ const useColumnsDef = ({
         },
       }),
 
-      columnHelper.accessor((row) => row.road_data?.inspector_pci, {
+      columnHelper.accessor((row) => row.avgTreatment, {
         id: 'predicted_treatment',
         header: () => (
           <Flex
@@ -274,8 +280,7 @@ const useColumnsDef = ({
           const value = info.getValue();
           return (
             <Text as="p" align={'center'} title="Predicted treatment">
-              {' '}
-              -{' '}
+              {value}
             </Text>
           );
         },
@@ -305,7 +310,7 @@ const useColumnsDef = ({
         },
       }),
     ],
-    [processingConfiguration, checkedRowIds],
+    [checkedRowIds, processingConfiguration],
   );
 };
 

@@ -21,16 +21,18 @@ const GET_VIDEO_METADATA_ENDPOINT = 'api/v1/parse_video';
 
 const GET_PROJECT_STATUS_ENDPOINT = 'api/v1/get_project_status';
 const GET_INFERENCE_MODELS = 'api/v1/get_inference_models';
-const GET_VIDEO_PCI_SCORES = 'api/v1/get_video_pci_scores';
+const GET_VIDEOS_PCI_SCORES = 'api/v1/get_video_inference_derived_results';
+const GET_PROCESSING_CONFIGURATIONS = 'api/v1/get_processing_configurations';
 
 const ENDPOINT = {
   INFERENCE_MODELS: `${BASE}/${GET_INFERENCE_MODELS}`,
+  PROCESSING_CONFIGURATIONS: `${BASE}/${GET_PROCESSING_CONFIGURATIONS}`,
   PROJECT: {
     LIST: `${BASE}/${GET_FILE_LIST_ENDPOINT}`,
     DETAILS: `${BASE}/${GET_FILE_DETAILS_ENDPOINT}`,
     STATUS: `${BASE}/${GET_PROJECT_STATUS_ENDPOINT}`,
-    PCI_SCORES: `${BASE}/${GET_VIDEO_PCI_SCORES}`,
   },
+  PCI_SCORES: `${BASE}/${GET_VIDEOS_PCI_SCORES}`,
   VIDEOS: `${BASE}/${GET_VIDEO_METADATA_ENDPOINT}`,
   // Expose also the raw direct origin for special cases (e.g., generating openapi types)
   __DIRECT_ORIGIN: DIRECT_API_BASE,
