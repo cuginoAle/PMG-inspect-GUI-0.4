@@ -5,6 +5,11 @@ import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful
 import { AugmentedProject, AugmentedProjectItemData } from '@/src/types';
 import { useEffect, useRef, useState } from 'react';
 import { Cache } from '@/src/lib/indexeddb';
+import {
+  getAvgPciScore,
+  getAvgPciScoreTreatment,
+  getSortedTreatmentScores,
+} from './helpers';
 
 const DataTransformer = () => {
   const augmentedProjectRef = useRef<AugmentedProject | null>(null);
@@ -151,25 +156,18 @@ const DataTransformer = () => {
                   item.selected_configuration,
               );
 
-              const avgTreatmentScore =
-                nonNullValues.length > 0
-                  ? Math.round(
-                      nonNullValues.reduce(
-                        (sum, v) => sum + (v?.treatment || 0),
-                        0,
-                      ) / nonNullValues.length,
-                    )
-                  : undefined;
+              const sortedTreatmentScores =
+                getSortedTreatmentScores(nonNullValues);
 
-              const avgPciScore =
-                nonNullValues.length > 0
-                  ? Math.round(
-                      nonNullValues.reduce(
-                        (sum, v) => sum + (v?.pci_score || 0),
-                        0,
-                      ) / nonNullValues.length,
-                    )
-                  : null;
+              // console.log('sortedScores', sortedTreatmentScores.join('-'));
+              // console.log('nonNullValues', nonNullValues);
+
+              const treatmentScores = getAvgPciScoreTreatment({
+                scores: nonNullValues,
+                mapping: config?.mappings as Record<string, string> | undefined, // TODO: Ask the API for the correct type
+              });
+
+              const avgPciScore = getAvgPciScore(nonNullValues);
 
               const progress =
                 framesCount > 0
@@ -181,12 +179,8 @@ const DataTransformer = () => {
                 selected_configuration: savedConfig,
                 aiPciScores,
                 avgPciScore,
-                avgTreatment:
-                  (
-                    config?.mappings?.treatment as
-                      | Record<number, string>
-                      | undefined
-                  )?.[avgTreatmentScore!] || 'N/A',
+                // avgPciScoreTreatment: sortedTreatmentScores, // This could come handy if we decide to draw a pie chart on the table
+                avgTreatment: treatmentScores,
                 progress,
               };
               return acc;
