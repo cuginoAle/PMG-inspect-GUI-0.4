@@ -49,7 +49,7 @@ async function fetchProjectStatus(
         severity: 'error',
         content: {
           source: 'fetchProjectStatus',
-          message: error.code + ' - ' + error,
+          message: error,
         },
       });
       throw error;

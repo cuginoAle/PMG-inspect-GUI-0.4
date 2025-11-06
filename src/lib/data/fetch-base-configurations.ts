@@ -39,7 +39,7 @@ async function fetchBaseConfigurations(): Promise<
         severity: 'error',
         content: {
           source: 'fetchBaseConfigurations',
-          message: error.code + ' - ' + error,
+          message: error,
         },
       });
       throw error;

@@ -63,7 +63,7 @@ async function fetchPciScore({
         severity: 'error',
         content: {
           source: 'fetchPciScore',
-          message: error.code + ' - ' + error,
+          message: error,
         },
       });
       throw error;

@@ -50,7 +50,7 @@ async function fetchProjectList(
         severity: 'error',
         content: {
           source: 'fetchProjectList',
-          message: error.code + ' - ' + error,
+          message: error,
         },
       });
       throw error;
