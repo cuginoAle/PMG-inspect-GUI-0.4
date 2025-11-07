@@ -8,7 +8,7 @@ type PciScore = {
 
 type AvgPciScoreTreatment = {
   scores: PciScore[];
-  mapping: Record<string, string> | undefined; // TODO: this type should come from API types
+  mapping: { treatment?: Record<string, string> } | undefined; // TODO: this type should come from API types
 };
 
 const getAvgPciScore = (scores: PciScore[]): number | null => {
@@ -35,7 +35,7 @@ const getSortedTreatmentScores = (scores: PciScore[]) => {
   const sortedScores = Array.from(scoresMap.entries() || []);
   sortedScores.sort((a, b) => -a[1] + b[1]);
 
-  return sortedScores;
+  return sortedScores as [number, number][];
 };
 
 const getAvgPciScoreTreatment = ({

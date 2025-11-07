@@ -23,6 +23,7 @@ type AugmentedProjectItemData = ProjectItem & {
   avgPciScore?: number | null;
   avgTreatment?: string | null; // TODO: I would like to receive an enum here from the backend (processing_configuration.mappings))
   progress?: number | null;
+  avgPciScoreTreatment?: [string, number][];
 };
 type AugmentedProject = Project & {
   items: Record<string, AugmentedProjectItemData>;

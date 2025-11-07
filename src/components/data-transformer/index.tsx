@@ -156,11 +156,16 @@ const DataTransformer = () => {
                   item.selected_configuration,
               );
 
-              const sortedTreatmentScores =
-                getSortedTreatmentScores(nonNullValues);
-
-              // console.log('sortedScores', sortedTreatmentScores.join('-'));
-              // console.log('nonNullValues', nonNullValues);
+              const sortedTreatmentByName = getSortedTreatmentScores(
+                nonNullValues,
+              ).map(([treatment, count]) => {
+                return [
+                  (config?.mappings?.treatment as Record<string, string>)[
+                    treatment
+                  ] as string,
+                  count,
+                ] as [string, number];
+              });
 
               const treatmentScores = getAvgPciScoreTreatment({
                 scores: nonNullValues,
@@ -179,7 +184,7 @@ const DataTransformer = () => {
                 selected_configuration: savedConfig,
                 aiPciScores,
                 avgPciScore,
-                // avgPciScoreTreatment: sortedTreatmentScores, // This could come handy if we decide to draw a pie chart on the table
+                avgPciScoreTreatment: sortedTreatmentByName,
                 avgTreatment: treatmentScores,
                 progress,
               };

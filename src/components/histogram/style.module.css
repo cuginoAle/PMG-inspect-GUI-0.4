@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 100px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.fill {
+  background: rgb(64, 86, 94);
+  border-radius: 3px 3px 0 0;
+  width: 34px;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 10px;
+}

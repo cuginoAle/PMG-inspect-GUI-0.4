@@ -30,3 +30,4 @@ export * from './video-analysis-score-gauge';
 export * from './data-transformer';
 export * from './link-map-and-table-btn';
 export * from './label-toggle';
+export * from './histogram';

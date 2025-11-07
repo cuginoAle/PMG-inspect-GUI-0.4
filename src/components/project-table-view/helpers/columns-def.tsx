@@ -3,10 +3,11 @@ import type {
   AugmentedProjectItemData,
   ProcessingConfiguration,
 } from '@/src/types';
-import { Flex, Spinner, Text } from '@radix-ui/themes';
+import { Flex, Spinner, Text, Tooltip } from '@radix-ui/themes';
 import { PersonIcon } from '@radix-ui/react-icons';
 import {
   CalculatorIcon,
+  Histogram,
   NeuralNetworkIcon,
   VideoAnalysisProgress,
   VideoAnalysisScoreGauge,
@@ -278,9 +279,12 @@ const useColumnsDef = ({
         ),
         cell: (info) => {
           const value = info.getValue();
+          const histogramValues = info.row.original.avgPciScoreTreatment || [];
           return (
             <Text as="p" align={'center'} title="Predicted treatment">
-              {value}
+              <Tooltip content={<Histogram data={histogramValues} />}>
+                <span>{value}</span>
+              </Tooltip>
             </Text>
           );
         },
