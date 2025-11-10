@@ -57,6 +57,7 @@ interface DrawPathsProps {
   styleLoaded: boolean;
   pathsToDraw?: PathsToDraw;
   highlightPath?: string;
+  skip?: boolean;
 }
 
 export const useDrawPaths = (props: DrawPathsProps) => {
@@ -66,7 +67,8 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       !props.styleLoaded ||
       !props.mapRef.current ||
       !props.pathsToDraw ||
-      Object.keys(props.pathsToDraw).length === 0
+      Object.keys(props.pathsToDraw).length === 0 ||
+      props.skip
     )
       return;
 
@@ -181,11 +183,16 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         console.log('error', error);
       }
     };
-  }, [props.styleLoaded, props.pathsToDraw, props.mapRef]);
+  }, [props.styleLoaded, props.pathsToDraw, props.mapRef, props.skip]);
 
   // Separate effect for highlighting a specific path (only re-runs when highlightPath changes)
   useEffect(() => {
-    if (!props.styleLoaded || !props.mapRef.current || !props.pathsToDraw)
+    if (
+      !props.styleLoaded ||
+      !props.mapRef.current ||
+      !props.pathsToDraw ||
+      props.skip
+    )
       return;
 
     const map = props.mapRef.current;
@@ -274,27 +281,27 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         pathsLayerId,
       );
     }
-  }, [props.styleLoaded, props.highlightPath, props.pathsToDraw, props.mapRef]);
+  }, [
+    props.styleLoaded,
+    props.highlightPath,
+    props.pathsToDraw,
+    props.mapRef,
+    props.skip,
+  ]);
 
   const panToPath = useCallback(
-    ({
-      pathData,
-      padding = 30,
-    }: {
-      pathData?: LngLatLike[];
-      padding?: number;
-    }) => {
-      if (!props.mapRef.current) {
+    ({ data, padding = 30 }: { data?: LngLatLike[]; padding?: number }) => {
+      if (!props.mapRef.current || props.skip) {
         return;
       }
 
       const map = props.mapRef.current;
 
-      if (!pathData || pathData.length === 0) {
+      if (!data || data.length === 0) {
         return;
       }
 
-      const normalizedPath = pathData.map(normalizeCoord).filter(isFiniteCoord);
+      const normalizedPath = data.map(normalizeCoord).filter(isFiniteCoord);
 
       if (normalizedPath.length === 0) {
         return;
@@ -328,10 +335,10 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         maxZoom: maxZoomLevel,
       });
     },
-    [props.mapRef],
+    [props.mapRef, props.skip],
   );
 
-  return { panToPath };
+  return { panToPath: props.skip ? undefined : panToPath };
 };
 
 export type { PathsToDraw };

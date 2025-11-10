@@ -18,7 +18,7 @@ const MAP_STYLE = {
   satellite: SATELLITE_MAP_STYLE,
 };
 
-const mapType = ['Road Avg', 'By frame'] as const;
+const mapType = ['Section Avg', 'By frame'] as const;
 type MapType = (typeof mapType)[number];
 
 interface MapProps {
@@ -121,5 +121,5 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
 
 Map.displayName = 'Map';
 
-export { Map };
+export { Map, mapType };
 export type { MapType };

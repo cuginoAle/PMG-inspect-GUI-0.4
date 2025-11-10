@@ -10,6 +10,7 @@ import {
   getAvgPciScoreTreatment,
   getSortedTreatmentScores,
 } from './helpers';
+import toast from 'react-hot-toast';
 
 const DataTransformer = () => {
   const augmentedProjectRef = useRef<AugmentedProject | null>(null);
@@ -150,11 +151,18 @@ const DataTransformer = () => {
               const nonNullValues = scoreValues.filter(
                 (score) => score?.pci_score,
               );
-              const config = baseProcessingConfigurations?.find(
-                (c) =>
-                  c.processing_configuration_name ===
+              let config = baseProcessingConfigurations?.find(
+                (baseConfig) =>
+                  baseConfig.processing_configuration_name ===
                   item.selected_configuration,
               );
+
+              if (!config) {
+                toast.error(
+                  `Processing configuration "${item.selected_configuration}" not found for video "${item.video_url}".`,
+                );
+                config = baseProcessingConfigurations?.[0];
+              }
 
               const sortedTreatmentByName = getSortedTreatmentScores(
                 nonNullValues,
