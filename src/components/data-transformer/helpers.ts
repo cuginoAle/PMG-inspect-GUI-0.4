@@ -52,7 +52,7 @@ const getAvgPciScoreTreatment = ({
 }: AvgPciScoreTreatment): string => {
   const scoresMap = getTreatmentScores(scores);
   const treatmentKey = scoresMap
-    .toSorted((a, b) => a[1] - b[1])?.[0]?.[0]
+    .toSorted((a, b) => -a[1] + b[1])?.[0]?.[0]
     ?.toString();
 
   if (!treatmentKey) return 'N/A';

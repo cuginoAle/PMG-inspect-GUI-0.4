@@ -111,14 +111,14 @@ const ProjectMapContainer = () => {
       data &&
         panToPath!({
           data: Object.values(data)[0]?.coordinates,
-          padding: 80,
+          padding: 50,
         });
     } else {
       // If no selectedVideo, pan to show all paths
       const allCoordinates = Object.values(pathsToDraw).flatMap(
         (path) => path.coordinates,
       );
-      panToPath!({ data: allCoordinates, padding: 80 });
+      panToPath!({ data: allCoordinates, padding: 20 });
     }
   }, [selectedVideo, videoUrlToDrawOnTheMap, pathsToDraw, panToPath]);
 

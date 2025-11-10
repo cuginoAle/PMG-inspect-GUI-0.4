@@ -17,7 +17,7 @@ const baseZoom = 16;
 const baseHighligthedWidth = 20;
 const baseRadius = 1;
 
-const maxZoomLevel = 16;
+const maxZoomLevel = 18;
 const mapPanDuration = 2000;
 
 const exponentinalLineWidth: DataDrivenPropertyValueSpecification<number> = {
