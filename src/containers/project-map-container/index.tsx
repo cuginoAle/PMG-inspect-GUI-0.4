@@ -1,28 +1,19 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
 import { AugmentedProjectItemData, GpsData } from '@/src/types';
-import {
-  Map,
-  mapType,
-  MapType,
-  PathsToDraw,
-  useDrawPaths,
-} from '@/src/components';
+import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
 import { useSearchParams } from 'next/navigation';
 import { pciScoreColourCodes } from '@/src/helpers/pci-score-colour-codes';
 import { getPciScoreLabelFromValue } from '@/src/helpers/get-pci-score-label-from-value';
-import { useDrawPoints } from 'components/map/useDrawPoints';
-import { getPathsMapData } from './helpers';
+import { getPathsMapData, getPointsMapData } from './helpers';
 
 const ProjectMapContainer = () => {
   const sp = useSearchParams();
   const videoUrl = sp.get('videoUrl') || undefined;
   const page = sp.get('page') || 0;
-
-  const [mapTypeSelected, setMapTypeSelected] = useState<MapType>(mapType[0]);
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
   const videoUrlToDrawOnTheMap = useGlobalState(
@@ -103,32 +94,11 @@ const ProjectMapContainer = () => {
     mapRef: mapBoxRef,
     styleLoaded,
     pathsToDraw,
+    pointsToDraw: getPointsMapData({
+      project: selectedProject,
+    }),
     highlightPath: highlightPath,
-    skip: mapTypeSelected !== mapType[0],
   });
-
-  const { panToPoints } = useDrawPoints({
-    mapRef: mapBoxRef,
-    styleLoaded,
-    pointsToDraw: selectedVideo
-      ? {
-          [videoUrlToDrawOnTheMap!]: {
-            coordinates: Object.values(selectedVideo.gps_points || {}).map(
-              (point) => [point.longitude, point.latitude],
-            ),
-            color:
-              pciScoreColourCodes[
-                getPciScoreLabelFromValue(
-                  selectedVideo.avgPciScore || undefined,
-                )
-              ],
-          },
-        }
-      : undefined,
-    skip: mapTypeSelected !== mapType[1],
-  });
-
-  const panningFunction = panToPath || panToPoints;
 
   useEffect(() => {
     if (!pathsToDraw) return;
@@ -139,7 +109,7 @@ const ProjectMapContainer = () => {
         [videoUrlToDrawOnTheMap]: { gpsPoints: gpsPointsArray },
       });
       data &&
-        panningFunction!({
+        panToPath!({
           data: Object.values(data)[0]?.coordinates,
           padding: 80,
         });
@@ -148,9 +118,9 @@ const ProjectMapContainer = () => {
       const allCoordinates = Object.values(pathsToDraw).flatMap(
         (path) => path.coordinates,
       );
-      panningFunction!({ data: allCoordinates, padding: 80 });
+      panToPath!({ data: allCoordinates, padding: 80 });
     }
-  }, [selectedVideo, videoUrlToDrawOnTheMap, pathsToDraw, panningFunction]);
+  }, [selectedVideo, videoUrlToDrawOnTheMap, pathsToDraw, panToPath]);
 
   if (!pathsToDraw) return null;
   return (
@@ -159,7 +129,6 @@ const ProjectMapContainer = () => {
       onZoomOutButtonClick={setVideoUrlToDrawOnTheMap}
       ref={mapBoxRef}
       onStyleLoaded={setStyleLoaded}
-      onTypeChange={setMapTypeSelected}
     />
   );
 };

@@ -10,9 +10,12 @@ type PathsToDraw = Record<
   { coordinates: LngLatLike[]; color?: string }
 >;
 
+type PointsToDraw = { coordinates: LngLatLike; color?: string }[];
+
 const baseWidth = 4;
 const baseZoom = 16;
 const baseHighligthedWidth = 20;
+const baseRadius = 1;
 
 const maxZoomLevel = 16;
 const mapPanDuration = 2000;
@@ -38,6 +41,16 @@ const exponentinalHighligthedLineWidth: DataDrivenPropertyValueSpecification<num
     ],
   };
 
+const exponentialCircleRadius: DataDrivenPropertyValueSpecification<number> = {
+  type: 'exponential',
+  base: 2,
+  stops: [
+    [0, baseRadius],
+    [13, baseRadius],
+    [22, 2 * Math.pow(2, 22 - baseZoom)],
+  ],
+};
+
 // Normalize any LngLatLike into a [lng, lat] tuple using Mapbox's built-in converter
 const normalizeCoord = (p: LngLatLike): [number, number] => {
   try {
@@ -57,7 +70,7 @@ interface DrawPathsProps {
   styleLoaded: boolean;
   pathsToDraw?: PathsToDraw;
   highlightPath?: string;
-  skip?: boolean;
+  pointsToDraw?: PointsToDraw;
 }
 
 export const useDrawPaths = (props: DrawPathsProps) => {
@@ -67,8 +80,7 @@ export const useDrawPaths = (props: DrawPathsProps) => {
       !props.styleLoaded ||
       !props.mapRef.current ||
       !props.pathsToDraw ||
-      Object.keys(props.pathsToDraw).length === 0 ||
-      props.skip
+      Object.keys(props.pathsToDraw).length === 0
     )
       return;
 
@@ -183,16 +195,11 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         console.log('error', error);
       }
     };
-  }, [props.styleLoaded, props.pathsToDraw, props.mapRef, props.skip]);
+  }, [props.styleLoaded, props.pathsToDraw, props.mapRef]);
 
   // Separate effect for highlighting a specific path (only re-runs when highlightPath changes)
   useEffect(() => {
-    if (
-      !props.styleLoaded ||
-      !props.mapRef.current ||
-      !props.pathsToDraw ||
-      props.skip
-    )
+    if (!props.styleLoaded || !props.mapRef.current || !props.pathsToDraw)
       return;
 
     const map = props.mapRef.current;
@@ -281,17 +288,93 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         pathsLayerId,
       );
     }
-  }, [
-    props.styleLoaded,
-    props.highlightPath,
-    props.pathsToDraw,
-    props.mapRef,
-    props.skip,
-  ]);
+  }, [props.styleLoaded, props.highlightPath, props.pathsToDraw, props.mapRef]);
+
+  // Effect for drawing points on top of paths
+  useEffect(() => {
+    if (
+      !props.styleLoaded ||
+      !props.mapRef.current ||
+      !props.pointsToDraw ||
+      props.pointsToDraw.length === 0
+    )
+      return;
+
+    const map = props.mapRef.current;
+
+    // Build a FeatureCollection of Point features
+    const features: GeoJSON.Feature<GeoJSON.Point, { color: string }>[] = [];
+
+    props.pointsToDraw.forEach((pointData) => {
+      const coordinates = pointData.coordinates;
+      const color = pointData.color || '#1612fa';
+      const normalizedCoord = normalizeCoord(coordinates);
+
+      if (!isFiniteCoord(normalizedCoord)) return;
+
+      const [lng, lat] = normalizedCoord;
+      features.push({
+        type: 'Feature',
+        properties: { color },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      });
+    });
+
+    // If no valid points, skip
+    if (features.length === 0) return;
+
+    const sourceId = 'path-points-source';
+    const layerId = 'path-points-layer';
+
+    const collection: GeoJSON.FeatureCollection<
+      GeoJSON.Point,
+      { color: string }
+    > = {
+      type: 'FeatureCollection',
+      features,
+    };
+
+    if (map && !map.getSource(sourceId)) {
+      map.addSource(sourceId, {
+        type: 'geojson',
+        data: collection,
+      });
+    } else {
+      const src = map.getSource(sourceId) as mapboxgl.GeoJSONSource | undefined;
+      src?.setData(collection);
+    }
+
+    if (!map.getLayer(layerId)) {
+      map.addLayer({
+        id: layerId,
+        type: 'circle',
+        source: sourceId,
+        paint: {
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.7,
+          'circle-radius': exponentialCircleRadius,
+        },
+      });
+    }
+
+    return () => {
+      // Cleanup layers and sources on unmount or when points change
+      if (!map) return;
+      try {
+        if (map.getLayer(layerId)) map.removeLayer(layerId);
+        if (map.getSource(sourceId)) map.removeSource(sourceId);
+      } catch (error) {
+        console.log('error removing points layer', error);
+      }
+    };
+  }, [props.styleLoaded, props.pointsToDraw, props.mapRef]);
 
   const panToPath = useCallback(
     ({ data, padding = 30 }: { data?: LngLatLike[]; padding?: number }) => {
-      if (!props.mapRef.current || props.skip) {
+      if (!props.mapRef.current) {
         return;
       }
 
@@ -335,10 +418,10 @@ export const useDrawPaths = (props: DrawPathsProps) => {
         maxZoom: maxZoomLevel,
       });
     },
-    [props.mapRef, props.skip],
+    [props.mapRef],
   );
 
-  return { panToPath: props.skip ? undefined : panToPath };
+  return { panToPath };
 };
 
-export type { PathsToDraw };
+export type { PathsToDraw, PointsToDraw };

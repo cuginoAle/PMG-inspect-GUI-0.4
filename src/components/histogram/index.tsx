@@ -12,8 +12,8 @@ const Histogram = ({ data, title }: HistogramProps) => {
   const maxCount = Math.max(...data.map(([, count]) => count));
   return (
     <span className={style.root}>
-      {title && <h3 className={style.title}>{title}</h3>}
-      <div className={style.histogram}>
+      {title && <span className={style.title}>{title}</span>}
+      <span className={style.histogram}>
         {data.map(([treatment, count]) => {
           const heightPerc = (count * 100) / maxCount;
           const perc = (count * 100) / data.reduce((sum, [, c]) => sum + c, 0);
@@ -31,7 +31,7 @@ const Histogram = ({ data, title }: HistogramProps) => {
             </span>
           );
         })}
-      </div>
+      </span>
     </span>
   );
 };

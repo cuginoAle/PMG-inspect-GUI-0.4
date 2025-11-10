@@ -1,5 +1,8 @@
-import { PathsToDraw } from '@/src/components';
-import { GpsData } from '@/src/types';
+import { PathsToDraw, PointsToDraw } from '@/src/components';
+
+import { getPciScoreLabelFromValue } from '@/src/helpers/get-pci-score-label-from-value';
+import { pciScoreColourCodes } from '@/src/helpers/pci-score-colour-codes';
+import { AugmentedProject, GpsData } from '@/src/types';
 
 const getPathsMapData = (
   gpsData: Record<
@@ -30,4 +33,34 @@ const getPathsMapData = (
   return undefined;
 };
 
-export { getPathsMapData };
+const getPointsMapData = ({
+  project,
+}: {
+  project?: AugmentedProject;
+}): PointsToDraw => {
+  return Object.values(project?.items || {}).reduce((acc, item) => {
+    const scores = item.aiPciScores || {};
+    const pciValues = Object.entries(scores);
+
+    if (pciValues.length === 0) return acc;
+
+    pciValues
+      .filter(([, score]) => !!score && !!score.pci_score)
+      .forEach(([frameIndex, score]) => {
+        const gpsPoint = item.gps_points?.[frameIndex as any];
+        if (!gpsPoint) return;
+
+        acc.push({
+          coordinates: [gpsPoint.longitude, gpsPoint.latitude],
+          color:
+            pciScoreColourCodes[
+              getPciScoreLabelFromValue(score?.pci_score || undefined)
+            ],
+        });
+      });
+
+    return acc;
+  }, [] as PointsToDraw);
+};
+
+export { getPathsMapData, getPointsMapData };

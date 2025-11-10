@@ -19,7 +19,7 @@ const getAvgPciScore = (scores: PciScore[]): number | null => {
     : null;
 };
 
-const getSortedTreatmentScores = (scores: PciScore[]) => {
+const getTreatmentScores = (scores: PciScore[]) => {
   const scoresMap = scores
     ? scores.reduce(
         (sum, v) => {
@@ -50,12 +50,14 @@ const getAvgPciScoreTreatment = ({
   scores,
   mapping,
 }: AvgPciScoreTreatment): string => {
-  const scoresMap = getSortedTreatmentScores(scores);
-  const treatmentKey = scoresMap[0]?.[0].toString();
+  const scoresMap = getTreatmentScores(scores);
+  const treatmentKey = scoresMap
+    .toSorted((a, b) => a[1] - b[1])?.[0]?.[0]
+    ?.toString();
 
   if (!treatmentKey) return 'N/A';
 
   return mapping?.treatment?.[treatmentKey] || 'N/A';
 };
 
-export { getAvgPciScoreTreatment, getSortedTreatmentScores, getAvgPciScore };
+export { getAvgPciScoreTreatment, getTreatmentScores, getAvgPciScore };

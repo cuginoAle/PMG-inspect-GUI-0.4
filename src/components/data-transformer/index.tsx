@@ -8,7 +8,7 @@ import { Cache } from '@/src/lib/indexeddb';
 import {
   getAvgPciScore,
   getAvgPciScoreTreatment,
-  getSortedTreatmentScores,
+  getTreatmentScores,
 } from './helpers';
 import toast from 'react-hot-toast';
 
@@ -162,20 +162,21 @@ const DataTransformer = () => {
                   `Processing configuration "${item.selected_configuration}" not found for video "${item.video_url}".`,
                 );
                 config = baseProcessingConfigurations?.[0];
+                //TODO: We should also update the selected_configuration in IndexedDB and global state (i.e. delete this file entry)
               }
 
-              const sortedTreatmentByName = getSortedTreatmentScores(
-                nonNullValues,
-              ).map(([treatment, count]) => {
-                return [
-                  (config?.mappings?.treatment as Record<string, string>)[
-                    treatment
-                  ] as string,
-                  count,
-                ] as [string, number];
-              });
+              const treatmentScores = getTreatmentScores(nonNullValues).map(
+                ([treatment, count]) => {
+                  return [
+                    (config?.mappings?.treatment as Record<string, string>)[
+                      treatment
+                    ] as string,
+                    count,
+                  ] as [string, number];
+                },
+              );
 
-              const treatmentScores = getAvgPciScoreTreatment({
+              const averageTreatmentScores = getAvgPciScoreTreatment({
                 scores: nonNullValues,
                 mapping: config?.mappings as Record<string, string> | undefined, // TODO: Ask the API for the correct type
               });
@@ -192,8 +193,8 @@ const DataTransformer = () => {
                 selected_configuration: savedConfig,
                 aiPciScores,
                 avgPciScore,
-                avgPciScoreTreatment: sortedTreatmentByName,
-                avgTreatment: treatmentScores,
+                avgPciScoreTreatment: treatmentScores,
+                avgTreatment: averageTreatmentScores,
                 progress,
               };
               return acc;
