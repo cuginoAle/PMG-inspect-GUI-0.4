@@ -6,6 +6,7 @@ import { useDebounce } from '@/src/hooks/useDebounce';
 import React from 'react';
 import { IconButton } from '@radix-ui/themes';
 import { CornersIcon } from '@radix-ui/react-icons';
+import { LabelToggle } from 'components/label-toggle';
 
 const STANDARD_MAP_STYLE = 'mapbox://styles/mapbox/standard';
 const FADED_MAP_STYLE = 'mapbox://styles/cuginoale/cmgzb37ku001c01qxgtd077kd';
@@ -17,15 +18,24 @@ const MAP_STYLE = {
   satellite: SATELLITE_MAP_STYLE,
 };
 
+const mapType = ['Road Avg', 'By frame'] as const;
+type MapType = (typeof mapType)[number];
+
 interface MapProps {
   onStyleLoaded?: (loaded: boolean) => void;
   showZoomOutButton?: boolean;
   onZoomOutButtonClick?: () => void;
+  onTypeChange?: (label: MapType) => void;
 }
 
 const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
   (
-    { onStyleLoaded, showZoomOutButton, onZoomOutButtonClick }: MapProps,
+    {
+      onStyleLoaded,
+      showZoomOutButton,
+      onZoomOutButtonClick,
+      onTypeChange,
+    }: MapProps,
     ref,
   ) => {
     const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -92,6 +102,18 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
           </IconButton>
         )}
         <div className={styles.mapContainer} ref={mapContainerRef} />
+        <div className={styles.labelToggleContainer}>
+          <span>Show PCI score:</span>
+          <LabelToggle
+            name="type"
+            label_1={mapType[0]}
+            label_2={mapType[1]}
+            defaultValue={mapType[0]}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              onTypeChange?.(event.target.value as MapType)
+            }
+          />
+        </div>
       </div>
     );
   },
@@ -100,3 +122,4 @@ const Map = React.forwardRef<mapboxgl.Map | null, MapProps>(
 Map.displayName = 'Map';
 
 export { Map };
+export type { MapType };

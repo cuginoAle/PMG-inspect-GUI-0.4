@@ -24,7 +24,8 @@
       "utils/*": ["./src/utils/*"],
       "src/*": ["./src/*"],
       "helpers/*": ["./src/helpers/*"],
-      "lib/*": ["./src/lib/*"]
+      "lib/*": ["./src/lib/*"],
+      "components/*": ["./src/components/*"]
     }
   },
   "include": [

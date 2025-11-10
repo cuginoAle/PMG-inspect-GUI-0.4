@@ -1,7 +1,7 @@
 'use client';
 import { useGlobalState } from '@/src/app/global-state';
 import { AugmentedProjectItemData, GpsData } from '@/src/types';
-import { Map, PathsToDraw, useDrawPaths } from '@/src/components';
+import { Map, MapType, PathsToDraw, useDrawPaths } from '@/src/components';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
@@ -42,6 +42,8 @@ const ProjectMapContainer = () => {
   const sp = useSearchParams();
   const videoUrl = sp.get('videoUrl') || undefined;
   const page = sp.get('page') || 0;
+
+  const [mapTypeSelected, setMapTypeSelected] = useState<MapType>('Road Avg');
 
   const [pathsToDraw, setPathsToDraw] = useState<PathsToDraw>();
   const videoUrlToDrawOnTheMap = useGlobalState(
@@ -154,6 +156,7 @@ const ProjectMapContainer = () => {
       onZoomOutButtonClick={setVideoUrlToDrawOnTheMap}
       ref={mapBoxRef}
       onStyleLoaded={setStyleLoaded}
+      onTypeChange={setMapTypeSelected}
     />
   );
 };
