@@ -128,7 +128,13 @@ const useColumnsDef = ({
       columnHelper.accessor((row) => row.road_data?.inspector_pci, {
         id: 'inspector_pci',
         header: () => (
-          <Flex justify="center" align={'center'} gap="1" width={'100%'}>
+          <Flex
+            justify="center"
+            align={'center'}
+            gap="1"
+            width={'100%'}
+            title="Inspector Pci Score"
+          >
             <PersonIcon />
             <span>Pci</span>
           </Flex>
@@ -136,7 +142,12 @@ const useColumnsDef = ({
         cell: (info) => {
           const value = info.getValue()!;
           return (
-            <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+            <Flex
+              justify="center"
+              gap="1"
+              style={{ fontSize: '1.7rem' }}
+              title="Inspector Pci Score"
+            >
               <VideoAnalysisProgress pciScore={value} progress={100} />
             </Flex>
           );
@@ -200,7 +211,13 @@ const useColumnsDef = ({
             const roundedValue = Math.round(value);
             const isNegative = value !== roundedValue;
             return (
-              <Text as="p" weight={'bold'} align="center" color="red">
+              <Text
+                as="p"
+                weight={'bold'}
+                align="center"
+                color="red"
+                title="AI Pci Score delta vs QC"
+              >
                 {isNegative ? '-' : !!value && '+'}
                 {roundedValue || ''}
               </Text>
@@ -212,25 +229,27 @@ const useColumnsDef = ({
       columnHelper.accessor((row) => row.avgPciScore, {
         id: 'pci_score_avg_ai',
         header: () => (
-          <Flex align={'center'} style={{ margin: 'auto' }} gap="1">
+          <Flex
+            align={'center'}
+            style={{ margin: 'auto' }}
+            gap="1"
+            title="AI average Pci Score"
+          >
             <NeuralNetworkIcon size={1.8} />
             <span>Pci</span>
           </Flex>
         ),
         cell: (info) => {
-          if (processingConfiguration.length === 0) {
-            return (
-              <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
-                <Spinner size="2" />
-              </Flex>
-            );
-          }
           const value = info.getValue();
-
           const progress = info.row.original.progress;
 
           return (
-            <Flex justify="center" gap="1" style={{ fontSize: '1.7rem' }}>
+            <Flex
+              justify="center"
+              gap="1"
+              style={{ fontSize: '1.7rem' }}
+              title="AI average Pci Score"
+            >
               {value === undefined ? (
                 <Spinner size="2" />
               ) : (
@@ -257,7 +276,7 @@ const useColumnsDef = ({
         cell: (info) => {
           const value = info.getValue();
           return (
-            <Text as="p" align={'center'}>
+            <Text as="p" align={'center'} title="Calculated treatment">
               {getTreatment(value || undefined)}
             </Text>
           );
@@ -281,8 +300,18 @@ const useColumnsDef = ({
           const value = info.getValue();
           const histogramValues = info.row.original.avgPciScoreTreatment || [];
           return (
-            <Text as="p" align={'center'} title="Predicted treatment">
-              <Tooltip content={<Histogram data={histogramValues} />}>
+            <Text as="p" align={'center'}>
+              <Tooltip
+                style={{
+                  backgroundColor: 'var(--gray-12)',
+                }}
+                content={
+                  <Histogram
+                    data={histogramValues}
+                    title="Predicted treatment"
+                  />
+                }
+              >
                 <span>{value}</span>
               </Tooltip>
             </Text>

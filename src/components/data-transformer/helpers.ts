@@ -21,21 +21,29 @@ const getAvgPciScore = (scores: PciScore[]): number | null => {
 
 const getSortedTreatmentScores = (scores: PciScore[]) => {
   const scoresMap = scores
-    ? scores.reduce((sum, v) => {
-        if (sum.get(v?.treatment)) {
-          sum.set(v?.treatment, (sum.get(v?.treatment) || 0) + 1);
-        } else {
-          sum.set(v?.treatment, 1);
-        }
-        return sum;
-      }, new Map())
+    ? scores.reduce(
+        (sum, v) => {
+          if (!!v?.treatment) {
+            if (sum.get(v.treatment)) {
+              sum.set(v.treatment, (sum.get(v.treatment) || 0) + 1);
+            } else {
+              sum.set(v.treatment, 1);
+            }
+          }
+          return sum;
+        },
+        new Map([
+          // Initialize with all treatments set to 0
+          [0, 0],
+          [1, 0],
+          [2, 0],
+          [3, 0],
+          [4, 0],
+        ]),
+      )
     : new Map();
 
-  // Sort treatments by their scores in descending order
-  const sortedScores = Array.from(scoresMap.entries() || []);
-  sortedScores.sort((a, b) => -a[1] + b[1]);
-
-  return sortedScores as [number, number][];
+  return Array.from(scoresMap.entries() || []) as [number, number][];
 };
 
 const getAvgPciScoreTreatment = ({
