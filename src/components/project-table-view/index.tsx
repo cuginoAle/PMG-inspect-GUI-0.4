@@ -216,7 +216,8 @@ const ProjectTableView = ({
     const urlSearchParams = new URLSearchParams(searchParams.toString());
     urlSearchParams.set('videoUrl', projectItem.video_url);
 
-    router.push(`/protected/edit?${urlSearchParams.toString()}`);
+    // router.push(`/protected/edit?${urlSearchParams.toString()}`);
+    window.open('https://pmg-web-ui.vercel.app/protected', '_blank');
   };
 
   const table = useReactTable({
