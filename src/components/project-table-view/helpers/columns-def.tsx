@@ -14,21 +14,7 @@ import {
 } from '@/src/components';
 import { parsingMap, statusColorsMap, statusTitleMap } from './constants';
 import { useMemo } from 'react';
-
-const getTreatment = (pciScore: number | undefined) => {
-  if (pciScore === undefined) return 'N/A';
-  if (pciScore >= 90) {
-    return 'Rejuvenation';
-  } else if (pciScore >= 70) {
-    return 'Maintenance';
-  } else if (pciScore >= 50) {
-    return 'Preservation';
-  } else if (pciScore >= 30) {
-    return 'Structural';
-  } else {
-    return 'Rehabilitation';
-  }
-};
+import { getTreatment } from '@/src/hooks/useTreatmentFromScore';
 
 const columnHelper = createColumnHelper<AugmentedProjectItemData>();
 
@@ -69,7 +55,7 @@ const useColumnsDef = ({
           );
         },
       }),
-      columnHelper.accessor((row) => `${row.video_name}`, {
+      columnHelper.accessor((row) => row.video_name, {
         id: 'video_name',
         header: 'Video name',
         cell: (info) => info.getValue(),

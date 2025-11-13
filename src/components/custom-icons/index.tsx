@@ -6,3 +6,4 @@ export * from './three-vert-dots';
 export * from './download';
 export * from './circle';
 export * from './calculator';
+export * from './excel';

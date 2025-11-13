@@ -15,6 +15,15 @@ const pciScoreColourCodes: Record<PCIScoreColourLabels, string> = {
   undefined: '#808080',
 };
 
+const pciScoreToEmoji: Record<PCIScoreColourLabels, string> = {
+  excellent: '🟦',
+  good: '🟩',
+  fair: '🟨',
+  poor: '🟧',
+  failed: '🟥',
+  undefined: '⬜',
+};
+
 const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
   excellent: '#ffffff',
   good: '#000000ca',
@@ -24,5 +33,5 @@ const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
   undefined: '#000000ca',
 };
 
-export { pciScoreColourCodes, pciScoreLabelColour };
+export { pciScoreColourCodes, pciScoreLabelColour, pciScoreToEmoji };
 export type { PCIScoreColourLabels };
