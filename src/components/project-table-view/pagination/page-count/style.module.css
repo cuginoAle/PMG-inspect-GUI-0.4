@@ -1,0 +1,5 @@
+.paginationText {
+  font-size: 14px;
+  color: var(--gray-11);
+  white-space: nowrap;
+}

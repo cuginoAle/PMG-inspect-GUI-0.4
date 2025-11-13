@@ -12,13 +12,6 @@ import {
 import { Cache } from '@/src/lib/indexeddb';
 import styles from './style.module.css';
 import { useGlobalState } from '@/src/app/global-state';
-import { ExportTable } from './export-table';
-
-const users = [
-  { name: 'Alice', email: 'alice@example.com', age: 30 },
-  { name: 'Bob', email: 'bob@example.com', age: 25 },
-  { name: 'Charlie', email: 'charlie@example.com', age: 28 },
-];
 
 const ModalContent = ({
   onClose,
@@ -139,12 +132,7 @@ const ModalContent = ({
           </dd>
         </div>
         <Separator orientation="horizontal" size={'4'} />
-        <div className={styles.settingItem}>
-          <ExportTable />
-        </div>
       </dl>
-
-      <Separator orientation="horizontal" size={'4'} />
 
       <Button variant="soft" color="green" size="2" onClick={onClose}>
         Save Settings

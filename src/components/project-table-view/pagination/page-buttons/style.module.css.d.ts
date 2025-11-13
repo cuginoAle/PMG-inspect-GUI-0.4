@@ -3,7 +3,6 @@ declare const styles: {
   readonly "disabled": string;
   readonly "paginationButton": string;
   readonly "paginationControls": string;
-  readonly "paginationText": string;
   readonly "spinner": string;
   readonly "spinnerVisible": string;
 };

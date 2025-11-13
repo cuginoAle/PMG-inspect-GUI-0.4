@@ -29,12 +29,6 @@
   cursor: not-allowed;
 }
 
-.paginationText {
-  font-size: 14px;
-  color: var(--gray-11);
-  white-space: nowrap;
-}
-
 .disabled {
   opacity: 0.4;
   cursor: not-allowed;

@@ -2,10 +2,17 @@ import { useGlobalState } from '@/src/app/global-state';
 import { ExcelIcon } from '@/src/components/custom-icons';
 import { exportJSONToExcel } from '@/src/helpers/export-to-excel';
 import { getResponseIfSuccesful } from '@/src/helpers/get-response-if-successful';
-import { Button, Text } from '@radix-ui/themes';
+import { Button, Flex, Heading, IconButton, Separator } from '@radix-ui/themes';
 import { getColumnData } from './helpers';
+import {
+  CodeSandboxLogoIcon,
+  Cross1Icon,
+  GlobeIcon,
+  Share2Icon,
+} from '@radix-ui/react-icons';
+import styles from './style.module.css';
 
-const ExportTable = () => {
+const ExportTable = ({ onClose }: { onClose: () => void }) => {
   const augmentedProject = getResponseIfSuccesful(
     useGlobalState((state) => state.augmentedProject),
   );
@@ -15,8 +22,6 @@ const ExportTable = () => {
   const data = Object.values(augmentedProject.items).map((item) =>
     getColumnData(item),
   );
-
-  // console.log('data', data);
 
   if (data.length === 0) {
     return null;
@@ -32,21 +37,42 @@ const ExportTable = () => {
     width: (width as number) || 20,
   }));
 
-  // [
-  //   { header: 'Full Name', key: 'name', width: 20 },
-  //   { header: 'Email Address', key: 'email', width: 30 },
-  //   { header: 'Age', key: 'age', width: 10 },
-  // ];
   return (
-    <>
-      <dt>
-        <Text size="2">Export table data:</Text>
-      </dt>
-      <dd>
+    <Flex direction="column" gap="4">
+      <IconButton
+        onClick={onClose}
+        size={'2'}
+        variant="soft"
+        className={styles.closeButton}
+        type="button"
+      >
+        <Cross1Icon width={16} height={16} color="var(--gray-a12)" />
+      </IconButton>
+      <Flex align="center" gap="2">
+        <Share2Icon width={24} height={24} color="var(--gray-11)" />
+        <Heading as="h2" size="4" weight="light">
+          Export table data:
+        </Heading>
+      </Flex>
+
+      <Separator orientation="horizontal" size={'4'} />
+
+      <Flex gap="2" align="center" justify="end">
+        <Button variant="soft" size={'2'} type="button" color="gray" disabled>
+          <GlobeIcon width={18} height={18} />
+          GeoJson
+        </Button>
+
+        <Button variant="soft" size={'2'} type="button" color="gray" disabled>
+          <CodeSandboxLogoIcon width={18} height={18} />
+          GeoPackage
+        </Button>
+
         <Button
-          variant="ghost"
-          size={'1'}
+          variant="soft"
+          size={'2'}
           type="button"
+          color="gray"
           onClick={() =>
             exportJSONToExcel({
               data: tableData,
@@ -60,8 +86,8 @@ const ExportTable = () => {
           <ExcelIcon size={1.8} />
           Excel
         </Button>
-      </dd>
-    </>
+      </Flex>
+    </Flex>
   );
 };
 export { ExportTable };

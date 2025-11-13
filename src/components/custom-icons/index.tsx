@@ -7,3 +7,4 @@ export * from './download';
 export * from './circle';
 export * from './calculator';
 export * from './excel';
+export * from './geo-json';

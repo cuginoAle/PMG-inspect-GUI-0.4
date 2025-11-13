@@ -26,9 +26,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { getRowId } from './helpers/getRowId';
 import { scrollChildIntoView } from '@/src/helpers/scrollChildIntoView';
 import { useDebounce } from '@/src/hooks/useDebounce';
-import { Pagination } from './pagination';
+
 import { selectAllCheckboxHandler } from './helpers/select-all-checkbox-handler';
-import { LinkMapAndTableBtn } from '@/src/components';
+import { LinkMapAndTableBtn, TableToolBar } from '@/src/components';
 import { useGlobalState } from '@/src/app/global-state';
 import { PageSizer } from './page-sizer';
 
@@ -296,7 +296,7 @@ const ProjectTableView = ({
             <LinkMapAndTableBtn />
           </Flex>
         </Flex>
-        <Pagination table={table} />
+        <TableToolBar table={table} />
 
         <div className={styles.tableContainer}>
           <Table.Root size={'1'} variant="surface" className={styles.tableRoot}>
