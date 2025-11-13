@@ -24,17 +24,16 @@ const getColumnData = (data: AugmentedProjectItemData) => [
   ['SECTION', data.road_data?.road_section, 10],
   ['FROM', data.road_data?.road_from],
   ['TO', data.road_data?.road_to],
-  ['LENGTH (FT)', feetToMeters(data.road_data?.road_length || undefined), 15],
-  ['WIDTH (FT)', feetToMeters(data.road_data?.road_width || undefined), 15],
+  ['LENGTH (FT)', data.road_data?.road_length, 15],
+  ['WIDTH (FT)', data.road_data?.road_width, 15],
+  ['AREA (SQFT)', data.road_data?.road_area, 15],
   [
-    'AREA (SQFT)',
-    squareFeetToSquareMeters(data.road_data?.road_area || undefined),
-    15,
+    'FUNCTIONAL CLASS',
+    data.road_data?.road_functional_class_type?.toUpperCase(),
   ],
-  ['FUNCTIONAL CLASS', data.road_data?.road_functional_class_type],
-  ['SURFACE', data.road_data?.road_surface_type, 10],
+  ['SURFACE', data.road_data?.road_surface_type?.toUpperCase(), 10],
   ['LANES', data.road_data?.road_lanes, 10],
-  ['SHOULDER', data.road_data?.road_shoulder_type, 10],
+  ['SHOULDER', data.road_data?.road_shoulder_type?.toUpperCase(), 10],
   ['QC PCI GAUGE MIN', data.road_data?.qc_pci_gauge_min],
   ['QC PCI GAUGE MAX', data.road_data?.qc_pci_gauge_max],
   ['QC PCI GAUGE NOTES', 'N/A'], //data.road_data?.qc_pci_gauge_notes
@@ -47,8 +46,8 @@ const getColumnData = (data: AugmentedProjectItemData) => [
   ['INSPECTOR NOTES', 'N/A'], //data.road_data?.inspector_notes
   ['PCI AI', data.avgPciScore],
   ['', pciScoreToEmoji[getPciScoreLabelFromValue(data.avgPciScore)], 4],
-  ['TREATMENT', getTreatment(data.avgPciScore)],
-  ['TREATMENT AI', data.avgTreatment],
+  ['TREATMENT', getTreatment(data.avgPciScore)?.toUpperCase()],
+  ['TREATMENT AI', data.avgTreatment?.toUpperCase()],
 ];
 
 export { getColumnData };

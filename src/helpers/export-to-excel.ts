@@ -5,11 +5,13 @@ export const exportJSONToExcel = async ({
   fileName = 'data.xlsx',
   columns,
   hyperlinkColumns = [],
+  highlightColumns = [],
 }: {
   data: Array<Record<string, any>>;
   fileName?: string;
   columns: Partial<ExcelJS.Column>[];
   hyperlinkColumns?: number[];
+  highlightColumns?: number[];
 }) => {
   // 1️⃣ Create a new workbook & worksheet
   const workbook = new ExcelJS.Workbook();
@@ -47,7 +49,7 @@ export const exportJSONToExcel = async ({
   worksheet.eachRow((row, rowNumber) => {
     if (rowNumber === 1) return;
 
-    row.eachCell((cell) => {
+    row.eachCell((cell, colNumber) => {
       cell.font = { color: { argb: '444444' } };
       cell.border = {
         top: { style: 'thin', color: { argb: '666666' } },
@@ -55,6 +57,13 @@ export const exportJSONToExcel = async ({
         bottom: { style: 'thin', color: { argb: '666666' } },
         right: { style: 'thin', color: { argb: '666666' } },
       };
+      if (highlightColumns.includes(colNumber - 1)) {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: '#fff9e2' },
+        };
+      }
     });
   });
 

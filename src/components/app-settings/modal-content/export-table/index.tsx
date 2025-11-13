@@ -32,8 +32,6 @@ const ExportTable = () => {
     width: (width as number) || 20,
   }));
 
-  // console.log('tableData', tableData);
-
   // [
   //   { header: 'Full Name', key: 'name', width: 20 },
   //   { header: 'Email Address', key: 'email', width: 30 },
@@ -55,6 +53,7 @@ const ExportTable = () => {
               fileName: `${augmentedProject.project_name}.xlsx`,
               columns: columns,
               hyperlinkColumns: [0],
+              highlightColumns: [21, 22, 23, 24],
             })
           }
         >

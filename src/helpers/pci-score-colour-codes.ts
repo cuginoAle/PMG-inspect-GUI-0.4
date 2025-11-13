@@ -16,12 +16,12 @@ const pciScoreColourCodes: Record<PCIScoreColourLabels, string> = {
 };
 
 const pciScoreToEmoji: Record<PCIScoreColourLabels, string> = {
-  excellent: '🟦',
-  good: '🟩',
-  fair: '🟨',
-  poor: '🟧',
-  failed: '🟥',
-  undefined: '⬜',
+  excellent: '🔵',
+  good: '🟢',
+  fair: '🟡',
+  poor: '🟠',
+  failed: '🔴',
+  undefined: '⚪',
 };
 
 const pciScoreLabelColour: Record<PCIScoreColourLabels, string> = {
